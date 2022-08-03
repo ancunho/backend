@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbAccessHistMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbAccessHist">
+    <id column="ACCESS_SEQ" jdbcType="INTEGER" property="accessSeq" />
+    <result column="CUSTOMER_SEQ" jdbcType="INTEGER" property="customerSeq" />
+    <result column="REQUEST_URL" jdbcType="VARCHAR" property="requestUrl" />
+    <result column="REQUEST_URI" jdbcType="VARCHAR" property="requestUri" />
+    <result column="HEADER_INFO" jdbcType="VARCHAR" property="headerInfo" />
+    <result column="USE_YN" jdbcType="VARCHAR" property="useYn" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="ERR_CD" jdbcType="VARCHAR" property="errCd" />
+    <result column="ERR_MSG" jdbcType="VARCHAR" property="errMsg" />
+    <result column="SESSION_ID" jdbcType="VARCHAR" property="sessionId" />
+    <result column="IP_ADDR" jdbcType="VARCHAR" property="ipAddr" />
+    <result column="USER_AGENT" jdbcType="VARCHAR" property="userAgent" />
+    <result column="REFERER" jdbcType="VARCHAR" property="referer" />
+    <result column="CUSER" jdbcType="VARCHAR" property="cuser" />
+    <result column="EUSER" jdbcType="VARCHAR" property="euser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="online.buza.blog.entity.TbAccessHist">
+    <result column="PARAMETERS" jdbcType="LONGVARCHAR" property="parameters" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ACCESS_SEQ, CUSTOMER_SEQ, REQUEST_URL, REQUEST_URI, HEADER_INFO, USE_YN, MEMO, ERR_CD, 
+    ERR_MSG, SESSION_ID, IP_ADDR, USER_AGENT, REFERER, CUSER, EUSER, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <sql id="Blob_Column_List">
+    `PARAMETERS`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_access_hist
+    where ACCESS_SEQ = #{accessSeq,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_access_hist
+    where ACCESS_SEQ = #{accessSeq,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.TbAccessHist">
+    insert into tb_access_hist (ACCESS_SEQ, CUSTOMER_SEQ, REQUEST_URL, 
+      REQUEST_URI, HEADER_INFO, USE_YN, 
+      MEMO, ERR_CD, ERR_MSG, 
+      SESSION_ID, IP_ADDR, USER_AGENT, 
+      REFERER, CUSER, EUSER, 
+      CREATE_TIME, UPDATE_TIME, `PARAMETERS`
+      )
+    values (#{accessSeq,jdbcType=INTEGER}, #{customerSeq,jdbcType=INTEGER}, #{requestUrl,jdbcType=VARCHAR}, 
+      #{requestUri,jdbcType=VARCHAR}, #{headerInfo,jdbcType=VARCHAR}, #{useYn,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{errCd,jdbcType=VARCHAR}, #{errMsg,jdbcType=VARCHAR}, 
+      #{sessionId,jdbcType=VARCHAR}, #{ipAddr,jdbcType=VARCHAR}, #{userAgent,jdbcType=VARCHAR}, 
+      #{referer,jdbcType=VARCHAR}, #{cuser,jdbcType=VARCHAR}, #{euser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{parameters,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.TbAccessHist">
+    insert into tb_access_hist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accessSeq != null">
+        ACCESS_SEQ,
+      </if>
+      <if test="customerSeq != null">
+        CUSTOMER_SEQ,
+      </if>
+      <if test="requestUrl != null">
+        REQUEST_URL,
+      </if>
+      <if test="requestUri != null">
+        REQUEST_URI,
+      </if>
+      <if test="headerInfo != null">
+        HEADER_INFO,
+      </if>
+      <if test="useYn != null">
+        USE_YN,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="errCd != null">
+        ERR_CD,
+      </if>
+      <if test="errMsg != null">
+        ERR_MSG,
+      </if>
+      <if test="sessionId != null">
+        SESSION_ID,
+      </if>
+      <if test="ipAddr != null">
+        IP_ADDR,
+      </if>
+      <if test="userAgent != null">
+        USER_AGENT,
+      </if>
+      <if test="referer != null">
+        REFERER,
+      </if>
+      <if test="cuser != null">
+        CUSER,
+      </if>
+      <if test="euser != null">
+        EUSER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="parameters != null">
+        `PARAMETERS`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accessSeq != null">
+        #{accessSeq,jdbcType=INTEGER},
+      </if>
+      <if test="customerSeq != null">
+        #{customerSeq,jdbcType=INTEGER},
+      </if>
+      <if test="requestUrl != null">
+        #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null">
+        #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="headerInfo != null">
+        #{headerInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="useYn != null">
+        #{useYn,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="errCd != null">
+        #{errCd,jdbcType=VARCHAR},
+      </if>
+      <if test="errMsg != null">
+        #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null">
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddr != null">
+        #{ipAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="referer != null">
+        #{referer,jdbcType=VARCHAR},
+      </if>
+      <if test="cuser != null">
+        #{cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="euser != null">
+        #{euser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parameters != null">
+        #{parameters,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbAccessHist">
+    update tb_access_hist
+    <set>
+      <if test="customerSeq != null">
+        CUSTOMER_SEQ = #{customerSeq,jdbcType=INTEGER},
+      </if>
+      <if test="requestUrl != null">
+        REQUEST_URL = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null">
+        REQUEST_URI = #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="headerInfo != null">
+        HEADER_INFO = #{headerInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="useYn != null">
+        USE_YN = #{useYn,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="errCd != null">
+        ERR_CD = #{errCd,jdbcType=VARCHAR},
+      </if>
+      <if test="errMsg != null">
+        ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null">
+        SESSION_ID = #{sessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddr != null">
+        IP_ADDR = #{ipAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        USER_AGENT = #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="referer != null">
+        REFERER = #{referer,jdbcType=VARCHAR},
+      </if>
+      <if test="cuser != null">
+        CUSER = #{cuser,jdbcType=VARCHAR},
+      </if>
+      <if test="euser != null">
+        EUSER = #{euser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parameters != null">
+        `PARAMETERS` = #{parameters,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ACCESS_SEQ = #{accessSeq,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="online.buza.blog.entity.TbAccessHist">
+    update tb_access_hist
+    set CUSTOMER_SEQ = #{customerSeq,jdbcType=INTEGER},
+      REQUEST_URL = #{requestUrl,jdbcType=VARCHAR},
+      REQUEST_URI = #{requestUri,jdbcType=VARCHAR},
+      HEADER_INFO = #{headerInfo,jdbcType=VARCHAR},
+      USE_YN = #{useYn,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      ERR_CD = #{errCd,jdbcType=VARCHAR},
+      ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      SESSION_ID = #{sessionId,jdbcType=VARCHAR},
+      IP_ADDR = #{ipAddr,jdbcType=VARCHAR},
+      USER_AGENT = #{userAgent,jdbcType=VARCHAR},
+      REFERER = #{referer,jdbcType=VARCHAR},
+      CUSER = #{cuser,jdbcType=VARCHAR},
+      EUSER = #{euser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      `PARAMETERS` = #{parameters,jdbcType=LONGVARCHAR}
+    where ACCESS_SEQ = #{accessSeq,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbAccessHist">
+    update tb_access_hist
+    set CUSTOMER_SEQ = #{customerSeq,jdbcType=INTEGER},
+      REQUEST_URL = #{requestUrl,jdbcType=VARCHAR},
+      REQUEST_URI = #{requestUri,jdbcType=VARCHAR},
+      HEADER_INFO = #{headerInfo,jdbcType=VARCHAR},
+      USE_YN = #{useYn,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      ERR_CD = #{errCd,jdbcType=VARCHAR},
+      ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      SESSION_ID = #{sessionId,jdbcType=VARCHAR},
+      IP_ADDR = #{ipAddr,jdbcType=VARCHAR},
+      USER_AGENT = #{userAgent,jdbcType=VARCHAR},
+      REFERER = #{referer,jdbcType=VARCHAR},
+      CUSER = #{cuser,jdbcType=VARCHAR},
+      EUSER = #{euser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ACCESS_SEQ = #{accessSeq,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.SysUserRoleMapper">
+    <resultMap id="BaseResultMap" type="online.buza.blog.entity.SysUserRole">
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="USER_SEQ" jdbcType="BIGINT" property="userSeq"/>
+        <result column="ROLE_ID" jdbcType="BIGINT" property="roleId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID
+        , USER_SEQ, ROLE_ID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_USER_ROLE
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from SYS_USER_ROLE
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="online.buza.blog.entity.SysUserRole">
+        insert into SYS_USER_ROLE (ID, USER_SEQ, ROLE_ID)
+        values (#{id,jdbcType=BIGINT}, #{userSeq,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="online.buza.blog.entity.SysUserRole">
+        insert into SYS_USER_ROLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="userSeq != null">
+                USER_SEQ,
+            </if>
+            <if test="roleId != null">
+                ROLE_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userSeq != null">
+                #{userSeq,jdbcType=BIGINT},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysUserRole">
+        update SYS_USER_ROLE
+        <set>
+            <if test="userSeq != null">
+                USER_SEQ = #{userSeq,jdbcType=BIGINT},
+            </if>
+            <if test="roleId != null">
+                ROLE_ID = #{roleId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysUserRole">
+        update SYS_USER_ROLE
+        set USER_SEQ = #{userSeq,jdbcType=BIGINT},
+            ROLE_ID  = #{roleId,jdbcType=BIGINT}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteSysUserRoleByUserSeq" parameterType="java.lang.Integer">
+        delete from SYS_USER_ROLE where user_seq = #{userSeq}
+    </delete>
+
+    <insert id="insertSysUserRoleByUserSeqRoleIds" parameterType="java.util.Map">
+    <![CDATA[
+        INSERT INTO SYS_USER_ROLE (USER_SEQ, ROLE_ID)
+        VALUES
+    ]]>
+        <foreach collection="lstRoleIds" separator="," item="item">
+            (#{userSeq}, #{item})
+        </foreach>
+    </insert>
+</mapper>

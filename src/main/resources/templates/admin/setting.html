@@ -1,0 +1,106 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="easyui-layout">
+<div th:replace="admin/common/layout::top"></div>
+<div th:replace="admin/common/layout::footer"></div>
+<div th:replace="admin/common/layout::nav"></div>
+<style type="text/css">
+    .setting-box { display: flex;}
+    .setting-box-left { width: 250px;}
+    .setting-box-left ul { padding: 0 0 0 15px; }
+    .setting-box-left ul li { margin-bottom: 20px;}
+    .setting-box-left ul li a { border-radius: 5px;  display: inline-block; line-height: 2; padding:8px 15px; background:#fff;color:#0f1419;box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;}
+    .setting-box-left ul li a span { font-size:16px; padding-left: 5px;}
+    .setting-box-left ul li a:hover, .setting-box-left ul li a:focus, .setting-box-left ul li a:active { background-color: #F5F8FA; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;transition: box-shadow .3s, background-color .3s; }
+    .setting-box-left ul li a img { vertical-align: middle; }
+    .setting-box-right { width:100%;}
+</style>
+<div data-options="region:'center'" class="center_container">
+    <div class="main-contents">
+        <!-- Main Contents Start -->
+        <h1>Setting</h1>
+        <div class="setting-box">
+            <div class="setting-box-left">
+                <ul>
+                    <li><a href="#this"><img th:src="@{/images/svg/user.svg}" width="40" height="40" /> <span>用户管理</span></a></li>
+                    <li><a href="#this"><img th:src="@{/images/svg/auth.svg}" width="40" height="40" /> <span>权限管理</span> </a></li>
+                    <li><a href="#this"><img th:src="@{/images/svg/folder.svg}" width="40" height="40" /> <span>菜单管理</span> </a></li>
+                    <li><a href="#this"><img th:src="@{/images/svg/setting.svg}" width="40" height="40" /> <span>数据字典</span> </a></li>
+                </ul>
+            </div>
+            <div class="setting-box-right">
+                <table id="userTable"
+                       title="Load Data" class="easyui-datagrid" style="width:100%;height:250px"
+                       iconCls="icon-save"
+                       pagination="true"
+                       singleSelect="true"
+                       fitColumns="true"
+                       rownumbers="true"
+                >
+                    <thead>
+                    <tr>
+                        <th field="userSeq" width="80" align="center">账号SEQ</th>
+                        <th field="username" width="120" align="center">账号</th>
+                        <th field="mobileNo" align="center">手机号</th>
+                        <th field="email" align="center">邮箱地址</th>
+                        <th field="statusName" width="60" align="center">状态</th>
+                        <th field="createtime" width="250">创建时间</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <!-- //Main Contents End -->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var userTableDataGrid = $('#userTable');	// get the pager of datagrid
+        var dataGridOption = userTableDataGrid.datagrid('options');
+        userTableDataGrid.datagrid({
+            loader: function(param, success, error) {
+                $.ajax({
+                    url: '/api/common/user/list'
+                    ,method: 'post'
+                    ,data: JSON.stringify(param)
+                    ,contentType: 'application/json;charset=utf-8'
+                    ,dataType: 'json'
+                    ,success: function(response) {
+                        console.log(dataGridOption);
+                        success(response.rows);
+                    }
+                    ,error: function(response) {
+                        error(response);
+                    }
+                });
+            }
+        })
+        userTableDataGrid.datagrid('getPager').pagination({
+            showPageList:true,
+            buttons:[{
+                iconCls:'icon-search',
+                handler:function(){
+                    alert('search');
+                }
+            },{
+                iconCls:'icon-add',
+                handler:function(){
+                    alert('add');
+                }
+            },{
+                iconCls:'icon-edit',
+                handler:function(){
+                    alert('edit');
+                }
+            }],
+            onBeforeRefresh:function(){
+
+                return true;
+            },
+        });
+    });
+</script>
+</body>
+</html>

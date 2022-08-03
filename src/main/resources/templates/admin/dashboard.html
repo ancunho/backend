@@ -1,0 +1,82 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="easyui-layout">
+<div th:replace="admin/common/layout::top"></div>
+<div th:replace="admin/common/layout::footer"></div>
+<div th:replace="admin/common/layout::nav"></div>
+<style type="text/css">
+    .dashboard-top { display:flex; justify-content: space-between;}
+    .dashboard-top-box {background:#fff;color:#0f1419;box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px; width:100%; margin: 0 10px; border: 1px solid #eee; border-radius: 20px; display: flex; justify-content: flex-start;}
+    .dashboard-top-box:hover {background-color: #F5F8FA; box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;transition: box-shadow .3s, background-color .3s;}
+    .dashboard-top-box-icon { padding: 20px 20px 20px 40px ; align-items: center; text-align: center; font-size:20px; }
+    .dashboard-top-box-desc { padding: 10px 10px 10px 0; }
+    .dashboard-top-box-title { font-size:14px; color: #9FA0A6; line-height: 2;}
+    .dashboard-top-box-number { font-size: 38px; color:#232f3e; font-weight: bold;}
+    .dashboard-top-box-number span { font-size:18px;}
+</style>
+<div data-options="region:'center'" class="center_container">
+    <div class="main-contents">
+        <!-- Main Contents Start -->
+        <h1>Dashboard</h1>
+        <div class="dashboard-top">
+            <div class="dashboard-top-box">
+                <p class="dashboard-top-box-icon"><img th:src="@{/images/svg/dashboard-new-member.svg}" width="50" height="50" /></p>
+                <div class="dashboard-top-box-desc">
+                    <p class="dashboard-top-box-title">新增用户数</p>
+                    <p class="dashboard-top-box-number">120<span>人</span></p>
+                </div>
+            </div>
+            <div class="dashboard-top-box">
+                <p class="dashboard-top-box-icon"><img th:src="@{/images/svg/dashboard-cash.svg}" width="50" height="50" /></p>
+                <div class="dashboard-top-box-desc">
+                    <p class="dashboard-top-box-title">今日销售额</p>
+                    <p class="dashboard-top-box-number">2,120.40<span>元</span></p>
+                </div>
+            </div>
+            <div class="dashboard-top-box">
+                <p class="dashboard-top-box-icon"><img th:src="@{/images/svg/dashboard-goods.svg}" width="50" height="50" /></p>
+                <div class="dashboard-top-box-desc">
+                    <p class="dashboard-top-box-title">在售商品数</p>
+                    <p class="dashboard-top-box-number">120<span>个</span></p>
+                </div>
+            </div>
+            <div class="dashboard-top-box">
+                <p class="dashboard-top-box-icon"><img th:src="@{/images/svg/dashboard-order.svg}" width="50" height="50" /></p>
+                <div class="dashboard-top-box-desc">
+                    <p class="dashboard-top-box-title">新增订单数(今日)</p>
+                    <p class="dashboard-top-box-number">120<span>单</span></p>
+                </div>
+            </div>
+        </div>
+<!--        <div id="dashboard01-chart" style="width:300px; height:200px;">-->
+
+<!--        </div>-->
+        <!-- //Main Contents End -->
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    // var chartDom = document.getElementById('dashboard01-chart');
+    // var myChart = echarts.init(chartDom);
+    // var option;
+    //
+    // option = {
+    //     xAxis: {
+    //         type: 'category',
+    //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    //     },
+    //     yAxis: {
+    //         type: 'value'
+    //     },
+    //     series: [
+    //         {
+    //             data: [150, 230, 224, 218, 135, 147, 260],
+    //             type: 'line'
+    //         }
+    //     ]
+    // };
+    // myChart.setOption(option)
+</script>
+</html>

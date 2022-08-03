@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.SysRoleMenuMapper">
+    <resultMap id="BaseResultMap" type="online.buza.blog.entity.SysRoleMenu">
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="ROLE_ID" jdbcType="BIGINT" property="roleId"/>
+        <result column="MENU_ID" jdbcType="BIGINT" property="menuId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID
+        , ROLE_ID, MENU_ID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_ROLE_MENU
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from SYS_ROLE_MENU
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="online.buza.blog.entity.SysRoleMenu">
+        insert into SYS_ROLE_MENU (ID, ROLE_ID, MENU_ID)
+        values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="online.buza.blog.entity.SysRoleMenu">
+        insert into SYS_ROLE_MENU
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="roleId != null">
+                ROLE_ID,
+            </if>
+            <if test="menuId != null">
+                MENU_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="menuId != null">
+                #{menuId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysRoleMenu">
+        update SYS_ROLE_MENU
+        <set>
+            <if test="roleId != null">
+                ROLE_ID = #{roleId,jdbcType=BIGINT},
+            </if>
+            <if test="menuId != null">
+                MENU_ID = #{menuId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysRoleMenu">
+        update SYS_ROLE_MENU
+        set ROLE_ID = #{roleId,jdbcType=BIGINT},
+            MENU_ID = #{menuId,jdbcType=BIGINT}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getSysRoleMenuByRoleId" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.SysRoleMenuDto">
+        <![CDATA[
+        SELECT 	Z1.ID AS MENU_ID
+                 ,Z1.PARENT_ID AS MENU_PARENT_ID
+                 ,Z1.NAME AS MENU_NAME
+                 ,Z1.PATH AS MENU_PATH
+                 ,Z1.PERMS AS MENU_PERMS
+                 ,Z1.COMPONENT AS MENU_COMPONENT
+                 ,Z1.TYPE AS MENU_TYPE
+                 ,Z1.ORDER_NUM AS MENU_ORDER_NUM
+                 ,Z1.STATUS AS MENU_STATUS
+                 ,CASE WHEN Z2.MENU_ID IS NOT NULL THEN '1' ELSE '0' END AS IS_CONTAIN
+        FROM 	SYS_MENU Z1
+                LEFT OUTER JOIN (
+                                SELECT 	T1.ID AS MENU_ID
+                                         ,T1.PARENT_ID AS MENU_PARENT_ID
+                                         ,T1.NAME AS MENU_NAME
+                                         ,T1.PATH AS MENU_PATH
+                                         ,T1.PERMS AS MENU_PERMS
+                                         ,T1.COMPONENT AS MENU_COMPONENT
+                                         ,T1.TYPE AS MENU_TYPE
+                                         ,T1.ORDER_NUM AS MENU_ORDER_NUM
+                                         ,T1.STATUS AS MENU_STATUS
+                                         ,T2.ROLE_ID AS ROLE_ID
+                                         ,T3.NAME AS ROLE_NAME
+                                         ,T3.CODE AS ROLE_CODE
+                                         ,T3.REMARK AS ROLE_REMARK
+                                         ,T3.STATUS AS ROLE_STATUS
+                                FROM 	SYS_MENU T1
+                                       ,SYS_ROLE_MENU T2
+                                       ,SYS_ROLE T3
+                                WHERE 	T1.ID = T2.MENU_ID
+                                AND     T1.STATUS = 1
+                                AND 	T2.ROLE_ID = T3.ID
+                                AND 	T3.ID = #{roleId}
+                            ) Z2 ON Z1.ID = Z2.MENU_ID
+        ]]>
+    </select>
+
+    <delete id="deleteSysRoleMenuByRoleId" parameterType="java.lang.Integer">
+        <![CDATA[
+        DELETE FROM SYS_ROLE_MENU T1 WHERE T1.ROLE_ID = #{roleId}
+        ]]>
+    </delete>
+
+    <insert id="insertSysRoleMenuByRoleIdMenuIds" parameterType="java.util.Map">
+        <![CDATA[
+        INSERT INTO SYS_ROLE_MENU (ROLE_ID, MENU_ID)
+        VALUES
+        ]]>
+        <foreach collection="lstMenuIds" separator="," item="item">
+            (#{roleId}, #{item})
+        </foreach>
+    </insert>
+</mapper>

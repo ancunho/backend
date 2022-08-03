@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.SysMenuMapper">
+    <resultMap id="BaseResultMap" type="online.buza.blog.entity.SysMenu">
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="parentId"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="PATH" jdbcType="VARCHAR" property="path"/>
+        <result column="PERMS" jdbcType="VARCHAR" property="perms"/>
+        <result column="COMPONENT" jdbcType="VARCHAR" property="component"/>
+        <result column="TYPE" jdbcType="INTEGER" property="type"/>
+        <result column="ICON" jdbcType="VARCHAR" property="icon"/>
+        <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum"/>
+        <result column="OPTION01" jdbcType="VARCHAR" property="option01"/>
+        <result column="OPTION02" jdbcType="VARCHAR" property="option02"/>
+        <result column="OPTION03" jdbcType="VARCHAR" property="option03"/>
+        <result column="OPTION04" jdbcType="VARCHAR" property="option04"/>
+        <result column="OPTION05" jdbcType="VARCHAR" property="option05"/>
+        <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="STATUS" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID
+        , PARENT_ID, `NAME`, `PATH`, PERMS, COMPONENT, `TYPE`, ICON, ORDER_NUM, OPTION01,
+    OPTION02, OPTION03, OPTION04, OPTION05, DATE_FORMAT(CREATETIME, '%Y-%m-%d %H:%i:%S') AS CREATETIME, UPDATETIME, `STATUS`
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_MENU
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from SYS_MENU
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="online.buza.blog.entity.SysMenu">
+        insert into SYS_MENU (ID, PARENT_ID, `NAME`,
+                              `PATH`, PERMS, COMPONENT,
+                              `TYPE`, ICON, ORDER_NUM,
+                              OPTION01, OPTION02, OPTION03,
+                              OPTION04, OPTION05, CREATETIME,
+                              UPDATETIME, `STATUS`)
+        values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+                #{path,jdbcType=VARCHAR}, #{perms,jdbcType=VARCHAR}, #{component,jdbcType=VARCHAR},
+                #{type,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER},
+                #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR},
+                #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+                #{updatetime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="online.buza.blog.entity.SysMenu">
+        insert into SYS_MENU
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="name != null">
+                `NAME`,
+            </if>
+            <if test="path != null">
+                `PATH`,
+            </if>
+            <if test="perms != null">
+                PERMS,
+            </if>
+            <if test="component != null">
+                COMPONENT,
+            </if>
+            <if test="type != null">
+                `TYPE`,
+            </if>
+            <if test="icon != null">
+                ICON,
+            </if>
+            <if test="orderNum != null">
+                ORDER_NUM,
+            </if>
+            <if test="option01 != null">
+                OPTION01,
+            </if>
+            <if test="option02 != null">
+                OPTION02,
+            </if>
+            <if test="option03 != null">
+                OPTION03,
+            </if>
+            <if test="option04 != null">
+                OPTION04,
+            </if>
+            <if test="option05 != null">
+                OPTION05,
+            </if>
+            <if test="status != null">
+                `STATUS`,
+            </if>
+            CREATETIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="perms != null">
+                #{perms,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNum != null">
+                #{orderNum,jdbcType=INTEGER},
+            </if>
+            <if test="option01 != null">
+                #{option01,jdbcType=VARCHAR},
+            </if>
+            <if test="option02 != null">
+                #{option02,jdbcType=VARCHAR},
+            </if>
+            <if test="option03 != null">
+                #{option03,jdbcType=VARCHAR},
+            </if>
+            <if test="option04 != null">
+                #{option04,jdbcType=VARCHAR},
+            </if>
+            <if test="option05 != null">
+                #{option05,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            now()
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysMenu">
+        update SYS_MENU
+        <set>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                `NAME` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                `PATH` = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="perms != null">
+                PERMS = #{perms,jdbcType=VARCHAR},
+            </if>
+            <if test="component != null">
+                COMPONENT = #{component,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `TYPE` = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                ICON = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNum != null">
+                ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+            </if>
+            <if test="option01 != null">
+                OPTION01 = #{option01,jdbcType=VARCHAR},
+            </if>
+            <if test="option02 != null">
+                OPTION02 = #{option02,jdbcType=VARCHAR},
+            </if>
+            <if test="option03 != null">
+                OPTION03 = #{option03,jdbcType=VARCHAR},
+            </if>
+            <if test="option04 != null">
+                OPTION04 = #{option04,jdbcType=VARCHAR},
+            </if>
+            <if test="option05 != null">
+                OPTION05 = #{option05,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `STATUS` = #{status,jdbcType=INTEGER},
+            </if>
+            UPDATETIME = now()
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysMenu">
+        update SYS_MENU
+        set PARENT_ID  = #{parentId,jdbcType=BIGINT},
+            `NAME`     = #{name,jdbcType=VARCHAR},
+            `PATH`     = #{path,jdbcType=VARCHAR},
+            PERMS      = #{perms,jdbcType=VARCHAR},
+            COMPONENT  = #{component,jdbcType=VARCHAR},
+            `TYPE`     = #{type,jdbcType=INTEGER},
+            ICON       = #{icon,jdbcType=VARCHAR},
+            ORDER_NUM  = #{orderNum,jdbcType=INTEGER},
+            OPTION01   = #{option01,jdbcType=VARCHAR},
+            OPTION02   = #{option02,jdbcType=VARCHAR},
+            OPTION03   = #{option03,jdbcType=VARCHAR},
+            OPTION04   = #{option04,jdbcType=VARCHAR},
+            OPTION05   = #{option05,jdbcType=VARCHAR},
+            CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+            UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+            `STATUS`   = #{status,jdbcType=INTEGER}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getAllSysMenuList" resultType="online.buza.blog.dto.SysMenuDto">
+        <![CDATA[
+        SELECT  ROW_NUMBER() OVER() AS RN
+                ,T1.ID
+                ,T1.PARENT_ID
+                ,T1.NAME
+                ,T1.PATH
+                ,T1.PERMS
+                ,T1.COMPONENT
+                ,T1.TYPE
+                ,T1.ICON
+                ,T1.ORDER_NUM
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d') AS CREATETIME
+                ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d') AS UPDATETIME
+        FROM    SYS_MENU T1
+        ]]>
+    </select>
+
+    <select id="existMenuName" parameterType="java.util.Map" resultType="java.lang.Integer">
+       SELECT  1
+        FROM    SYS_MENU T1
+        WHERE   EXISTS  (
+                        SELECT  1
+                        FROM    SYS_MENU A1
+                        WHERE   A1.ID = T1.ID
+                        <if test="menuId != null">
+                            AND     A1.ID != #{menuId}
+                        </if>
+                        AND     (A1.NAME = #{menuName} OR A1.PERMS = #{menuPerms})
+                        )
+        LIMIT 1
+    </select>
+
+
+
+</mapper>

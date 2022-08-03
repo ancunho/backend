@@ -1,0 +1,210 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta">
+</head>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<title>Buza Admin</title>
+<body>
+<div style="width: 300px; margin: 0 auto; padding:0 20px">
+    <h2 style="margin: 100px 0 30px 0; text-align: center;">Admin Login</h2>
+    <form id="login_form" method="post">
+        <div style="margin-bottom:10px">
+            <input type="text" name="username" id="username" placeholder="请输入用户名" style="width:100%; height:38px">
+        </div>
+        <div>
+            <input type="password" name="password" id="password" placeholder="请输入密码" style="width:100%;height:38px">
+        </div>
+        <div style="text-align:center;margin-top:30px">
+            <a href="javascript:void(0)" class="easyui-linkbutton c-primary" id="btnLogin">
+                <span style="font-size:16px">Login</span>
+            </a>
+        </div>
+        <div style="text-align:center;margin-top:10px">
+            <a href="javascript:void(0)" onclick="$('#register_box').window('open')" class="easyui-linkbutton c-light" ><span style="font-size:16px">Register</span></a>
+        </div>
+    </form>
+</div>
+
+<div id="register_box" class="easyui-window" title="Register Manager" style="width:600px;height:400px"
+     data-options="iconCls:'icon-save',modal:true,closed:true,">
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'center'">
+            <div style="max-width: 400px; padding: 30px; margin:0 auto;">
+                <form id="register_form" method="post">
+                    <div style="margin-bottom:20px">
+                        <input class="easyui-textbox" name="username_register" id="username_register" style="width:100%" data-options="label:'账号'">
+                    </div>
+                    <div style="margin-bottom:20px">
+                        <input class="easyui-passwordbox" name="password_register" id="password_register" style="width:100%" data-options="label:'密码'">
+                    </div>
+                    <div style="margin-bottom:20px">
+                        <input class="easyui-passwordbox" name="password_register_check" id="password_register_check" style="width:100%" data-options="label:'确认密码'">
+                    </div>
+                    <div style="margin-bottom:20px">
+                        <input class="easyui-textbox" name="mobileNo" id="mobileNo" style="width:100%" data-options="label:'手机号'">
+                    </div>
+                    <div style="margin-bottom:20px">
+                        <input class="easyui-textbox" name="email" id="email" style="width:100%" data-options="label:'Email',validType:'email'">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div data-options="region:'south',border:false" style="text-align:right;padding:5px;">
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="btnRegister" href="javascript:void(0)" style="width:80px">Ok</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:alert('cancel')" style="width:80px">Cancel</a>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#login_form #username").focus();
+        // Login Process
+        $("#password").unbind('keypress').keypress(function(e) {
+            if (e.which === 13) {
+                $('#btnLogin').click();
+            }
+        });
+
+        $("#btnLogin").unbind('click').click(function() {
+            var params = {
+                username: $("#login_form #username").val(),
+                password: $("#login_form #password").val()
+            }
+
+            var sb = new StringBuffer();
+            if ($.trim(params.username) === "") {
+                sb.append("请输入用户名! <br />");
+            }
+            if ($.trim(params.password) === "") {
+                sb.append("请输入密码! <br />");
+            }
+
+            if (sb.toString() !== "") {
+                $.messager.alert("Error", sb.toString(), "error");
+                return;
+            }
+
+            $.ajax({
+                type : "POST"
+                ,url : contextRootPath + "/adminLoginProc"
+                ,data : JSON.stringify(params)
+                ,contentType: 'application/json'
+                ,async : false
+                ,success: function(data) {
+                    console.log(data);
+                    if (data.code !== 0) {
+                        $.messager.alert("Error", data.msg, "error", function() {
+                            $("#login_form").form('clear');
+                            $("#login_form #username").focus();
+                        });
+                        return;
+                    }
+
+                    var $frmBUZACommon = $("#frmBUZACommon");
+                    if($frmBUZACommon.length < 1) {
+                        $frmBUZACommon = $("<form/>").attr({id:"frmBUZACommon", method:'POST'});
+                        $(document.body).append($frmBUZACommon);
+                    }
+                    $frmBUZACommon.empty();
+                    $frmBUZACommon.attr('target', '_self');
+                    $frmBUZACommon.attr('action', contextRootPath + '/admin/index');
+
+                    $frmBUZACommon.submit();
+                }
+                ,error: function(req, status, e) {
+                    if (status == "error" && req.status == "500") {
+                        $.messager.alert(
+                            "Error"
+                            ,"您好！ 非常抱歉， 由于网络延时，我将暂无法提供服务，请稍后再试，谢谢！"
+                            ,"error"
+                            ,function(r) {
+                                if (r) {
+                                    alert("aasf");
+                                }
+                            }
+                        );
+                    } else {
+                        var errContent = "";
+                        errContent += 'Error Code : ' + req.status + '\n';
+                        errContent += 'Message : ' + req.responseText + '\n';
+                        errContent += 'Error : ' + e.toString() + '\n';
+                        $.messager.alert("Error", errContent, "error");
+                    }
+                }
+            });
+        });
+
+        // Register Process
+        $("#btnRegister").unbind('click').click(function(){
+            var params = {
+                username: $("#username_register").val(),
+                password: $("#password_register").val(),
+                password_check: $("#password_register_check").val(),
+                mobileNo: $("#mobileNo").val(),
+                email: $("#email").val(),
+            }
+
+            if (params.password !== params.password_check) {
+                $.messager.alert("Error", "2次密码输入不匹配", "error");
+                return;
+            }
+
+            $.ajax({
+                type : "POST"
+                ,url : contextRootPath + "/adminRegisterProc"
+                ,data : JSON.stringify(params)
+                ,contentType: 'application/json'
+                ,async : false
+                ,success: function(data) {
+                    if (data.code !== 0) {
+                        $.messager.alert("Error", data.msg, "error");
+                        return;
+                    }
+
+                    var $frmBUZACommon = $("#frmBUZACommon");
+                    if($frmBUZACommon.length < 1) {
+                        $frmBUZACommon = $("<form/>").attr({id:"frmBUZACommon", method:'POST'});
+                        $(document.body).append($frmBUZACommon);
+                    }
+                    $frmBUZACommon.empty();
+                    $frmBUZACommon.attr('target', '_self');
+                    $frmBUZACommon.attr('action', contextRootPath + '/admin/index');
+
+                    $frmBUZACommon.submit();
+                }
+                ,error: function(req, status, e) {
+                    if (status == "error" && req.status == "500") {
+                        $.messager.alert(
+                            "Error"
+                            ,"您好！ 非常抱歉， 由于网络延时，我将暂无法提供服务，请稍后再试，谢谢！"
+                            ,"error"
+                            ,function(r) {
+                                if (r) {
+                                    alert("aasf");
+                                }
+                            }
+                        );
+                    } else {
+                        var errContent = "";
+                        errContent += 'Error Code : ' + req.status + '\n';
+                        errContent += 'Message : ' + req.responseText + '\n';
+                        errContent += 'Error : ' + e.toString() + '\n';
+                        $.messager.alert("Error", errContent, "error");
+                    }
+                }
+            });
+
+
+        });
+
+
+    });
+</script>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

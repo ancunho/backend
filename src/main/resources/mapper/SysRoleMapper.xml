@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="online.buza.blog.entity.SysRole">
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="CODE" jdbcType="VARCHAR" property="code"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="STATUS" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID
+        , `NAME`, CODE, REMARK, DATE_FORMAT(CREATETIME, '%Y-%m-%d %H:%i:%S') AS CREATETIME, UPDATETIME, `STATUS`
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_ROLE
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from SYS_ROLE
+        where ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="online.buza.blog.entity.SysRole">
+        insert into SYS_ROLE (ID, `NAME`, CODE,
+                              REMARK, CREATETIME, UPDATETIME,
+                              `STATUS`)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
+                #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP},
+                #{status,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="online.buza.blog.entity.SysRole">
+        insert into SYS_ROLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="name != null">
+                `NAME`,
+            </if>
+            <if test="code != null">
+                CODE,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="status != null">
+                `STATUS`,
+            </if>
+            CREATETIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysRole">
+        update SYS_ROLE
+        <set>
+            <if test="name != null">
+                `NAME` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                CODE = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `STATUS` = #{status,jdbcType=INTEGER},
+            </if>
+            UPDATETIME = now()
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysRole">
+        update SYS_ROLE
+        set `NAME`     = #{name,jdbcType=VARCHAR},
+            CODE       = #{code,jdbcType=VARCHAR},
+            REMARK     = #{remark,jdbcType=VARCHAR},
+            CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+            UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+            `STATUS`   = #{status,jdbcType=INTEGER}
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getAllSysRoleList" resultType="online.buza.blog.dto.SysRoleDto">
+        SELECT 	ROW_NUMBER() OVER() AS RN
+                ,T1.ID
+                ,T1.NAME
+                ,T1.CODE
+                ,T1.REMARK
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d') AS CREATETIME
+                ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d') AS UPDATETIME
+        FROM 	SYS_ROLE T1
+    </select>
+
+    <select id="existRoleName" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT  1
+        FROM    SYS_MENU T1
+        WHERE   EXISTS  (
+                        SELECT  1
+                        FROM    SYS_MENU A1
+                        WHERE   A1.ID = T1.ID
+                        <if test="menuId != null">
+                            AND     A1.ID != #{menuId}
+                        </if>
+                        AND     (A1.NAME = #{menuName} OR A1.PERMS = #{menuPerms})
+                        )
+        LIMIT 1
+    </select>
+
+
+
+</mapper>

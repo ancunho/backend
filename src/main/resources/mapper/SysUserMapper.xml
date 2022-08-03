@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="online.buza.blog.dao.SysUserMapper">
+    <resultMap id="BaseResultMap" type="online.buza.blog.entity.SysUser">
+        <id column="USER_SEQ" jdbcType="INTEGER" property="userSeq"/>
+        <result column="OPENID" jdbcType="VARCHAR" property="openid"/>
+        <result column="UNIONID" jdbcType="VARCHAR" property="unionid"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+        <result column="ROLE_NO" jdbcType="VARCHAR" property="roleNo"/>
+        <result column="ROLE" jdbcType="VARCHAR" property="role"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="USER_TYPE" jdbcType="VARCHAR" property="userType"/>
+        <result column="REALNAME" jdbcType="VARCHAR" property="realname"/>
+        <result column="COMPANY" jdbcType="VARCHAR" property="company"/>
+        <result column="COMPANY_TYPE" jdbcType="VARCHAR" property="companyType"/>
+        <result column="MOBILE_NO" jdbcType="VARCHAR" property="mobileNo"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="SEX" jdbcType="VARCHAR" property="sex"/>
+        <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday"/>
+        <result column="WECHAT" jdbcType="VARCHAR" property="wechat"/>
+        <result column="PROVINCE_CODE" jdbcType="VARCHAR" property="provinceCode"/>
+        <result column="CITY_CODE" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="DISTRICT_CODE" jdbcType="VARCHAR" property="districtCode"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+        <result column="QUESTION" jdbcType="VARCHAR" property="question"/>
+        <result column="ANSWER" jdbcType="VARCHAR" property="answer"/>
+        <result column="IMAGE_PHOTO" jdbcType="VARCHAR" property="imagePhoto"/>
+        <result column="OPTION01" jdbcType="VARCHAR" property="option01"/>
+        <result column="OPTION02" jdbcType="VARCHAR" property="option02"/>
+        <result column="OPTION03" jdbcType="VARCHAR" property="option03"/>
+        <result column="OPTION04" jdbcType="VARCHAR" property="option04"/>
+        <result column="OPTION05" jdbcType="VARCHAR" property="option05"/>
+        <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        USER_SEQ
+        , OPENID, UNIONID, USERNAME, `PASSWORD`, ROLE_NO, `ROLE`, `STATUS`, USER_TYPE,
+    REALNAME, COMPANY, COMPANY_TYPE, MOBILE_NO, EMAIL, SEX, BIRTHDAY, WECHAT, PROVINCE_CODE,
+    CITY_CODE, DISTRICT_CODE, ADDRESS, QUESTION, ANSWER, IMAGE_PHOTO, OPTION01, OPTION02,
+    OPTION03, OPTION04, OPTION05, CREATETIME, UPDATETIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SYS_USER
+        where USER_SEQ = #{userSeq,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from SYS_USER
+        where USER_SEQ = #{userSeq,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="online.buza.blog.entity.SysUser">
+        insert into SYS_USER (USER_SEQ, OPENID, UNIONID,
+                              USERNAME, `PASSWORD`, ROLE_NO,
+                              `ROLE`, `STATUS`, USER_TYPE,
+                              REALNAME, COMPANY, COMPANY_TYPE,
+                              MOBILE_NO, EMAIL, SEX,
+                              BIRTHDAY, WECHAT, PROVINCE_CODE,
+                              CITY_CODE, DISTRICT_CODE, ADDRESS,
+                              QUESTION, ANSWER, IMAGE_PHOTO,
+                              OPTION01, OPTION02, OPTION03,
+                              OPTION04, OPTION05, CREATETIME,
+                              UPDATETIME)
+        values (#{userSeq,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR},
+                #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{roleNo,jdbcType=VARCHAR},
+                #{role,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR},
+                #{realname,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{companyType,jdbcType=VARCHAR},
+                #{mobileNo,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+                #{birthday,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR},
+                #{cityCode,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+                #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{imagePhoto,jdbcType=VARCHAR},
+                #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR},
+                #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+                #{updatetime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="online.buza.blog.entity.SysUser">
+        insert into SYS_USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userSeq != null">USER_SEQ,</if>
+            <if test="openid != null">OPENID,</if>
+            <if test="unionid != null">UNIONID,</if>
+            <if test="username != null">USERNAME,</if>
+            <if test="password != null">`PASSWORD`,</if>
+            <if test="roleNo != null">ROLE_NO,</if>
+            <if test="role != null">`ROLE`,</if>
+            <if test="status != null">`STATUS`,</if>
+            <if test="userType != null">USER_TYPE,</if>
+            <if test="realname != null">REALNAME,</if>
+            <if test="company != null">COMPANY,</if>
+            <if test="companyType != null">COMPANY_TYPE,</if>
+            <if test="mobileNo != null">MOBILE_NO,</if>
+            <if test="email != null">EMAIL,</if>
+            <if test="sex != null">SEX,</if>
+            <if test="birthday != null">BIRTHDAY,</if>
+            <if test="wechat != null">WECHAT,</if>
+            <if test="provinceCode != null">PROVINCE_CODE,</if>
+            <if test="cityCode != null">CITY_CODE,</if>
+            <if test="districtCode != null">DISTRICT_CODE,</if>
+            <if test="address != null">ADDRESS,</if>
+            <if test="question != null">QUESTION,</if>
+            <if test="answer != null">ANSWER,</if>
+            <if test="imagePhoto != null">IMAGE_PHOTO,</if>
+            <if test="option01 != null">OPTION01,</if>
+            <if test="option02 != null">OPTION02,</if>
+            <if test="option03 != null">OPTION03,</if>
+            <if test="option04 != null">OPTION04,</if>
+            <if test="option05 != null">OPTION05,</if>
+            CREATETIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userSeq != null">#{userSeq,jdbcType=INTEGER},</if>
+            <if test="openid != null">#{openid,jdbcType=VARCHAR},</if>
+            <if test="unionid != null">#{unionid,jdbcType=VARCHAR},</if>
+            <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+            <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+            <if test="roleNo != null">#{roleNo,jdbcType=VARCHAR},</if>
+            <if test="role != null">#{role,jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+            <if test="userType != null">#{userType,jdbcType=VARCHAR},</if>
+            <if test="realname != null">#{realname,jdbcType=VARCHAR},</if>
+            <if test="company != null">#{company,jdbcType=VARCHAR},</if>
+            <if test="companyType != null">#{companyType,jdbcType=VARCHAR},</if>
+            <if test="mobileNo != null">#{mobileNo,jdbcType=VARCHAR},</if>
+            <if test="email != null">#{email,jdbcType=VARCHAR},</if>
+            <if test="sex != null">#{sex,jdbcType=VARCHAR},</if>
+            <if test="birthday != null">#{birthday,jdbcType=VARCHAR},</if>
+            <if test="wechat != null">#{wechat,jdbcType=VARCHAR},</if>
+            <if test="provinceCode != null">#{provinceCode,jdbcType=VARCHAR},</if>
+            <if test="cityCode != null">#{cityCode,jdbcType=VARCHAR},</if>
+            <if test="districtCode != null">#{districtCode,jdbcType=VARCHAR},</if>
+            <if test="address != null">#{address,jdbcType=VARCHAR},</if>
+            <if test="question != null">#{question,jdbcType=VARCHAR},</if>
+            <if test="answer != null">#{answer,jdbcType=VARCHAR},</if>
+            <if test="imagePhoto != null">#{imagePhoto,jdbcType=VARCHAR},</if>
+            <if test="option01 != null">#{option01,jdbcType=VARCHAR},</if>
+            <if test="option02 != null">#{option02,jdbcType=VARCHAR},</if>
+            <if test="option03 != null">#{option03,jdbcType=VARCHAR},</if>
+            <if test="option04 != null">#{option04,jdbcType=VARCHAR},</if>
+            <if test="option05 != null">#{option05,jdbcType=VARCHAR},</if>
+            now()
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysUser">
+        update SYS_USER
+        <set>
+            <if test="openid != null">
+                OPENID = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="unionid != null">
+                UNIONID = #{unionid,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `PASSWORD` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="roleNo != null">
+                ROLE_NO = #{roleNo,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                `ROLE` = #{role,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `STATUS` = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                USER_TYPE = #{userType,jdbcType=VARCHAR},
+            </if>
+            <if test="realname != null">
+                REALNAME = #{realname,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                COMPANY = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="companyType != null">
+                COMPANY_TYPE = #{companyType,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNo != null">
+                MOBILE_NO = #{mobileNo,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                SEX = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="wechat != null">
+                WECHAT = #{wechat,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceCode != null">
+                PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cityCode != null">
+                CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="districtCode != null">
+                DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                ADDRESS = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="question != null">
+                QUESTION = #{question,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                ANSWER = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="imagePhoto != null">
+                IMAGE_PHOTO = #{imagePhoto,jdbcType=VARCHAR},
+            </if>
+            <if test="option01 != null">
+                OPTION01 = #{option01,jdbcType=VARCHAR},
+            </if>
+            <if test="option02 != null">
+                OPTION02 = #{option02,jdbcType=VARCHAR},
+            </if>
+            <if test="option03 != null">
+                OPTION03 = #{option03,jdbcType=VARCHAR},
+            </if>
+            <if test="option04 != null">
+                OPTION04 = #{option04,jdbcType=VARCHAR},
+            </if>
+            <if test="option05 != null">
+                OPTION05 = #{option05,jdbcType=VARCHAR},
+            </if>
+            UPDATETIME = now()
+        </set>
+        where USER_SEQ = #{userSeq,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysUser">
+        update SYS_USER
+        set OPENID        = #{openid,jdbcType=VARCHAR},
+            UNIONID       = #{unionid,jdbcType=VARCHAR},
+            USERNAME      = #{username,jdbcType=VARCHAR},
+            `PASSWORD`    = #{password,jdbcType=VARCHAR},
+            ROLE_NO       = #{roleNo,jdbcType=VARCHAR},
+            `ROLE`        = #{role,jdbcType=VARCHAR},
+            `STATUS`      = #{status,jdbcType=VARCHAR},
+            USER_TYPE     = #{userType,jdbcType=VARCHAR},
+            REALNAME      = #{realname,jdbcType=VARCHAR},
+            COMPANY       = #{company,jdbcType=VARCHAR},
+            COMPANY_TYPE  = #{companyType,jdbcType=VARCHAR},
+            MOBILE_NO     = #{mobileNo,jdbcType=VARCHAR},
+            EMAIL         = #{email,jdbcType=VARCHAR},
+            SEX           = #{sex,jdbcType=VARCHAR},
+            BIRTHDAY      = #{birthday,jdbcType=VARCHAR},
+            WECHAT        = #{wechat,jdbcType=VARCHAR},
+            PROVINCE_CODE = #{provinceCode,jdbcType=VARCHAR},
+            CITY_CODE     = #{cityCode,jdbcType=VARCHAR},
+            DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+            ADDRESS       = #{address,jdbcType=VARCHAR},
+            QUESTION      = #{question,jdbcType=VARCHAR},
+            ANSWER        = #{answer,jdbcType=VARCHAR},
+            IMAGE_PHOTO   = #{imagePhoto,jdbcType=VARCHAR},
+            OPTION01      = #{option01,jdbcType=VARCHAR},
+            OPTION02      = #{option02,jdbcType=VARCHAR},
+            OPTION03      = #{option03,jdbcType=VARCHAR},
+            OPTION04      = #{option04,jdbcType=VARCHAR},
+            OPTION05      = #{option05,jdbcType=VARCHAR},
+            CREATETIME    = #{createtime,jdbcType=TIMESTAMP},
+            UPDATETIME    = #{updatetime,jdbcType=TIMESTAMP}
+        where USER_SEQ = #{userSeq,jdbcType=INTEGER}
+    </update>
+
+    <select id="getAllSysUserList" parameterType="online.buza.blog.dto.SysUserDto" resultType="online.buza.blog.dto.SysUserDto">
+        <![CDATA[
+        SELECT ROW_NUMBER()                                                                    OVER() AS RN
+                ,T1.USER_SEQ
+             , T1.USERNAME
+             , T1.ROLE_NO
+             , T1.STATUS
+             , CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+             , T1.USER_TYPE
+             , T1.REALNAME
+             , T1.COMPANY
+             , T1.COMPANY_TYPE
+             , T1.MOBILE_NO
+             , T1.EMAIL
+             , T1.SEX
+             , T1.BIRTHDAY
+             , T1.WECHAT
+             , T1.PROVINCE_CODE
+             , T1.CITY_CODE
+             , T1.DISTRICT_CODE
+             , T1.ADDRESS
+             , T1.QUESTION
+             , T1.ANSWER
+             , T1.IMAGE_PHOTO
+             , T1.OPTION01
+             , T1.OPTION02
+             , T1.OPTION03
+             , T1.OPTION04
+             , T1.OPTION05
+             , DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
+             , DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
+        FROM SYS_USER T1
+        ]]>
+        <where>
+            <if test="status != null">
+                AND T1.status = #{status}
+            </if>
+            <if test="username != null">
+                AND T1.USERNAME LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="mobileNo != null">
+                AND T1.MOBILE_NO LIKE CONCAT('%', #{mobileNo}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="existUserName" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT  1
+        FROM    SYS_USER T1
+        WHERE   EXISTS  (
+                        SELECT 1
+                        FROM SYS_USER A1
+                        WHERE A1.USER_SEQ = T1.USER_SEQ
+                        <if test="userSeq != null">
+                            AND A1.USER_SEQ != #{userSeq}
+                        </if>
+                        AND A1.USERNAME = #{username}
+                        )
+    </select>
+
+    <select id="getRoleListByUserSeq" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.SysUserDto">
+        <![CDATA[
+        SELECT  Z1.ID       AS ROLE_ID
+                ,Z1.NAME    AS ROLE_NAME
+                ,Z1.CODE    AS ROLE_CODE
+                ,Z1.REMARK  AS ROLE_REMARK
+                ,CASE WHEN Z2.USER_SEQ IS NOT NULL THEN '1' WHEN Z2.USER_SEQ IS NULL THEN '0' ELSE '0' END AS IS_CONTAIN
+        FROM SYS_ROLE Z1
+             LEFT OUTER JOIN (
+                            SELECT  T1.USER_SEQ
+                                    ,T1.ROLE_ID
+                            FROM    SYS_USER_ROLE T1
+                            WHERE   T1.USER_SEQ = #{userSeq}
+                            ) Z2 ON Z1.ID = Z2.ROLE_ID
+        WHERE Z1.STATUS = 1
+        ]]>
+    </select>
+
+    <select id="getSysUserByUsernameAndPassword" parameterType="online.buza.blog.dto.SysUserDto" resultType="online.buza.blog.dto.SysUserDto">
+        SELECT  T1.USER_SEQ
+                ,T1.OPENID
+                ,T1.UNIONID
+                ,T1.USERNAME
+                ,T1.PASSWORD
+                ,T1.ROLE_NO
+                ,T1.ROLE
+                ,T1.STATUS
+                ,T1.USER_TYPE
+                ,T1.REALNAME
+                ,T1.COMPANY
+                ,T1.COMPANY_TYPE
+                ,T1.MOBILE_NO
+                ,T1.EMAIL
+                ,T1.SEX
+                ,T1.BIRTHDAY
+                ,T1.WECHAT
+                ,T1.PROVINCE_CODE
+                ,T1.CITY_CODE
+                ,T1.DISTRICT_CODE
+                ,T1.ADDRESS
+                ,T1.QUESTION
+                ,T1.ANSWER
+                ,T1.IMAGE_PHOTO
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
+                ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
+        FROM    SYS_USER T1
+        WHERE   T1.USERNAME = #{username}
+        AND     T1.PASSWORD = #{password}
+    </select>
+
+</mapper>

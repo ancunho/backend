@@ -1,0 +1,15 @@
+
+// Btn Style
+<a href="#" class="easyui-linkbutton c-secondary" style="">
+    <span style="font-size:16px">Login</span>
+</a>
+<a href="#" class="easyui-linkbutton c-success" >
+    <span style="font-size:16px">Login</span>
+</a>
+<a href="#" class="easyui-linkbutton c-danger">
+    <span style="font-size:16px">Login</span>
+</a>
+<a href="#" class="easyui-linkbutton c-warn">
+    <span style="font-size:16px">Login</span>
+</a>
+<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-man'" ></a>
