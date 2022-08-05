@@ -2,16 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
 <title>Buza Management System</title>
-<body class="easyui-layout">
+<body>
+<div class="min-h-full">
     <div th:replace="admin/common/layout::top"></div>
-    <div th:replace="admin/common/layout::footer"></div>
-    <div th:replace="admin/common/layout::nav"></div>
-    <div data-options="region:'center'" class="center_container">
-        <div class="main-contents">
-            <!-- Main Contents Start -->
-            <h1>Index</h1>
-            <!-- //Main Contents End -->
+
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
         </div>
-    </div>
+    </header>
+    <main>
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Replace with your content -->
+            <div class="px-4 py-6 sm:px-0">
+                <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+            </div>
+            <!-- /End replace -->
+        </div>
+    </main>
+</div>
 </body>
 </html>
