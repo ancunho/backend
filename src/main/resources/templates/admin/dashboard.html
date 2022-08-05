@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
 <title>Buza Management System</title>
-<body class="easyui-layout">
+<body>
 <div th:replace="admin/common/layout::top"></div>
 <div th:replace="admin/common/layout::footer"></div>
 <div th:replace="admin/common/layout::nav"></div>
@@ -16,7 +16,7 @@
     .dashboard-top-box-number { font-size: 38px; color:#232f3e; font-weight: bold;}
     .dashboard-top-box-number span { font-size:18px;}
 </style>
-<div data-options="region:'center'" class="center_container">
+<div class="center_container">
     <div class="main-contents">
         <!-- Main Contents Start -->
         <h1>Dashboard</h1>
@@ -57,26 +57,4 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
-    // var chartDom = document.getElementById('dashboard01-chart');
-    // var myChart = echarts.init(chartDom);
-    // var option;
-    //
-    // option = {
-    //     xAxis: {
-    //         type: 'category',
-    //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    //     },
-    //     yAxis: {
-    //         type: 'value'
-    //     },
-    //     series: [
-    //         {
-    //             data: [150, 230, 224, 218, 135, 147, 260],
-    //             type: 'line'
-    //         }
-    //     ]
-    // };
-    // myChart.setOption(option)
-</script>
 </html>

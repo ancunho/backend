@@ -1,14 +1,22 @@
 <div th:fragment="top" data-options="region:'north',title:'header',split:false,noheader:true" class="top_container">
-    <div class="logo">
-        <a href="/admin/index"><img th:src="@{/images/buza_management_logo.png}" width="200" height="40"></a>
-        <ul class="top_menu">
-            <li><a href="#this">产品</a> </li>
-            <li><a href="#this">解决方案</a> </li>
-            <li><a href="#this">定价</a> </li>
-            <li><a href="#this">文档</a> </li>
-        </ul>
-    </div>
-    <div class="logout">您好，<p th:text="${session.LOGINED_USER.username}" style="display: inline-block; padding-right:20px;"></p> <a href="javascript:void(0)" class="easyui-linkbutton" id="btnLogout" data-options="iconCls:'icon-swich'">退出</a></div>
+<!--    <div class="logo">-->
+<!--        <a href="/admin/index"><img th:src="@{/images/buza_management_logo.png}" width="200" height="40"></a>-->
+<!--        <ul class="top_menu">-->
+<!--            <li><a href="#this">产品</a> </li>-->
+<!--            <li><a href="#this">解决方案</a> </li>-->
+<!--            <li><a href="#this">定价</a> </li>-->
+<!--            <li><a href="#this">文档</a> </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="logout">您好，<p th:text="${session.LOGINED_USER.username}" style="display: inline-block; padding-right:20px;"></p> <a href="javascript:void(0)" id="btnLogout">退出</a></div>-->
+    <nav class="bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+asdfasdfdsf
+        </div>
+    </nav>
+
+
+
 </div>
 
 <div th:fragment="footer" class="footer_container" data-options="region:'south',title:'footer',split:false,noheader:true">
@@ -20,51 +28,12 @@
         <a href="/admin/dashboard" class="btn-dashboard">Dashboard</a>
         <a href="/admin/setting" class="btn-setting">Setting</a>
     </div>
-    <div  id="sm" class="easyui-sidemenu" data-options="data:sideMenuData">
+    <div  id="sm">
     </div>
     <style type="text/css">
         #sm .accordion { border:none;}
     </style>
     <script type="text/javascript">
-        var sideMenuData = [{
-            text: 'Item1',
-            iconCls: 'icon-location',
-            state: 'open',
-            route: 'asdf',
-            children: [{
-                text: 'Option1',
-                route: 'asdsssf'
-            },{
-                text: 'Option2',
-                route: 'asdsssf'
-            },{
-                text: 'Option3',
-                route: 'asdsssf',
-                children: [{
-                    text: 'Option31'
-                },{
-                    text: 'Option32'
-                }]
-            }]
-        },{
-            text: 'Item2',
-            iconCls: 'icon-location',
-            children: [{
-                text: 'Option4'
-            },{
-                text: 'Option5'
-            },{
-                text: 'Option6'
-            }]
-        },{
-            text: 'Item3',
-            iconCls: 'icon-location',
-        }];
-        $('#sm').sidemenu({
-            data: sideMenuData
-        });
-
-
         // Logout
         $("#btnLogout").unbind('click').click(function(){
             $.messager.confirm('Logout', '确定要退出吗?', function(flag){
