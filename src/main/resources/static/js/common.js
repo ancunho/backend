@@ -89,3 +89,30 @@ Array.prototype.del = function(value){
         }
     }
 };
+
+function gfn_Alert(content, paramFunc) {
+
+    if (content.length > 400) {
+        content = content.substring(0, 400) + "...";
+    }
+
+    if (typeof paramFunc !== undefined) {
+        swal({
+            title: "提示"
+            ,text: content
+            ,html: true
+            ,confirmButtonText: "确认"
+        });
+    } else {
+        swal({
+            title: "提示"
+            ,text: content
+            ,html: true
+            ,confirmButtonText: "确认"
+        }, function() {
+            if (typeof paramFunc !== undefined) {
+                paramFunc();
+            }
+        });
+    }
+}
