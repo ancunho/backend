@@ -91,7 +91,6 @@ Array.prototype.del = function(value){
 };
 
 function gfn_Alert(content, paramFunc) {
-
     if (content.length > 400) {
         content = content.substring(0, 400) + "...";
     }
@@ -116,3 +115,40 @@ function gfn_Alert(content, paramFunc) {
         });
     }
 }
+
+function gfn_Confirm(msg, paramFunc) {
+    if (top != self) {
+        top.swal({
+            title: "确认"
+            , text: msg
+            , html: true
+            , type: "warning"
+            , showCancelButton: true
+            , cancelButtonText: "取消"
+            , confirmButtonColor: "#DD6B55"
+            , confirmButtonText: "确认"
+            , closeOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm && typeof paramFunc != "undefined") {
+                paramFunc();
+            }
+        });
+    } else {
+        swal({
+            title: "确认"
+            , text: msg
+            , html: true
+            , type: "warning"
+            , showCancelButton: true
+            , cancelButtonText: "取消"
+            , confirmButtonColor: "#DD6B55"
+            , confirmButtonText: "确认"
+            , closeOnConfirm: true
+        }, function (isConfirm) {
+            if (isConfirm && typeof paramFunc != "undefined") {
+                paramFunc();
+            }
+        });
+    }
+}
+
