@@ -76,5 +76,11 @@ public class AdminPageController {
         return "admin/setting";
     }
 
+    @AdminUserLogin
+    @RequestMapping(value = "/customer")
+    public String customer(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/customer/index";
+    }
+
 
 }
