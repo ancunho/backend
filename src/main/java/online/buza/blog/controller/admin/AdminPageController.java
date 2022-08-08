@@ -71,15 +71,15 @@ public class AdminPageController {
     }
 
     @AdminUserLogin
-    @RequestMapping(value = "/setting")
-    public String setting(Model model, HttpServletRequest request, HttpServletResponse response) {
-        return "admin/setting";
-    }
-
-    @AdminUserLogin
     @RequestMapping(value = "/customer")
     public String customer(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/customer/index";
+    }
+
+    @AdminUserLogin
+    @RequestMapping(value = "/setting")
+    public String setting(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/setting/index";
     }
 
 
