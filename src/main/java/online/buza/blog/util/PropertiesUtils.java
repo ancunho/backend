@@ -16,6 +16,7 @@ public class PropertiesUtils {
     private static Properties properties;
 
     private static String PROGRAM_NAME;
+    private static String ADMIN_LOGIN_URL;
     private static String FILE_PATH;
     private static String ALIYUN_OSS_FILE_BUCKET_NAME;
     private static String ALIYUN_OSS_FILE_ENDPOINT;
@@ -36,6 +37,7 @@ public class PropertiesUtils {
             Reader reader = new InputStreamReader(inStream, "UTF-8");
             properties.load(reader);
             PROGRAM_NAME = properties.getProperty("PROGRAM_NAME");
+            ADMIN_LOGIN_URL = properties.getProperty("ADMIN_LOGIN_URL");
             FILE_PATH = properties.getProperty("FILE_PATH");
             ALIYUN_OSS_FILE_BUCKET_NAME = properties.getProperty("ALIYUN_OSS_FILE_BUCKET_NAME");
             ALIYUN_OSS_FILE_ENDPOINT = properties.getProperty("ALIYUN_OSS_FILE_ENDPOINT");
@@ -78,6 +80,14 @@ public class PropertiesUtils {
 
     public static void setProgramName(String programName) {
         PROGRAM_NAME = programName;
+    }
+    
+    public static String getAdminLoginUrl() {
+        return ADMIN_LOGIN_URL;
+    }
+
+    public static void setAdminLoginUrl(String adminLoginUrl) {
+        ADMIN_LOGIN_URL = adminLoginUrl;
     }
 
     public static String getFilePath() {
