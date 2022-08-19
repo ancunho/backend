@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">-->
-<!--    <script src="https://cdn.tailwindcss.com"></script>-->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/tailwind.js}"></script>
-    <script defer th:src="@{/js/sweetalert.js}"></script>
-    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/axios.min.js}"></script>
     <script defer th:src="@{/js/alpine.js}"></script>
+    <script defer th:src="@{/js/sweetalert.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script th:src="@{/js/common.js}"></script>
 </head>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Buza Admin</title>
@@ -28,8 +27,11 @@
 <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div>
-            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                 alt="Workflow">
+<!--            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"-->
+<!--                 alt="Workflow">-->
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
             <h1 class="mt-6 text-center text-xl font-extrabold text-gray-500">Buza Management System</h1>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-800">Login</h2>
         </div>
@@ -39,14 +41,20 @@
                 <div class="mb-3">
                     <label for="username" class="sr-only">아이디를 입력하세요.</label>
                     <input id="username" name="username" type="text" autocomplete="text" required
-                           class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                           class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                            placeholder="아이디를 입력하세요.">
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="password" class="sr-only">패스워드를 입력하세요.</label>
                     <input id="password" name="password" type="password" autocomplete="current-password" required
-                           class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                           class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                            placeholder="패스워드를 입력하세요.">
+                </div>
+                <div class="grid grid-cols-3">
+                    <input id="captchaCode" name="captchaCode" type="text" autocomplete="text" required
+                           class="col-span-2 transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                           placeholder="인증번호를 입력하세요.">
+                    <img id="base64Img" class="col-span-1 w-full h-full" src="" />
                 </div>
             </div>
 
@@ -86,7 +94,8 @@
         $("#btnLogin").unbind('click').click(function() {
             var params = {
                 username: $("#login_form #username").val(),
-                password: $("#login_form #password").val()
+                password: $("#login_form #password").val(),
+                captchaCode: $("#captchaCode").val()
             }
 
             var sb = new StringBuffer();
@@ -98,9 +107,28 @@
             }
 
             if (sb.toString() !== "") {
-                gfn_Alert(sb.toString());
+                swal(sb.toString());
                 return;
             }
+
+            // axios.post(contextRootPath + "/adminLoginProc", params)
+            //     .then(res => {
+            //         var data = res.data;
+            //         if (data.code !== 0) {
+            //             swal("Error", data.msg, "error")
+            //                 .then((value => {
+            //                     $("#login_form #username").val('');
+            //                     $("#login_form #password").val('');
+            //                     $("#login_form #username").focus();
+            //                 }));
+            //             return;
+            //         }
+            //
+            //         BuzaRouter('/admin/index');
+            //     })
+            //     .catch(error => {
+            //         console.log(error);
+            //     });
 
             $.ajax({
                 type : "POST"
@@ -119,17 +147,17 @@
                         }));
                         return;
                     }
+                    BuzaRouter('/admin/index');
+                    // var $frmBUZACommon = $("#frmBUZACommon");
+                    // if($frmBUZACommon.length < 1) {
+                    //     $frmBUZACommon = $("<form/>").attr({id:"frmBUZACommon", method:'POST'});
+                    //     $(document.body).append($frmBUZACommon);
+                    // }
+                    // $frmBUZACommon.empty();
+                    // $frmBUZACommon.attr('target', '_self');
+                    // $frmBUZACommon.attr('action', contextRootPath + '/admin/index');
                     //
-                    var $frmBUZACommon = $("#frmBUZACommon");
-                    if($frmBUZACommon.length < 1) {
-                        $frmBUZACommon = $("<form/>").attr({id:"frmBUZACommon", method:'POST'});
-                        $(document.body).append($frmBUZACommon);
-                    }
-                    $frmBUZACommon.empty();
-                    $frmBUZACommon.attr('target', '_self');
-                    $frmBUZACommon.attr('action', contextRootPath + '/admin/index');
-
-                    $frmBUZACommon.submit();
+                    // $frmBUZACommon.submit();
                 }
                 ,error: function(req, status, e) {
                     if (status == "error" && req.status == "500") {
@@ -206,6 +234,22 @@
             });
 
 
+        });
+
+        initCaptcha();
+        function initCaptcha() {
+            axios.get(contextRootPath + "/api/common/captcha")
+                .then(res => {
+                    $("#base64Img").attr("src", res.data.data.base64Img);
+                })
+                .catch(error => {
+                    initCaptcha();
+                    console.log(error);
+                })
+        }
+
+        $("#base64Img").unbind('click').click(function() {
+            initCaptcha();
         });
 
     });

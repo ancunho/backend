@@ -89,66 +89,16 @@ Array.prototype.del = function(value){
         }
     }
 };
-
-function gfn_Alert(content, paramFunc) {
-    if (content.length > 400) {
-        content = content.substring(0, 400) + "...";
+// const axios = axios.create();
+function BuzaRouter(url) {
+    var $frmBUZACommon = $("#frmBUZACommon");
+    if($frmBUZACommon.length < 1) {
+        $frmBUZACommon = $("<form/>").attr({id:"frmBUZACommon", method:'POST'});
+        $(document.body).append($frmBUZACommon);
     }
+    $frmBUZACommon.empty();
+    $frmBUZACommon.attr('target', '_self');
+    $frmBUZACommon.attr('action', contextRootPath + url);
 
-    if (typeof paramFunc !== undefined) {
-        swal({
-            title: "提示"
-            ,text: content
-            ,html: true
-            ,confirmButtonText: "确认"
-        });
-    } else {
-        swal({
-            title: "提示"
-            ,text: content
-            ,html: true
-            ,confirmButtonText: "确认"
-        }, function() {
-            if (typeof paramFunc !== undefined) {
-                paramFunc();
-            }
-        });
-    }
+    $frmBUZACommon.submit();
 }
-
-function gfn_Confirm(msg, paramFunc) {
-    if (top != self) {
-        top.swal({
-            title: "确认"
-            , text: msg
-            , html: true
-            , type: "warning"
-            , showCancelButton: true
-            , cancelButtonText: "取消"
-            , confirmButtonColor: "#DD6B55"
-            , confirmButtonText: "确认"
-            , closeOnConfirm: true
-        }, function (isConfirm) {
-            if (isConfirm && typeof paramFunc != "undefined") {
-                paramFunc();
-            }
-        });
-    } else {
-        swal({
-            title: "确认"
-            , text: msg
-            , html: true
-            , type: "warning"
-            , showCancelButton: true
-            , cancelButtonText: "取消"
-            , confirmButtonColor: "#DD6B55"
-            , confirmButtonText: "确认"
-            , closeOnConfirm: true
-        }, function (isConfirm) {
-            if (isConfirm && typeof paramFunc != "undefined") {
-                paramFunc();
-            }
-        });
-    }
-}
-
