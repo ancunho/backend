@@ -26,8 +26,6 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class CaptchaFilter extends OncePerRequestFilter {
 
-    private final String loginUrl = "/manager/login";
-
     @Autowired
     private RedisUtil redisUtil;
 
@@ -35,7 +33,7 @@ public class CaptchaFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String url = request.getRequestURI();
 
-        if (url.contains(loginUrl) && request.getMethod().equals("POST")) {
+        if (url.contains(PropertiesUtils.getAdminLoginUrl()) && request.getMethod().equals("POST")) {
             //1. 校验验证码
             try {
                 this.validateCaptcha(request);
