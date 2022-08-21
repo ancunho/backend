@@ -58,4 +58,7 @@ public class SysUserDto extends BaseRequest implements Serializable {
     private String roleRemark;
     private String isContain;
 
+    private String captchaCode;
+    private String captchaKey;
+
 }
