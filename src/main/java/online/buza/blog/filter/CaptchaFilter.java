@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets;
  * 图片验证码校验过滤器，在登录过滤器前
  * */
 @Slf4j
-@WebFilter(filterName = "captchaFilter", urlPatterns = "/adminLoginProc")
+@WebFilter(urlPatterns = "/otherURL")
 public class CaptchaFilter implements Filter {
 
     @Autowired
@@ -65,6 +65,7 @@ public class CaptchaFilter implements Filter {
 
     private void validateCaptcha(HttpServletRequest request) {
         Box box = HttpUtility.getBox(request);
+        System.out.println(">>>>captchaCode:" + request.getParameter("captchaCode"));
         String captchaCode = box.get("captchaCode");
         String captchaKey = box.get("captchaKey"); //captchaKey
 
@@ -90,6 +91,7 @@ public class CaptchaFilter implements Filter {
             //1. 校验验证码
             try {
                 this.validateCaptcha(request);
+                filterChain.doFilter(servletRequest, servletResponse);
             } catch (CaptchaException e) {
                 //交给认证失败处理器
                 response.setContentType("application/json;charset=UTF-8");
@@ -111,6 +113,6 @@ public class CaptchaFilter implements Filter {
             }
         }
 
-        filterChain.doFilter(request, response);
+
     }
 }
