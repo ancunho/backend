@@ -3,14 +3,16 @@ package online.buza.blog.controller.admin;
 import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.annotation.PassLogin;
 import online.buza.blog.common.BaseResponse;
+import online.buza.blog.common.Const;
 import online.buza.blog.common.ResponseCode;
+import online.buza.blog.controller.common.CommonController;
 import online.buza.blog.dao.SysUserMapper;
 import online.buza.blog.dto.BaseRequest;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.SysUser;
+import online.buza.blog.exception.CaptchaException;
 import online.buza.blog.service.AdminUserService;
-import online.buza.blog.util.MD5Util;
-import online.buza.blog.util.Util;
+import online.buza.blog.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +25,19 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/")
-public class AdminController {
+public class AdminController extends CommonController {
 
     @Autowired
     private AdminUserService adminUserService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @PassLogin
     @PostMapping(value = "/adminLoginProc")
     @ResponseBody
     public BaseResponse login_proc(HttpServletRequest request, @RequestBody SysUserDto sysUserDto) {
+        this.validateCaptcha(sysUserDto);
         if (sysUserDto.getUsername() == null || "".equals(sysUserDto.getUsername())) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
@@ -48,6 +54,23 @@ public class AdminController {
             return BaseResponse.valueOfSuccessMessage("登录成功");
         }
 
+    }
+
+    private void validateCaptcha(SysUserDto sysUserDto) {
+        String captchaCode = sysUserDto.getCaptchaCode();
+        String captchaKey = sysUserDto.getCaptchaKey(); //captchaKey
+
+        if (StringUtils.isBlank(captchaCode) || StringUtils.isBlank(captchaKey)) {
+            putPrintOut(BaseResponse.valueOfFailureMessage("验证码不能为空"));
+//            throw new CaptchaException("验证码不能为空");
+        }
+
+        if (!captchaCode.equals(redisUtil.hget(Const.CAPTCHA_KEY, captchaKey))) {
+            putPrintOut(BaseResponse.valueOfFailureMessage("验证码错误"));
+//            throw new CaptchaException("验证码错误");
+        }
+
+        redisUtil.hdel(Const.CAPTCHA_KEY, captchaKey);
     }
 
     @PassLogin

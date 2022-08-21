@@ -16,11 +16,6 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <title>Buza Admin</title>
 <script type="text/javascript">
-    function topMenu() {
-        return {
-            isProfileSubMenuVisible: false
-        }
-    }
 </script>
 <body>
 
@@ -35,48 +30,51 @@
             <h1 class="mt-6 text-center text-xl font-extrabold text-gray-500">Buza Management System</h1>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-800">Login</h2>
         </div>
-        <div id="login_form" class="mt-8 space-y-6">
-            <input type="hidden" name="remember" value="true">
-            <div class="rounded-md shadow-sm">
-                <div class="mb-3">
-                    <label for="username" class="sr-only">아이디를 입력하세요.</label>
-                    <input id="username" name="username" type="text" autocomplete="text" required
-                           class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                           placeholder="아이디를 입력하세요.">
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="sr-only">패스워드를 입력하세요.</label>
-                    <input id="password" name="password" type="password" autocomplete="current-password" required
-                           class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                           placeholder="패스워드를 입력하세요.">
-                </div>
-                <div class="grid grid-cols-3">
-                    <input id="captchaCode" name="captchaCode" type="text" autocomplete="text" required
-                           class="col-span-2 transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                           placeholder="인증번호를 입력하세요.">
-                    <img id="base64Img" class="col-span-1 w-full h-full" src="" />
-                </div>
-            </div>
-
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input id="remember-me" name="remember-me" type="checkbox"
-                           class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                    <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
+<!--        <form enctype="application/x-www-form-urlencoded" method="post">-->
+            <div id="login_form" class="mt-8 space-y-6">
+                <input type="hidden" name="remember" value="true">
+                <input type="hidden" id="captchaKey" name="captchaKey" value="">
+                <div class="rounded-md shadow-sm">
+                    <div class="mb-3">
+                        <label for="username" class="sr-only">아이디를 입력하세요.</label>
+                        <input id="username" name="username" type="text" autocomplete="text" required value=""
+                               class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                               placeholder="아이디를 입력하세요.">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="sr-only">패스워드를 입력하세요.</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required value=""
+                               class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                               placeholder="패스워드를 입력하세요.">
+                    </div>
+                    <div class="grid grid-cols-3">
+                        <input id="captchaCode" name="captchaCode" type="text" autocomplete="text" required
+                               class="col-span-2 transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                               placeholder="인증번호를 입력하세요.">
+                        <img id="base64Img" class="col-span-1 w-full h-full" src="" />
+                    </div>
                 </div>
 
-                <div class="text-sm">
-                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> Forgot your password? </a>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox"
+                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-900"> Remember me </label>
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> Forgot your password? </a>
+                    </div>
+                </div>
+
+                <div>
+                    <button id="btnLogin"
+                            class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Sign in
+                    </button>
                 </div>
             </div>
-
-            <div>
-                <button id="btnLogin"
-                        class="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Sign in
-                </button>
-            </div>
-        </div>
+<!--        </form>-->
     </div>
 </div>
 
@@ -95,7 +93,8 @@
             var params = {
                 username: $("#login_form #username").val(),
                 password: $("#login_form #password").val(),
-                captchaCode: $("#captchaCode").val()
+                captchaCode: $("#captchaCode").val(),
+                captchaKey: $("#captchaKey").val()
             }
 
             var sb = new StringBuffer();
@@ -110,67 +109,63 @@
                 swal(sb.toString());
                 return;
             }
-
-            // axios.post(contextRootPath + "/adminLoginProc", params)
-            //     .then(res => {
-            //         var data = res.data;
-            //         if (data.code !== 0) {
-            //             swal("Error", data.msg, "error")
-            //                 .then((value => {
-            //                     $("#login_form #username").val('');
-            //                     $("#login_form #password").val('');
-            //                     $("#login_form #username").focus();
-            //                 }));
-            //             return;
-            //         }
-            //
-            //         BuzaRouter('/admin/index');
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //     });
-
-            $.ajax({
-                type : "POST"
-                ,url : contextRootPath + "/adminLoginProc"
-                ,data : JSON.stringify(params)
-                ,contentType: 'application/json'
-                ,async : false
-                ,success: function(data) {
-
+            console.log(params);
+            axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+            axios.post(contextRootPath + "/adminLoginProc", params)
+                .then(res => {
+                    console.log(res);
+                    var data = res.data;
                     if (data.code !== 0) {
                         swal("Error", data.msg, "error")
-                        .then((value => {
-                            $("#login_form #username").val('');
-                            $("#login_form #password").val('');
-                            $("#login_form #username").focus();
-                        }));
+                            .then((value => {
+                                $("#login_form #username").val('');
+                                $("#login_form #password").val('');
+                                $("#login_form #username").focus();
+                                $("#captchaCode").val('');
+                                $("#captchaKey").val('');
+                                initCaptcha();
+                            }));
                         return;
                     }
+
                     BuzaRouter('/admin/index');
-                    // var $frmBUZACommon = $("#frmBUZACommon");
-                    // if($frmBUZACommon.length < 1) {
-                    //     $frmBUZACommon = $("<form/>").attr({id:"frmBUZACommon", method:'POST'});
-                    //     $(document.body).append($frmBUZACommon);
-                    // }
-                    // $frmBUZACommon.empty();
-                    // $frmBUZACommon.attr('target', '_self');
-                    // $frmBUZACommon.attr('action', contextRootPath + '/admin/index');
-                    //
-                    // $frmBUZACommon.submit();
-                }
-                ,error: function(req, status, e) {
-                    if (status == "error" && req.status == "500") {
-                        alert("error");
-                    } else {
-                        var errContent = "";
-                        errContent += 'Error Code : ' + req.status + '\n';
-                        errContent += 'Message : ' + req.responseText + '\n';
-                        errContent += 'Error : ' + e.toString() + '\n';
-                        swal("Error", errContent, "error");
-                    }
-                }
-            });
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+            // $.ajax({
+            //     type : "POST"
+            //     ,url : contextRootPath + "/adminLoginProc"
+            //     ,data : params
+            //     ,contentType: 'application/json'
+            //     ,dataType: 'json'
+            //     ,async : false
+            //     ,success: function(data) {
+            //         console.log(data);
+            //         if (data.code !== 0) {
+            //             swal("Error", data.msg, "error")
+            //             .then((value => {
+            //                 $("#login_form #username").val('');
+            //                 $("#login_form #password").val('');
+            //                 $("#login_form #username").focus();
+            //             }));
+            //             return;
+            //         }
+            //         BuzaRouter('/admin/index');
+            //     }
+            //     ,error: function(req, status, e) {
+            //         if (status == "error" && req.status == "500") {
+            //             alert("error");
+            //         } else {
+            //             var errContent = "";
+            //             errContent += 'Error Code : ' + req.status + '\n';
+            //             errContent += 'Message : ' + req.responseText + '\n';
+            //             errContent += 'Error : ' + e.toString() + '\n';
+            //             swal("Error", errContent, "error");
+            //         }
+            //     }
+            // });
         });
 
         // Register Process
@@ -241,6 +236,8 @@
             axios.get(contextRootPath + "/api/common/captcha")
                 .then(res => {
                     $("#base64Img").attr("src", res.data.data.base64Img);
+                    // $("#captchaCode").val(res.data.data.captchaCode);
+                    $("#captchaKey").val(res.data.data.captchaKey);
                 })
                 .catch(error => {
                     initCaptcha();
