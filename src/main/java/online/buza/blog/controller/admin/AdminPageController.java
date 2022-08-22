@@ -77,6 +77,18 @@ public class AdminPageController {
     }
 
     @AdminUserLogin
+    @RequestMapping(value = "/post")
+    public String post(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/post/index";
+    }
+
+    @AdminUserLogin
+    @RequestMapping(value = "/post/create")
+    public String post_create(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/post/create";
+    }
+
+    @AdminUserLogin
     @RequestMapping(value = "/setting")
     public String setting(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/setting/index";
