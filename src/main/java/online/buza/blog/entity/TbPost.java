@@ -1,9 +1,15 @@
 package online.buza.blog.entity;
 
+import online.buza.blog.dto.BaseRequest;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class TbPost {
+public class TbPost implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private Integer postId;
 
     private String postType;
