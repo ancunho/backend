@@ -111,3 +111,29 @@ CREATE TABLE `sys_user_role` (
                                  `ROLE_ID` bigint NOT NULL,
                                  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- tb_post
+CREATE TABLE `tb_post` (
+                           `POST_ID` int NOT NULL AUTO_INCREMENT,
+                           `POST_TYPE` varchar(10) NOT NULL,
+                           `POST_CATEGORY_ID` int DEFAULT NULL,
+                           `POST_TITLE` varchar(100) DEFAULT NULL,
+                           `POST_CONTENT` mediumtext,
+                           `EVENT_START_TIME` varchar(45) DEFAULT NULL,
+                           `EVENT_END_TIME` varchar(45) DEFAULT NULL,
+                           `POST_THUMBNAIL_SMALL` varchar(100) DEFAULT NULL,
+                           `POST_THUMBNAIL_BIG` varchar(100) DEFAULT NULL,
+                           `POST_AUTHOR` varchar(45) DEFAULT NULL,
+                           `IS_JOIN` varchar(10) DEFAULT NULL COMMENT '참여여부(0:불필요, 1: 필요), 회원이 참여하는 포스트 , 예: 레슨',
+                           `IS_NEED_PAY` varchar(10) DEFAULT NULL COMMENT '지불이 필요한 포스트인가?',
+                           `POST_PRICE` decimal(20,2) DEFAULT NULL,
+                           `STATUS` varchar(10) DEFAULT NULL,
+                           `OPTION01` varchar(1000) DEFAULT NULL,
+                           `OPTION02` varchar(45) DEFAULT NULL,
+                           `OPTION03` varchar(45) DEFAULT NULL,
+                           `OPTION04` varchar(45) DEFAULT NULL,
+                           `OPTION05` varchar(45) DEFAULT NULL,
+                           `CREATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
+                           `UPDATE_TIME` datetime DEFAULT NULL,
+                           PRIMARY KEY (`POST_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

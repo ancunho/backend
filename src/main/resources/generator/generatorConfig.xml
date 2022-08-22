@@ -38,6 +38,7 @@
         <javaClientGenerator targetProject="src\main\java"
                              targetPackage="online.buza.blog.dao"
                              type="XMLMAPPER" />
-        <table tableName="tb_access_hist" domainObjectName="TbAccessHist" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+<!--        <table tableName="tb_access_hist" domainObjectName="TbAccessHist" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />-->
+        <table tableName="tb_post" domainObjectName="TbPost" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
     </context>
 </generatorConfiguration>
