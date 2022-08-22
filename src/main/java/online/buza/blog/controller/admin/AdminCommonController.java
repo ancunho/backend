@@ -30,15 +30,20 @@ import java.util.UUID;
 @RequestMapping("/api/common")
 public class AdminCommonController {
 
+    @Autowired
     private AdminUserService adminUserService;
+
+    @Autowired
     private Producer producer;
+
+    @Autowired
     public RedisUtil redisUtil;
 
-    public AdminCommonController(AdminUserService adminUserService, Producer producer, RedisUtil redisUtil) {
-        this.adminUserService = adminUserService;
-        this.producer = producer;
-        this.redisUtil = redisUtil;
-    }
+//    public AdminCommonController(AdminUserService adminUserService, Producer producer, RedisUtil redisUtil) {
+//        this.adminUserService = adminUserService;
+//        this.producer = producer;
+//        this.redisUtil = redisUtil;
+//    }
 
     @PassLogin
     @GetMapping("/captcha")

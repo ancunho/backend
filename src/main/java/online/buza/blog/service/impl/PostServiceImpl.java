@@ -1,5 +1,9 @@
 package online.buza.blog.service.impl;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.TbPostMapper;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
@@ -10,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
+@Slf4j
+@Getter
+@Setter
+@AllArgsConstructor
 @Service
 public class PostServiceImpl implements PostService {
 

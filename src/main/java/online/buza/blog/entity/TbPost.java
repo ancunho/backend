@@ -1,7 +1,5 @@
 package online.buza.blog.entity;
 
-import online.buza.blog.dto.BaseRequest;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;

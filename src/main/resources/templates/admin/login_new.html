@@ -37,13 +37,13 @@
                 <div class="rounded-md shadow-sm">
                     <div class="mb-3">
                         <label for="username" class="sr-only">아이디를 입력하세요.</label>
-                        <input id="username" name="username" type="text" autocomplete="text" required value=""
+                        <input id="username" name="username" type="text" autocomplete="text" required value="111"
                                class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                placeholder="아이디를 입력하세요.">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="sr-only">패스워드를 입력하세요.</label>
-                        <input id="password" name="password" type="password" autocomplete="current-password" required value=""
+                        <input id="password" name="password" type="password" autocomplete="current-password" required value="111"
                                class="transition duration-300 appearance-none rounded-none relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                placeholder="패스워드를 입력하세요.">
                     </div>
@@ -109,8 +109,7 @@
                 swal(sb.toString());
                 return;
             }
-            console.log(params);
-            axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
+
             axios.post(contextRootPath + "/adminLoginProc", params)
                 .then(res => {
                     console.log(res);
@@ -236,7 +235,7 @@
             axios.get(contextRootPath + "/api/common/captcha")
                 .then(res => {
                     $("#base64Img").attr("src", res.data.data.base64Img);
-                    // $("#captchaCode").val(res.data.data.captchaCode);
+                    $("#captchaCode").val(res.data.data.captchaCode);
                     $("#captchaKey").val(res.data.data.captchaKey);
                 })
                 .catch(error => {

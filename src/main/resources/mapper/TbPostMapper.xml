@@ -283,7 +283,7 @@
         where POST_ID = #{postId,jdbcType=INTEGER}
     </update>
 
-    <select id="getAllTbPostListByTbPost" parameterType="online.cunho.blog.dto.TbPostDto" resultType="online.cunho.blog.dto.TbPostDto">
+    <select id="getAllTbPostListByTbPost" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
         SELECT 	ROW_NUMBER() OVER() AS RN
                 ,T1.POST_ID
                 ,T1.POST_TYPE
@@ -341,7 +341,7 @@
         ORDER BY T1.CREATE_TIME DESC
     </select>
 
-    <select id="getTbPostByPostId" parameterType="java.lang.Integer" resultType="online.cunho.blog.dto.TbPostDto">
+    <select id="getTbPostByPostId" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.TbPostDto">
         <![CDATA[
         SELECT 	ROW_NUMBER() OVER() AS RN
                 ,T1.POST_ID
