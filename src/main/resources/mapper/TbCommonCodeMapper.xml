@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbCommonCodeMapper">
+    <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbCommonCode">
+        <id column="CODE_SEQ" jdbcType="INTEGER" property="codeSeq"/>
+        <result column="CODE_ID" jdbcType="VARCHAR" property="codeId"/>
+        <result column="CODE_TYPE" jdbcType="VARCHAR" property="codeType"/>
+        <result column="CODE_NAME" jdbcType="VARCHAR" property="codeName"/>
+        <result column="USE_YN" jdbcType="VARCHAR" property="useYn"/>
+        <result column="SORT" jdbcType="VARCHAR" property="sort"/>
+        <result column="OPTION01" jdbcType="VARCHAR" property="option01"/>
+        <result column="OPTION02" jdbcType="VARCHAR" property="option02"/>
+        <result column="OPTION03" jdbcType="VARCHAR" property="option03"/>
+        <result column="OPTION04" jdbcType="VARCHAR" property="option04"/>
+        <result column="OPTION05" jdbcType="VARCHAR" property="option05"/>
+        <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        CODE_SEQ
+        , CODE_ID, CODE_TYPE, CODE_NAME, USE_YN, SORT, OPTION01, OPTION02, OPTION03,
+    OPTION04, OPTION05, CREATETIME, UPDATETIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_common_code
+        where CODE_SEQ = #{codeSeq,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_common_code
+        where CODE_SEQ = #{codeSeq,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="online.buza.blog.entity.TbCommonCode">
+        insert into tb_common_code (CODE_SEQ, CODE_ID, CODE_TYPE,
+                                    CODE_NAME, USE_YN, SORT,
+                                    OPTION01, OPTION02, OPTION03,
+                                    OPTION04, OPTION05, CREATETIME,
+                                    UPDATETIME)
+        values (#{codeSeq,jdbcType=INTEGER}, #{codeId,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR},
+                #{codeName,jdbcType=VARCHAR}, #{useYn,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR},
+                #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR},
+                #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+                #{updatetime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="online.buza.blog.entity.TbCommonCode">
+        insert into tb_common_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="codeSeq != null">
+                CODE_SEQ,
+            </if>
+            <if test="codeId != null">
+                CODE_ID,
+            </if>
+            <if test="codeType != null">
+                CODE_TYPE,
+            </if>
+            <if test="codeName != null">
+                CODE_NAME,
+            </if>
+            <if test="useYn != null">
+                USE_YN,
+            </if>
+            <if test="sort != null">
+                SORT,
+            </if>
+            <if test="option01 != null">
+                OPTION01,
+            </if>
+            <if test="option02 != null">
+                OPTION02,
+            </if>
+            <if test="option03 != null">
+                OPTION03,
+            </if>
+            <if test="option04 != null">
+                OPTION04,
+            </if>
+            <if test="option05 != null">
+                OPTION05,
+            </if>
+            <if test="createtime != null">
+                CREATETIME,
+            </if>
+            <if test="updatetime != null">
+                UPDATETIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="codeSeq != null">
+                #{codeSeq,jdbcType=INTEGER},
+            </if>
+            <if test="codeId != null">
+                #{codeId,jdbcType=VARCHAR},
+            </if>
+            <if test="codeType != null">
+                #{codeType,jdbcType=VARCHAR},
+            </if>
+            <if test="codeName != null">
+                #{codeName,jdbcType=VARCHAR},
+            </if>
+            <if test="useYn != null">
+                #{useYn,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="option01 != null">
+                #{option01,jdbcType=VARCHAR},
+            </if>
+            <if test="option02 != null">
+                #{option02,jdbcType=VARCHAR},
+            </if>
+            <if test="option03 != null">
+                #{option03,jdbcType=VARCHAR},
+            </if>
+            <if test="option04 != null">
+                #{option04,jdbcType=VARCHAR},
+            </if>
+            <if test="option05 != null">
+                #{option05,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbCommonCode">
+        update tb_common_code
+        <set>
+            <if test="codeId != null">
+                CODE_ID = #{codeId,jdbcType=VARCHAR},
+            </if>
+            <if test="codeType != null">
+                CODE_TYPE = #{codeType,jdbcType=VARCHAR},
+            </if>
+            <if test="codeName != null">
+                CODE_NAME = #{codeName,jdbcType=VARCHAR},
+            </if>
+            <if test="useYn != null">
+                USE_YN = #{useYn,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                SORT = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="option01 != null">
+                OPTION01 = #{option01,jdbcType=VARCHAR},
+            </if>
+            <if test="option02 != null">
+                OPTION02 = #{option02,jdbcType=VARCHAR},
+            </if>
+            <if test="option03 != null">
+                OPTION03 = #{option03,jdbcType=VARCHAR},
+            </if>
+            <if test="option04 != null">
+                OPTION04 = #{option04,jdbcType=VARCHAR},
+            </if>
+            <if test="option05 != null">
+                OPTION05 = #{option05,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where CODE_SEQ = #{codeSeq,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbCommonCode">
+        update tb_common_code
+        set CODE_ID    = #{codeId,jdbcType=VARCHAR},
+            CODE_TYPE  = #{codeType,jdbcType=VARCHAR},
+            CODE_NAME  = #{codeName,jdbcType=VARCHAR},
+            USE_YN     = #{useYn,jdbcType=VARCHAR},
+            SORT       = #{sort,jdbcType=VARCHAR},
+            OPTION01   = #{option01,jdbcType=VARCHAR},
+            OPTION02   = #{option02,jdbcType=VARCHAR},
+            OPTION03   = #{option03,jdbcType=VARCHAR},
+            OPTION04   = #{option04,jdbcType=VARCHAR},
+            OPTION05   = #{option05,jdbcType=VARCHAR},
+            CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+            UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+        where CODE_SEQ = #{codeSeq,jdbcType=INTEGER}
+    </update>
+</mapper>
