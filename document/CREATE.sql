@@ -137,3 +137,42 @@ CREATE TABLE `tb_post` (
                            `UPDATE_TIME` datetime DEFAULT NULL,
                            PRIMARY KEY (`POST_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- tb_classification
+CREATE TABLE `tb_classification` (
+                                     `CLASSIFICATION_ID` int NOT NULL AUTO_INCREMENT,
+                                     `PARENT_CLASSIFICATION_ID` int DEFAULT NULL,
+                                     `CLASSIFICATION_NAME` varchar(100) DEFAULT NULL,
+                                     `CLASSIFICATION_TYPE` varchar(45) DEFAULT NULL,
+                                     `CLASSIFICATION_IMAGE` varchar(100) DEFAULT NULL,
+                                     `SORT_ORDER` int DEFAULT NULL,
+                                     `DEPTH_NUM` int DEFAULT NULL,
+                                     `STATUS` varchar(10) DEFAULT NULL,
+                                     `OPTION01` varchar(45) DEFAULT NULL,
+                                     `OPTION02` varchar(45) DEFAULT NULL,
+                                     `OPTION03` varchar(45) DEFAULT NULL,
+                                     `OPTION04` varchar(45) DEFAULT NULL,
+                                     `OPTION05` varchar(45) DEFAULT NULL,
+                                     `CREATE_TIME` datetime DEFAULT NULL,
+                                     `UPDATE_TIME` datetime DEFAULT NULL,
+                                     PRIMARY KEY (`CLASSIFICATION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- tb_common_code
+CREATE TABLE `tb_common_code` (
+                                  `CODE_ID` int NOT NULL AUTO_INCREMENT COMMENT '번호',
+                                  `CODE_TYPE` varchar(45) DEFAULT NULL,
+                                  `CODE_CD` varchar(45) DEFAULT NULL,
+                                  `CODE_NAME` varchar(45) DEFAULT NULL,
+                                  `USE_YN` varchar(2) DEFAULT NULL,
+                                  `REMARK` varchar(100) DEFAULT NULL,
+                                  `SORT_ORDER` int DEFAULT NULL,
+                                  `OPTION01` varchar(45) DEFAULT NULL,
+                                  `OPTION02` varchar(45) DEFAULT NULL,
+                                  `OPTION03` varchar(45) DEFAULT NULL,
+                                  `OPTION04` varchar(45) DEFAULT NULL,
+                                  `OPTION05` varchar(45) DEFAULT NULL,
+                                  `CREATE_TIME` datetime DEFAULT NULL,
+                                  `UPDATE_TIME` datetime DEFAULT NULL,
+                                  PRIMARY KEY (`CODE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='공통코드테이블';
