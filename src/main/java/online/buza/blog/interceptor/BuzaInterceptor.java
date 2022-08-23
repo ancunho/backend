@@ -55,7 +55,7 @@ public class BuzaInterceptor implements HandlerInterceptor {
                 SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
                 if (sysUserDto == null) {
                     System.out.println(">>>>>need Login");
-                    response.sendRedirect("/admin/login");
+                    response.sendRedirect("/admin/login.ahn");
                     return false;
                 }
                 return true;
@@ -69,7 +69,7 @@ public class BuzaInterceptor implements HandlerInterceptor {
                 CustomerDto customerDto = (CustomerDto) session.getAttribute("CUSTOMER_USER");
                 if (customerDto == null) {
                     System.out.println(">>>>>>Customer User Need Login");
-                    response.sendRedirect("/customer/login");
+                    response.sendRedirect("/customer/login.ahn");
                     return false;
                 }
                 return true;

@@ -34,8 +34,8 @@ public class TbPostDto extends BaseRequest implements Serializable {
     private String option03;
     private String option04;
     private String option05;
-    private Date createTime;
-    private Date updateTime;
+    private String createTime;
+    private String updateTime;
 
     private String postTypeName;
     private String statusName;
