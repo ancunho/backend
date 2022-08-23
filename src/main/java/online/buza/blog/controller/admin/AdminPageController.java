@@ -88,11 +88,33 @@ public class AdminPageController {
         return "admin/post/create";
     }
 
+    /**
+     * 설정 페이지 메인 - 사용자관리
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
     @AdminUserLogin
     @RequestMapping(value = "/setting.ahn")
     public String setting(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/setting/index";
     }
+
+    /**
+     * 설정 - 공통코드관리 페이지
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @AdminUserLogin
+    @RequestMapping(value = "/setting/common_code.ahn")
+    public String setting_common_code(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/setting/common_code";
+    }
+
+
 
 
 }
