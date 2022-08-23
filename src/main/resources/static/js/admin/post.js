@@ -63,3 +63,40 @@ function initData() {
         }
     }
 }
+
+function initPostIndex() {
+    return {
+        itemList: [],
+        modifyItem: {},
+        loading: true,
+        currentPage: 1, //page
+        pageSize: 5, //limit
+        pageSizes: [5, 15, 30, 50],
+        total: 100,
+        isModalVisible: false,
+        buzaModalTitle: 'Modal',
+        getPostList() {
+            const _this = this;
+            axios.post(contextRootPath + "/api/post/list?page=1&limit=2", {})
+                .then(res => {
+                    var data = res.data;
+                    if (data.code !== 0) {
+                        swal({
+                            title: "Error!", text: data.msg, icon: "error", closeOnClickOutside: false,
+                        }).then(value => {
+                            _this.form.postTitle = '';
+                            editor.setHtml('');
+                        });
+                        return;
+                    } else {
+                        console.log(data);
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+
+    }
+}
