@@ -33,7 +33,7 @@ public class BusinessController {
      * @return
      */
     @PassLogin
-    @GetMapping(value = "/business/index")
+    @GetMapping(value = "/business/index.ahn")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "business/index";
     }

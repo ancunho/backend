@@ -34,7 +34,7 @@ public class AdminController extends CommonController {
     private RedisUtil redisUtil;
 
     @PassLogin
-    @PostMapping(value = "/adminLoginProc")
+    @PostMapping(value = "/adminLoginProc.do")
     @ResponseBody
     public BaseResponse login_proc(HttpServletRequest request, @RequestBody SysUserDto sysUserDto) {
         this.validateCaptcha(sysUserDto);
@@ -74,7 +74,7 @@ public class AdminController extends CommonController {
     }
 
     @PassLogin
-    @PostMapping(value = "/adminRegisterProc")
+    @PostMapping(value = "/adminRegisterProc.do")
     @ResponseBody
     public BaseResponse register_proc(BaseRequest baseRequest, @RequestBody SysUserDto sysUserDto) {
         if (StringUtils.isEmpty(sysUserDto.getUsername())

@@ -28,14 +28,14 @@ public class BusinessPageController {
     }
 
     @PassLogin
-    @RequestMapping("/login")
+    @RequestMapping("/login.ahn")
     public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("name", "cunho");
         return "index";
     }
 
     @PassLogin
-    @RequestMapping("/customer/login")
+    @RequestMapping("/customer/login.ahn")
     public String customer_login(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("name", "cunho");
         return "customer_login";

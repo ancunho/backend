@@ -32,64 +32,64 @@ public class AdminPageController {
         SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
         
         if (sysUserDto == null || "".equals(Util.nullempty(sysUserDto.getUserSeq()))) {
-            return "redirect:/admin/login";
+            return "redirect:/admin/login.ahn";
         }
         
-        return "redirect:/admin/index";
+        return "redirect:/admin/index.ahn";
     }
 
     @PassLogin
-    @RequestMapping(value = "/index")
+    @RequestMapping(value = "/index.ahn")
     public String admin_index(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
 
         if (sysUserDto == null) {
-            return "redirect:/admin/login";
+            return "redirect:/admin/login.ahn";
         }
         return "admin/index";
     }
 
     @PassLogin
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login.ahn")
     public String admin_login(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/login_new";
     }
 
     @PassLogin
-    @PostMapping(value = "/adminLogoutProc")
+    @PostMapping(value = "/adminLogoutProc.do")
     public String admin_logout(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         session.removeAttribute("LOGINED_USER");
-        return "redirect:/admin/login";
+        return "redirect:/admin/login.ahn";
     }
 
     @AdminUserLogin
-    @RequestMapping(value = "/dashboard")
+    @RequestMapping(value = "/dashboard.ahn")
     public String dashboard(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/dashboard";
     }
 
     @AdminUserLogin
-    @RequestMapping(value = "/customer")
+    @RequestMapping(value = "/customer.ahn")
     public String customer(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/customer/index";
     }
 
     @AdminUserLogin
-    @RequestMapping(value = "/post")
+    @RequestMapping(value = "/post.ahn")
     public String post(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/post/index";
     }
 
     @AdminUserLogin
-    @RequestMapping(value = "/post/create")
+    @RequestMapping(value = "/post/create.ahn")
     public String post_create(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/post/create";
     }
 
     @AdminUserLogin
-    @RequestMapping(value = "/setting")
+    @RequestMapping(value = "/setting.ahn")
     public String setting(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/setting/index";
     }

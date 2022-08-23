@@ -26,7 +26,7 @@ public class PostController extends CommonController {
     private PostService postService;
 
     @AdminUserLogin
-    @PostMapping(value = "/list")
+    @PostMapping(value = "/list.do")
     public BaseResponse getAllTbPostListByTbPost(BaseRequest baseRequest, @RequestBody TbPostDto tbPostDto) {
         PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
         List<TbPostDto> returnData = postService.getAllTbPostListByTbPost(tbPostDto);
@@ -41,7 +41,7 @@ public class PostController extends CommonController {
      * @return
      */
     @AdminUserLogin
-    @PostMapping(value = "/proc")
+    @PostMapping(value = "/proc.do")
     public BaseResponse procTbPostByTbPostDto(HttpServletRequest request, @RequestBody TbPostDto tbPostDto) {
         if (tbPostDto == null
                 || StringUtils.isEmpty(tbPostDto.getPostTitle())
@@ -114,7 +114,7 @@ public class PostController extends CommonController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/info")
+    @GetMapping(value = "/info.do")
     public BaseResponse getTbPostByPostId(@RequestParam("postId") Integer postId) {
         if (postId == null) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());

@@ -28,7 +28,7 @@ function initData() {
             const _this = this;
             _this.form.postContent = editor.getHtml();
             _this.form.postType = '01';
-            axios.post(contextRootPath + "/api/post/proc", this.form)
+            axios.post(contextRootPath + "/api/post/proc.do", this.form)
                 .then(res => {
                     var data = res.data;
                     if (data.code !== 0) {
@@ -77,7 +77,7 @@ function initPostIndex() {
         buzaModalTitle: 'Modal',
         getPostList() {
             const _this = this;
-            axios.post(contextRootPath + "/api/post/list?page=1&limit=2", {})
+            axios.post(contextRootPath + "/api/post/list.do?page=1&limit=2", {})
                 .then(res => {
                     var data = res.data;
                     if (data.code !== 0) {

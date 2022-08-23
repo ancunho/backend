@@ -46,7 +46,7 @@ public class AdminCommonController {
 //    }
 
     @PassLogin
-    @GetMapping("/captcha")
+    @GetMapping("/captcha.do")
     public BaseResponse captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String captchaCode = producer.createText();
         String captchaKey = UUID.randomUUID().toString();
@@ -76,7 +76,7 @@ public class AdminCommonController {
 
 
     @AdminUserLogin
-    @PostMapping(value = "/user/list")
+    @PostMapping(value = "/user/list.do")
     public BaseResponse user_list(BaseRequest baseRequest, @RequestBody SysUserDto sysUserDto) {
         PageHelper.startPage(baseRequest.getPage(), baseRequest.getRows());
         List<SysUserDto> lstSysUserDto = adminUserService.selectSysUserDtoByPaging(sysUserDto);

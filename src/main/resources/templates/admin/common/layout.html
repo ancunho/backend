@@ -47,11 +47,11 @@
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 <!--                            <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</a>-->
                             <a href="/admin" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Dashboard</a>
-                            <a href="/admin/customer" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Customer</a>
+                            <a href="/admin/customer.ahn" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Customer</a>
                             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Product</a>
                             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Order</a>
-                            <a href="/admin/post" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Post</a>
-                            <a href="/admin/setting" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Setting</a>
+                            <a href="/admin/post.ahn" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Post</a>
+                            <a href="/admin/setting.ahn" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Setting</a>
                         </div>
                     </div>
                 </div>
@@ -127,12 +127,12 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 <!--                <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>-->
-                <a href="/admin/index" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
-                <a href="/admin/customer" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Customer</a>
+                <a href="/admin/index.ahn" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
+                <a href="/admin/customer.ahn" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Customer</a>
                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Product</a>
                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Order</a>
-                <a href="/admin/post" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Post</a>
-                <a href="/admin/setting" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Setting</a>
+                <a href="/admin/post.ahn" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Post</a>
+                <a href="/admin/setting.ahn" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Setting</a>
             </div>
             <div class="pt-4 pb-3 border-t border-gray-700">
                 <div class="flex items-center px-5">
@@ -180,7 +180,7 @@
                     }
                     $frmBUZACommon.empty();
                     $frmBUZACommon.attr('target', '_self');
-                    $frmBUZACommon.attr('action', contextRootPath + '/admin/adminLogoutProc');
+                    $frmBUZACommon.attr('action', contextRootPath + '/admin/adminLogoutProc.do');
 
                     $frmBUZACommon.submit();
                 }
@@ -197,8 +197,8 @@
 
 <div th:fragment="nav" >
     <div class="left_top">
-        <a href="/admin/dashboard" class="btn-dashboard">Dashboard</a>
-        <a href="/admin/setting" class="btn-setting">Setting</a>
+        <a href="/admin/dashboard.ahn" class="btn-dashboard">Dashboard</a>
+        <a href="/admin/setting.ahn" class="btn-setting">Setting</a>
     </div>
     <div  id="sm">
     </div>

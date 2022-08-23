@@ -110,7 +110,7 @@
                 return;
             }
 
-            axios.post(contextRootPath + "/adminLoginProc", params)
+            axios.post(contextRootPath + "/adminLoginProc.do", params)
                 .then(res => {
                     console.log(res);
                     var data = res.data;
@@ -127,44 +127,12 @@
                         return;
                     }
 
-                    BuzaRouter('/admin/index');
+                    BuzaRouter('/admin/index.ahn');
                 })
                 .catch(error => {
                     console.log(error);
                 });
 
-            // $.ajax({
-            //     type : "POST"
-            //     ,url : contextRootPath + "/adminLoginProc"
-            //     ,data : params
-            //     ,contentType: 'application/json'
-            //     ,dataType: 'json'
-            //     ,async : false
-            //     ,success: function(data) {
-            //         console.log(data);
-            //         if (data.code !== 0) {
-            //             swal("Error", data.msg, "error")
-            //             .then((value => {
-            //                 $("#login_form #username").val('');
-            //                 $("#login_form #password").val('');
-            //                 $("#login_form #username").focus();
-            //             }));
-            //             return;
-            //         }
-            //         BuzaRouter('/admin/index');
-            //     }
-            //     ,error: function(req, status, e) {
-            //         if (status == "error" && req.status == "500") {
-            //             alert("error");
-            //         } else {
-            //             var errContent = "";
-            //             errContent += 'Error Code : ' + req.status + '\n';
-            //             errContent += 'Message : ' + req.responseText + '\n';
-            //             errContent += 'Error : ' + e.toString() + '\n';
-            //             swal("Error", errContent, "error");
-            //         }
-            //     }
-            // });
         });
 
         // Register Process
@@ -184,7 +152,7 @@
 
             $.ajax({
                 type : "POST"
-                ,url : contextRootPath + "/adminRegisterProc"
+                ,url : contextRootPath + "/adminRegisterProc.do"
                 ,data : JSON.stringify(params)
                 ,contentType: 'application/json'
                 ,async : false
@@ -201,7 +169,7 @@
                     }
                     $frmBUZACommon.empty();
                     $frmBUZACommon.attr('target', '_self');
-                    $frmBUZACommon.attr('action', contextRootPath + '/admin/index');
+                    $frmBUZACommon.attr('action', contextRootPath + '/admin/index.ahn');
 
                     $frmBUZACommon.submit();
                 }
@@ -232,7 +200,7 @@
 
         initCaptcha();
         function initCaptcha() {
-            axios.get(contextRootPath + "/api/common/captcha")
+            axios.get(contextRootPath + "/api/common/captcha.do")
                 .then(res => {
                     $("#base64Img").attr("src", res.data.data.base64Img);
                     $("#captchaCode").val(res.data.data.captchaCode);
