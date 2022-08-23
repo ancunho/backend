@@ -18,50 +18,94 @@
             <!-- Top Search Form Box Start -->
             <div class="">
                 <div class=" grid grid-cols-1 rounded-lg shadow-md p-3">
-<!--                    <h4 class="text-lg text-gray-700">Search Conditions</h4>-->
-                    <div class="grid grid-cols-12 gap-2">
-                        <div class="col-span-4">
-                            <label for="first-name-1" class="block text-sm font-medium text-gray-700">이름 or 아이디 or 연락처 or Wechat계정</label>
-                            <input type="text" name="first-name" placeholder="검색어를 입력하세요." id="first-name-1" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                        </div>
-                        <div class="col-span-2">
-                            <label for="country" class="block text-sm font-medium text-gray-700">권한</label>
-                            <select id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option>United States</option>
-                                <option>Canada</option>
-                                <option>Mexico</option>
-                            </select>
-                        </div>
-                        <div class="col-span-2">
-                            <label for="sex" class="block text-sm font-medium text-gray-700">성별</label>
-                            <select id="sex" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option>Man</option>
-                                <option>Women</option>
-                                <option>None</option>
-                            </select>
-                        </div>
-                        <div class="col-span-4">
-                            <label for="department" class="block text-sm font-medium text-gray-700">소속부서</label>
-                            <select id="department" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option>안테나</option>
-                                <option>YG</option>
-                                <option>SM Town</option>
-                                <option>JYP</option>
-                            </select>
-                        </div>
-                        <div class="col-span-12 mt-5 mb-2 text-center">
-<!--                            <button class="mt-5 mb-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Search User</button>-->
-                            <span class="sm:ml-3">
-                                <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                <!-- Heroicon name: solid/check -->
+                    <!-- Top Tabs Start -->
+                    <ul class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4" id="tabs-tabFill"
+                        role="tablist">
+                        <li class="nav-item text-center" role="presentation">
+                            <a href="#tab-search" class="inline-flex items-center nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent hover:bg-gray-100 focus:border-transparent active" id="tabs-home-tabFill" data-bs-toggle="pill" data-bs-target="#tab-search" role="tab"
+                               aria-controls="tab-search" aria-selected="true">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
-                                Search User
-                                </button>
-                            </span>
+                                Search Condition
+                            </a>
+                        </li>
+                        <li class="nav-item text-center" role="presentation">
+                            <a href="#tab-addNewCommonCode" class="inline-flex items-center nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent hover:bg-gray-100 focus:border-transparent"
+                               id="tabs-profile-tabFill" data-bs-toggle="pill" data-bs-target="#tab-addNewCommonCode" role="tab"
+                               aria-controls="tab-addNewCommonCode" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                Add New Common Code
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="tabs-tabContentFill">
+                        <div class="tab-pane fade show active" id="tab-search" role="tabpanel" aria-labelledby="tabs-home-tabFill">
+                            Tab 1 content fill
+                        </div>
+                        <div class="tab-pane fade" id="tab-addNewCommonCode" role="tabpanel" aria-labelledby="tabs-profile-tabFill">
+                            <div class="grid grid-cols-5 gap-4">
+                                <div class="">
+                                    <label for="codeTypeInput" class="form-label inline-block text-gray-700">
+                                        Code Type
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeTypeInput" placeholder="ex: POST_TYPE" />
+                                </div>
+                                <div class="">
+                                    <label for="codeCdInput" class="form-label inline-block text-gray-700">
+                                        Code CD
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeCdInput" placeholder="ex: 01" />
+                                </div>
+                                <div class="">
+                                    <label for="codeNameInput" class="form-label inline-block text-gray-700">
+                                        Code Name
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeNameInput" placeholder="ex: 공지사항" />
+                                </div>
+
+                                <div class="">
+                                    <label for="codeSortInput" class="form-label inline-block text-gray-700">
+                                        Sort
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeSortInput" placeholder="ex: 1" />
+                                </div>
+                                <div class="">
+                                    <label for="codeUseYnSelect" class="form-label inline-block text-gray-700">
+                                        Use Y Or N
+                                    </label>
+                                    <select id="codeUseYnSelect" name="country" autocomplete="country-name" class="block w-full py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                                <div class="col-span-3">
+                                    <label for="codeRemarkInput" class="form-label inline-block text-gray-700">
+                                        Remark
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeRemarkInput" placeholder="Description for Code" />
+                                </div>
+
+                                <div class="pt-6">
+                                    <button type="button" class="inline-flex items-center text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        <!-- Heroicon name: solid/check -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- // Top Tabs End -->
                 </div>
             </div>
             <!-- // Top Search Form Box End -->
@@ -71,7 +115,7 @@
                 <div class="md:w-full mt-5 space-x-5">
                     <div class="">
                         <div class="grid grid-cols-12 flex justify-center">
-                            <h3 class="text-2xl py-5 font-bold col-span-8 text-gray-900">사용자 목록 조회</h3>
+                            <h3 class="text-lg py-5 font-bold col-span-8 text-gray-700 ">Common Code List</h3>
                             <div class="col-span-4 text-right pt-4">
                                 <span>View:</span>
                                 <select id="pageViews" name="country" autocomplete="country-name" class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
