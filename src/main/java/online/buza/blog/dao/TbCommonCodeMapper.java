@@ -14,4 +14,10 @@ public interface TbCommonCodeMapper {
     int updateByPrimaryKeySelective(TbCommonCode record);
 
     int updateByPrimaryKey(TbCommonCode record);
+    
+    List<TbCommonCodeDto> getAllTbCommonCodeList();
+
+    TbCommonCodeDto getTbCommonCodeInfoByCodeId(Integer codeId);
+
+    List<TbCommonCodeDto> lstTbCommonCodeByCodeType(String codeType);
 }
