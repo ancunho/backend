@@ -7,15 +7,19 @@ public class TbCommonCode implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer codeSeq;
 
-    private String codeId;
+    private Integer codeId;
 
     private String codeType;
+
+    private String codeCd;
 
     private String codeName;
 
     private String useYn;
 
     private String sort;
+
+    private String remark;
 
     private String option01;
 
@@ -39,11 +43,11 @@ public class TbCommonCode implements Serializable {
         this.codeSeq = codeSeq;
     }
 
-    public String getCodeId() {
+    public Integer getCodeId() {
         return codeId;
     }
 
-    public void setCodeId(String codeId) {
+    public void setCodeId(Integer codeId) {
         this.codeId = codeId;
     }
 
@@ -53,6 +57,14 @@ public class TbCommonCode implements Serializable {
 
     public void setCodeType(String codeType) {
         this.codeType = codeType;
+    }
+
+    public String getCodeCd() {
+        return codeCd;
+    }
+
+    public void setCodeCd(String codeCd) {
+        this.codeCd = codeCd;
     }
 
     public String getCodeName() {
@@ -77,6 +89,14 @@ public class TbCommonCode implements Serializable {
 
     public void setSort(String sort) {
         this.sort = sort;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getOption01() {
@@ -143,10 +163,12 @@ public class TbCommonCode implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", codeSeq=").append(codeSeq);
         sb.append(", codeId=").append(codeId);
+        sb.append(", codeCd=").append(codeCd);
         sb.append(", codeType=").append(codeType);
         sb.append(", codeName=").append(codeName);
         sb.append(", useYn=").append(useYn);
         sb.append(", sort=").append(sort);
+        sb.append(", remark=").append(remark);
         sb.append(", option01=").append(option01);
         sb.append(", option02=").append(option02);
         sb.append(", option03=").append(option03);
