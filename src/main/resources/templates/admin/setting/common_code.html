@@ -3,6 +3,7 @@
 <head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
 <title>Buza Management System</title>
 <body class="bg-gray-50">
+<script th:src="@{/js/admin/setting.js}"></script>
 <div class="min-h-full font-mono">
     <div th:replace="admin/common/layout::top"></div>
     <div th:replace="admin/common/layout::footer"></div>
@@ -12,7 +13,7 @@
             <div th:replace="admin/setting/setting_submenu::setting_submenu"></div>
         </div>
     </header>
-    <main class="mt-3 ">
+    <main class="mt-3" x-data="initCommonCodeIndex()">
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-white rounded-xl shadow-md">
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
@@ -176,78 +177,7 @@
                                             <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
                                         </td>
                                     </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                            유재석
-                                        </th>
-                                        <td class="py-4 px-6">yujaeseok</td>
-                                        <td class="py-4 px-6">최고관리자</td>
-                                        <td class="py-4 px-6">185****5572</td>
-                                        <td class="py-4 px-6">Man</td>
-                                        <td class="py-4 px-6">jaeseok.1972</td>
-                                        <td class="py-4 px-6">안테나</td>
-                                        <!--                                    <td class="py-4 px-6">1900-01-01 18:23:21</td>-->
-                                        <td class="py-4 px-6 text-right">
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">상세보기</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">메뉴조회</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">정보수정</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                            유재석
-                                        </th>
-                                        <td class="py-4 px-6">yujaeseok</td>
-                                        <td class="py-4 px-6">최고관리자</td>
-                                        <td class="py-4 px-6">185****5572</td>
-                                        <td class="py-4 px-6">Man</td>
-                                        <td class="py-4 px-6">jaeseok.1972</td>
-                                        <td class="py-4 px-6">안테나</td>
-                                        <!--                                    <td class="py-4 px-6">1900-01-01 18:23:21</td>-->
-                                        <td class="py-4 px-6 text-right">
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">상세보기</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">메뉴조회</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">정보수정</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                            유재석
-                                        </th>
-                                        <td class="py-4 px-6">yujaeseok</td>
-                                        <td class="py-4 px-6">최고관리자</td>
-                                        <td class="py-4 px-6">185****5572</td>
-                                        <td class="py-4 px-6">Man</td>
-                                        <td class="py-4 px-6">jaeseok.1972</td>
-                                        <td class="py-4 px-6">안테나</td>
-                                        <!--                                    <td class="py-4 px-6">1900-01-01 18:23:21</td>-->
-                                        <td class="py-4 px-6 text-right">
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">상세보기</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">메뉴조회</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">정보수정</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                            유재석
-                                        </th>
-                                        <td class="py-4 px-6">yujaeseok</td>
-                                        <td class="py-4 px-6">최고관리자</td>
-                                        <td class="py-4 px-6">185****5572</td>
-                                        <td class="py-4 px-6">Man</td>
-                                        <td class="py-4 px-6">jaeseok.1972</td>
-                                        <td class="py-4 px-6">안테나</td>
-                                        <!--                                    <td class="py-4 px-6">1900-01-01 18:23:21</td>-->
-                                        <td class="py-4 px-6 text-right">
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">상세보기</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">메뉴조회</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">정보수정</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
-                                        </td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -292,54 +222,10 @@
 
             <!-- // Top Analysis End -->
 
-            <!-- Button trigger modal -->
-            <!-- Button trigger modal -->
-            <!-- Button trigger modal -->
-            <button type="button"
-                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Launch static backdrop modal
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
-                 id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
-                    <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
-                        <div class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-                            <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
-                                Modal title
-                            </h5>
-                            <span data-bs-dismiss="modal" aria-label="Close">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </span>
-
-                        </div>
-                        <div class="modal-body relative p-4">
-                            <div>asdf</div>
-                            <div>asdf</div>
-                            <div>asdf</div>
-                            <div>asdf</div>
-                        </div>
-                        <div class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                            <button type="button" class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                                    data-bs-dismiss="modal">Close</button>
-                            <button type="button"
-                                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
-                                Understood</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- // Main Contents End -->
         </div>
     </main>
 </div>
-<!--<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>-->
 <script th:src="@{/js/tailwind-elements.min.js}"></script>
 </body>
 </html>
