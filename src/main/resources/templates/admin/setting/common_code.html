@@ -13,7 +13,7 @@
             <div th:replace="admin/setting/setting_submenu::setting_submenu"></div>
         </div>
     </header>
-    <main class="mt-3" x-data="initCommonCodeIndex()">
+    <main class="mt-3" x-data="initCommonCodeIndex()" x-init="getMainList()">
         <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-white rounded-xl shadow-md">
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
@@ -68,21 +68,21 @@
                                         Code Type
                                     </label>
                                     <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                           type="text" id="codeTypeInput" placeholder="ex: POST_TYPE" />
+                                           type="text" id="codeTypeInput" x-model="item.codeType" placeholder="ex: POST_TYPE" />
                                 </div>
                                 <div class="">
                                     <label for="codeCdInput" class="form-label inline-block text-gray-700">
                                         Code CD
                                     </label>
                                     <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                           type="text" id="codeCdInput" placeholder="ex: 01" />
+                                           type="text" id="codeCdInput" x-model="item.codeCd" placeholder="ex: 01" />
                                 </div>
                                 <div class="">
                                     <label for="codeNameInput" class="form-label inline-block text-gray-700">
                                         Code Name
                                     </label>
                                     <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                           type="text" id="codeNameInput" placeholder="ex: 공지사항" />
+                                           type="text" id="codeNameInput" x-model="item.codeName" placeholder="ex: 공지사항" />
                                 </div>
 
                                 <div class="">
@@ -90,15 +90,17 @@
                                         Sort
                                     </label>
                                     <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                           type="text" id="codeSortInput" placeholder="ex: 1" />
+                                           type="text" id="codeSortInput" x-model="item.sort" placeholder="ex: 1" />
                                 </div>
                                 <div class="">
                                     <label for="codeUseYnSelect" class="form-label inline-block text-gray-700">
                                         Use Y Or N
                                     </label>
-                                    <select id="codeUseYnSelect" name="country" autocomplete="country-name" class="block w-full py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                    <select id="codeUseYnSelect" name="country" x-model="item.useYn" autocomplete="country-name" class="block w-full py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option value="" disabled>Select status</option>
+                                        <template x-for="item in [{label: 'Yes', value: '1'}, {label: 'No', value: '0'}]">
+                                            <option class="inline-block	h-10" :value="item.value" x-text="item.label"></option>
+                                        </template>
                                     </select>
                                 </div>
                                 <div class="col-span-3">
@@ -106,11 +108,11 @@
                                         Remark
                                     </label>
                                     <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                           type="text" id="codeRemarkInput" placeholder="Description for Code" />
+                                           type="text" id="codeRemarkInput" x-model="item.remark" placeholder="Description for Code" />
                                 </div>
 
                                 <div class="pt-6">
-                                    <button type="button" class="inline-flex items-center text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                    <button type="button" @click="save()" class="inline-flex items-center text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                         <!-- Heroicon name: solid/check -->
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -131,17 +133,8 @@
                 <div class="md:w-full mt-5 space-x-5">
                     <div class="">
                         <div class="grid grid-cols-12 flex justify-center">
-                            <h3 class="text-lg py-5 font-bold col-span-8 text-gray-700 ">Common Code List</h3>
-                            <div class="col-span-4 text-right pt-4">
-                                <span>View:</span>
-                                <select id="pageViews" name="country" autocomplete="country-name" class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                    <option>100</option>
-                                </select>
-                            </div>
+                            <h3 class="text-lg py-5 font-bold col-span-12 text-gray-700 ">Common Code List</h3>
+
                         </div>
                         <div class="overflow-x-auto relative">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -183,35 +176,32 @@
                         </div>
 
                         <!-- Paging Start -->
-                        <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 ">
-                            <div class="flex-1 flex justify-between sm:hidden">
-                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Previous </a>
-                                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Next </a>
+<!--                        x-init="$watch('getMainList()', () => handleInit())" -->
+                        <div class="flex justify-between">
+                            <div class="">
+                                <span>View:</span>
+                                <select id="pageViews" name="country" autocomplete="country-name" class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <template x-for="item in pageParam.pageSizes">
+                                        <option :value="item" x-text="item"></option>
+                                    </template>
+                                </select>
                             </div>
-                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                                <div>
-                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                            <span class="sr-only">Previous</span>
-                                            <!-- Heroicon name: solid/chevron-left -->
-                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                            </svg>
-                                        </a>
-                                        <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-                                        <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 1 </a>
-                                        <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 2 </a>
-                                        <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium"> 3 </a>
-                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                            <span class="sr-only">Next</span>
-                                            <!-- Heroicon name: solid/chevron-right -->
-                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                            </svg>
-                                        </a>
-                                    </nav>
-                                </div>
-                            </div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="flex list-style-none">
+                                    <li class="page-item disabled"><a
+                                            class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none"
+                                            href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
+                                    <template  x-for="(renderedPage,idx) in pageParam.pageCount" :key="idx">
+                                        <li :class="renderedPage === pageParam.page ? 'page-item active' : 'page-item'">
+                                            <a  :class="renderedPage === pageParam.page ? 'cursor-pointer page-link relative block py-1.5 px-3 rounded border-0 bg-blue-600 outline-none transition-all duration-300 rounded text-white hover:text-white hover:bg-blue-600 shadow-md focus:shadow-md'
+                                                        : 'cursor-pointer page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none'"
+                                                @click="handleChangeCurrentPage(renderedPage); " x-text="renderedPage"></a></li>
+                                    </template>
+                                    <li class="page-item">
+                                        <a  class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                                            href="#">Next</a></li>
+                                </ul>
+                            </nav>
                         </div>
                         <!-- //Paging End -->
 

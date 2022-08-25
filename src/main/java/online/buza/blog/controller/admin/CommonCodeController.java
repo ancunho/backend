@@ -25,7 +25,7 @@ public class CommonCodeController {
     private CommonCodeService commonCodeService;
 
     @AdminUserLogin
-    @PostMapping(value = "/proc")
+    @PostMapping(value = "/proc.do")
     public BaseResponse modifyTbCommonCode(HttpServletRequest request, @RequestBody TbCommonCodeDto tbCommonCodeDto) {
         if (StringUtils.isEmpty(tbCommonCodeDto.getCodeName())
                 || StringUtils.isEmpty(tbCommonCodeDto.getCodeCd())
@@ -40,7 +40,8 @@ public class CommonCodeController {
                 tbCommonCode.setCodeType(tbCommonCodeDto.getCodeType());
                 tbCommonCode.setCodeCd(tbCommonCodeDto.getCodeCd());
                 tbCommonCode.setCodeName(tbCommonCodeDto.getCodeName());
-                tbCommonCode.setUseYn(tbCommonCodeDto.getStatus());
+                tbCommonCode.setUseYn(tbCommonCodeDto.getUseYn());
+                tbCommonCode.setSort(tbCommonCodeDto.getSort());
                 tbCommonCode.setRemark(tbCommonCodeDto.getRemark());
                 tbCommonCode.setOption01(tbCommonCodeDto.getOption01());
                 tbCommonCode.setOption02(tbCommonCodeDto.getOption02());
@@ -62,6 +63,7 @@ public class CommonCodeController {
                 tbCommonCode.setCodeCd(tbCommonCodeDto.getCodeCd());
                 tbCommonCode.setCodeName(tbCommonCodeDto.getCodeName());
                 tbCommonCode.setUseYn(tbCommonCodeDto.getStatus());
+                tbCommonCode.setSort(tbCommonCodeDto.getSort());
                 tbCommonCode.setRemark(tbCommonCodeDto.getRemark());
                 tbCommonCode.setOption01(tbCommonCodeDto.getOption01());
                 tbCommonCode.setOption02(tbCommonCodeDto.getOption02());
@@ -83,7 +85,7 @@ public class CommonCodeController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/list.do")
     public BaseResponse getAllTbCommonCodeList(BaseRequest baseRequest) {
         PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
         List<TbCommonCodeDto> returnData = commonCodeService.getAllTbCommonCodeList();
@@ -91,7 +93,7 @@ public class CommonCodeController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/info")
+    @GetMapping(value = "/info.do")
     public BaseResponse getTbCommonCodeInfoByCodeId(@RequestParam("codeId") Integer codeId) {
         if (codeId == null) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -102,7 +104,7 @@ public class CommonCodeController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/type/list")
+    @GetMapping(value = "/type/list.do")
     public BaseResponse lstTbCommonCodeByCodeType(@RequestParam("codeType") String codeType) {
         if (codeType == null || StringUtils.isEmpty(codeType)) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
