@@ -217,6 +217,7 @@
                 ,T1.CODE_TYPE
                 ,T1.CODE_CD
                 ,T1.CODE_NAME
+                ,T1.SORT
                 ,T1.REMARK
                 ,T1.USE_YN
                 ,T1.USE_YN AS STATUS
@@ -240,6 +241,7 @@
                 ,T1.CODE_TYPE
                 ,T1.CODE_CD
                 ,T1.CODE_NAME
+                ,T1.SORT
                 ,T1.REMARK
                 ,T1.USE_YN
                 ,T1.USE_YN AS STATUS
@@ -263,6 +265,7 @@
                 ,T1.CODE_TYPE
                 ,T1.CODE_CD
                 ,T1.CODE_NAME
+                ,T1.SORT
                 ,T1.REMARK
                 ,T1.USE_YN
                 ,T1.USE_YN AS STATUS

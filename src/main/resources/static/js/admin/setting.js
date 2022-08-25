@@ -11,7 +11,7 @@ function initCommonCodeIndex() {
         pageParam: {
             pageCount: 1,
             page: 1, //page
-            limit: 2, //limit
+            limit: 5, //limit
             pageSizes: [15, 30, 50, 100],
             total: 100,
         },
@@ -35,6 +35,7 @@ function initCommonCodeIndex() {
                         title: "Success Save!", text: data.msg, icon: "success", closeOnClickOutside: false,
                     }).then(value => {
                         _this.item = {};
+                        _this.getMainList();
                     });
 
                 })
@@ -55,6 +56,7 @@ function initCommonCodeIndex() {
                         });
                         return;
                     } else {
+                        _this.itemList = data.data;
                         _this.pageParam.total = data.total;
                         _this.handlePaginationInit();
                     }

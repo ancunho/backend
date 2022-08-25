@@ -140,36 +140,42 @@
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="py-3 px-6">사용자이름</th>
-                                    <th scope="col" class="py-3 px-6">아이디</th>
-                                    <th scope="col" class="py-3 px-6">권한명</th>
-                                    <th scope="col" class="py-3 px-6">연락처</th>
-                                    <th scope="col" class="py-3 px-6">성별</th>
-                                    <th scope="col" class="py-3 px-6">Wechat</th>
-                                    <th scope="col" class="py-3 px-6">소속부서</th>
+                                    <th scope="col" class="py-3 px-6">CODE_TYPE</th>
+                                    <th scope="col" class="py-3 px-6">CODE_CD</th>
+                                    <th scope="col" class="py-3 px-6">CODE_NAME</th>
+                                    <th scope="col" class="py-3 px-6">USE</th>
+                                    <th scope="col" class="py-3 px-6">SORT</th>
+                                    <th scope="col" class="py-3 px-6">REMARK</th>
 <!--                                    <th scope="col" class="py-3 px-6">가입일자</th>-->
                                     <th scope="col" class="py-3 px-6 text-right"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                            유재석
-                                        </th>
-                                        <td class="py-4 px-6">yujaeseok</td>
-                                        <td class="py-4 px-6">최고관리자</td>
-                                        <td class="py-4 px-6">185****5572</td>
-                                        <td class="py-4 px-6">Man</td>
-                                        <td class="py-4 px-6">jaeseok.1972</td>
-                                        <td class="py-4 px-6">안테나</td>
-    <!--                                    <td class="py-4 px-6">1900-01-01 18:23:21</td>-->
-                                        <td class="py-4 px-6 text-right">
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">상세보기</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">메뉴조회</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">정보수정</a>
-                                            <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
-                                        </td>
-                                    </tr>
+                                    <template x-for="(item, idx) in itemList" :key="idx">
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <th scope="row" x-text="item.codeType" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                                유재석
+                                            </th>
+                                            <td x-text="item.codeCd"  class="py-4 px-6">yujaeseok</td>
+                                            <td x-text="item.codeName"  class="py-4 px-6">최고관리자</td>
+                                            <template x-if="item.useYn === '1'">
+                                                <td class="py-4 px-6">사용중</td>
+                                            </template>
+                                            <template x-if="item.useYn === '0' || item.useYn === null">
+                                                <td class="py-4 px-6">비사용중</td>
+                                            </template>
+
+                                            <td x-text="item.sort"  class="py-4 px-6">Man</td>
+                                            <td x-text="item.remark"  class="py-4 px-6">jaeseok.1972</td>
+                                            <!--                                    <td class="py-4 px-6">1900-01-01 18:23:21</td>-->
+                                            <td class="py-4 px-6 text-right">
+                                                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">상세보기</a>
+                                                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">메뉴조회</a>
+                                                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">정보수정</a>
+                                                <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
+                                            </td>
+                                        </tr>
+                                    </template>
 
                                 </tbody>
                             </table>
