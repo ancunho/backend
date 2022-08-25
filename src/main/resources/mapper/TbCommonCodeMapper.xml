@@ -5,9 +5,11 @@
         <id column="CODE_SEQ" jdbcType="INTEGER" property="codeSeq"/>
         <result column="CODE_ID" jdbcType="VARCHAR" property="codeId"/>
         <result column="CODE_TYPE" jdbcType="VARCHAR" property="codeType"/>
+        <result column="CODE_CD" jdbcType="VARCHAR" property="codeCd"/>
         <result column="CODE_NAME" jdbcType="VARCHAR" property="codeName"/>
         <result column="USE_YN" jdbcType="VARCHAR" property="useYn"/>
         <result column="SORT" jdbcType="VARCHAR" property="sort"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
         <result column="OPTION01" jdbcType="VARCHAR" property="option01"/>
         <result column="OPTION02" jdbcType="VARCHAR" property="option02"/>
         <result column="OPTION03" jdbcType="VARCHAR" property="option03"/>
@@ -17,8 +19,8 @@
         <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        CODE_SEQ
-        , CODE_ID, CODE_TYPE, CODE_NAME, USE_YN, SORT, OPTION01, OPTION02, OPTION03,
+        CODE_SEQ, CODE_CD
+        , CODE_ID, CODE_TYPE, CODE_NAME, USE_YN, SORT, REMARK, OPTION01, OPTION02, OPTION03,
     OPTION04, OPTION05, CREATETIME, UPDATETIME
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -33,13 +35,13 @@
         where CODE_SEQ = #{codeSeq,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="online.buza.blog.entity.TbCommonCode">
-        insert into tb_common_code (CODE_SEQ, CODE_ID, CODE_TYPE,
-                                    CODE_NAME, USE_YN, SORT,
+        insert into tb_common_code (CODE_SEQ, CODE_ID, CODE_TYPE,, CODE_CD
+                                    CODE_NAME, USE_YN, SORT, REMARK,
                                     OPTION01, OPTION02, OPTION03,
                                     OPTION04, OPTION05, CREATETIME,
                                     UPDATETIME)
-        values (#{codeSeq,jdbcType=INTEGER}, #{codeId,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR},
-                #{codeName,jdbcType=VARCHAR}, #{useYn,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR},
+        values (#{codeSeq,jdbcType=INTEGER}, #{codeId,jdbcType=VARCHAR}, #{codeType,jdbcType=VARCHAR}, #{codeCd,jdbcType=VARCHAR},
+                #{codeName,jdbcType=VARCHAR}, #{useYn,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
                 #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR},
                 #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
                 #{updatetime,jdbcType=TIMESTAMP})
@@ -56,6 +58,9 @@
             <if test="codeType != null">
                 CODE_TYPE,
             </if>
+            <if test="codeCd != null">
+                CODE_CD,
+            </if>
             <if test="codeName != null">
                 CODE_NAME,
             </if>
@@ -64,6 +69,9 @@
             </if>
             <if test="sort != null">
                 SORT,
+            </if>
+            <if test="remark != null">
+                REMARK,
             </if>
             <if test="option01 != null">
                 OPTION01,
@@ -97,6 +105,9 @@
             <if test="codeType != null">
                 #{codeType,jdbcType=VARCHAR},
             </if>
+            <if test="codeCd != null">
+                #{codeCd,jdbcType=VARCHAR},
+            </if>
             <if test="codeName != null">
                 #{codeName,jdbcType=VARCHAR},
             </if>
@@ -105,6 +116,9 @@
             </if>
             <if test="sort != null">
                 #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
             </if>
             <if test="option01 != null">
                 #{option01,jdbcType=VARCHAR},
@@ -138,6 +152,9 @@
             <if test="codeType != null">
                 CODE_TYPE = #{codeType,jdbcType=VARCHAR},
             </if>
+            <if test="codeCd != null">
+                CODE_CD = #{codeCd,jdbcType=VARCHAR},
+            </if>
             <if test="codeName != null">
                 CODE_NAME = #{codeName,jdbcType=VARCHAR},
             </if>
@@ -146,6 +163,9 @@
             </if>
             <if test="sort != null">
                 SORT = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
             </if>
             <if test="option01 != null">
                 OPTION01 = #{option01,jdbcType=VARCHAR},
@@ -175,9 +195,11 @@
         update tb_common_code
         set CODE_ID    = #{codeId,jdbcType=VARCHAR},
             CODE_TYPE  = #{codeType,jdbcType=VARCHAR},
+            CODE_CD  = #{codeCd,jdbcType=VARCHAR},
             CODE_NAME  = #{codeName,jdbcType=VARCHAR},
             USE_YN     = #{useYn,jdbcType=VARCHAR},
             SORT       = #{sort,jdbcType=VARCHAR},
+            REMARK       = #{remark,jdbcType=VARCHAR},
             OPTION01   = #{option01,jdbcType=VARCHAR},
             OPTION02   = #{option02,jdbcType=VARCHAR},
             OPTION03   = #{option03,jdbcType=VARCHAR},
@@ -187,4 +209,73 @@
             UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
         where CODE_SEQ = #{codeSeq,jdbcType=INTEGER}
     </update>
+
+    <select id="getAllTbCommonCodeList" resultType="online.buza.blog.dto.TbCommonCodeDto">
+        <![CDATA[
+        SELECT 	ROW_NUMBER() OVER() AS RN
+                ,T1.CODE_ID
+                ,T1.CODE_TYPE
+                ,T1.CODE_CD
+                ,T1.CODE_NAME
+                ,T1.REMARK
+                ,T1.USE_YN
+                ,T1.USE_YN AS STATUS
+                ,CASE WHEN T1.USE_YN = 1 THEN '使用中' WHEN T1.USE_YN = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM 	TB_COMMON_CODE T1
+        ORDER BY CODE_TYPE,CODE_CD
+        ]]>
+    </select>
+
+    <select id="getTbCommonCodeInfoByCodeId" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.TbCommonCodeDto">
+        <![CDATA[
+        SELECT 	ROW_NUMBER() OVER() AS RN
+                ,T1.CODE_ID
+                ,T1.CODE_TYPE
+                ,T1.CODE_CD
+                ,T1.CODE_NAME
+                ,T1.REMARK
+                ,T1.USE_YN
+                ,T1.USE_YN AS STATUS
+                ,CASE WHEN T1.USE_YN = 1 THEN '使用中' WHEN T1.USE_YN = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM 	TB_COMMON_CODE T1
+        WHERE   T1.CODE_ID = #{codeId}
+        ]]>
+    </select>
+
+    <select id="lstTbCommonCodeByCodeType" parameterType="java.lang.String" resultType="online.buza.blog.dto.TbCommonCodeDto">
+        <![CDATA[
+        SELECT 	ROW_NUMBER() OVER() AS RN
+                ,T1.CODE_ID
+                ,T1.CODE_TYPE
+                ,T1.CODE_CD
+                ,T1.CODE_NAME
+                ,T1.REMARK
+                ,T1.USE_YN
+                ,T1.USE_YN AS STATUS
+                ,CASE WHEN T1.USE_YN = 1 THEN '使用中' WHEN T1.USE_YN = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM 	TB_COMMON_CODE T1
+        WHERE   T1.CODE_TYPE = #{codeType}
+        ]]>
+    </select>
 </mapper>
