@@ -110,6 +110,9 @@
 /*    border-width: 1px;*/
 /*}*/
 
+::selection {
+    background:#64748b; color:#fff;
+}
 
 
 
