@@ -151,7 +151,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <template x-for="(item, idx) in itemList" :key="idx">
+                                    <template x-for="item in itemList" :key="item.rn">
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <th scope="row" x-text="item.codeType" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                                 유재석
@@ -161,7 +161,7 @@
                                             <template x-if="item.useYn === '1'">
                                                 <td class="py-4 px-6">사용중</td>
                                             </template>
-                                            <template x-if="item.useYn === '0' || item.useYn === null">
+                                            <template x-if="item.useYn === '0' || item.useYn === null || item.useYn === ''">
                                                 <td class="py-4 px-6">비사용중</td>
                                             </template>
 
@@ -182,7 +182,6 @@
                         </div>
 
                         <!-- Paging Start -->
-<!--                        x-init="$watch('getMainList()', () => handleInit())" -->
                         <div class="flex justify-between">
                             <div class="">
                                 <span>View:</span>
@@ -197,7 +196,7 @@
                                     <li class="page-item disabled"><a
                                             class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none"
                                             href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
-                                    <template  x-for="(renderedPage,idx) in pageParam.pageCount" :key="idx">
+                                    <template  x-for="renderedPage in pageParam.pageCount">
                                         <li :class="renderedPage === pageParam.page ? 'page-item active' : 'page-item'">
                                             <a  :class="renderedPage === pageParam.page ? 'cursor-pointer page-link relative block py-1.5 px-3 rounded border-0 bg-blue-600 outline-none transition-all duration-300 rounded text-white hover:text-white hover:bg-blue-600 shadow-md focus:shadow-md'
                                                         : 'cursor-pointer page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none'"
