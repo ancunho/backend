@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">-->
 <!--    <script src="https://cdn.tailwindcss.com"></script>-->
-    <script th:src="@{/js/tailwind.js}"></script>
+<!--    <link rel="stylesheet" th:href="@{/css/viewuiplus.min.css}">-->
+<!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" th:href="@{/css/element-ui.2.15.7.min.css}">
+<!--    <script th:src="@{/js/tailwind.js}"></script>-->
     <script th:src="@{/js/browser.min.js}"></script>
     <script th:src="@{/js/polyfill.min.js}"></script>
-    <script th:src="@{/js/vue.3.2.37.min.js}"></script>
+    <script th:src="@{/js/vue.2.7.10.min.js}"></script>
+    <!--    <script th:src="@{/js/vue.3.2.37.min.js}"></script>-->
     <script th:src="@{/js/jquery.min.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/js/viewuiplus.min.js}"></script>-->
+    <script th:src="@{/js/element-ui.2.15.7.min.js}"></script>
     <script th:src="@{/js/axios.min.js}"></script>
     <script defer th:src="@{/js/sweetalert.js}"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
@@ -22,6 +28,9 @@
 <body>
 
 <div id="app" class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <el-button :plain="true" @click="open">打开消息提示</el-button>
+    <!--    <i-button @click="show">Click me!</i-button>-->
+
     <div class="max-w-md w-full space-y-8">
         <div>
 <!--            <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"-->
@@ -81,28 +90,27 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        Vue.createApp({
-            data() {
+    // $(document).ready(function() {
+        new Vue({
+            el: '#app',
+            data: function() {
                 return {
+                    visible: false,
                     defaultValue: {
-                        username: '1111111',
-                        password: '111',
-                        captchaCode: '',
-                        captchaKey: '',
+                        username: '111444',
+                        password: '111333',
+                        captchaCode: '1112222',
+                        captchaKey: '11111'
                     }
                 }
             },
-            mounted() {
-                const _this = this;
-                _this.defaultValue.username = '222';
-                _this.defaultValue.password = '222';
-            },
-            methods() {
-
+            methods: {
+                open() {
+                    this.$message('这是一条消息提示');
+                },
             }
-        }).mount('#app');
-    });
+        })
+    // });
 </script>
 </body>
 </html>

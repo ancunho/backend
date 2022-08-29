@@ -53,7 +53,7 @@ public class AdminPageController {
     @PassLogin
     @RequestMapping(value = "/login.ahn")
     public String admin_login(Model model, HttpServletRequest request, HttpServletResponse response) {
-        return "admin/login_new_new";
+        return "admin/login_new_new_new";
     }
 
     @PassLogin
