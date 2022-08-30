@@ -26,50 +26,53 @@
             </div>
             <!-- // Top Search Form Box End -->
             <!-- Result List Start -->
-            <div class="flex sm:flex-none">
-                <div class="md:w-full mt-5 space-x-5">
-                    <div class="">
-                        <div class="overflow-x-auto relative">
-                            <el-table v-bind:data="userList" style="width: 100%; margin-top: 1.5rem;">
-                                <el-table-column prop="userSeq" label="userSeq" v-if="false"></el-table-column>
-                                <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>
-                                <el-table-column prop="username" label="Username" width="100"></el-table-column>
-                                <el-table-column prop="realname" label="RealName" width="150"></el-table-column>
-                                <el-table-column prop="status" align="center" label="Status" width="120">
-                                    <template slot-scope="scope">
-                                        <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>
-                                        <el-tag type="success" v-if="scope.row.status == '1'"> {{ scope.row.statusName }} </el-tag>
-                                    </template>
-                                </el-table-column>
-                                <el-table-column prop="createtime" label="CreateTime" width="220"></el-table-column>
-                                <el-table-column prop="updatetime" label="UpdateTime" width="220"></el-table-column>
-                                <el-table-column label="Action" align="center" >
-                                    <template slot-scope="scope">
-                                        <el-button v-on:click="handleOpenDrawer(scope.row)" type="primary" icon="el-icon-edit-outline">修改信息</el-button>
-                                        <el-button v-on:click="getRoleHandler(scope.row)" type="info" icon="el-icon-lock">编辑权限</el-button>
-                                        <!--          <el-button @click="getRoleHandler(scope.row)" type="danger" icon="el-icon-delete">删除</el-button>-->
-                                    </template>
-                                </el-table-column>
-                            </el-table>
-                        </div>
-                        <el-row style="margin: 2rem 0;">
-                            <el-col :span="12" :offset="6">
-                                <el-pagination
-                                        v-on:size-change="handleSizeChange"
-                                        v-on:current-change="handleCurrentChange"
-                                        v-bind:current-page="currentPage"
-                                        v-bind:page-sizes="pageSizes"
-                                        v-bind:page-size="pageSize"
-                                        layout="total, sizes, prev, pager, next, jumper"
-                                        v-bind:total="total">
-                                </el-pagination>
-                            </el-col>
-                        </el-row>
-
-                    </div>
-
+            <div class="">
+                <div style="text-align: right;">
+                    <el-button size="small" icon="el-icon-plus" v-on:click="handleDrawerOpen" style="text-align: right;">Add New User</el-button>
                 </div>
+                <div class="overflow-x-auto relative">
+                    <el-table v-bind:data="userList" style="width: 100%; margin-top: 1.5rem;">
+                        <el-table-column prop="userSeq" label="userSeq" v-if="false"></el-table-column>
+                        <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>
+                        <el-table-column prop="username" label="Username" width="100"></el-table-column>
+                        <el-table-column prop="realname" label="RealName" width="150"></el-table-column>
+                        <el-table-column prop="status" align="center" label="Status" width="120">
+                            <template slot-scope="scope">
+                                <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>
+                                <el-tag type="success" v-if="scope.row.status == '1'"> {{ scope.row.statusName }} </el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="createtime" label="CreateTime" width="220"></el-table-column>
+                        <el-table-column prop="updatetime" label="UpdateTime" width="220">
+                            <template slot-scope="scope">
+                                {{ scope.row.updatetime || '-' }}
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="Action" align="center" >
+                            <template slot-scope="scope">
+                                <el-button v-on:click="handleDrawerOpen(scope.row)" type="primary" size="small" icon="el-icon-edit-outline">修改信息</el-button>
+                                <el-button v-on:click="getRoleHandler(scope.row)" type="info" size="small" icon="el-icon-lock">编辑权限</el-button>
+                                <!--          <el-button @click="getRoleHandler(scope.row)" type="danger" icon="el-icon-delete">删除</el-button>-->
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <el-row style="margin: 2rem 0;">
+                    <el-col :span="12" :offset="6">
+                        <el-pagination
+                                v-on:size-change="handleSizeChange"
+                                v-on:current-change="handleCurrentChange"
+                                v-bind:current-page="currentPage"
+                                v-bind:page-sizes="pageSizes"
+                                v-bind:page-size="pageSize"
+                                layout="total, sizes, prev, pager, next, jumper"
+                                v-bind:total="total">
+                        </el-pagination>
+                    </el-col>
+                </el-row>
+
             </div>
+
             <!-- // Result List End -->
 
             <!-- // Main Contents End -->
@@ -93,6 +96,10 @@
                         </el-form-item>
                         <el-form-item label="密码" v-if="selectedItem.userSeq == null">
                             <el-input v-model="selectedItem.password"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="确认密码" v-if="selectedItem.userSeq == null">
+                            <el-input v-model="selectedItem.confirmPassword"></el-input>
                         </el-form-item>
                         <el-form-item label="真实姓名">
                             <el-input v-model="selectedItem.realname"></el-input>
@@ -122,7 +129,7 @@
                     </el-form>
                 </div>
                 <el-button type="danger" v-on:click="drawerHide">取 消</el-button>
-                <el-button type="primary" v-if="modalType == 1" v-on:click="saveUser(modifyUserItem)">保存用户</el-button>
+                <el-button type="primary" v-if="modalType == 1" v-on:click="saveItem(selectedItem)">保存用户</el-button>
                 <el-button type="info" v-if="modalType == 2" v-on:click="saveUserRole(modifyUserItem.id)">保存用户权限</el-button>
             </div>
         </el-drawer>
@@ -174,11 +181,16 @@
                 handleTabClick(tab, event) {
                     console.log(tab, event);
                 },
-                handleOpenDrawer(row) {
+                handleDrawerOpen(row) {
                     const _this = this;
-                    _this.drawerTitle = row.username + "'s modify";
+                    if (Tool.isEmpty(row.userSeq)) {
+                        _this.drawerTitle = "Add New User";
+                        _this.selectedItem = {};
+                    } else {
+                        _this.drawerTitle = row.username + "'s modify";
+                        _this.getMainDetail(row.userSeq);
+                    }
                     _this.drawer = true;
-                    _this.getMainDetail(row.userSeq);
                 },
                 handleDrawerClose(done) {
                     this.$confirm('确认关闭？')
@@ -186,6 +198,27 @@
                             done();
                         })
                         .catch(_ => {});
+                },
+                drawerHide() {
+                    let _this = this;
+                    _this.drawer = false;
+                    _this.selectedItem = {};
+                },
+                saveItem(item) {
+                    const _this = this;
+                    if (item.password !== item.confirmPassword) {
+                        _this.$message.error("2次密码输入不匹配");
+                        _this.selectedItem.password = '';
+                        _this.selectedItem.confirmPassword = '';
+                        return;
+                    }
+                    // axios.post("/api/setting/user/create.do", _this.selectedItem)
+                    // .then(response => {
+                    //     console.log(response);
+                    // })
+                    // .catch(error => {
+                    //
+                    // });
                 },
                 getMainList() {
                     let _this = this;
@@ -217,11 +250,7 @@
                         _this.$message.error("Axios Error!");
                     });
                 },
-                drawerHide() {
-                    let _this = this;
-                    _this.drawer = false;
-                    _this.selectedItem = {};
-                },
+
             }
         });
     });

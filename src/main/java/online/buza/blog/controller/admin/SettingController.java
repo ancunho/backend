@@ -43,5 +43,18 @@ public class SettingController {
         return BaseResponse.valueOfSuccess(sysUserDtoDetail);
     }
 
+    @AdminUserLogin
+    @PostMapping(value = "/user/create.do")
+    public BaseResponse user_create(BaseRequest baseRequest, @RequestBody SysUserDto sysUserDto) {
+        if (sysUserDto == null) {
+            return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        SysUserDto sysUserDtoDetail = adminUserService.selectSysUserDtoByUserSeq(sysUserDto.getUserSeq());
+        return BaseResponse.valueOfSuccess(sysUserDtoDetail);
+    }
+
+
+
 
 }
