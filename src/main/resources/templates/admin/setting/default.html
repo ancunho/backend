@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="bg-gray-50">
+<div class="min-h-full font-mono">
+    <div th:replace="admin/common/layout::top"></div>
+    <div th:replace="admin/common/layout::footer"></div>
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">
+            <h1 class="text-xl font-bold text-gray-900 col-span-4">Setting - 사용자 관리</h1>
+            <div th:replace="admin/setting/setting_submenu::setting_submenu"></div>
+        </div>
+    </header>
+    <main class="mt-3" id="app">
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-white rounded-xl shadow-md">
+            <!-- Main Contents Start -->
+            <!-- Top Search Form Box Start -->
+            <div class="">
+
+            </div>
+            <!-- // Top Search Form Box End -->
+            <!-- Top Analysis Start -->
+
+            <div class="flex sm:flex-none">
+                <div class="md:w-full mt-5 space-x-5">
+                    <div class="">
+                        <div class="grid grid-cols-12 flex justify-center">
+                            <h3 class="text-2xl py-5 font-bold col-span-8 text-gray-900">사용자 목록 조회</h3>
+                            <div class="col-span-4 text-right pt-4">
+                                <span>View:</span>
+                                <select id="pageViews" name="country" autocomplete="country-name" class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option>5</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>50</option>
+                                    <option>100</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto relative">
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- // Top Analysis End -->
+
+
+            <!-- // Main Contents End -->
+        </div>
+    </main>
+</div>
+<!--<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>-->
+<script th:src="@{/js/tailwind-elements.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        new Vue({
+            el: '#app'
+        });
+    });
+</script>
+</body>
+</html>
