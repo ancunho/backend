@@ -1,15 +1,10 @@
 package online.buza.blog.controller.admin;
 
-import com.github.pagehelper.PageHelper;
 import com.google.code.kaptcha.Producer;
 import lombok.extern.slf4j.Slf4j;
-import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
-import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.Const;
-import online.buza.blog.dto.SysUserDto;
-import online.buza.blog.service.AdminUserService;
 import online.buza.blog.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -31,19 +25,10 @@ import java.util.UUID;
 public class AdminCommonController {
 
     @Autowired
-    private AdminUserService adminUserService;
-
-    @Autowired
     private Producer producer;
 
     @Autowired
     public RedisUtil redisUtil;
-
-//    public AdminCommonController(AdminUserService adminUserService, Producer producer, RedisUtil redisUtil) {
-//        this.adminUserService = adminUserService;
-//        this.producer = producer;
-//        this.redisUtil = redisUtil;
-//    }
 
     @PassLogin
     @GetMapping("/captcha.do")
@@ -75,12 +60,5 @@ public class AdminCommonController {
     }
 
 
-    @AdminUserLogin
-    @PostMapping(value = "/user/list.do")
-    public BaseResponse user_list(BaseRequest baseRequest, @RequestBody SysUserDto sysUserDto) {
-        PageHelper.startPage(baseRequest.getPage(), baseRequest.getRows());
-        List<SysUserDto> lstSysUserDto = adminUserService.selectSysUserDtoByPaging(sysUserDto);
-        return BaseResponse.valueOfSuccessList(lstSysUserDto);
-    }
 
 }

@@ -386,4 +386,39 @@
         AND     T1.PASSWORD = #{password}
     </select>
 
+    <select id="selectSysUserDtoByUserSeq" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.SysUserDto">
+        <![CDATA[
+        SELECT  T1.USER_SEQ
+                 , T1.USERNAME
+                 , T1.ROLE_NO
+                 , T1.STATUS
+                 , CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                 , T1.USER_TYPE
+                 , T1.REALNAME
+                 , T1.COMPANY
+                 , T1.COMPANY_TYPE
+                 , T1.MOBILE_NO
+                 , T1.EMAIL
+                 , T1.SEX
+                 , T1.BIRTHDAY
+                 , T1.WECHAT
+                 , T1.PROVINCE_CODE
+                 , T1.CITY_CODE
+                 , T1.DISTRICT_CODE
+                 , T1.ADDRESS
+                 , T1.QUESTION
+                 , T1.ANSWER
+                 , T1.IMAGE_PHOTO
+                 , T1.OPTION01
+                 , T1.OPTION02
+                 , T1.OPTION03
+                 , T1.OPTION04
+                 , T1.OPTION05
+                 , DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
+                 , DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
+        FROM SYS_USER T1
+        WHERE   T1.USER_SEQ = #{userSeq}
+        ]]>
+    </select>
+
 </mapper>

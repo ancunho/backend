@@ -15,6 +15,7 @@ public interface AdminUserService {
     public Boolean updateSysUser(SysUser sysUser);
 
     public List<SysUserDto> selectSysUserDtoByPaging(SysUserDto sysUserDto);
+    public SysUserDto selectSysUserDtoByUserSeq(Integer userSeq);
 
 
 

@@ -82,4 +82,14 @@ public class AdminCommonServiceImpl implements AdminUserService {
         return lstSysUserDto;
     }
 
+    /**
+     * UserSeq로 유저상세정보 가져오기
+     * @param userSeq
+     * @return
+     */
+    public SysUserDto selectSysUserDtoByUserSeq(Integer userSeq) {
+        return sysUserMapper.selectSysUserDtoByUserSeq(userSeq);
+    }
+
+
 }

@@ -27,4 +27,6 @@ public interface SysUserMapper {
     List<SysUserDto> getRoleListByUserSeq(Integer userSeq);
 
     SysUserDto getSysUserByUsernameAndPassword(SysUserDto sysUserDto);
+
+    SysUserDto selectSysUserDtoByUserSeq(Integer userSeq);
 }
