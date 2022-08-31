@@ -88,27 +88,17 @@
         <el-drawer
                 v-bind:title="drawerTitle"
                 v-bind:visible.sync="drawer"
-                direction="rtl" size="50%"
+                direction="rtl" size="80%"
                 v-bind:before-close="handleDrawerClose">
             <div class="drawer-container" style="padding: 20px;">
                 <div v-if="modalType == 1">
                     <input type="hidden" v-model="selectedItem.userSeq" />
                     <el-form ref="form" label-width="80px">
-                        <el-form-item label="ID" v-if="selectedItem.userSeq != null">
-                            <el-input v-model="selectedItem.userSeq" disabled></el-input>
+                        <el-form-item label="ID" v-if="selectedItem.postId != null">
+                            <el-input v-model="selectedItem.postId" disabled></el-input>
                         </el-form-item>
-                        <el-form-item label="用户名">
-                            <el-input v-model="selectedItem.username"></el-input>
-                        </el-form-item>
-                        <el-form-item label="密码" v-if="selectedItem.userSeq == null">
-                            <el-input v-model="selectedItem.password"></el-input>
-                        </el-form-item>
-
-                        <el-form-item label="确认密码" v-if="selectedItem.userSeq == null">
-                            <el-input v-model="selectedItem.confirmPassword"></el-input>
-                        </el-form-item>
-                        <el-form-item label="真实姓名">
-                            <el-input v-model="selectedItem.realname"></el-input>
+                        <el-form-item label="标题">
+                            <el-input v-model="selectedItem.postTitle"></el-input>
                         </el-form-item>
                         <el-form-item label="是否激活">
                             <el-switch v-model="selectedItem.status"></el-switch>
