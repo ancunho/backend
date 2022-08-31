@@ -114,7 +114,7 @@ public class PostController extends CommonController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/info.do")
+    @GetMapping(value = "/detail.do")
     public BaseResponse getTbPostByPostId(@RequestParam("postId") Integer postId) {
         if (postId == null) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
