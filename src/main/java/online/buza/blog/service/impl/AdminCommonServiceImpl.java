@@ -73,6 +73,19 @@ public class AdminCommonServiceImpl implements AdminUserService {
     }
 
     /**
+     * 删除用户信息
+     * @param userSeq
+     * @return
+     */
+    public Boolean deleteSysUser(Integer userSeq) {
+        int deleteCount = sysUserMapper.deleteByPrimaryKey(userSeq);
+        if (deleteCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 获取用户列表
      * @param sysUserDto
      * @return

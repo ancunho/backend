@@ -384,6 +384,7 @@
         FROM    SYS_USER T1
         WHERE   T1.USERNAME = #{username}
         AND     T1.PASSWORD = #{password}
+        AND     T1.STATUS = '1'
     </select>
 
     <select id="selectSysUserDtoByUserSeq" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.SysUserDto">
