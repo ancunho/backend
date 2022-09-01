@@ -287,14 +287,9 @@
         SELECT 	ROW_NUMBER() OVER() AS RN
                 ,T1.POST_ID
                 ,T1.POST_TYPE
-                ,(
-                SELECT  A1.CODE_NAME
-                FROM    TB_COMMON_CODE A1
-                WHERE   A1.CODE_CD = T1.POST_TYPE
-                AND     A1.CODE_TYPE = 'POST_TYPE'
-                ) AS POST_TYPE_NAME
+                ,'test_POST_TYPE_NAME' AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
-                ,(SELECT A1.CATEGORY_NAME FROM TB_CATEGORY A1 WHERE A1.CATEGORY_ID = T1.POST_CATEGORY_ID) AS POST_CATEGORY_NAME
+                ,'test_POST_CATEGORY_NAME' AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
                 ,T1.POST_CONTENT
                 ,T1.EVENT_START_TIME
