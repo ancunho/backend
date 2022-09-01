@@ -3,9 +3,9 @@
 <head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
 <title>Buza Management System</title>
 <body class="bg-gray-50">
-<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+<!--<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">-->
 <!--<script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>-->
-<script th:src="@{/js/wangEditor.5.1.15.js}"></script>
+<!--<script th:src="@{/js/wangEditor.5.1.15.js}"></script>-->
 <!--<script th:src="@{/js/wangEditor-for-vue.js}"></script>-->
 <div class="min-h-full font-mono">
     <div th:replace="admin/common/layout::top"></div>
@@ -42,10 +42,10 @@
                 </div>
                 <div class="overflow-x-auto relative">
                     <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">
-                        <el-table-column prop="postId" label="userSeq" v-if="false"></el-table-column>
+                        <el-table-column prop="postId" label="postId" v-if="false"></el-table-column>
                         <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>
-                        <el-table-column prop="postAuthor" label="Username" width="100"></el-table-column>
-                        <el-table-column prop="postTitle" label="RealName" width="150"></el-table-column>
+                        <el-table-column prop="postAuthor" label="postAuthor" width="100"></el-table-column>
+                        <el-table-column prop="postTitle" label="postTitle" width="150"></el-table-column>
                         <el-table-column prop="status" align="center" label="Status" width="120">
                             <template slot-scope="scope">
                                 <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>
@@ -60,7 +60,7 @@
                         </el-table-column>
                         <el-table-column label="Action" align="center" >
                             <template slot-scope="scope">
-                                <el-button type="primary" v-on:click="handleDrawerOpen(scope.row)" icon="el-icon-edit" circle></el-button>
+                                <el-button type="primary" v-on:click="handleDispatcherModify(scope.row.postId)" icon="el-icon-edit" circle></el-button>
                                 <el-button type="danger" v-on:click="handleConfirmOpen(scope.row.postId)" icon="el-icon-delete" circle></el-button>
                             </template>
                         </el-table-column>
@@ -182,8 +182,11 @@
                         })
                         .catch(_ => {});
                 },
-                handleConfirmOpen(userSeq) {
-                    console.log(userSeq);
+                handleDispatcherModify(postId) {
+                    BuzaRouter("/admin/post/create.ahn?postId=" + postId);
+                },
+                handleConfirmOpen(postId) {
+                    console.log(postId);
                     const _this = this;
                     _this.$confirm('确定删除此用户信息吗, 是否继续?', '提示', {
                         confirmButtonText: '确定',

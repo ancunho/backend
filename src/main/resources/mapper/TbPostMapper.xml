@@ -252,9 +252,7 @@
             <if test="createTime != null">
                 CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
-                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
+                UPDATE_TIME = now()
         </set>
         where POST_ID = #{postId,jdbcType=INTEGER}
     </update>

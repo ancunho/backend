@@ -6,13 +6,13 @@
 <link th:href="@{/css/wangEditor.min.css}" type="text/css" rel="stylesheet">
 <script th:src="@{/js/wangEditor.5.1.15.js}"></script>
 <!--<script th:src="@{/js/admin/post.js}"></script>-->
-<div class="min-h-full font-mono">
+<div class="min-h-full font-mono" id="app" v-loading="loading">
     <div th:replace="admin/common/layout::top"></div>
     <div th:replace="admin/common/layout::footer"></div>
     <header class="header-top">
         <!--        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">-->
         <div class="header-container ">
-            <h3>Setting - 포스트 Craete</h3>
+            <h3>Setting - Post {{ postId == '' ? 'Create' : 'Modify' }}</h3>
             <!--            <div class="header-container-menu">-->
             <!--                <a href="/admin/setting.ahn" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">사용자관리</a>-->
             <!--                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">권한관리</a>-->
@@ -21,11 +21,10 @@
             <!--            </div>-->
         </div>
     </header>
-    <main class="main-container" id="app">
+    <main class="main-container">
         <input type="hidden" th:value="${postId}" class="initPostId" />
         <div class="">
             <!-- Main Contents Start -->
-<!--            <input type="hidden" v-model="selectedItem.userSeq" />-->
             <el-form v-bind:inline="true" label-width="80px">
                 <el-form-item label="是否发布">
                     <el-switch v-model="selectedItem.status"></el-switch>
@@ -63,7 +62,7 @@
     #editor-container { height: 400px; }
 </style>
 <script type="text/javascript">
-    $(document).ready(function() {
+    // $(document).ready(function() {
         new Vue({
             el: '#app',
             data() {
@@ -82,6 +81,8 @@
                 _this.postId = $(".initPostId").val();
                 if (!Tool.isEmpty(_this.postId)) {
                     _this.getDetail(_this.postId);
+                } else {
+                    _this.loading = false;
                 }
             },
             methods: {
@@ -89,23 +90,39 @@
                     let _this = this;
                     axios.get("/api/post/detail.do?postId=" + postId)
                     .then(response => {
-                        _this.selectedItem.postTitle = response.data.data.postTitle;
+                        console.log(response);
+                        if (response.data.count !== 0 || response.data.data === undefined) {
+                            _this.$alert('点击确定返回列表页', 'Error', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    BuzaRouter("/admin/post.ahn");
+                                }
+                            });
+                        } else {
+                            _this.selectedItem.postTitle = response.data.data.postTitle;
+                            _this.selectedItem.status = response.data.data.status === "1" ? true : false;
+                            editor.setHtml(response.data.data.postContent);
+                        }
+                        _this.loading = false;
                     })
                     .catch(error => {
-                        console.log(error);
+                        _this.loading = false;
+                        _this.$message.error("Error!");
                     });
                 },
                 saveItem(item) {
-                    console.log(editor.getHtml());
                     const _this = this;
                     if (Tool.isEmpty(item.postId)) {
                         if(Tool.isEmpty(item.postTitle)) { _this.$message.info("username必填"); return; }
                     }
-
+                    _this.loading = true;
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
                     _this.selectedItem.postType = "01";
+                    _this.selectedItem.postContent = editor.getHtml();
+                    _this.selectedItem.postId = _this.postId;
                     axios.post("/api/post/proc.do", _this.selectedItem)
                         .then(response => {
+                            _this.loading = false;
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);
                             } else {
@@ -115,17 +132,18 @@
                                     callback: action => {
                                         BuzaRouter("/admin/post.ahn");
                                     }
-                                })
+                                });
 
                             }
                         })
                         .catch(error => {
+                            _this.loading = false;
                             _this.$message.error("Request Error!")
                         });
                 }
             }
         });
-    });
+    // });
 </script>
 <script>
     const { createEditor, createToolbar } = window.wangEditor;

@@ -5,6 +5,8 @@ import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.dto.SysUserDto;
+import online.buza.blog.util.Box;
+import online.buza.blog.util.HttpUtility;
 import online.buza.blog.util.Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -85,7 +87,9 @@ public class AdminPageController {
     @AdminUserLogin
     @RequestMapping(value = "/post/create.ahn")
     public String post_create(Model model, HttpServletRequest request, HttpServletResponse response) {
-        return "admin/post/create";
+        Box box = HttpUtility.getBox(request);
+        model.addAttribute("postId", box.get("postId"));
+        return "admin/post/modify";
     }
 
     /**
