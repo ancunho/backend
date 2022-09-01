@@ -7,6 +7,7 @@ import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.controller.common.CommonController;
+import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
 import online.buza.blog.service.PostService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -50,6 +52,8 @@ public class PostController extends CommonController {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
+        HttpSession session = request.getSession();
+        SysUserDto loginUser = (SysUserDto) session.getAttribute("LOGINED_USER");
         try {
             if (tbPostDto.getPostId() == null || "".equals(tbPostDto.getPostId())) {
                 // insert new
@@ -62,7 +66,7 @@ public class PostController extends CommonController {
                 tbPost.setEventEndTime(tbPostDto.getEventEndTime());
                 tbPost.setPostThumbnailBig(tbPostDto.getPostThumbnailBig());
                 tbPost.setPostThumbnailSmall(tbPostDto.getPostThumbnailSmall());
-                tbPost.setPostAuthor("username");
+                tbPost.setPostAuthor(loginUser.getUsername());
                 tbPost.setIsJoin(tbPostDto.getIsJoin());
                 tbPost.setIsNeedPay(tbPostDto.getIsNeedPay());
                 tbPost.setPostPrice(tbPostDto.getPostPrice());
@@ -90,7 +94,7 @@ public class PostController extends CommonController {
                 tbPost.setEventEndTime(tbPostDto.getEventEndTime());
                 tbPost.setPostThumbnailBig(tbPostDto.getPostThumbnailBig());
                 tbPost.setPostThumbnailSmall(tbPostDto.getPostThumbnailSmall());
-                tbPost.setPostAuthor(tbPostDto.getPostAuthor());
+                tbPost.setPostAuthor(loginUser.getUsername());
                 tbPost.setIsJoin(tbPostDto.getIsJoin());
                 tbPost.setIsNeedPay(tbPostDto.getIsNeedPay());
                 tbPost.setPostPrice(tbPostDto.getPostPrice());
