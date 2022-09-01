@@ -3,6 +3,10 @@
 <head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
 <title>Buza Management System</title>
 <body class="bg-gray-50">
+<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+<!--<script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>-->
+<script th:src="@{/js/wangEditor.5.1.15.js}"></script>
+<!--<script th:src="@{/js/wangEditor-for-vue.js}"></script>-->
 <div class="min-h-full font-mono">
     <div th:replace="admin/common/layout::top"></div>
     <div th:replace="admin/common/layout::footer"></div>
@@ -33,9 +37,8 @@
             <!-- Result List Start -->
             <div class="">
                 <div style="text-align: right;">
-<!--                    <el-button size="small" icon="el-icon-plus" v-on:click="handleDrawerOpen" style="text-align: right;">Add New Post</el-button>-->
-<!--                    <a size="small" style="text-align: right;">Add New Post</a>-->
-                    <el-link icon="el-icon-edit" href="/admin/post/create.ahn" type="primary">Add New Post</el-link>
+<!--                    <el-link icon="el-icon-edit" v-on:click="handleDrawerOpen" type="primary">Add New Post</el-link>-->
+                    <el-link icon="el-icon-edit" href="/admin/post/create.ahn" target="_blank" type="primary">Add New Post</el-link>
                 </div>
                 <div class="overflow-x-auto relative">
                     <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">
@@ -97,11 +100,17 @@
                         <el-form-item label="ID" v-if="selectedItem.postId != null">
                             <el-input v-model="selectedItem.postId" disabled></el-input>
                         </el-form-item>
+                        <el-form-item label="是否发布">
+                            <el-switch v-model="selectedItem.status"></el-switch>
+                        </el-form-item>
                         <el-form-item label="标题">
                             <el-input v-model="selectedItem.postTitle"></el-input>
                         </el-form-item>
-                        <el-form-item label="是否激活">
-                            <el-switch v-model="selectedItem.status"></el-switch>
+                        <el-form-item label="Content">
+                            <div id="editor—wrapper">
+                                <div id="toolbar-container"><!-- 工具栏 --></div>
+                                <div id="editor-container"><!-- 编辑器 --></div>
+                            </div>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -132,11 +141,15 @@
                     activeTabName: 'searchTab',
                     drawer: false,
                     drawerTitle: 'Drawer Title',
+
                 }
             },
             created() {
                 const _this = this;
                 this.initMainList();
+            },
+            mounted() {
+
             },
             methods: {
                 handleSizeChange(limit) {
@@ -154,11 +167,11 @@
                 handleDrawerOpen(row) {
                     const _this = this;
                     if (Tool.isEmpty(row.postId)) {
-                        _this.drawerTitle = "Add New User";
+                        _this.drawerTitle = "Add New Post";
                         _this.selectedItem = {};
                     } else {
-                        _this.drawerTitle = row.username + "'s modify";
-                        _this.getMainDetail(row.postId);
+                        _this.drawerTitle = row.postId + "'s modify";
+                        // _this.getMainDetail(row.postId);
                     }
                     _this.drawer = true;
                 },
@@ -208,9 +221,9 @@
                             _this.selectedItem.confirmPassword = '';
                             return;
                         }
-                        if(Tool.isEmpty(item.username)) { _this.$message.info("username必填"); }
-                        if(Tool.isEmpty(item.password)) { _this.$message.info("密码必填"); }
-                        if(Tool.isEmpty(item.realname)) { _this.$message.info("真实姓名必填"); }
+                        if(Tool.isEmpty(item.username)) { _this.$message.info("username必填"); return; }
+                        if(Tool.isEmpty(item.password)) { _this.$message.info("密码必填"); return; }
+                        if(Tool.isEmpty(item.realname)) { _this.$message.info("真实姓名必填"); return; }
                     }
 
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
@@ -259,7 +272,13 @@
 
             }
         });
+
     });
 </script>
+<style>
+    #editor—wrapper { border: 1px solid #ccc; z-index: 100; /* 按需定义 */ }
+    #toolbar-container { border-bottom: 1px solid #ccc; }
+    #editor-container { height: 400px; }
+</style>
 </body>
 </html>
