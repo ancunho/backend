@@ -133,7 +133,7 @@ public class BuzaInterceptor implements HandlerInterceptor {
             tbAccessHist.setParameters(box.toString());
             tbAccessHist.setUseYn("1");
 
-            commonService.insertTbAccessHist(tbAccessHist);
+//            commonService.insertTbAccessHist(tbAccessHist);
         } catch (Exception e) {
             e.printStackTrace();
         }
