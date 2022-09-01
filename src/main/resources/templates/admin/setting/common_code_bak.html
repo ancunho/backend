@@ -1,0 +1,226 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="bg-gray-50">
+<script th:src="@{/js/admin/setting.js}"></script>
+<div class="min-h-full font-mono">
+    <div th:replace="admin/common/layout::top"></div>
+    <div th:replace="admin/common/layout::footer"></div>
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">
+            <h1 class="text-xl font-bold text-gray-900 col-span-4">Setting - 공통코드관리</h1>
+            <div th:replace="admin/setting/setting_submenu::setting_submenu"></div>
+        </div>
+    </header>
+    <main class="mt-3" x-data="initCommonCodeIndex()" x-init="getMainList()">
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-white rounded-xl shadow-md">
+            <!-- Main Contents Start -->
+            <!-- Top Search Form Box Start -->
+            <div class="">
+                <div class=" grid grid-cols-1 rounded-lg shadow-md p-3">
+                    <!-- Top Tabs Start -->
+                    <ul class="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4" id="tabs-tabFill"
+                        role="tablist">
+                        <li class="nav-item text-center" role="presentation">
+                            <a href="#tab-search" class="inline-flex items-center nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent hover:bg-gray-100 focus:border-transparent active" id="tabs-home-tabFill" data-bs-toggle="pill" data-bs-target="#tab-search" role="tab"
+                               aria-controls="tab-search" aria-selected="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                Search
+                            </a>
+                        </li>
+                        <li class="nav-item text-center" role="presentation">
+                            <a href="#tab-addNewCommonCode" class="inline-flex items-center nav-link block font-medium text-xs leading-tight uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent hover:bg-gray-100 focus:border-transparent"
+                               id="tabs-profile-tabFill" data-bs-toggle="pill" data-bs-target="#tab-addNewCommonCode" role="tab"
+                               aria-controls="tab-addNewCommonCode" aria-selected="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                Add New
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="tabs-tabContentFill">
+                        <div class="tab-pane fade show active" id="tab-search" role="tabpanel" aria-labelledby="tabs-home-tabFill">
+                            <div class="grid grid-cols-5 gap-4">
+                                <div class="col-span-3">
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" placeholder="ex: POST_TYPE, 공지사항, 01...." />
+                                </div>
+
+                                <div class="">
+                                    <button type="button" class="inline-flex items-center text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <!-- Heroicon name: solid/check -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab-addNewCommonCode" role="tabpanel" aria-labelledby="tabs-profile-tabFill">
+                            <div class="grid grid-cols-5 gap-4">
+                                <div class="">
+                                    <label for="codeTypeInput" class="form-label inline-block text-gray-700">
+                                        Code Type
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeTypeInput" x-model="item.codeType" placeholder="ex: POST_TYPE" />
+                                </div>
+                                <div class="">
+                                    <label for="codeCdInput" class="form-label inline-block text-gray-700">
+                                        Code CD
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeCdInput" x-model="item.codeCd" placeholder="ex: 01" />
+                                </div>
+                                <div class="">
+                                    <label for="codeNameInput" class="form-label inline-block text-gray-700">
+                                        Code Name
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeNameInput" x-model="item.codeName" placeholder="ex: 공지사항" />
+                                </div>
+
+                                <div class="">
+                                    <label for="codeSortInput" class="form-label inline-block text-gray-700">
+                                        Sort
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeSortInput" x-model="item.sort" placeholder="ex: 1" />
+                                </div>
+                                <div class="">
+                                    <label for="codeUseYnSelect" class="form-label inline-block text-gray-700">
+                                        Use Y Or N
+                                    </label>
+                                    <select id="codeUseYnSelect" name="country" x-model="item.useYn" autocomplete="country-name" class="block w-full py-1.5 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option value="" disabled>Select status</option>
+                                        <template x-for="item in [{label: 'Yes', value: '1'}, {label: 'No', value: '0'}]">
+                                            <option class="inline-block	h-10" :value="item.value" x-text="item.label"></option>
+                                        </template>
+                                    </select>
+                                </div>
+                                <div class="col-span-3">
+                                    <label for="codeRemarkInput" class="form-label inline-block text-gray-700">
+                                        Remark
+                                    </label>
+                                    <input class="form-control inline-block w-full px-1.5 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                           type="text" id="codeRemarkInput" x-model="item.remark" placeholder="Description for Code" />
+                                </div>
+
+                                <div class="pt-6">
+                                    <button type="button" @click="save()" class="inline-flex items-center text-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <!-- Heroicon name: solid/check -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // Top Tabs End -->
+                </div>
+            </div>
+            <!-- // Top Search Form Box End -->
+            <!-- Top Analysis Start -->
+
+            <div class="flex sm:flex-none">
+                <div class="md:w-full mt-5 space-x-5">
+                    <div class="">
+                        <div class="grid grid-cols-12 flex justify-center">
+                            <h3 class="text-lg py-5 font-bold col-span-12 text-gray-700 ">Common Code List</h3>
+
+                        </div>
+                        <div class="overflow-x-auto relative">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6">CODE_TYPE</th>
+                                    <th scope="col" class="py-3 px-6">CODE_CD</th>
+                                    <th scope="col" class="py-3 px-6">CODE_NAME</th>
+                                    <th scope="col" class="py-3 px-6">USE</th>
+                                    <th scope="col" class="py-3 px-6">SORT</th>
+                                    <th scope="col" class="py-3 px-6">REMARK</th>
+<!--                                    <th scope="col" class="py-3 px-6">가입일자</th>-->
+                                    <th scope="col" class="py-3 px-6 text-right"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <template x-for="item in itemList" :key="item.rn">
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <th scope="row" x-text="item.codeType" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                                유재석
+                                            </th>
+                                            <td x-text="item.codeCd"  class="py-4 px-6">yujaeseok</td>
+                                            <td x-text="item.codeName"  class="py-4 px-6">최고관리자</td>
+                                            <template x-if="item.useYn === '1'">
+                                                <td class="py-4 px-6">사용중</td>
+                                            </template>
+                                            <template x-if="item.useYn === '0' || item.useYn === null || item.useYn === ''">
+                                                <td class="py-4 px-6">비사용중</td>
+                                            </template>
+
+                                            <td x-text="item.sort"  class="py-4 px-6">Man</td>
+                                            <td x-text="item.remark"  class="py-4 px-6">jaeseok.1972</td>
+                                            <!--                                    <td class="py-4 px-6">1900-01-01 18:23:21</td>-->
+                                            <td class="py-4 px-6 text-right">
+                                                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">상세보기</a>
+                                                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">메뉴조회</a>
+                                                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500">정보수정</a>
+                                                <a href="#" class="ml-5 text-md font-medium text-red-600 hover:text-red-500">삭제</a>
+                                            </td>
+                                        </tr>
+                                    </template>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Paging Start -->
+                        <div class="flex justify-between">
+                            <div class="">
+                                <span>View:</span>
+                                <select id="pageViews" name="country" autocomplete="country-name" class="mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <template x-for="item in pageParam.pageSizes">
+                                        <option :value="item" x-text="item"></option>
+                                    </template>
+                                </select>
+                            </div>
+                            <nav aria-label="Page navigation example">
+                                <ul class="flex list-style-none">
+                                    <li class="page-item disabled"><a
+                                            class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-500 pointer-events-none focus:shadow-none"
+                                            href="#" tabindex="-1" aria-disabled="true">Previous</a></li>
+                                    <template  x-for="renderedPage in pageParam.pageCount">
+                                        <li :class="renderedPage === pageParam.page ? 'page-item active' : 'page-item'">
+                                            <a  :class="renderedPage === pageParam.page ? 'cursor-pointer page-link relative block py-1.5 px-3 rounded border-0 bg-blue-600 outline-none transition-all duration-300 rounded text-white hover:text-white hover:bg-blue-600 shadow-md focus:shadow-md'
+                                                        : 'cursor-pointer page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none'"
+                                                @click="handleChangeCurrentPage(renderedPage); " x-text="renderedPage"></a></li>
+                                    </template>
+                                    <li class="page-item">
+                                        <a  class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                                            href="#">Next</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- //Paging End -->
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- // Top Analysis End -->
+
+            <!-- // Main Contents End -->
+        </div>
+    </main>
+</div>
+<script th:src="@{/js/tailwind-elements.min.js}"></script>
+</body>
+</html>

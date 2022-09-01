@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class TbCommonCode implements Serializable {
     private static final long serialVersionUID = 1L;
-    private Integer codeSeq;
 
     private Integer codeId;
 
@@ -31,17 +30,9 @@ public class TbCommonCode implements Serializable {
 
     private String option05;
 
-    private Date createtime;
+    private Date createTime;
 
-    private Date updatetime;
-
-    public Integer getCodeSeq() {
-        return codeSeq;
-    }
-
-    public void setCodeSeq(Integer codeSeq) {
-        this.codeSeq = codeSeq;
-    }
+    private Date updateTime;
 
     public Integer getCodeId() {
         return codeId;
@@ -139,20 +130,20 @@ public class TbCommonCode implements Serializable {
         this.option05 = option05;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getUpdatetime() {
-        return updatetime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(Date updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -161,7 +152,6 @@ public class TbCommonCode implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", codeSeq=").append(codeSeq);
         sb.append(", codeId=").append(codeId);
         sb.append(", codeCd=").append(codeCd);
         sb.append(", codeType=").append(codeType);
@@ -174,8 +164,8 @@ public class TbCommonCode implements Serializable {
         sb.append(", option03=").append(option03);
         sb.append(", option04=").append(option04);
         sb.append(", option05=").append(option05);
-        sb.append(", createtime=").append(createtime);
-        sb.append(", updatetime=").append(updatetime);
+        sb.append(", createtime=").append(createTime);
+        sb.append(", updatetime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }

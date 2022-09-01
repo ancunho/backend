@@ -62,7 +62,7 @@ public class CommonCodeController {
                 tbCommonCode.setCodeType(tbCommonCodeDto.getCodeType());
                 tbCommonCode.setCodeCd(tbCommonCodeDto.getCodeCd());
                 tbCommonCode.setCodeName(tbCommonCodeDto.getCodeName());
-                tbCommonCode.setUseYn(tbCommonCodeDto.getStatus());
+                tbCommonCode.setUseYn(tbCommonCodeDto.getUseYn());
                 tbCommonCode.setSort(tbCommonCodeDto.getSort());
                 tbCommonCode.setRemark(tbCommonCodeDto.getRemark());
                 tbCommonCode.setOption01(tbCommonCodeDto.getOption01());
@@ -85,10 +85,10 @@ public class CommonCodeController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/list.do")
-    public BaseResponse getAllTbCommonCodeList(BaseRequest baseRequest) {
+    @PostMapping(value = "/list.do")
+    public BaseResponse getAllTbCommonCodeList(BaseRequest baseRequest, @RequestBody TbCommonCodeDto tbCommonCodeDto) {
         PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
-        List<TbCommonCodeDto> returnData = commonCodeService.getAllTbCommonCodeList();
+        List<TbCommonCodeDto> returnData = commonCodeService.getAllTbCommonCodeList(tbCommonCodeDto);
         return BaseResponse.valueOfSuccessList(returnData);
     }
 
@@ -102,6 +102,21 @@ public class CommonCodeController {
         TbCommonCodeDto tbCommonCodeDto = commonCodeService.getTbCommonCodeInfoByCodeId(codeId);
         return BaseResponse.valueOfSuccess(tbCommonCodeDto);
     }
+
+    @AdminUserLogin
+    @GetMapping(value = "/delete.do")
+    public BaseResponse code_delete(BaseRequest baseRequest, @RequestParam("codeId") Integer codeId) {
+        if (codeId == null || "".equals(String.valueOf(codeId))) {
+            return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        boolean isSuccessDelete = commonCodeService.deleteTbCommonCode(codeId);
+        if (isSuccessDelete) {
+            return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
+        }
+        return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
+    }
+
 
     @AdminUserLogin
     @GetMapping(value = "/type/list.do")

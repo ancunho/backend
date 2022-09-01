@@ -6,19 +6,19 @@ import online.buza.blog.entity.TbCommonCode;
 import java.util.List;
 
 public interface TbCommonCodeMapper {
-    int deleteByPrimaryKey(Integer codeSeq);
+    int deleteByPrimaryKey(Integer codeId);
 
     int insert(TbCommonCode record);
 
     int insertSelective(TbCommonCode record);
 
-    TbCommonCode selectByPrimaryKey(Integer codeSeq);
+    TbCommonCode selectByPrimaryKey(Integer codeId);
 
     int updateByPrimaryKeySelective(TbCommonCode record);
 
     int updateByPrimaryKey(TbCommonCode record);
 
-    List<TbCommonCodeDto> getAllTbCommonCodeList();
+    List<TbCommonCodeDto> getAllTbCommonCodeList(TbCommonCodeDto tbCommonCodeDto);
 
     TbCommonCodeDto getTbCommonCodeInfoByCodeId(Integer codeId);
 
