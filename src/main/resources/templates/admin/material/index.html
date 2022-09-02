@@ -19,99 +19,98 @@
     <main class="main-container" id="app" v-loading="loading">
         <div class="">
             <!-- Main Contents Start -->
-            <!-- Top Search Form Box Start -->
-            <div class="">
-                <el-tabs v-model="activeTabName" type="card" v-on:tab-click="handleTabClick">
-                    <el-tab-pane label="Search" name="searchTab">
-                        <p>asdfdsaf</p>
-                    </el-tab-pane>
-                </el-tabs>
-            </div>
-            <!-- // Top Search Form Box End -->
+            <!-- Top File Upload Box Start -->
+            <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="#this"
+                    v-bind:file-list="fileList"
+                    v-bind:limit="5"
+                    multiple
+                    v-bind:auto-upload="false"
+                    v-bind:on-change="handleOnChange"
+                    v-bind:on-exceed="handleOnExceed"
+                    v-bind:http-request="handleOnUpload"
+            >
+                <el-button slot="trigger" type="primary">1. 选取文件</el-button>
+                <el-button style="margin-left: 10px;" type="success" v-on:click="handleSubmitUpload">2. 上传到服务器</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+            <!-- // Top File Upload Box End -->
+            <!--  paging start  -->
+            <el-row style="margin: 2rem 0;">
+                <el-col v-bind:span="12" v-bind:offset="6">
+                    <el-pagination
+                            v-on:size-change="handleSizeChange"
+                            v-on:current-change="handleCurrentChange"
+                            v-bind:current-page="currentPage"
+                            v-bind:page-sizes="pageSizes"
+                            v-bind:page-size="pageSize"
+                            layout="total, sizes, prev, pager, next, jumper"
+                            v-bind:total="total">
+                    </el-pagination>
+                </el-col>
+            </el-row>
+            <!--  // paging end  -->
             <!-- Result List Start -->
-            <div class="">
-                <div style="text-align: right;">
-<!--                    <el-link icon="el-icon-edit" v-on:click="handleDrawerOpen" type="primary">Add New Post</el-link>-->
-                    <el-link icon="el-icon-edit" href="/admin/post/create.ahn" target="_blank" type="primary">Add New Post</el-link>
-                </div>
-                <div class="overflow-x-auto relative">
-                    <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">
-                        <el-table-column prop="postId" label="postId" v-if="false"></el-table-column>
-                        <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>
-                        <el-table-column prop="postAuthor" label="postAuthor" width="100"></el-table-column>
-                        <el-table-column prop="postTitle" label="postTitle" width="150"></el-table-column>
-                        <el-table-column prop="status" align="center" label="Status" width="120">
-                            <template slot-scope="scope">
-                                <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>
-                                <el-tag type="success" v-if="scope.row.status == '1'"> {{ scope.row.statusName }} </el-tag>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="createTime" label="CreateTime" width="220"></el-table-column>
-                        <el-table-column prop="updateTime" label="UpdateTime" width="220">
-                            <template slot-scope="scope">
-                                {{ scope.row.updateTime || '-' }}
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="Action" align="center" >
-                            <template slot-scope="scope">
-                                <el-button type="primary" v-on:click="handleDispatcherModify(scope.row.postId)" icon="el-icon-edit" circle></el-button>
-                                <el-button type="danger" v-on:click="handleConfirmOpen(scope.row.postId)" icon="el-icon-delete" circle></el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </div>
-                <el-row style="margin: 2rem 0;">
-                    <el-col :span="12" :offset="6">
-                        <el-pagination
-                                v-on:size-change="handleSizeChange"
-                                v-on:current-change="handleCurrentChange"
-                                v-bind:current-page="currentPage"
-                                v-bind:page-sizes="pageSizes"
-                                v-bind:page-size="pageSize"
-                                layout="total, sizes, prev, pager, next, jumper"
-                                v-bind:total="total">
-                        </el-pagination>
-                    </el-col>
-                </el-row>
-
-            </div>
-
+            <el-row v-bind:gutter="20">
+                <el-col v-bind:lg="4" v-bind:xs="12" v-bind:sm="6" v-bind:md="6" v-for="item in arrInitData" v-bind:key="item.fileId" style="margin-bottom: 20px;">
+                    <el-card v-bind:body-style="{ padding: '0px' }" shadow="hover">
+                        <el-image style="width: 100%; height: 200px" v-bind:src="item.fileUrl" fit="contain"></el-image>
+                        <div style="padding: 14px;">
+                            <span style="font-size: .7rem; height: 30px; line-height: 25px; display: inline-block; overflow-y: hidden">{{ item.fileOriginName }}</span>
+                            <div class="bottom clearfix">
+                                <!--                                <time class="time">{{ item.fileName }}</time>-->
+                                <el-button type="text" class="button" v-on:click="handleOpenDrawer(item.fileId)">查看详细</el-button>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
             <!-- // Result List End -->
-
+            <!--  paging start  -->
+            <el-row style="margin: 2rem 0;">
+                <el-col v-bind:span="12" v-bind:offset="6">
+                    <el-pagination
+                            v-on:size-change="handleSizeChange"
+                            v-on:current-change="handleCurrentChange"
+                            v-bind:current-page="currentPage"
+                            v-bind:page-sizes="pageSizes"
+                            v-bind:page-size="pageSize"
+                            layout="total, sizes, prev, pager, next, jumper"
+                            v-bind:total="total">
+                    </el-pagination>
+                </el-col>
+            </el-row>
+            <!--  // paging end  -->
+            <!--  // drawer start  -->
+            <el-drawer
+                    v-loading="loadingDrawer"
+                    title="图片详细信息"
+                    v-bind:visible.sync="isDrawerVisible"
+                    direction="rtl"
+                    size="50%"
+                    v-bind:close-on-press-escape="false"
+            >
+                <p>fileId : {{ itemDetail.fileId }}</p>
+                <p>fileType : {{ itemDetail.fileType || '' }}</p>
+                <p>filePurpose : {{ itemDetail.filePurpose || '-' }}</p>
+                <p>fileOriginName : {{ itemDetail.fileOriginName }}</p>
+                <p>fileName : {{ itemDetail.fileName }}</p>
+                <p>filePath : {{ itemDetail.filePath }}</p>
+                <p>fileBucketName : {{ itemDetail.fileBucketName }}</p>
+                <p>fileBucketObject : {{ itemDetail.fileBucketObject }}</p>
+                <p>fileSize : {{ itemDetail.fileSize }}</p>
+                <p>status : {{ itemDetail.status }}</p>
+                <p>fileExtention : {{ itemDetail.fileExtention }}</p>
+                <p>fileUrl : {{ itemDetail.fileUrl }}</p>
+            </el-drawer>
+            <!--  // drawer end  -->
             <!-- // Main Contents End -->
         </div>
 
         <!-- Drawer Start -->
-        <el-drawer
-                v-bind:title="drawerTitle"
-                v-bind:visible.sync="drawer"
-                direction="rtl" size="80%"
-                v-bind:before-close="handleDrawerClose">
-            <div class="drawer-container" style="padding: 20px;">
-                <div v-if="modalType == 1">
-                    <input type="hidden" v-model="selectedItem.userSeq" />
-                    <el-form ref="form" label-width="80px">
-                        <el-form-item label="ID" v-if="selectedItem.postId != null">
-                            <el-input v-model="selectedItem.postId" disabled></el-input>
-                        </el-form-item>
-                        <el-form-item label="是否发布">
-                            <el-switch v-model="selectedItem.status"></el-switch>
-                        </el-form-item>
-                        <el-form-item label="标题">
-                            <el-input v-model="selectedItem.postTitle"></el-input>
-                        </el-form-item>
-                        <el-form-item label="Content">
-                            <div id="editor—wrapper">
-                                <div id="toolbar-container"><!-- 工具栏 --></div>
-                                <div id="editor-container"><!-- 编辑器 --></div>
-                            </div>
-                        </el-form-item>
-                    </el-form>
-                </div>
-                <el-button type="danger" v-on:click="drawerHide">取 消</el-button>
-                <el-button type="primary" v-if="modalType == 1" v-on:click="saveItem(selectedItem)">保存用户</el-button>
-            </div>
-        </el-drawer>
+
         <!-- // Drawer End -->
 
     </main>
@@ -123,27 +122,29 @@
             el: '#app',
             data() {
                 return {
-                    itemList: [],
-                    modifyUserItem: {},
-                    selectedItem: {},
-                    modalType: 1, // 1:新增权限/修改权限
-                    loading: true,
+                    currentDate: new Date(),
+                    loading: false,
                     currentPage: 1, //page
-                    pageSize: 5, //limit
-                    pageSizes: [5,20,30,50],
+                    pageSize: 2, //limit
+                    pageSizes: [2, 4, 100, 200],
                     total: 100,
-                    activeTabName: 'searchTab',
-                    drawer: false,
-                    drawerTitle: 'Drawer Title',
 
+                    fileList: [],
+                    fileData: '', // 文件上传数据（多文件合一）
+                    imgDeleteURL: '/api/file/handle/single/image/delete',
+                    imgUploadURL: '/api/file/handle/multie/image/upload',
+                    imgDetailURL: '/api/file/handle/info',
+                    initDataListURL: '/api/file/handle/list',
+                    arrInitData: [],
+                    isDrawerVisible: false,
+                    fileId: '',
+                    itemDetail: {},
+                    loadingDrawer: false,
                 }
             },
-            created() {
-                const _this = this;
-                this.initMainList();
-            },
             mounted() {
-
+                let _this = this;
+                _this.initMainList();
             },
             methods: {
                 handleSizeChange(limit) {
@@ -155,118 +156,101 @@
                     this.currentPage = page;
                     this.initMainList();
                 },
-                handleTabClick(tab, event) {
-                    console.log(tab, event);
-                },
-                handleDrawerOpen(row) {
-                    const _this = this;
-                    if (Tool.isEmpty(row.postId)) {
-                        _this.drawerTitle = "Add New Post";
-                        _this.selectedItem = {};
-                    } else {
-                        _this.drawerTitle = row.postId + "'s modify";
-                        // _this.getMainDetail(row.postId);
-                    }
-                    _this.drawer = true;
-                },
-                handleDrawerClose(done) {
-                    this.$confirm('确认关闭？')
-                        .then(_ => {
-                            done();
-                        })
-                        .catch(_ => {});
-                },
-                handleDispatcherModify(postId) {
-                    BuzaRouter("/admin/post/create.ahn?postId=" + postId);
-                },
-                handleConfirmOpen(postId) {
-                    console.log(postId);
-                    const _this = this;
-                    _this.$confirm('确定删除此用户信息吗, 是否继续?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        axios.get('/api/setting/user/delete.do?userSeq=' + userSeq)
-                            .then(response => {
-                                if (response.data.code !== 0) {
-                                    _this.$message.error(response.data.msg);
-                                } else {
-                                    _this.$message.success(response.data.msg);
-                                    _this.initMainList();
-                                }
-                            })
-                            .catch(() => {
-                                _this.$message.error('报错， 请刷新页面重试');
-                            });
-
-                    }).catch(() => {
-                        _this.$message.info('报错， 请刷新页面重试');
-                    });
-                },
-                drawerHide() {
-                    let _this = this;
-                    _this.drawer = false;
-                    _this.selectedItem = {};
-                },
-                saveItem(item) {
-                    const _this = this;
-                    if (Tool.isEmpty(item.userSeq)) {
-                        if (item.password !== item.confirmPassword) {
-                            _this.$message.error("2次密码输入不匹配");
-                            _this.selectedItem.password = '';
-                            _this.selectedItem.confirmPassword = '';
-                            return;
-                        }
-                        if(Tool.isEmpty(item.username)) { _this.$message.info("username必填"); return; }
-                        if(Tool.isEmpty(item.password)) { _this.$message.info("密码必填"); return; }
-                        if(Tool.isEmpty(item.realname)) { _this.$message.info("真实姓名必填"); return; }
-                    }
-
-                    _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
-                    axios.post("/api/post/modify.do", _this.selectedItem)
-                        .then(response => {
-                            if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
-                            } else {
-                                _this.selectedItem = {};
-                                _this.drawerHide();
-                                _this.$message.success(response.data.msg);
-                                _this.initMainList();
-                            }
-                        })
-                        .catch(error => {
-                            _this.$message.error("Request Error!")
-                        });
-                },
                 initMainList() {
                     let _this = this;
-                    const params = {
+                    let params = {
 
-                    }
-                    axios.post("/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
-                        console.log(response.data.data);
-                        _this.itemList = response.data.data;
-                        _this.total = response.data.total;
-                        _this.loading = false;
-                    })
-                },
-                getMainDetail(postId) {
-                    const _this = this;
-                    axios.post("/api/post/detail.do?postId=" + postId)
-                        .then(response => {
-                            if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                    };
+
+                    axios.post(_this.initDataListURL + '?page=' + _this.currentPage + "&limit=" + _this.pageSize,params)
+                        .then(res => {
+                            if (res.data.status === 200) {
+                                _this.arrInitData = res.data.data;
+                                _this.total = res.data.count;
                             } else {
-                                _this.selectedItem = response.data.data;
-                                _this.selectedItem.status = _this.selectedItem.status == '1' ? true : false;
+                                _this.$message.error(res.data.msg);
                             }
+                            _this.loading = false;
                         })
-                        .catch(error => {
-                            _this.$message.error("Axios Error!");
+                        .catch(res => {
+                            _this.$message.error("Fail!!!!!!")
+                            _this.loading = false;
                         });
                 },
+                handleOnChange(file, fileList) {
+                    let _this = this;
+                    let existsFile = fileList.slice(0, fileList.length - 1).find(f => f.name === file.name);
+                    if (existsFile) {
+                        _this.$message.error("当前文件已经存在!");
+                        fileList.pop();
+                    }
+                    _this.fileList = fileList;
+                },
+                handleOnExceed() {
+                    this.$message.warning(`当前限制选择 5 个文件`)
+                },
+                handleOnUpload(file) {
+                    let _this = this;
+                    _this.fileData.append("imageFiles", file.file);
+                },
+                //上传文件
+                handleSubmitUpload() {
+                    let _this = this;
+                    const isLt1M = _this.fileList.every(file => file.size / 1024 / 1024 < 1);
+                    if (!isLt1M) {
+                        _this.$message.error("请检查，上传文件大小不能超过1MB!");
+                        return;
+                    }
 
+                    _this.fileData = new FormData();
+                    _this.$refs.upload.submit();
+                    _this.handleRequest(_this.fileData);
+                },
+                handleRequest(params) {
+                    console.log(params)
+                    let _this = this;
+                    _this.loading = true;
+                    var instance_files = axios.create({
+                        headers: {
+                            'content-type': 'multipart/form-data',
+                            "Request-Source": "client"
+                        }
+                    });
+                    instance_files
+                        .post(_this.imgUploadURL, params)
+                        .then(res => {
+                            if (res.data.code === 0) {
+                                _this.$message.success(res.data.msg);
+                                _this.fileList = [];
+                            } else {
+                                _this.$message.error(res.data.msg);
+                            }
+                            _this.initMainList();
+                        })
+                        .catch(response => {
+                            _this.$message.error("上传失败， 请重试或联系管理员");
+                            _this.loading = false;
+                        });
+                },
+                handleOpenDrawer(fileId) {
+                    let _this = this;
+                    _this.fileId = fileId;
+                    _this.isDrawerVisible = true;
+                    _this.loadingDrawer = true;
+                    axios.get(_this.imgDetailURL + '?fileId=' + _this.fileId)
+                        .then(res => {
+                            _this.loadingDrawer = false;
+                            if (res.data.status === 200) {
+                                _this.itemDetail = res.data.data;
+                            } else {
+                                _this.$message.error(res.data.msg);
+                            }
+
+                        })
+                        .catch(res => {
+
+                        });
+                },
             }
         });
 

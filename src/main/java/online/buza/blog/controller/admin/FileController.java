@@ -8,6 +8,7 @@ import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.Const;
 import online.buza.blog.common.ResponseCode;
+import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.dto.TbFileListDto;
 import online.buza.blog.entity.TbFileList;
 import online.buza.blog.service.AliyunService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +97,9 @@ public class FileController {
 
     @AdminUserLogin
     @PostMapping(value = "/multie/image/upload")
-    public BaseResponse image_multie_upload_return_url(HttpServletRequest request, @RequestParam("imageFiles") List<MultipartFile> multipartFileList, @RequestParam("authors") String username) {
+    public BaseResponse image_multie_upload_return_url(HttpServletRequest request, @RequestParam("imageFiles") List<MultipartFile> multipartFileList) {
+        HttpSession session = request.getSession();
+        SysUserDto loginUser = (SysUserDto) session.getAttribute("LOGINED_USER");
         try {
             if (multipartFileList.size() > 0) {
                 Map<String, Object> returnFileMap;
@@ -122,7 +126,7 @@ public class FileController {
                         tbFileList.setFileIsMain(null);
                         tbFileList.setFileRemark(null);
                         tbFileList.setStatus("1");
-                        tbFileList.setOption01(username);
+                        tbFileList.setOption01(loginUser.getUsername());
                         tbFileList.setOption02(null);
                         tbFileList.setOption03(null);
                         tbFileList.setOption04(null);
