@@ -92,6 +92,12 @@ public class AdminPageController {
         return "admin/post/modify";
     }
 
+    @AdminUserLogin
+    @RequestMapping(value = "/material.ahn")
+    public String material(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/material/index";
+    }
+
     /**
      * 설정 페이지 메인 - 사용자관리
      * @param model

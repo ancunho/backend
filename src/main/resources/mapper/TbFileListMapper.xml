@@ -295,7 +295,7 @@
         where FILE_ID = #{fileId,jdbcType=INTEGER}
     </update>
 
-    <select id="getAllTbFileList" parameterType="online.cunho.blog.dto.TbFileListDto" resultType="online.cunho.blog.dto.TbFileListDto">
+    <select id="getAllTbFileList" parameterType="online.buza.blog.dto.TbFileListDto" resultType="online.buza.blog.dto.TbFileListDto">
       SELECT  T1.FILE_ID
            ,T1.FILE_TYPE
            ,T1.FILE_PURPOSE
@@ -323,7 +323,7 @@
       ORDER BY T1.CREATE_TIME DESC
     </select>
 
-    <select id="getTbFileListInfoByFileId" parameterType="java.lang.Integer" resultType="online.cunho.blog.dto.TbFileListDto">
+    <select id="getTbFileListInfoByFileId" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.TbFileListDto">
       SELECT  T1.FILE_ID
            ,T1.FILE_TYPE
            ,T1.FILE_PURPOSE
