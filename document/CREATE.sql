@@ -224,15 +224,21 @@ CREATE TABLE `tb_blog_category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+-- TB_TAG
+CREATE TABLE `tb_tag` (
+                     `TAG_ID` INT NOT NULL AUTO_INCREMENT,
+                     `TAG_NAME` VARCHAR(200) NOT NULL,
+                     PRIMARY KEY (`TAG_ID`))
+ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'tab表';
+
 
 --포스트 태그 테이블
 CREATE TABLE `tb_post_tag` (
-                               `TAG_ID` int NOT NULL AUTO_INCREMENT,
+                               `ID` int NOT NULL AUTO_INCREMENT,
                                `POST_ID` int NOT NULL,
-                               `TAG_NAME` varchar(100) DEFAULT NULL,
-                               PRIMARY KEY (`TAG_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='포스트 태그 테이블';
-
+                               `TAG_ID` int NOT NULL,
+                               PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='post and tag relationship';
 
 --포스트 - 참여고객 테이블
 CREATE TABLE `tb_post_customer` (

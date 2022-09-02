@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbFileListMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbFileList">
+    <id column="FILE_ID" jdbcType="INTEGER" property="fileId" />
+    <result column="FILE_TYPE" jdbcType="VARCHAR" property="fileType" />
+    <result column="FILE_PURPOSE" jdbcType="VARCHAR" property="filePurpose" />
+    <result column="FILE_ORIGIN_NAME" jdbcType="VARCHAR" property="fileOriginName" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath" />
+    <result column="FILE_BUCKET_NAME" jdbcType="VARCHAR" property="fileBucketName" />
+    <result column="FILE_BUCKET_OBJECT" jdbcType="VARCHAR" property="fileBucketObject" />
+    <result column="FILE_SIZE" jdbcType="VARCHAR" property="fileSize" />
+    <result column="FILE_EXTENTION" jdbcType="VARCHAR" property="fileExtention" />
+    <result column="FILE_URL" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="FILE_SORT" jdbcType="INTEGER" property="fileSort" />
+    <result column="FILE_IS_MAIN" jdbcType="VARCHAR" property="fileIsMain" />
+    <result column="FILE_REMARK" jdbcType="VARCHAR" property="fileRemark" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="OPTION01" jdbcType="VARCHAR" property="option01" />
+    <result column="OPTION02" jdbcType="VARCHAR" property="option02" />
+    <result column="OPTION03" jdbcType="VARCHAR" property="option03" />
+    <result column="OPTION04" jdbcType="VARCHAR" property="option04" />
+    <result column="OPTION05" jdbcType="VARCHAR" property="option05" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FILE_ID, FILE_TYPE, FILE_PURPOSE, FILE_ORIGIN_NAME, FILE_NAME, FILE_PATH, FILE_BUCKET_NAME, 
+    FILE_BUCKET_OBJECT, FILE_SIZE, FILE_EXTENTION, FILE_URL, FILE_SORT, FILE_IS_MAIN, 
+    FILE_REMARK, `STATUS`, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file_list
+    where FILE_ID = #{fileId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_file_list
+    where FILE_ID = #{fileId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.TbFileList">
+    insert into tb_file_list (FILE_ID, FILE_TYPE, FILE_PURPOSE, 
+      FILE_ORIGIN_NAME, FILE_NAME, FILE_PATH, 
+      FILE_BUCKET_NAME, FILE_BUCKET_OBJECT, FILE_SIZE, 
+      FILE_EXTENTION, FILE_URL, FILE_SORT, 
+      FILE_IS_MAIN, FILE_REMARK, `STATUS`, 
+      OPTION01, OPTION02, OPTION03, 
+      OPTION04, OPTION05, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{fileId,jdbcType=INTEGER}, #{fileType,jdbcType=VARCHAR}, #{filePurpose,jdbcType=VARCHAR}, 
+      #{fileOriginName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, 
+      #{fileBucketName,jdbcType=VARCHAR}, #{fileBucketObject,jdbcType=VARCHAR}, #{fileSize,jdbcType=VARCHAR}, 
+      #{fileExtention,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{fileSort,jdbcType=INTEGER}, 
+      #{fileIsMain,jdbcType=VARCHAR}, #{fileRemark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR}, 
+      #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.TbFileList">
+    insert into tb_file_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        FILE_ID,
+      </if>
+      <if test="fileType != null">
+        FILE_TYPE,
+      </if>
+      <if test="filePurpose != null">
+        FILE_PURPOSE,
+      </if>
+      <if test="fileOriginName != null">
+        FILE_ORIGIN_NAME,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="filePath != null">
+        FILE_PATH,
+      </if>
+      <if test="fileBucketName != null">
+        FILE_BUCKET_NAME,
+      </if>
+      <if test="fileBucketObject != null">
+        FILE_BUCKET_OBJECT,
+      </if>
+      <if test="fileSize != null">
+        FILE_SIZE,
+      </if>
+      <if test="fileExtention != null">
+        FILE_EXTENTION,
+      </if>
+      <if test="fileUrl != null">
+        FILE_URL,
+      </if>
+      <if test="fileSort != null">
+        FILE_SORT,
+      </if>
+      <if test="fileIsMain != null">
+        FILE_IS_MAIN,
+      </if>
+      <if test="fileRemark != null">
+        FILE_REMARK,
+      </if>
+      <if test="status != null">
+        `STATUS`,
+      </if>
+      <if test="option01 != null">
+        OPTION01,
+      </if>
+      <if test="option02 != null">
+        OPTION02,
+      </if>
+      <if test="option03 != null">
+        OPTION03,
+      </if>
+      <if test="option04 != null">
+        OPTION04,
+      </if>
+      <if test="option05 != null">
+        OPTION05,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="filePurpose != null">
+        #{filePurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="fileOriginName != null">
+        #{fileOriginName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileBucketName != null">
+        #{fileBucketName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileBucketObject != null">
+        #{fileBucketObject,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        #{fileSize,jdbcType=VARCHAR},
+      </if>
+      <if test="fileExtention != null">
+        #{fileExtention,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSort != null">
+        #{fileSort,jdbcType=INTEGER},
+      </if>
+      <if test="fileIsMain != null">
+        #{fileIsMain,jdbcType=VARCHAR},
+      </if>
+      <if test="fileRemark != null">
+        #{fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbFileList">
+    update tb_file_list
+    <set>
+      <if test="fileType != null">
+        FILE_TYPE = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="filePurpose != null">
+        FILE_PURPOSE = #{filePurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="fileOriginName != null">
+        FILE_ORIGIN_NAME = #{fileOriginName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileBucketName != null">
+        FILE_BUCKET_NAME = #{fileBucketName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileBucketObject != null">
+        FILE_BUCKET_OBJECT = #{fileBucketObject,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null">
+        FILE_SIZE = #{fileSize,jdbcType=VARCHAR},
+      </if>
+      <if test="fileExtention != null">
+        FILE_EXTENTION = #{fileExtention,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSort != null">
+        FILE_SORT = #{fileSort,jdbcType=INTEGER},
+      </if>
+      <if test="fileIsMain != null">
+        FILE_IS_MAIN = #{fileIsMain,jdbcType=VARCHAR},
+      </if>
+      <if test="fileRemark != null">
+        FILE_REMARK = #{fileRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `STATUS` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        OPTION01 = #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        OPTION02 = #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        OPTION03 = #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        OPTION04 = #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        OPTION05 = #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FILE_ID = #{fileId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbFileList">
+    update tb_file_list
+    set FILE_TYPE = #{fileType,jdbcType=VARCHAR},
+      FILE_PURPOSE = #{filePurpose,jdbcType=VARCHAR},
+      FILE_ORIGIN_NAME = #{fileOriginName,jdbcType=VARCHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      FILE_BUCKET_NAME = #{fileBucketName,jdbcType=VARCHAR},
+      FILE_BUCKET_OBJECT = #{fileBucketObject,jdbcType=VARCHAR},
+      FILE_SIZE = #{fileSize,jdbcType=VARCHAR},
+      FILE_EXTENTION = #{fileExtention,jdbcType=VARCHAR},
+      FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+      FILE_SORT = #{fileSort,jdbcType=INTEGER},
+      FILE_IS_MAIN = #{fileIsMain,jdbcType=VARCHAR},
+      FILE_REMARK = #{fileRemark,jdbcType=VARCHAR},
+      `STATUS` = #{status,jdbcType=VARCHAR},
+      OPTION01 = #{option01,jdbcType=VARCHAR},
+      OPTION02 = #{option02,jdbcType=VARCHAR},
+      OPTION03 = #{option03,jdbcType=VARCHAR},
+      OPTION04 = #{option04,jdbcType=VARCHAR},
+      OPTION05 = #{option05,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where FILE_ID = #{fileId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbPostTagMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbPostTag">
+    <id column="TAG_ID" jdbcType="INTEGER" property="tagId" />
+    <result column="POST_ID" jdbcType="INTEGER" property="postId" />
+    <result column="TAG_NAME" jdbcType="VARCHAR" property="tagName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TAG_ID, POST_ID, TAG_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_post_tag
+    where TAG_ID = #{tagId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_post_tag
+    where TAG_ID = #{tagId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.TbPostTag">
+    insert into tb_post_tag (TAG_ID, POST_ID, TAG_NAME
+      )
+    values (#{tagId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.TbPostTag">
+    insert into tb_post_tag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        TAG_ID,
+      </if>
+      <if test="postId != null">
+        POST_ID,
+      </if>
+      <if test="tagName != null">
+        TAG_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tagId != null">
+        #{tagId,jdbcType=INTEGER},
+      </if>
+      <if test="postId != null">
+        #{postId,jdbcType=INTEGER},
+      </if>
+      <if test="tagName != null">
+        #{tagName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbPostTag">
+    update tb_post_tag
+    <set>
+      <if test="postId != null">
+        POST_ID = #{postId,jdbcType=INTEGER},
+      </if>
+      <if test="tagName != null">
+        TAG_NAME = #{tagName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TAG_ID = #{tagId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbPostTag">
+    update tb_post_tag
+    set POST_ID = #{postId,jdbcType=INTEGER},
+      TAG_NAME = #{tagName,jdbcType=VARCHAR}
+    where TAG_ID = #{tagId,jdbcType=INTEGER}
+  </update>
+</mapper>

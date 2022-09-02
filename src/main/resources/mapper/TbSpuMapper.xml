@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbSpuMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbSpu">
+    <id column="SPU_ID" jdbcType="INTEGER" property="spuId" />
+    <result column="CLASSIFICATION_ID" jdbcType="INTEGER" property="classificationId" />
+    <result column="DEPTH01_ID" jdbcType="INTEGER" property="depth01Id" />
+    <result column="DEPTH01_NAME" jdbcType="VARCHAR" property="depth01Name" />
+    <result column="DEPTH02_ID" jdbcType="INTEGER" property="depth02Id" />
+    <result column="DEPTH02_NAME" jdbcType="VARCHAR" property="depth02Name" />
+    <result column="DEPTH03_ID" jdbcType="INTEGER" property="depth03Id" />
+    <result column="DEPTH03_NAME" jdbcType="VARCHAR" property="depth03Name" />
+    <result column="BRAND_ID" jdbcType="INTEGER" property="brandId" />
+    <result column="SPU_NAME" jdbcType="VARCHAR" property="spuName" />
+    <result column="SPU_TYPE" jdbcType="VARCHAR" property="spuType" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="MAIN_IMAGE_01" jdbcType="VARCHAR" property="mainImage01" />
+    <result column="MAIN_IMAGE_02" jdbcType="VARCHAR" property="mainImage02" />
+    <result column="MAIN_IMAGE_03" jdbcType="VARCHAR" property="mainImage03" />
+    <result column="SUB_IMAGE_01" jdbcType="VARCHAR" property="subImage01" />
+    <result column="SUB_IMAGE_02" jdbcType="VARCHAR" property="subImage02" />
+    <result column="SUB_IMAGE_03" jdbcType="VARCHAR" property="subImage03" />
+    <result column="SUB_IMAGE_04" jdbcType="VARCHAR" property="subImage04" />
+    <result column="SUB_IMAGE_05" jdbcType="VARCHAR" property="subImage05" />
+    <result column="OPTION01" jdbcType="VARCHAR" property="option01" />
+    <result column="OPTION02" jdbcType="VARCHAR" property="option02" />
+    <result column="OPTION03" jdbcType="VARCHAR" property="option03" />
+    <result column="OPTION04" jdbcType="VARCHAR" property="option04" />
+    <result column="OPTION05" jdbcType="VARCHAR" property="option05" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SPU_ID, CLASSIFICATION_ID, DEPTH01_ID, DEPTH01_NAME, DEPTH02_ID, DEPTH02_NAME, DEPTH03_ID, 
+    DEPTH03_NAME, BRAND_ID, SPU_NAME, SPU_TYPE, `STATUS`, MAIN_IMAGE_01, MAIN_IMAGE_02, 
+    MAIN_IMAGE_03, SUB_IMAGE_01, SUB_IMAGE_02, SUB_IMAGE_03, SUB_IMAGE_04, SUB_IMAGE_05, 
+    OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_spu
+    where SPU_ID = #{spuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_spu
+    where SPU_ID = #{spuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.TbSpu">
+    insert into tb_spu (SPU_ID, CLASSIFICATION_ID, DEPTH01_ID, 
+      DEPTH01_NAME, DEPTH02_ID, DEPTH02_NAME, 
+      DEPTH03_ID, DEPTH03_NAME, BRAND_ID, 
+      SPU_NAME, SPU_TYPE, `STATUS`, 
+      MAIN_IMAGE_01, MAIN_IMAGE_02, MAIN_IMAGE_03, 
+      SUB_IMAGE_01, SUB_IMAGE_02, SUB_IMAGE_03, 
+      SUB_IMAGE_04, SUB_IMAGE_05, OPTION01, 
+      OPTION02, OPTION03, OPTION04, 
+      OPTION05, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{spuId,jdbcType=INTEGER}, #{classificationId,jdbcType=INTEGER}, #{depth01Id,jdbcType=INTEGER}, 
+      #{depth01Name,jdbcType=VARCHAR}, #{depth02Id,jdbcType=INTEGER}, #{depth02Name,jdbcType=VARCHAR}, 
+      #{depth03Id,jdbcType=INTEGER}, #{depth03Name,jdbcType=VARCHAR}, #{brandId,jdbcType=INTEGER}, 
+      #{spuName,jdbcType=VARCHAR}, #{spuType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{mainImage01,jdbcType=VARCHAR}, #{mainImage02,jdbcType=VARCHAR}, #{mainImage03,jdbcType=VARCHAR}, 
+      #{subImage01,jdbcType=VARCHAR}, #{subImage02,jdbcType=VARCHAR}, #{subImage03,jdbcType=VARCHAR}, 
+      #{subImage04,jdbcType=VARCHAR}, #{subImage05,jdbcType=VARCHAR}, #{option01,jdbcType=VARCHAR}, 
+      #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR}, #{option04,jdbcType=VARCHAR}, 
+      #{option05,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.TbSpu">
+    insert into tb_spu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="spuId != null">
+        SPU_ID,
+      </if>
+      <if test="classificationId != null">
+        CLASSIFICATION_ID,
+      </if>
+      <if test="depth01Id != null">
+        DEPTH01_ID,
+      </if>
+      <if test="depth01Name != null">
+        DEPTH01_NAME,
+      </if>
+      <if test="depth02Id != null">
+        DEPTH02_ID,
+      </if>
+      <if test="depth02Name != null">
+        DEPTH02_NAME,
+      </if>
+      <if test="depth03Id != null">
+        DEPTH03_ID,
+      </if>
+      <if test="depth03Name != null">
+        DEPTH03_NAME,
+      </if>
+      <if test="brandId != null">
+        BRAND_ID,
+      </if>
+      <if test="spuName != null">
+        SPU_NAME,
+      </if>
+      <if test="spuType != null">
+        SPU_TYPE,
+      </if>
+      <if test="status != null">
+        `STATUS`,
+      </if>
+      <if test="mainImage01 != null">
+        MAIN_IMAGE_01,
+      </if>
+      <if test="mainImage02 != null">
+        MAIN_IMAGE_02,
+      </if>
+      <if test="mainImage03 != null">
+        MAIN_IMAGE_03,
+      </if>
+      <if test="subImage01 != null">
+        SUB_IMAGE_01,
+      </if>
+      <if test="subImage02 != null">
+        SUB_IMAGE_02,
+      </if>
+      <if test="subImage03 != null">
+        SUB_IMAGE_03,
+      </if>
+      <if test="subImage04 != null">
+        SUB_IMAGE_04,
+      </if>
+      <if test="subImage05 != null">
+        SUB_IMAGE_05,
+      </if>
+      <if test="option01 != null">
+        OPTION01,
+      </if>
+      <if test="option02 != null">
+        OPTION02,
+      </if>
+      <if test="option03 != null">
+        OPTION03,
+      </if>
+      <if test="option04 != null">
+        OPTION04,
+      </if>
+      <if test="option05 != null">
+        OPTION05,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="spuId != null">
+        #{spuId,jdbcType=INTEGER},
+      </if>
+      <if test="classificationId != null">
+        #{classificationId,jdbcType=INTEGER},
+      </if>
+      <if test="depth01Id != null">
+        #{depth01Id,jdbcType=INTEGER},
+      </if>
+      <if test="depth01Name != null">
+        #{depth01Name,jdbcType=VARCHAR},
+      </if>
+      <if test="depth02Id != null">
+        #{depth02Id,jdbcType=INTEGER},
+      </if>
+      <if test="depth02Name != null">
+        #{depth02Name,jdbcType=VARCHAR},
+      </if>
+      <if test="depth03Id != null">
+        #{depth03Id,jdbcType=INTEGER},
+      </if>
+      <if test="depth03Name != null">
+        #{depth03Name,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="spuName != null">
+        #{spuName,jdbcType=VARCHAR},
+      </if>
+      <if test="spuType != null">
+        #{spuType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage01 != null">
+        #{mainImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage02 != null">
+        #{mainImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage03 != null">
+        #{mainImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage01 != null">
+        #{subImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage02 != null">
+        #{subImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage03 != null">
+        #{subImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage04 != null">
+        #{subImage04,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage05 != null">
+        #{subImage05,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbSpu">
+    update tb_spu
+    <set>
+      <if test="classificationId != null">
+        CLASSIFICATION_ID = #{classificationId,jdbcType=INTEGER},
+      </if>
+      <if test="depth01Id != null">
+        DEPTH01_ID = #{depth01Id,jdbcType=INTEGER},
+      </if>
+      <if test="depth01Name != null">
+        DEPTH01_NAME = #{depth01Name,jdbcType=VARCHAR},
+      </if>
+      <if test="depth02Id != null">
+        DEPTH02_ID = #{depth02Id,jdbcType=INTEGER},
+      </if>
+      <if test="depth02Name != null">
+        DEPTH02_NAME = #{depth02Name,jdbcType=VARCHAR},
+      </if>
+      <if test="depth03Id != null">
+        DEPTH03_ID = #{depth03Id,jdbcType=INTEGER},
+      </if>
+      <if test="depth03Name != null">
+        DEPTH03_NAME = #{depth03Name,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        BRAND_ID = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="spuName != null">
+        SPU_NAME = #{spuName,jdbcType=VARCHAR},
+      </if>
+      <if test="spuType != null">
+        SPU_TYPE = #{spuType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `STATUS` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage01 != null">
+        MAIN_IMAGE_01 = #{mainImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage02 != null">
+        MAIN_IMAGE_02 = #{mainImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage03 != null">
+        MAIN_IMAGE_03 = #{mainImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage01 != null">
+        SUB_IMAGE_01 = #{subImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage02 != null">
+        SUB_IMAGE_02 = #{subImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage03 != null">
+        SUB_IMAGE_03 = #{subImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage04 != null">
+        SUB_IMAGE_04 = #{subImage04,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage05 != null">
+        SUB_IMAGE_05 = #{subImage05,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        OPTION01 = #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        OPTION02 = #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        OPTION03 = #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        OPTION04 = #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        OPTION05 = #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SPU_ID = #{spuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbSpu">
+    update tb_spu
+    set CLASSIFICATION_ID = #{classificationId,jdbcType=INTEGER},
+      DEPTH01_ID = #{depth01Id,jdbcType=INTEGER},
+      DEPTH01_NAME = #{depth01Name,jdbcType=VARCHAR},
+      DEPTH02_ID = #{depth02Id,jdbcType=INTEGER},
+      DEPTH02_NAME = #{depth02Name,jdbcType=VARCHAR},
+      DEPTH03_ID = #{depth03Id,jdbcType=INTEGER},
+      DEPTH03_NAME = #{depth03Name,jdbcType=VARCHAR},
+      BRAND_ID = #{brandId,jdbcType=INTEGER},
+      SPU_NAME = #{spuName,jdbcType=VARCHAR},
+      SPU_TYPE = #{spuType,jdbcType=VARCHAR},
+      `STATUS` = #{status,jdbcType=VARCHAR},
+      MAIN_IMAGE_01 = #{mainImage01,jdbcType=VARCHAR},
+      MAIN_IMAGE_02 = #{mainImage02,jdbcType=VARCHAR},
+      MAIN_IMAGE_03 = #{mainImage03,jdbcType=VARCHAR},
+      SUB_IMAGE_01 = #{subImage01,jdbcType=VARCHAR},
+      SUB_IMAGE_02 = #{subImage02,jdbcType=VARCHAR},
+      SUB_IMAGE_03 = #{subImage03,jdbcType=VARCHAR},
+      SUB_IMAGE_04 = #{subImage04,jdbcType=VARCHAR},
+      SUB_IMAGE_05 = #{subImage05,jdbcType=VARCHAR},
+      OPTION01 = #{option01,jdbcType=VARCHAR},
+      OPTION02 = #{option02,jdbcType=VARCHAR},
+      OPTION03 = #{option03,jdbcType=VARCHAR},
+      OPTION04 = #{option04,jdbcType=VARCHAR},
+      OPTION05 = #{option05,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where SPU_ID = #{spuId,jdbcType=INTEGER}
+  </update>
+</mapper>

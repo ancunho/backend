@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbBaseDateMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbBaseDate">
+    <id column="BASE_YMD" jdbcType="VARCHAR" property="baseYmd" />
+    <result column="BASE_YYYY" jdbcType="VARCHAR" property="baseYyyy" />
+    <result column="BASE_MM" jdbcType="VARCHAR" property="baseMm" />
+    <result column="BASE_DD" jdbcType="VARCHAR" property="baseDd" />
+    <result column="BASE_WEEKDAY" jdbcType="VARCHAR" property="baseWeekday" />
+    <result column="BASE_WEEKDAY_NAME" jdbcType="VARCHAR" property="baseWeekdayName" />
+    <result column="BASE_WW" jdbcType="VARCHAR" property="baseWw" />
+    <result column="LUNAR_YMD" jdbcType="VARCHAR" property="lunarYmd" />
+    <result column="HOLIDAY_YN" jdbcType="VARCHAR" property="holidayYn" />
+    <result column="HOLIDAY_NAME" jdbcType="VARCHAR" property="holidayName" />
+    <result column="USE_YN" jdbcType="VARCHAR" property="useYn" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="OPTION01" jdbcType="VARCHAR" property="option01" />
+    <result column="OPTION02" jdbcType="VARCHAR" property="option02" />
+    <result column="OPTION03" jdbcType="VARCHAR" property="option03" />
+    <result column="OPTION04" jdbcType="VARCHAR" property="option04" />
+    <result column="OPTION05" jdbcType="VARCHAR" property="option05" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    BASE_YMD, BASE_YYYY, BASE_MM, BASE_DD, BASE_WEEKDAY, BASE_WEEKDAY_NAME, BASE_WW, 
+    LUNAR_YMD, HOLIDAY_YN, HOLIDAY_NAME, USE_YN, MEMO, OPTION01, OPTION02, OPTION03, 
+    OPTION04, OPTION05
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_base_date
+    where BASE_YMD = #{baseYmd,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_base_date
+    where BASE_YMD = #{baseYmd,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.TbBaseDate">
+    insert into tb_base_date (BASE_YMD, BASE_YYYY, BASE_MM, 
+      BASE_DD, BASE_WEEKDAY, BASE_WEEKDAY_NAME, 
+      BASE_WW, LUNAR_YMD, HOLIDAY_YN, 
+      HOLIDAY_NAME, USE_YN, MEMO, 
+      OPTION01, OPTION02, OPTION03, 
+      OPTION04, OPTION05)
+    values (#{baseYmd,jdbcType=VARCHAR}, #{baseYyyy,jdbcType=VARCHAR}, #{baseMm,jdbcType=VARCHAR}, 
+      #{baseDd,jdbcType=VARCHAR}, #{baseWeekday,jdbcType=VARCHAR}, #{baseWeekdayName,jdbcType=VARCHAR}, 
+      #{baseWw,jdbcType=VARCHAR}, #{lunarYmd,jdbcType=VARCHAR}, #{holidayYn,jdbcType=VARCHAR}, 
+      #{holidayName,jdbcType=VARCHAR}, #{useYn,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR}, 
+      #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.TbBaseDate">
+    insert into tb_base_date
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="baseYmd != null">
+        BASE_YMD,
+      </if>
+      <if test="baseYyyy != null">
+        BASE_YYYY,
+      </if>
+      <if test="baseMm != null">
+        BASE_MM,
+      </if>
+      <if test="baseDd != null">
+        BASE_DD,
+      </if>
+      <if test="baseWeekday != null">
+        BASE_WEEKDAY,
+      </if>
+      <if test="baseWeekdayName != null">
+        BASE_WEEKDAY_NAME,
+      </if>
+      <if test="baseWw != null">
+        BASE_WW,
+      </if>
+      <if test="lunarYmd != null">
+        LUNAR_YMD,
+      </if>
+      <if test="holidayYn != null">
+        HOLIDAY_YN,
+      </if>
+      <if test="holidayName != null">
+        HOLIDAY_NAME,
+      </if>
+      <if test="useYn != null">
+        USE_YN,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="option01 != null">
+        OPTION01,
+      </if>
+      <if test="option02 != null">
+        OPTION02,
+      </if>
+      <if test="option03 != null">
+        OPTION03,
+      </if>
+      <if test="option04 != null">
+        OPTION04,
+      </if>
+      <if test="option05 != null">
+        OPTION05,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="baseYmd != null">
+        #{baseYmd,jdbcType=VARCHAR},
+      </if>
+      <if test="baseYyyy != null">
+        #{baseYyyy,jdbcType=VARCHAR},
+      </if>
+      <if test="baseMm != null">
+        #{baseMm,jdbcType=VARCHAR},
+      </if>
+      <if test="baseDd != null">
+        #{baseDd,jdbcType=VARCHAR},
+      </if>
+      <if test="baseWeekday != null">
+        #{baseWeekday,jdbcType=VARCHAR},
+      </if>
+      <if test="baseWeekdayName != null">
+        #{baseWeekdayName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseWw != null">
+        #{baseWw,jdbcType=VARCHAR},
+      </if>
+      <if test="lunarYmd != null">
+        #{lunarYmd,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayYn != null">
+        #{holidayYn,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayName != null">
+        #{holidayName,jdbcType=VARCHAR},
+      </if>
+      <if test="useYn != null">
+        #{useYn,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        #{option05,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbBaseDate">
+    update tb_base_date
+    <set>
+      <if test="baseYyyy != null">
+        BASE_YYYY = #{baseYyyy,jdbcType=VARCHAR},
+      </if>
+      <if test="baseMm != null">
+        BASE_MM = #{baseMm,jdbcType=VARCHAR},
+      </if>
+      <if test="baseDd != null">
+        BASE_DD = #{baseDd,jdbcType=VARCHAR},
+      </if>
+      <if test="baseWeekday != null">
+        BASE_WEEKDAY = #{baseWeekday,jdbcType=VARCHAR},
+      </if>
+      <if test="baseWeekdayName != null">
+        BASE_WEEKDAY_NAME = #{baseWeekdayName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseWw != null">
+        BASE_WW = #{baseWw,jdbcType=VARCHAR},
+      </if>
+      <if test="lunarYmd != null">
+        LUNAR_YMD = #{lunarYmd,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayYn != null">
+        HOLIDAY_YN = #{holidayYn,jdbcType=VARCHAR},
+      </if>
+      <if test="holidayName != null">
+        HOLIDAY_NAME = #{holidayName,jdbcType=VARCHAR},
+      </if>
+      <if test="useYn != null">
+        USE_YN = #{useYn,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        OPTION01 = #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        OPTION02 = #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        OPTION03 = #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        OPTION04 = #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        OPTION05 = #{option05,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BASE_YMD = #{baseYmd,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbBaseDate">
+    update tb_base_date
+    set BASE_YYYY = #{baseYyyy,jdbcType=VARCHAR},
+      BASE_MM = #{baseMm,jdbcType=VARCHAR},
+      BASE_DD = #{baseDd,jdbcType=VARCHAR},
+      BASE_WEEKDAY = #{baseWeekday,jdbcType=VARCHAR},
+      BASE_WEEKDAY_NAME = #{baseWeekdayName,jdbcType=VARCHAR},
+      BASE_WW = #{baseWw,jdbcType=VARCHAR},
+      LUNAR_YMD = #{lunarYmd,jdbcType=VARCHAR},
+      HOLIDAY_YN = #{holidayYn,jdbcType=VARCHAR},
+      HOLIDAY_NAME = #{holidayName,jdbcType=VARCHAR},
+      USE_YN = #{useYn,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      OPTION01 = #{option01,jdbcType=VARCHAR},
+      OPTION02 = #{option02,jdbcType=VARCHAR},
+      OPTION03 = #{option03,jdbcType=VARCHAR},
+      OPTION04 = #{option04,jdbcType=VARCHAR},
+      OPTION05 = #{option05,jdbcType=VARCHAR}
+    where BASE_YMD = #{baseYmd,jdbcType=VARCHAR}
+  </update>
+</mapper>

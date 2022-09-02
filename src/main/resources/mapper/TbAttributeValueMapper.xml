@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbAttributeValueMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbAttributeValue">
+    <id column="ATTR_VALUE_ID" jdbcType="INTEGER" property="attrValueId" />
+    <result column="ATTR_ID" jdbcType="INTEGER" property="attrId" />
+    <result column="ATTR_VALUE" jdbcType="VARCHAR" property="attrValue" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="VIP_PRICE" jdbcType="DECIMAL" property="vipPrice" />
+    <result column="DELIVERY_PRICE" jdbcType="DECIMAL" property="deliveryPrice" />
+    <result column="DELIVERY_TYPE" jdbcType="VARCHAR" property="deliveryType" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="ATTR_VALUE_IMAGE" jdbcType="VARCHAR" property="attrValueImage" />
+    <result column="OPTION01" jdbcType="VARCHAR" property="option01" />
+    <result column="OPTION02" jdbcType="VARCHAR" property="option02" />
+    <result column="OPTION03" jdbcType="VARCHAR" property="option03" />
+    <result column="OPTION04" jdbcType="VARCHAR" property="option04" />
+    <result column="OPTION05" jdbcType="VARCHAR" property="option05" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ATTR_VALUE_ID, ATTR_ID, ATTR_VALUE, PRICE, VIP_PRICE, DELIVERY_PRICE, DELIVERY_TYPE, 
+    `STATUS`, ATTR_VALUE_IMAGE, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_attribute_value
+    where ATTR_VALUE_ID = #{attrValueId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_attribute_value
+    where ATTR_VALUE_ID = #{attrValueId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.TbAttributeValue">
+    insert into tb_attribute_value (ATTR_VALUE_ID, ATTR_ID, ATTR_VALUE, 
+      PRICE, VIP_PRICE, DELIVERY_PRICE, 
+      DELIVERY_TYPE, `STATUS`, ATTR_VALUE_IMAGE, 
+      OPTION01, OPTION02, OPTION03, 
+      OPTION04, OPTION05, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{attrValueId,jdbcType=INTEGER}, #{attrId,jdbcType=INTEGER}, #{attrValue,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{vipPrice,jdbcType=DECIMAL}, #{deliveryPrice,jdbcType=DECIMAL}, 
+      #{deliveryType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{attrValueImage,jdbcType=VARCHAR}, 
+      #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR}, 
+      #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.TbAttributeValue">
+    insert into tb_attribute_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="attrValueId != null">
+        ATTR_VALUE_ID,
+      </if>
+      <if test="attrId != null">
+        ATTR_ID,
+      </if>
+      <if test="attrValue != null">
+        ATTR_VALUE,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE,
+      </if>
+      <if test="deliveryPrice != null">
+        DELIVERY_PRICE,
+      </if>
+      <if test="deliveryType != null">
+        DELIVERY_TYPE,
+      </if>
+      <if test="status != null">
+        `STATUS`,
+      </if>
+      <if test="attrValueImage != null">
+        ATTR_VALUE_IMAGE,
+      </if>
+      <if test="option01 != null">
+        OPTION01,
+      </if>
+      <if test="option02 != null">
+        OPTION02,
+      </if>
+      <if test="option03 != null">
+        OPTION03,
+      </if>
+      <if test="option04 != null">
+        OPTION04,
+      </if>
+      <if test="option05 != null">
+        OPTION05,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="attrValueId != null">
+        #{attrValueId,jdbcType=INTEGER},
+      </if>
+      <if test="attrId != null">
+        #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="attrValue != null">
+        #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryPrice != null">
+        #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryType != null">
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="attrValueImage != null">
+        #{attrValueImage,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbAttributeValue">
+    update tb_attribute_value
+    <set>
+      <if test="attrId != null">
+        ATTR_ID = #{attrId,jdbcType=INTEGER},
+      </if>
+      <if test="attrValue != null">
+        ATTR_VALUE = #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryPrice != null">
+        DELIVERY_PRICE = #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryType != null">
+        DELIVERY_TYPE = #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `STATUS` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="attrValueImage != null">
+        ATTR_VALUE_IMAGE = #{attrValueImage,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        OPTION01 = #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        OPTION02 = #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        OPTION03 = #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        OPTION04 = #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        OPTION05 = #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ATTR_VALUE_ID = #{attrValueId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbAttributeValue">
+    update tb_attribute_value
+    set ATTR_ID = #{attrId,jdbcType=INTEGER},
+      ATTR_VALUE = #{attrValue,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+      DELIVERY_PRICE = #{deliveryPrice,jdbcType=DECIMAL},
+      DELIVERY_TYPE = #{deliveryType,jdbcType=VARCHAR},
+      `STATUS` = #{status,jdbcType=VARCHAR},
+      ATTR_VALUE_IMAGE = #{attrValueImage,jdbcType=VARCHAR},
+      OPTION01 = #{option01,jdbcType=VARCHAR},
+      OPTION02 = #{option02,jdbcType=VARCHAR},
+      OPTION03 = #{option03,jdbcType=VARCHAR},
+      OPTION04 = #{option04,jdbcType=VARCHAR},
+      OPTION05 = #{option05,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ATTR_VALUE_ID = #{attrValueId,jdbcType=INTEGER}
+  </update>
+</mapper>

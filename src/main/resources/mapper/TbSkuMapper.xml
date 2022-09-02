@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbSkuMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbSku">
+    <id column="SKU_ID" jdbcType="INTEGER" property="skuId" />
+    <result column="SPU_ID" jdbcType="INTEGER" property="spuId" />
+    <result column="SKU_NAME" jdbcType="VARCHAR" property="skuName" />
+    <result column="SKU_INTRO" jdbcType="VARCHAR" property="skuIntro" />
+    <result column="SKU_PRICE" jdbcType="DECIMAL" property="skuPrice" />
+    <result column="SKU_CODE" jdbcType="VARCHAR" property="skuCode" />
+    <result column="SKU_BARCODE" jdbcType="VARCHAR" property="skuBarcode" />
+    <result column="SKU_STOCK" jdbcType="INTEGER" property="skuStock" />
+    <result column="SKU_UNIT" jdbcType="INTEGER" property="skuUnit" />
+    <result column="SKU_UNIT_NAME" jdbcType="VARCHAR" property="skuUnitName" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="VIP_PRICE" jdbcType="DECIMAL" property="vipPrice" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="MAIN_IMAGE_01" jdbcType="VARCHAR" property="mainImage01" />
+    <result column="MAIN_IMAGE_02" jdbcType="VARCHAR" property="mainImage02" />
+    <result column="MAIN_IMAGE_03" jdbcType="VARCHAR" property="mainImage03" />
+    <result column="SUB_IMAGE_01" jdbcType="VARCHAR" property="subImage01" />
+    <result column="SUB_IMAGE_02" jdbcType="VARCHAR" property="subImage02" />
+    <result column="SUB_IMAGE_03" jdbcType="VARCHAR" property="subImage03" />
+    <result column="SUB_IMAGE_04" jdbcType="VARCHAR" property="subImage04" />
+    <result column="SUB_IMAGE_05" jdbcType="VARCHAR" property="subImage05" />
+    <result column="OPTION01" jdbcType="VARCHAR" property="option01" />
+    <result column="OPTION02" jdbcType="VARCHAR" property="option02" />
+    <result column="OPTION03" jdbcType="VARCHAR" property="option03" />
+    <result column="OPTION04" jdbcType="VARCHAR" property="option04" />
+    <result column="OPTION05" jdbcType="VARCHAR" property="option05" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SKU_ID, SPU_ID, SKU_NAME, SKU_INTRO, SKU_PRICE, SKU_CODE, SKU_BARCODE, SKU_STOCK, 
+    SKU_UNIT, SKU_UNIT_NAME, PRICE, VIP_PRICE, `STATUS`, MAIN_IMAGE_01, MAIN_IMAGE_02, 
+    MAIN_IMAGE_03, SUB_IMAGE_01, SUB_IMAGE_02, SUB_IMAGE_03, SUB_IMAGE_04, SUB_IMAGE_05, 
+    OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_sku
+    where SKU_ID = #{skuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_sku
+    where SKU_ID = #{skuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.TbSku">
+    insert into tb_sku (SKU_ID, SPU_ID, SKU_NAME, 
+      SKU_INTRO, SKU_PRICE, SKU_CODE, 
+      SKU_BARCODE, SKU_STOCK, SKU_UNIT, 
+      SKU_UNIT_NAME, PRICE, VIP_PRICE, 
+      `STATUS`, MAIN_IMAGE_01, MAIN_IMAGE_02, 
+      MAIN_IMAGE_03, SUB_IMAGE_01, SUB_IMAGE_02, 
+      SUB_IMAGE_03, SUB_IMAGE_04, SUB_IMAGE_05, 
+      OPTION01, OPTION02, OPTION03, 
+      OPTION04, OPTION05, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{skuId,jdbcType=INTEGER}, #{spuId,jdbcType=INTEGER}, #{skuName,jdbcType=VARCHAR}, 
+      #{skuIntro,jdbcType=VARCHAR}, #{skuPrice,jdbcType=DECIMAL}, #{skuCode,jdbcType=VARCHAR}, 
+      #{skuBarcode,jdbcType=VARCHAR}, #{skuStock,jdbcType=INTEGER}, #{skuUnit,jdbcType=INTEGER}, 
+      #{skuUnitName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{vipPrice,jdbcType=DECIMAL}, 
+      #{status,jdbcType=VARCHAR}, #{mainImage01,jdbcType=VARCHAR}, #{mainImage02,jdbcType=VARCHAR}, 
+      #{mainImage03,jdbcType=VARCHAR}, #{subImage01,jdbcType=VARCHAR}, #{subImage02,jdbcType=VARCHAR}, 
+      #{subImage03,jdbcType=VARCHAR}, #{subImage04,jdbcType=VARCHAR}, #{subImage05,jdbcType=VARCHAR}, 
+      #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR}, #{option03,jdbcType=VARCHAR}, 
+      #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.TbSku">
+    insert into tb_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="skuId != null">
+        SKU_ID,
+      </if>
+      <if test="spuId != null">
+        SPU_ID,
+      </if>
+      <if test="skuName != null">
+        SKU_NAME,
+      </if>
+      <if test="skuIntro != null">
+        SKU_INTRO,
+      </if>
+      <if test="skuPrice != null">
+        SKU_PRICE,
+      </if>
+      <if test="skuCode != null">
+        SKU_CODE,
+      </if>
+      <if test="skuBarcode != null">
+        SKU_BARCODE,
+      </if>
+      <if test="skuStock != null">
+        SKU_STOCK,
+      </if>
+      <if test="skuUnit != null">
+        SKU_UNIT,
+      </if>
+      <if test="skuUnitName != null">
+        SKU_UNIT_NAME,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE,
+      </if>
+      <if test="status != null">
+        `STATUS`,
+      </if>
+      <if test="mainImage01 != null">
+        MAIN_IMAGE_01,
+      </if>
+      <if test="mainImage02 != null">
+        MAIN_IMAGE_02,
+      </if>
+      <if test="mainImage03 != null">
+        MAIN_IMAGE_03,
+      </if>
+      <if test="subImage01 != null">
+        SUB_IMAGE_01,
+      </if>
+      <if test="subImage02 != null">
+        SUB_IMAGE_02,
+      </if>
+      <if test="subImage03 != null">
+        SUB_IMAGE_03,
+      </if>
+      <if test="subImage04 != null">
+        SUB_IMAGE_04,
+      </if>
+      <if test="subImage05 != null">
+        SUB_IMAGE_05,
+      </if>
+      <if test="option01 != null">
+        OPTION01,
+      </if>
+      <if test="option02 != null">
+        OPTION02,
+      </if>
+      <if test="option03 != null">
+        OPTION03,
+      </if>
+      <if test="option04 != null">
+        OPTION04,
+      </if>
+      <if test="option05 != null">
+        OPTION05,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="skuId != null">
+        #{skuId,jdbcType=INTEGER},
+      </if>
+      <if test="spuId != null">
+        #{spuId,jdbcType=INTEGER},
+      </if>
+      <if test="skuName != null">
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuIntro != null">
+        #{skuIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="skuPrice != null">
+        #{skuPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="skuCode != null">
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuBarcode != null">
+        #{skuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuStock != null">
+        #{skuStock,jdbcType=INTEGER},
+      </if>
+      <if test="skuUnit != null">
+        #{skuUnit,jdbcType=INTEGER},
+      </if>
+      <if test="skuUnitName != null">
+        #{skuUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage01 != null">
+        #{mainImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage02 != null">
+        #{mainImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage03 != null">
+        #{mainImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage01 != null">
+        #{subImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage02 != null">
+        #{subImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage03 != null">
+        #{subImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage04 != null">
+        #{subImage04,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage05 != null">
+        #{subImage05,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbSku">
+    update tb_sku
+    <set>
+      <if test="spuId != null">
+        SPU_ID = #{spuId,jdbcType=INTEGER},
+      </if>
+      <if test="skuName != null">
+        SKU_NAME = #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuIntro != null">
+        SKU_INTRO = #{skuIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="skuPrice != null">
+        SKU_PRICE = #{skuPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="skuCode != null">
+        SKU_CODE = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuBarcode != null">
+        SKU_BARCODE = #{skuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuStock != null">
+        SKU_STOCK = #{skuStock,jdbcType=INTEGER},
+      </if>
+      <if test="skuUnit != null">
+        SKU_UNIT = #{skuUnit,jdbcType=INTEGER},
+      </if>
+      <if test="skuUnitName != null">
+        SKU_UNIT_NAME = #{skuUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        `STATUS` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage01 != null">
+        MAIN_IMAGE_01 = #{mainImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage02 != null">
+        MAIN_IMAGE_02 = #{mainImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage03 != null">
+        MAIN_IMAGE_03 = #{mainImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage01 != null">
+        SUB_IMAGE_01 = #{subImage01,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage02 != null">
+        SUB_IMAGE_02 = #{subImage02,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage03 != null">
+        SUB_IMAGE_03 = #{subImage03,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage04 != null">
+        SUB_IMAGE_04 = #{subImage04,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage05 != null">
+        SUB_IMAGE_05 = #{subImage05,jdbcType=VARCHAR},
+      </if>
+      <if test="option01 != null">
+        OPTION01 = #{option01,jdbcType=VARCHAR},
+      </if>
+      <if test="option02 != null">
+        OPTION02 = #{option02,jdbcType=VARCHAR},
+      </if>
+      <if test="option03 != null">
+        OPTION03 = #{option03,jdbcType=VARCHAR},
+      </if>
+      <if test="option04 != null">
+        OPTION04 = #{option04,jdbcType=VARCHAR},
+      </if>
+      <if test="option05 != null">
+        OPTION05 = #{option05,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SKU_ID = #{skuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbSku">
+    update tb_sku
+    set SPU_ID = #{spuId,jdbcType=INTEGER},
+      SKU_NAME = #{skuName,jdbcType=VARCHAR},
+      SKU_INTRO = #{skuIntro,jdbcType=VARCHAR},
+      SKU_PRICE = #{skuPrice,jdbcType=DECIMAL},
+      SKU_CODE = #{skuCode,jdbcType=VARCHAR},
+      SKU_BARCODE = #{skuBarcode,jdbcType=VARCHAR},
+      SKU_STOCK = #{skuStock,jdbcType=INTEGER},
+      SKU_UNIT = #{skuUnit,jdbcType=INTEGER},
+      SKU_UNIT_NAME = #{skuUnitName,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+      `STATUS` = #{status,jdbcType=VARCHAR},
+      MAIN_IMAGE_01 = #{mainImage01,jdbcType=VARCHAR},
+      MAIN_IMAGE_02 = #{mainImage02,jdbcType=VARCHAR},
+      MAIN_IMAGE_03 = #{mainImage03,jdbcType=VARCHAR},
+      SUB_IMAGE_01 = #{subImage01,jdbcType=VARCHAR},
+      SUB_IMAGE_02 = #{subImage02,jdbcType=VARCHAR},
+      SUB_IMAGE_03 = #{subImage03,jdbcType=VARCHAR},
+      SUB_IMAGE_04 = #{subImage04,jdbcType=VARCHAR},
+      SUB_IMAGE_05 = #{subImage05,jdbcType=VARCHAR},
+      OPTION01 = #{option01,jdbcType=VARCHAR},
+      OPTION02 = #{option02,jdbcType=VARCHAR},
+      OPTION03 = #{option03,jdbcType=VARCHAR},
+      OPTION04 = #{option04,jdbcType=VARCHAR},
+      OPTION05 = #{option05,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where SKU_ID = #{skuId,jdbcType=INTEGER}
+  </update>
+</mapper>
