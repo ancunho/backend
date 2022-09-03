@@ -21,6 +21,7 @@
         </div>
     </header>
     <main class="main-container" id="app" v-loading="loading">
+        <BoilerGraph></BoilerGraph>
         <div class="">
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
@@ -281,5 +282,6 @@
     #toolbar-container { border-bottom: 1px solid #ccc; }
     #editor-container { height: 400px; }
 </style>
+<div th:replace="admin/component/component::file-select"></div>
 </body>
 </html>

@@ -59,7 +59,7 @@ public class FileController {
 
     @PassLogin
     @PostMapping(value = "/wangEditor/single/upload")
-    public Map<String, Object> file_wangEditor_upload_return_url(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+    public Map<String, Object> file_wangEditor_upload_return_url(HttpServletRequest request, @RequestParam(value = "editorImageFile", required = false) MultipartFile file) throws Exception {
         Map<String, Object> result = new HashMap<>();
 //        for (MultipartFile file : multipartFiles) {
         //Const.UPLOAD_IMAGE_MAX_SIZE : 2MB

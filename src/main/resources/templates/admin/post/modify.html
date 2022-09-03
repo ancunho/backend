@@ -46,11 +46,12 @@
                 </div>
 
             <el-button type="primary" v-on:click="saveItem(selectedItem)" icon="el-icon-edit">Save</el-button>
-
+            <BoilerGraph />
             <!-- // Main Contents End -->
         </div>
     </main>
 </div>
+<div th:replace="admin/component/component::file-select"></div>
 <style>
     .post-content {}
     .post-content .post-content-label { font-size:13px; color:#475569; font-weight: bold}
@@ -152,8 +153,22 @@
         placeholder: 'Type here...',
         onChange(editor2) {
             const html = editor2.getHtml();
+        },
+        MENU_CONF: {
+            uploadImage: {
+                server: '/api/file/handle/wangEditor/single/upload',
+                fieldName: 'editorImageFile',
+                maxFileSize: 1 * 1024 * 1024,
+                maxNumberOfFiles: 1,
+                allowedFileTypes: ['image/*'],
+                onBeforeUpload(file) {
+                    console.log(file);
+                    return file;
+                }
+            }
         }
     }
+
     const editor = createEditor({
         selector: '#editor-container',
         html: '<p><br></p>',
