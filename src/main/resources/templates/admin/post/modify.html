@@ -153,7 +153,7 @@
                     _this.selectedItem.postType = "01";
                     _this.selectedItem.postContent = editor.getHtml();
                     _this.selectedItem.postId = _this.postId;
-                    axios.post("/api/post/proc.do", _this.selectedItem)
+                    axios.post('/api/post/proc.do', _this.selectedItem)
                         .then(response => {
                             _this.loading = false;
                             if (response.data.code !== 0) {
