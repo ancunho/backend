@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.SysUserMapper;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.SysUser;
-import online.buza.blog.service.AdminUserService;
+import online.buza.blog.service.AdminCommonService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,7 +19,7 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 @Service
-public class AdminCommonServiceImpl implements AdminUserService {
+public class AdminCommonServiceImpl implements AdminCommonService {
 
     @Resource
     private SysUserMapper sysUserMapper;

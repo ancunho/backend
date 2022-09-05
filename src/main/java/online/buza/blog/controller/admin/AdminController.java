@@ -6,19 +6,16 @@ import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.Const;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.controller.common.CommonController;
-import online.buza.blog.dao.SysUserMapper;
 import online.buza.blog.dto.BaseRequest;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.SysUser;
-import online.buza.blog.exception.CaptchaException;
-import online.buza.blog.service.AdminUserService;
+import online.buza.blog.service.AdminCommonService;
 import online.buza.blog.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +26,7 @@ import java.util.Map;
 public class AdminController extends CommonController {
 
     @Autowired
-    private AdminUserService adminUserService;
+    private AdminCommonService adminCommonService;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -45,7 +42,7 @@ public class AdminController extends CommonController {
         }
 
         sysUserDto.setPassword(MD5Util.MD5EncodeUtf8(sysUserDto.getPassword()));
-        SysUserDto selectedSysUser = adminUserService.selectSysUserByLogin(sysUserDto);
+        SysUserDto selectedSysUser = adminCommonService.selectSysUserByLogin(sysUserDto);
         if (selectedSysUser == null || "".equals(Util.nullempty(selectedSysUser.getUsername()))) {
             return BaseResponse.valueOfFailureMessage("账号名或登录密码不正确");
         } else {
@@ -87,7 +84,7 @@ public class AdminController extends CommonController {
 
         Map<String, Object> mapParams = new HashMap<>();
         mapParams.put("username", sysUserDto.getUsername());
-        boolean isExistUsername = adminUserService.existUserName(mapParams);
+        boolean isExistUsername = adminCommonService.existUserName(mapParams);
         if (isExistUsername) {
             return BaseResponse.valueOfFailureMessage("Username重复,请使用其他用户名");
         }
@@ -121,7 +118,7 @@ public class AdminController extends CommonController {
         sysUser.setOption05(sysUserDto.getOption05());
         sysUser.setUseYn(sysUserDto.getUseYn());
 
-        boolean isSuccessInsert = adminUserService.insertSysUser(sysUser);
+        boolean isSuccessInsert = adminCommonService.insertSysUser(sysUser);
         if (isSuccessInsert) {
             return BaseResponse.valueOfSuccessMessage(ResponseCode.INSERT_SUCCESS.getDesc());
         }

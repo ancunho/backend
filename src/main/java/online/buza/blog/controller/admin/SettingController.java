@@ -8,7 +8,7 @@ import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.SysUser;
-import online.buza.blog.service.AdminUserService;
+import online.buza.blog.service.AdminCommonService;
 import online.buza.blog.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,16 @@ import java.util.Map;
 public class SettingController {
 
     @Autowired
-    private AdminUserService adminUserService;
+    private AdminCommonService adminCommonService;
 
+    /**
+     * User Management
+     */
     @AdminUserLogin
     @PostMapping(value = "/user/list.do")
     public BaseResponse user_list(BaseRequest baseRequest, @RequestBody SysUserDto sysUserDto) {
         PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
-        List<SysUserDto> lstSysUserDto = adminUserService.selectSysUserDtoByPaging(sysUserDto);
+        List<SysUserDto> lstSysUserDto = adminCommonService.selectSysUserDtoByPaging(sysUserDto);
         return BaseResponse.valueOfSuccessList(lstSysUserDto);
     }
 
@@ -41,7 +44,7 @@ public class SettingController {
             return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        SysUserDto sysUserDtoDetail = adminUserService.selectSysUserDtoByUserSeq(sysUserDto.getUserSeq());
+        SysUserDto sysUserDtoDetail = adminCommonService.selectSysUserDtoByUserSeq(sysUserDto.getUserSeq());
         return BaseResponse.valueOfSuccess(sysUserDtoDetail);
     }
 
@@ -55,7 +58,7 @@ public class SettingController {
         if (sysUserDto.getUserSeq() == null || "".equals(String.valueOf(sysUserDto.getUserSeq()))) {
             Map<String, Object> mapParams = new HashMap<>();
             mapParams.put("username", sysUserDto.getUsername());
-            boolean isExistUsername = adminUserService.existUserName(mapParams);
+            boolean isExistUsername = adminCommonService.existUserName(mapParams);
             if (isExistUsername) {
                 return BaseResponse.valueOfFailureMessage("Username重复,请使用其他用户名");
             }
@@ -93,7 +96,7 @@ public class SettingController {
             sysUser.setOption05(sysUserDto.getOption05());
             sysUser.setUseYn(sysUserDto.getUseYn());
 
-            boolean isSuccessInsert = adminUserService.insertSysUser(sysUser);
+            boolean isSuccessInsert = adminCommonService.insertSysUser(sysUser);
             if (isSuccessInsert) {
                 return BaseResponse.valueOfSuccessMessage(ResponseCode.INSERT_SUCCESS.getDesc());
             }
@@ -102,7 +105,7 @@ public class SettingController {
             Map<String, Object> mapParams = new HashMap<>();
             mapParams.put("username", sysUserDto.getUsername());
             mapParams.put("userSeq", sysUserDto.getUserSeq());
-            boolean isExistUsername = adminUserService.existUserName(mapParams);
+            boolean isExistUsername = adminCommonService.existUserName(mapParams);
             if (isExistUsername) {
                 return BaseResponse.valueOfFailureMessage("Username重复,请使用其他用户名");
             }
@@ -137,7 +140,7 @@ public class SettingController {
             sysUser.setOption05(sysUserDto.getOption05());
             sysUser.setUseYn(sysUserDto.getUseYn());
 
-            boolean isSuccessUpdate = adminUserService.updateSysUser(sysUser);
+            boolean isSuccessUpdate = adminCommonService.updateSysUser(sysUser);
             if (isSuccessUpdate) {
                 return BaseResponse.valueOfSuccessMessage(ResponseCode.SAVE_SUCCESS.getDesc());
             }
@@ -153,12 +156,17 @@ public class SettingController {
             return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        boolean isSuccessDelete = adminUserService.deleteSysUser(userSeq);
+        boolean isSuccessDelete = adminCommonService.deleteSysUser(userSeq);
         if (isSuccessDelete) {
             return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
         }
         return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
     }
+
+    /**
+     * Classification Management
+     */
+
 
 
 }

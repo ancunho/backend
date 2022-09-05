@@ -6,7 +6,7 @@ import online.buza.blog.entity.SysUser;
 import java.util.List;
 import java.util.Map;
 
-public interface AdminUserService {
+public interface AdminCommonService {
 
     public SysUserDto selectSysUserByLogin(SysUserDto sysUserDto);
 
