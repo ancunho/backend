@@ -145,18 +145,19 @@ CREATE TABLE `tb_classification` (
                                      `CLASSIFICATION_NAME` varchar(100) DEFAULT NULL,
                                      `CLASSIFICATION_TYPE` varchar(45) DEFAULT NULL,
                                      `CLASSIFICATION_IMAGE` varchar(100) DEFAULT NULL,
-                                     `SORT_ORDER` int DEFAULT NULL,
-                                     `DEPTH_NUM` int DEFAULT NULL,
-                                     `STATUS` varchar(10) DEFAULT NULL,
+                                     `SORT_ORDER` int DEFAULT '1',
+                                     `DEPTH_NUM` int DEFAULT '1',
+                                     `STATUS` varchar(10) DEFAULT '1',
                                      `OPTION01` varchar(45) DEFAULT NULL,
                                      `OPTION02` varchar(45) DEFAULT NULL,
                                      `OPTION03` varchar(45) DEFAULT NULL,
                                      `OPTION04` varchar(45) DEFAULT NULL,
                                      `OPTION05` varchar(45) DEFAULT NULL,
-                                     `CREATE_TIME` datetime DEFAULT NULL,
+                                     `CREATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
                                      `UPDATE_TIME` datetime DEFAULT NULL,
                                      PRIMARY KEY (`CLASSIFICATION_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 -- tb_common_code
 CREATE TABLE `tb_common_code` (

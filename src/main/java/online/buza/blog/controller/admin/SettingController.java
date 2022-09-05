@@ -177,13 +177,13 @@ public class SettingController {
     }
 
     @AdminUserLogin
-    @PostMapping(value = "/classification/detail.do")
-    public BaseResponse classification_detail_by_classification_id(BaseRequest baseRequest, @RequestBody TbClassificationDto tbClassificationDto) {
-        if (tbClassificationDto == null) {
+    @GetMapping(value = "/classification/detail.do")
+    public BaseResponse classification_detail_by_classification_id(BaseRequest baseRequest, @RequestParam("classificationId") Integer classificationId) {
+        if (classificationId == null) {
             return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        TbClassificationDto tbClassificationDtoDetail = adminCommonService.selectTbClassificationDtoByClassificationId(tbClassificationDto.getClassificationId());
+        TbClassificationDto tbClassificationDtoDetail = adminCommonService.selectTbClassificationDtoByClassificationId(classificationId);
         return BaseResponse.valueOfSuccess(tbClassificationDtoDetail);
     }
 
@@ -257,7 +257,7 @@ public class SettingController {
 
     @AdminUserLogin
     @GetMapping(value = "/classification/delete.do")
-    public BaseResponse classification_delete(BaseRequest baseRequest, Integer classificationId) {
+    public BaseResponse classification_delete(BaseRequest baseRequest, @RequestParam("classificationId") Integer classificationId) {
         if (classificationId == null || "".equals(String.valueOf(classificationId))) {
             return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }

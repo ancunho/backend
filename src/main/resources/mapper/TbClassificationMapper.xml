@@ -213,9 +213,11 @@
     </select>
 
     <select id="getAllTbClassificationList" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
-        SELECT  ,T1.CLASSIFICATION_ID
-                ,T1.PARENT_CLASSIFICATION_ID
+        SELECT  ROW_NUMBER() OVER() AS RN
+                ,T1.CLASSIFICATION_ID
                 ,T1.CLASSIFICATION_NAME
+                ,T1.PARENT_CLASSIFICATION_ID
+                ,(SELECT A1.CLASSIFICATION_NAME FROM TB_CLASSIFICATION A1 WHERE A1.CLASSIFICATION_ID = T1.PARENT_CLASSIFICATION_ID) AS PARENT_CLASSIFICATION_NAME
                 ,T1.CLASSIFICATION_TYPE
                 ,T1.CLASSIFICATION_IMAGE
                 ,T1.SORT_ORDER
@@ -230,10 +232,11 @@
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
         FROM    TB_CLASSIFICATION T1
+        ORDER BY T1.CREATE_TIME DESC
     </select>
 
     <select id="selectTbClassificationDtoByClassificationId" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.TbClassificationDto">
-        SELECT  ,T1.CLASSIFICATION_ID
+        SELECT  T1.CLASSIFICATION_ID
                 ,T1.PARENT_CLASSIFICATION_ID
                 ,T1.CLASSIFICATION_NAME
                 ,T1.CLASSIFICATION_TYPE

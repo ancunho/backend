@@ -117,7 +117,7 @@ public class AdminCommonServiceImpl implements AdminCommonService {
 
     public TbClassificationDto selectTbClassificationDtoByClassificationId(Integer classificaitonId) {
         TbClassificationDto tbClassificationDto = tbClassificationMapper.selectTbClassificationDtoByClassificationId(classificaitonId);
-        return null;
+        return tbClassificationDto;
     }
 
     public Boolean existClassificationName(Map<String, Object> mapParam) {

@@ -16,6 +16,7 @@ public class TbClassificationDto extends BaseRequest implements Serializable {
 
     private Integer classificationId;
     private Integer parentClassificationId;
+    private String parentClassificationName;
     private String classificationName;
     private String classificationType;
     private String classificationImage;
@@ -27,7 +28,7 @@ public class TbClassificationDto extends BaseRequest implements Serializable {
     private String option03;
     private String option04;
     private String option05;
-    private Date createTime;
-    private Date updateTime;
+    private String createTime;
+    private String updateTime;
 
 }

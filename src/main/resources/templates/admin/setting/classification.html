@@ -28,21 +28,20 @@
             <!-- Result List Start -->
             <div class="">
                 <div style="text-align: right;">
-                    <el-button size="small" icon="el-icon-plus" v-on:click="handleDrawerOpen" style="text-align: right;">Add New Code</el-button>
+                    <el-button size="small" icon="el-icon-plus" v-on:click="handleDrawerOpen" style="text-align: right;">Add New Classification</el-button>
                 </div>
                 <div class="overflow-x-auto relative">
                     <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">
-                        <el-table-column prop="codeId" label="codeId" v-if="false"></el-table-column>
-                        <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>
-                        <el-table-column prop="codeType" label="codeType" width="100"></el-table-column>
-                        <el-table-column prop="codeCd" label="codeCd" width="150"></el-table-column>
-                        <el-table-column prop="codeName" label="codeName" width="150"></el-table-column>
-                        <el-table-column prop="sort" label="sort" width="150"></el-table-column>
-                        <el-table-column prop="remark" label="remark" width="150"></el-table-column>
-                        <el-table-column prop="useYn" align="center" label="useYn" width="120">
+                        <el-table-column prop="classificationId" label="classificationId" v-if="false"></el-table-column>
+                        <el-table-column prop="rn" label="Rn" width="50"></el-table-column>
+                        <el-table-column prop="classificationType" label="Type" width="100"></el-table-column>
+                        <el-table-column prop="classificationName" label="Name" width="150"></el-table-column>
+                        <el-table-column prop="parentClassificationName" label="parent" width="150"></el-table-column>
+                        <el-table-column prop="sortOrder" label="sort" width="150"></el-table-column>
+                        <el-table-column prop="status" align="center" label="status" width="120">
                             <template slot-scope="scope">
-                                <el-tag type="danger" v-if="scope.row.useYn == '0'"> {{ scope.row.statusName }} </el-tag>
-                                <el-tag type="success" v-if="scope.row.useYn == '1'"> {{ scope.row.statusName }} </el-tag>
+                                <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>
+                                <el-tag type="success" v-if="scope.row.status == '1'"> {{ scope.row.statusName }} </el-tag>
                             </template>
                         </el-table-column>
                         <el-table-column prop="createTime" v-if="false" label="CreateTime" width="220"></el-table-column>
@@ -54,7 +53,7 @@
                         <el-table-column label="Action" align="center" >
                             <template slot-scope="scope">
                                 <el-button type="primary" v-on:click="handleDrawerOpen(scope.row)" icon="el-icon-edit" circle></el-button>
-                                <el-button type="danger" v-on:click="handleConfirmOpen(scope.row.codeId)" icon="el-icon-delete" circle></el-button>
+                                <el-button type="danger" v-on:click="handleConfirmOpen(scope.row.classificationId)" icon="el-icon-delete" circle></el-button>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -88,31 +87,25 @@
                 v-bind:before-close="handleDrawerClose">
             <div class="drawer-container" style="padding: 20px;">
                 <div v-if="modalType == 1">
-                    <input type="hidden" v-model="selectedItem.codeId" />
+                    <input type="hidden" v-model="selectedItem.classificationId" />
                     <el-form ref="form" label-width="150px">
-                        <el-form-item label="ID" v-if="selectedItem.codeId != null">
-                            <el-input v-model="selectedItem.codeId" disabled></el-input>
+                        <el-form-item label="ID" v-if="selectedItem.classificationId != null">
+                            <el-input v-model="selectedItem.classificationId" disabled></el-input>
                         </el-form-item>
-                        <el-form-item label="CODE TYPE">
-                            <el-input v-model="selectedItem.codeType"></el-input>
+                        <el-form-item label="Name">
+                            <el-input v-model="selectedItem.classificationName"></el-input>
                         </el-form-item>
-                        <el-form-item label="CODE CD">
-                            <el-input v-model="selectedItem.codeCd"></el-input>
-                        </el-form-item>
-                        <el-form-item label="CODE NAME">
-                            <el-input v-model="selectedItem.codeName"></el-input>
+                        <el-form-item label="Type">
+                            <el-input v-model="selectedItem.classificationType"></el-input>
                         </el-form-item>
                         <el-form-item label="SORT">
-                            <el-input v-model="selectedItem.sort"></el-input>
-                        </el-form-item>
-                        <el-form-item label="REMARK">
-                            <el-input v-model="selectedItem.remark"></el-input>
+                            <el-input v-model="selectedItem.sortOrder"></el-input>
                         </el-form-item>
 
                         <el-form-item label="是否激活">
-                            <el-switch v-model="selectedItem.useYn"></el-switch>
+                            <el-switch v-model="selectedItem.status"></el-switch>
                         </el-form-item>
-                        <el-form-item label="CREATE_TIME" v-if="selectedItem.codeId != null">
+                        <el-form-item label="CREATE_TIME" v-if="selectedItem.classificationId != null">
                             <el-input v-model="selectedItem.createTime"></el-input>
                         </el-form-item>
                     </el-form>
@@ -138,9 +131,6 @@
                     selectedItem: {},
                     modalType: 1, // 1:新增权限/修改权限
                     roleIdChecked: [],
-                    modifyUserId: '',
-                    isModalVisible: false,
-                    buzaModalTitle: 'Modal',
                     loading: true,
                     currentPage: 1, //page
                     pageSize: 5, //limit
@@ -170,12 +160,13 @@
                 },
                 handleDrawerOpen(row) {
                     const _this = this;
-                    if (Tool.isEmpty(row.codeId)) {
-                        _this.drawerTitle = "Add New Code";
+                    console.log(row);
+                    if (Tool.isEmpty(row.classificationId)) {
+                        _this.drawerTitle = "Add New Classification";
                         _this.selectedItem = {};
                     } else {
-                        _this.drawerTitle = row.codeName + "'s modify";
-                        _this.getMainDetail(row.codeId);
+                        _this.drawerTitle = row.classificationName + "'s modify";
+                        _this.getMainDetail(row.classificationId);
                     }
                     _this.drawer = true;
                 },
@@ -186,15 +177,15 @@
                         })
                         .catch(_ => {});
                 },
-                handleConfirmOpen(codeId) {
-                    console.log(codeId);
+                handleConfirmOpen(classificationId) {
+                    console.log(classificationId);
                     const _this = this;
                     _this.$confirm('确定删除此用户信息吗, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.get('/api/common_code/delete.do?codeId=' + codeId)
+                        axios.get('/api/setting/classification/delete.do?classificationId=' + classificationId)
                             .then(response => {
                                 if (response.data.code !== 0) {
                                     _this.$message.error(response.data.msg);
@@ -218,13 +209,12 @@
                 },
                 saveItem(item) {
                     const _this = this;
-                    if (Tool.isEmpty(item.codeId)) {
-                        if(Tool.isEmpty(item.codeType)) { _this.$message.info("codeType必填"); }
-                        if(Tool.isEmpty(item.codeCd)) { _this.$message.info("codeCd必填"); }
+                    if (Tool.isEmpty(item.classificationId)) {
+                        if(Tool.isEmpty(item.classificationName)) { _this.$message.info("Name必填"); }
                     }
 
-                    _this.selectedItem.useYn = _this.selectedItem.useYn === true ? "1" : "0";
-                    axios.post("/api/common_code/proc.do", _this.selectedItem)
+                    _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
+                    axios.post("/api/setting/classification/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);
@@ -244,22 +234,22 @@
                     const params = {
 
                     }
-                    axios.post("/api/common_code/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
+                    axios.post("/api/setting/classification/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
                         console.log(response.data.data);
                         _this.itemList = response.data.data;
                         _this.total = response.data.total;
                         _this.loading = false;
                     })
                 },
-                getMainDetail(codeId) {
+                getMainDetail(classificationId) {
                     const _this = this;
-                    axios.get("/api/common_code/info.do?codeId=" + codeId)
+                    axios.get("/api/setting/classification/detail.do?classificationId=" + classificationId)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);
                             } else {
                                 _this.selectedItem = response.data.data;
-                                _this.selectedItem.useYn = _this.selectedItem.useYn == '1' ? true : false;
+                                _this.selectedItem.status = _this.selectedItem.status == '1' ? true : false;
                             }
                         })
                         .catch(error => {
