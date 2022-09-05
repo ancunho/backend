@@ -7,7 +7,9 @@ import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.dto.SysUserDto;
+import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.entity.SysUser;
+import online.buza.blog.entity.TbClassification;
 import online.buza.blog.service.AdminCommonService;
 import online.buza.blog.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
@@ -166,6 +168,107 @@ public class SettingController {
     /**
      * Classification Management
      */
+    @AdminUserLogin
+    @PostMapping(value = "/classification/list.do")
+    public BaseResponse classification_list(BaseRequest baseRequest, @RequestBody TbClassificationDto tbClassificationDto) {
+        PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
+        List<TbClassificationDto> lstClassificaitonDto = adminCommonService.selectTbClassificationDtoByPaging(tbClassificationDto);
+        return BaseResponse.valueOfSuccessList(lstClassificaitonDto);
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/classification/detail.do")
+    public BaseResponse classification_detail_by_classification_id(BaseRequest baseRequest, @RequestBody TbClassificationDto tbClassificationDto) {
+        if (tbClassificationDto == null) {
+            return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        TbClassificationDto tbClassificationDtoDetail = adminCommonService.selectTbClassificationDtoByClassificationId(tbClassificationDto.getClassificationId());
+        return BaseResponse.valueOfSuccess(tbClassificationDtoDetail);
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/classification/modify.do")
+    public BaseResponse classification_modify(BaseRequest baseRequest, @RequestBody TbClassificationDto tbClassificationDto) {
+        if (StringUtils.isEmpty(tbClassificationDto.getClassificationName())) {
+            return BaseResponse.valueOfFailureMessage("分类名称必填");
+        }
+
+        if (tbClassificationDto.getClassificationId() == null || "".equals(String.valueOf(tbClassificationDto.getClassificationId()))) {
+            // insert new
+            Map<String, Object> mapParams = new HashMap<>();
+            mapParams.put("classificationName", tbClassificationDto.getClassificationName());
+            boolean isExistClassificationName = adminCommonService.existClassificationName(mapParams);
+            if (isExistClassificationName) {
+                return BaseResponse.valueOfFailureMessage("分类名称重复， 请使用别名");
+            }
+
+            TbClassification tbClassification = new TbClassification();
+            tbClassification.setClassificationName(tbClassificationDto.getClassificationName());
+            tbClassification.setClassificationType(tbClassificationDto.getClassificationType());
+            tbClassification.setClassificationImage(tbClassificationDto.getClassificationImage());
+            tbClassification.setParentClassificationId(tbClassificationDto.getParentClassificationId());
+            tbClassification.setDepthNum(tbClassificationDto.getDepthNum());
+            tbClassification.setStatus(tbClassificationDto.getStatus());
+            tbClassification.setSortOrder(tbClassificationDto.getSortOrder());
+            tbClassification.setOption01(tbClassificationDto.getOption01());
+            tbClassification.setOption02(tbClassificationDto.getOption02());
+            tbClassification.setOption03(tbClassificationDto.getOption03());
+            tbClassification.setOption04(tbClassificationDto.getOption04());
+            tbClassification.setOption05(tbClassificationDto.getOption05());
+
+            boolean isSuccessInsert = adminCommonService.insertTbClassification(tbClassification);
+            if (isSuccessInsert) {
+                return BaseResponse.valueOfSuccessMessage(ResponseCode.INSERT_SUCCESS.getDesc());
+            }
+            return BaseResponse.valueOfFailureMessage(ResponseCode.INSERT_ERROR.getDesc());
+        } else {
+            // update
+            Map<String, Object> mapParams = new HashMap<>();
+            mapParams.put("classificationId", tbClassificationDto.getClassificationId());
+            mapParams.put("classificationName", tbClassificationDto.getClassificationName());
+            boolean isExistClassificationName = adminCommonService.existClassificationName(mapParams);
+            if (isExistClassificationName) {
+                return BaseResponse.valueOfFailureMessage("分类名称重复， 请使用别名");
+            }
+
+            TbClassification tbClassification = new TbClassification();
+            tbClassification.setClassificationId(tbClassificationDto.getClassificationId());
+            tbClassification.setClassificationName(tbClassificationDto.getClassificationName());
+            tbClassification.setClassificationType(tbClassificationDto.getClassificationType());
+            tbClassification.setClassificationImage(tbClassificationDto.getClassificationImage());
+            tbClassification.setParentClassificationId(tbClassificationDto.getParentClassificationId());
+            tbClassification.setDepthNum(tbClassificationDto.getDepthNum());
+            tbClassification.setStatus(tbClassificationDto.getStatus());
+            tbClassification.setSortOrder(tbClassificationDto.getSortOrder());
+            tbClassification.setOption01(tbClassificationDto.getOption01());
+            tbClassification.setOption02(tbClassificationDto.getOption02());
+            tbClassification.setOption03(tbClassificationDto.getOption03());
+            tbClassification.setOption04(tbClassificationDto.getOption04());
+            tbClassification.setOption05(tbClassificationDto.getOption05());
+
+            boolean isSuccessUpdate = adminCommonService.updateTbClassification(tbClassification);
+            if (isSuccessUpdate) {
+                return BaseResponse.valueOfSuccessMessage(ResponseCode.SAVE_SUCCESS.getDesc());
+            }
+            return BaseResponse.valueOfFailureMessage(ResponseCode.SAVE_ERROR.getDesc());
+        }
+    }
+
+    @AdminUserLogin
+    @GetMapping(value = "/classification/delete.do")
+    public BaseResponse classification_delete(BaseRequest baseRequest, Integer classificationId) {
+        if (classificationId == null || "".equals(String.valueOf(classificationId))) {
+            return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        boolean isSuccessDelete = adminCommonService.deleteTbClassification(classificationId);
+        if (isSuccessDelete) {
+            return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
+        }
+        return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
+    }
+
 
 
 

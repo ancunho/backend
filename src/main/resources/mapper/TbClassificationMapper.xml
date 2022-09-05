@@ -91,12 +91,7 @@
             <if test="option05 != null">
                 OPTION05,
             </if>
-            <if test="createTime != null">
-                CREATE_TIME,
-            </if>
-            <if test="updateTime != null">
-                UPDATE_TIME,
-            </if>
+            CREATE_TIME
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="classificationId != null">
@@ -138,12 +133,7 @@
             <if test="option05 != null">
                 #{option05,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
-            </if>
+            now()
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbClassification">
@@ -185,12 +175,7 @@
             <if test="option05 != null">
                 OPTION05 = #{option05,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
-                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
-            </if>
+            UPDATE_TIME = now()
         </set>
         where CLASSIFICATION_ID = #{classificationId,jdbcType=INTEGER}
     </update>
@@ -212,4 +197,61 @@
             UPDATE_TIME              = #{updateTime,jdbcType=TIMESTAMP}
         where CLASSIFICATION_ID = #{classificationId,jdbcType=INTEGER}
     </update>
+
+    <select id="existClassificationName" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT  1
+        FROM    TB_CLASSIFICATION T1
+        WHERE   EXISTS  (
+                        SELECT  1
+                        FROM    TB_CLASSIFICATION A1
+                        WHERE   A1.CLASSIFICATION_ID = T1.CLASSIFICATION_ID
+                        <if test="classificationId != null">
+                            AND A1.CLASSIFICATION_ID != #{classificationId}
+                        </if>
+                        AND     A1.CLASSIFICATION_NAME = #{classificationName}
+                        )
+    </select>
+
+    <select id="getAllTbClassificationList" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
+        SELECT  ,T1.CLASSIFICATION_ID
+                ,T1.PARENT_CLASSIFICATION_ID
+                ,T1.CLASSIFICATION_NAME
+                ,T1.CLASSIFICATION_TYPE
+                ,T1.CLASSIFICATION_IMAGE
+                ,T1.SORT_ORDER
+                ,T1.DEPTH_NUM
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM    TB_CLASSIFICATION T1
+    </select>
+
+    <select id="selectTbClassificationDtoByClassificationId" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.TbClassificationDto">
+        SELECT  ,T1.CLASSIFICATION_ID
+                ,T1.PARENT_CLASSIFICATION_ID
+                ,T1.CLASSIFICATION_NAME
+                ,T1.CLASSIFICATION_TYPE
+                ,T1.CLASSIFICATION_IMAGE
+                ,T1.SORT_ORDER
+                ,T1.DEPTH_NUM
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM    TB_CLASSIFICATION T1
+        WHERE   T1.CLASSIFICATION_ID = #{classificationId}
+    </select>
+
+
 </mapper>
