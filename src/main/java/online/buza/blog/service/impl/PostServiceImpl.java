@@ -50,5 +50,14 @@ public class PostServiceImpl implements PostService {
         return tbPostMapper.getTbPostByPostId(postId);
     }
 
+    @Override
+    public Boolean deleteTbPost(Integer postId) {
+        int deleteCount = tbPostMapper.deleteByPrimaryKey(postId);
+        if (deleteCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

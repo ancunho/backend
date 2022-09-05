@@ -11,5 +11,6 @@ public interface PostService {
     public Boolean updateTbPost(TbPost tbPost);
     public List<TbPostDto> getAllTbPostListByTbPost(TbPostDto tbPostDto);
     public TbPostDto getTbPostByPostId(Integer postId);
+    public Boolean deleteTbPost(Integer postId);
 
 }

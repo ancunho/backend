@@ -137,6 +137,6 @@ color-text-primary:1F2937
 .header-container { width: 1224px; margin: 0 auto; display: flex; justify-content: space-between;}
 .header-container .header-container-menu { display: flex; justify-content: flex-end; align-items: center;}
 .header-container .header-container-menu a { padding: 10px 15px; text-decoration: none; color:#1F2937}
-.main-container { width: 1224px; margin: 0 auto;}
+.main-container { width: 1224px; margin: 0 auto; padding-bottom: 50px;}
 
 

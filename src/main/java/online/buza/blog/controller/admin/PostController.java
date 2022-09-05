@@ -126,7 +126,20 @@ public class PostController extends CommonController {
 
         TbPostDto tbPostDto = postService.getTbPostByPostId(postId);
         return BaseResponse.valueOfSuccess(tbPostDto);
+    }
 
+    @AdminUserLogin
+    @GetMapping(value = "/delete.do")
+    public BaseResponse delete_post(@RequestParam("postId") Integer postId) {
+        if (postId == null) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        boolean isSuccessDelete = postService.deleteTbPost(postId);
+        if (isSuccessDelete) {
+            return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
+        }
+        return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
     }
 
 

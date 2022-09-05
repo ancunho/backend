@@ -25,6 +25,10 @@
         <input type="hidden" th:value="${postId}" class="initPostId" />
         <div class="">
             <!-- Main Contents Start -->
+            <div style="display: flex; justify-content: space-between">
+                <el-button type="primary" v-on:click="saveItem(selectedItem)" icon="el-icon-edit">Save</el-button>
+                <el-button type="info" v-on:click="handleRedirectList" icon="el-icon-notebook-2">Move to list</el-button>
+            </div>
             <el-form v-bind:inline="true" label-width="80px">
                 <el-form-item label="是否发布">
                     <el-switch v-model="selectedItem.status"></el-switch>
@@ -108,6 +112,20 @@
                 }
             },
             methods: {
+                handleRedirectList() {
+                    let _this = this;
+                    _this.$confirm('是否保存？', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    })
+                    .then(() => {
+                        _this.saveItem(_this.selectedItem);
+                    })
+                    .catch(() => {
+                        BuzaRouter("/admin/post.ahn");
+                    })
+                },
                 handleDrawerOpen() {
                     this.drawer = true;
                 },
@@ -146,7 +164,7 @@
                 saveItem(item) {
                     const _this = this;
                     if (Tool.isEmpty(item.postId)) {
-                        if(Tool.isEmpty(item.postTitle)) { _this.$message.info("username必填"); return; }
+                        if(Tool.isEmpty(item.postTitle)) { _this.$message.info("postTitle必填"); return; }
                     }
                     _this.loading = true;
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";

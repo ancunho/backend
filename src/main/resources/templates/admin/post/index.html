@@ -185,14 +185,13 @@
                     BuzaRouter("/admin/post/create.ahn?postId=" + postId);
                 },
                 handleConfirmOpen(postId) {
-                    console.log(postId);
                     const _this = this;
                     _this.$confirm('确定删除此用户信息吗, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.get('/api/setting/user/delete.do?userSeq=' + userSeq)
+                        axios.get('/api/post/delete.do?postId=' + postId)
                             .then(response => {
                                 if (response.data.code !== 0) {
                                     _this.$message.error(response.data.msg);
