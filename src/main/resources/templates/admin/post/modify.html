@@ -25,6 +25,7 @@
         <input type="hidden" th:value="${postId}" class="initPostId" />
         <div class="">
             <!-- Main Contents Start -->
+            <el-button type="primary" v-on:click="handleDrawerOpen">Select file</el-button>
             <el-form v-bind:inline="true" label-width="80px">
                 <el-form-item label="是否发布">
                     <el-switch v-model="selectedItem.status"></el-switch>
@@ -46,9 +47,14 @@
                 </div>
 
             <el-button type="primary" v-on:click="saveItem(selectedItem)" icon="el-icon-edit">Save</el-button>
-            <BoilerGraph />
+
             <!-- // Main Contents End -->
         </div>
+        <el-drawer title="file upload list"
+                   v-bind:visible.sync="drawer"
+                   direction="rtl" size="80%">
+            <file-upload-component />
+        </el-drawer>
     </main>
 </div>
 <div th:replace="admin/component/component::file-select"></div>
@@ -66,6 +72,9 @@
     // $(document).ready(function() {
         new Vue({
             el: '#app',
+            components: {
+                'file-upload-component': fileUploadAndListComponent,
+            },
             data() {
                 return {
                     loading: true,
@@ -75,6 +84,7 @@
                         status: false,
                     },
                     postId: '',
+                    drawer: false,
                 }
             },
             mounted() {
@@ -87,6 +97,16 @@
                 }
             },
             methods: {
+                handleDrawerOpen() {
+                    this.drawer = true;
+                },
+                handleDrawerClose(done) {
+                    this.$confirm('确认关闭？')
+                        .then(_ => {
+                            done();
+                        })
+                        .catch(_ => {});
+                },
                 getDetail(postId) {
                     let _this = this;
                     axios.get("/api/post/detail.do?postId=" + postId)
