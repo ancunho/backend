@@ -232,7 +232,7 @@ CREATE TABLE `tb_tag` (
 ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = 'tab表';
 
 
---포스트 태그 테이블
+-- 포스트 태그 테이블
 CREATE TABLE `tb_post_tag` (
                                `ID` int NOT NULL AUTO_INCREMENT,
                                `POST_ID` int NOT NULL,
@@ -240,7 +240,7 @@ CREATE TABLE `tb_post_tag` (
                                PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='post and tag relationship';
 
---포스트 - 참여고객 테이블
+-- 포스트 - 참여고객 테이블
 CREATE TABLE `tb_post_customer` (
                                     `POST_CUSTOMER_ID` int NOT NULL AUTO_INCREMENT,
                                     `POST_ID` int DEFAULT NULL,
@@ -315,7 +315,7 @@ CREATE TABLE `tb_spu` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
---TB_SPU_ATTRIBUTE
+-- TB_SPU_ATTRIBUTE
 CREATE TABLE `tb_spu_attribute` (
                                     `SPU_ATTR_ID` int NOT NULL AUTO_INCREMENT,
                                     `SPU_ID` int NOT NULL,
@@ -331,7 +331,7 @@ CREATE TABLE `tb_spu_attribute` (
                                     PRIMARY KEY (`SPU_ATTR_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---TB_SKU
+-- TB_SKU
 CREATE TABLE `tb_sku` (
                           `SKU_ID` int NOT NULL AUTO_INCREMENT,
                           `SPU_ID` int NOT NULL,
@@ -366,7 +366,7 @@ CREATE TABLE `tb_sku` (
 
 
 
---TB_SKU_ATTRIBUTE
+-- TB_SKU_ATTRIBUTE
 
 CREATE TABLE `tb_sku_attribute` (
                                     `SKU_ATTR_ID` int NOT NULL AUTO_INCREMENT,
@@ -389,7 +389,7 @@ CREATE TABLE `tb_sku_attribute` (
                                     KEY `tb_sku_attribute_attr_value_id` (`ATTR_VALUE_ID` ASC)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---TB_ATTRIBUTE
+-- TB_ATTRIBUTE
 CREATE TABLE `tb_attribute` (
                                 `ATTR_ID` int NOT NULL AUTO_INCREMENT,
                                 `ATTR_NAME` varchar(45) DEFAULT NULL,
@@ -407,7 +407,7 @@ CREATE TABLE `tb_attribute` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
---TB_ATTRIBUTE_VALUE
+-- TB_ATTRIBUTE_VALUE
 CREATE TABLE `tb_attribute_value` (
                                       `ATTR_VALUE_ID` int NOT NULL AUTO_INCREMENT,
                                       `ATTR_ID` int NOT NULL,
@@ -430,7 +430,7 @@ CREATE TABLE `tb_attribute_value` (
 
 
 
---고객테이블 - 클라이언트정보
+-- 고객테이블 - 클라이언트정보
 CREATE TABLE `tb_customer` (
                                `CUSTOMER_ID` int NOT NULL AUTO_INCREMENT COMMENT '고객번호',
                                `WEIXIN_OPEN_ID` varchar(100) DEFAULT NULL COMMENT '위챗오픈아이디',
@@ -485,7 +485,7 @@ CREATE TABLE `tb_shop` (
                            PRIMARY KEY (`SHOP_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='매장정보테이블';
 
---방/타석정보
+-- 방/타석정보
 CREATE TABLE `tb_room` (
                            `ROOM_ID` int NOT NULL AUTO_INCREMENT,
                            `SHOP_ID` int NOT NULL,
@@ -506,7 +506,7 @@ CREATE TABLE `tb_room` (
                            PRIMARY KEY (`ROOM_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='방/타석정보';
 
---예약정보
+-- 예약정보
 
 CREATE TABLE `tb_booking` (
                               `BOOKING_ID` bigint NOT NULL AUTO_INCREMENT,
@@ -540,3 +540,19 @@ CREATE TABLE `tb_booking` (
                               `UPDATE_TIME` datetime DEFAULT NULL,
                               PRIMARY KEY (`BOOKING_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='예약정보(메인)';
+
+-- post and classification relationship
+CREATE TABLE `tb_post_classification` (
+                                          `POST_CLASSIFICATION_ID` int NOT NULL AUTO_INCREMENT,
+                                          `POST_ID` int DEFAULT NULL,
+                                          `CLASSIFICATION_ID` int DEFAULT NULL,
+                                          `SORT_ORDER` int DEFAULT NULL,
+                                          `OPTION01` varchar(45) DEFAULT NULL,
+                                          `OPTION02` varchar(45) DEFAULT NULL,
+                                          `OPTION03` varchar(45) DEFAULT NULL,
+                                          `OPTION04` varchar(45) DEFAULT NULL,
+                                          `OPTION05` varchar(45) DEFAULT NULL,
+                                          `CREATE_TIME` datetime DEFAULT CURRENT_TIMESTAMP,
+                                          `UPDATE_TIME` datetime DEFAULT NULL,
+                                          PRIMARY KEY (`POST_CLASSIFICATION_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
