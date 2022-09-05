@@ -20,7 +20,7 @@ var childTestComponent =  Vue.extend({
 
 var fileUploadAndListComponent = Vue.extend({
     template: `
-    <div class="">
+    <div class="" style="padding: 0 30px;">
             <!-- Top File Upload Box Start -->
             <el-upload
                     class="upload-demo"
@@ -64,7 +64,7 @@ var fileUploadAndListComponent = Vue.extend({
                             <div class="bottom clearfix">
                                 <!--                                <time class="time">{{ item.fileName }}</time>-->
                                 <el-button type="text" class="button" v-on:click="handleOpenDrawer(item.fileId)">查看详细</el-button>
-                                <el-button type="text" class="button" v-on:click="handleEmitItem(item)">选择</el-button>
+                                <el-button type="text" class="button" v-on:click="emitfile(item)">选择</el-button>
                             </div>
                         </div>
                     </el-card>
@@ -118,8 +118,8 @@ var fileUploadAndListComponent = Vue.extend({
             currentDate: new Date(),
             loading: false,
             currentPage: 1, //page
-            pageSize: 2, //limit
-            pageSizes: [2, 4, 100, 200],
+            pageSize: 18, //limit
+            pageSizes: [18, 36, 96],
             total: 100,
 
             fileList: [],
@@ -244,9 +244,9 @@ var fileUploadAndListComponent = Vue.extend({
 
                 });
         },
-        handleEmitItem(item) {
+        emitfile(item) {
             let _this = this;
-            _this.$emit("childEmitItem", item);
+            _this.$emit("emitfile", item);
 
         },
     }
