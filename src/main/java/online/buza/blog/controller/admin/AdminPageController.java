@@ -113,6 +113,19 @@ public class AdminPageController {
     }
 
     /**
+     * 설정 - 분류관리 페이지
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     */
+    @AdminUserLogin
+    @RequestMapping(value = "/setting/classification.ahn")
+    public String setting_classification(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/setting/classification";
+    }
+
+    /**
      * 설정 - 공통코드관리 페이지
      * @param model
      * @param request
