@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
 import online.buza.blog.common.BaseResponse;
+import online.buza.blog.controller.common.CommonController;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.util.Box;
 import online.buza.blog.util.HttpUtility;
