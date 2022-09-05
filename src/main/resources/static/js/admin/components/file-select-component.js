@@ -18,6 +18,7 @@ var childTestComponent =  Vue.extend({
     }
 });
 
+// File Upload Component
 var fileUploadAndListComponent = Vue.extend({
     template: `
     <div class="" style="padding: 0 30px;">
