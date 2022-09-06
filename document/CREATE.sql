@@ -141,7 +141,7 @@ CREATE TABLE `tb_post` (
 -- tb_classification
 CREATE TABLE `tb_classification` (
                                      `CLASSIFICATION_ID` int NOT NULL AUTO_INCREMENT,
-                                     `PARENT_CLASSIFICATION_ID` int DEFAULT NULL,
+                                     `PARENT_CLASSIFICATION_ID` int DEFAULT '0',
                                      `CLASSIFICATION_NAME` varchar(100) DEFAULT NULL,
                                      `CLASSIFICATION_TYPE` varchar(45) DEFAULT NULL,
                                      `CLASSIFICATION_IMAGE` varchar(100) DEFAULT NULL,
