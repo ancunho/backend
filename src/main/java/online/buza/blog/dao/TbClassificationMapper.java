@@ -1,5 +1,7 @@
 package online.buza.blog.dao;
 
+import online.buza.blog.dto.ClassificationTreeDto;
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.entity.TbClassification;
 
@@ -24,4 +26,6 @@ public interface TbClassificationMapper {
     TbClassificationDto selectTbClassificationDtoByClassificationId(Integer classificationId);
 
     Integer existClassificationName(Map<String, Object> mapParams);
+
+    List<LabelDto> getClassificationTree(ClassificationTreeDto classificationTreeDto);
 }

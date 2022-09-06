@@ -6,16 +6,21 @@ import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
+import online.buza.blog.dto.ClassificationTreeDto;
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.entity.SysUser;
 import online.buza.blog.entity.TbClassification;
 import online.buza.blog.service.AdminCommonService;
+import online.buza.blog.util.Box;
+import online.buza.blog.util.HttpUtility;
 import online.buza.blog.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -267,6 +272,13 @@ public class SettingController {
             return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
         }
         return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/classification/tree.do")
+    public BaseResponse get_classification_tree(HttpServletRequest request, @RequestBody ClassificationTreeDto classificationTreeDto) {
+        List<LabelDto> lstClassificationTree = adminCommonService.getClassificationTree(classificationTreeDto);
+        return BaseResponse.valueOfSuccess(lstClassificationTree);
     }
 
 

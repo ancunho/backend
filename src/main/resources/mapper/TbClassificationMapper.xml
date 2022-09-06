@@ -256,5 +256,53 @@
         WHERE   T1.CLASSIFICATION_ID = #{classificationId}
     </select>
 
+    <resultMap id="classificationTreeResultMap" type="online.buza.blog.dto.LabelDto">
+        <id column="CLAS_ID" jdbcType="INTEGER" property="id"/>
+        <result column="CLAS_NAME" jdbcType="VARCHAR" property="label"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName"/>
+        <collection property="children" ofType="online.buza.blog.dto.LabelDto">
+            <id column="CHILD_CLAS_ID" jdbcType="INTEGER" property="id"/>
+            <result column="CLAS_NAME" jdbcType="VARCHAR" property="label"/>
+            <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+            <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName"/>
+        </collection>
+    </resultMap>
+    <select id="getClassificationTree" parameterType="online.buza.blog.dto.ClassificationTreeDto" resultMap="classificationTreeResultMap">
+        <![CDATA[
+        SELECT 	Z1.CLAS_ID,
+                Z1.CLAS_NAME,
+                Z1.CHILD_CLAS_ID,
+                Z1.PRENT_ID,
+                Z1.SORT_ORDER,
+                Z1.STATUS,
+                CASE WHEN Z1.STATUS = 1 THEN '使用中' ELSE '未激活' END AS STATUS_NAME
+        FROM	(
+                SELECT  T1.CLASSIFICATION_ID AS CLAS_ID,
+                        T1.CLASSIFICATION_NAME AS CLAS_NAME,
+                        0 AS CHILD_CLAS_ID,
+                        0 AS PRENT_ID,
+                        T1.SORT_ORDER AS SORT_ORDER,
+                        T1.STATUS
+                FROM	TB_CLASSIFICATION T1
+                WHERE	T1.PARENT_CLASSIFICATION_ID = 0
+                AND		(IFNULL(#{classificationId}, '') = '' OR T1.CLASSIFICATION_ID = #{classificationId})
+                UNION ALL
+                SELECT	T1.CLASSIFICATION_ID AS CLAS_ID,
+                          T2.CLASSIFICATION_NAME AS CLAS_NAME,
+                          T2.CLASSIFICATION_ID AS CHILD_CLAS_ID,
+                          T2.PARENT_CLASSIFICATION_ID AS PRENT_ID,
+                          T2.SORT_ORDER AS SORT_ORDER,
+                          T2.STATUS
+                FROM	TB_CLASSIFICATION T1
+                            INNER JOIN TB_CLASSIFICATION T2 ON T1.CLASSIFICATION_ID = T2.PARENT_CLASSIFICATION_ID
+                WHERE	T2.PARENT_CLASSIFICATION_ID <> 0
+                AND		(IFNULL(#{classificationId}, '') = '' OR T2.PARENT_CLASSIFICATION_ID = #{classificationId})
+                GROUP BY T1.CLASSIFICATION_ID,T2.CLASSIFICATION_ID,T2.PARENT_CLASSIFICATION_ID
+                ) Z1
+        ORDER BY Z1.CLAS_ID,Z1.SORT_ORDER
+        ]]>
+    </select>
+
 
 </mapper>

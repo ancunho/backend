@@ -17,6 +17,21 @@
         <div class="">
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
+            <el-tree
+                    v-bind:data="treeItems"
+                    default-expand-all
+                    highlight-current
+                    expand-on-click-node="false"
+                    node-key="id">
+                <span class="custom-tree-node" slot-scope="{ node, data }">
+                    <span>{{ node.data.label }}</span>
+                    <span>
+                        <el-tag style="margin-right: 10px;" v-bind:type="node.data.status == '1' ? 'success' : 'danger'" size="mini">{{ node.data.statusName }}</el-tag>
+                        <el-button type="text" size="mini" v-on:click="() => append(node)"> Append </el-button>
+                        <el-button type="text" size="mini"> Delete </el-button>
+                    </span>
+                </span>
+            </el-tree>
             <div class="">
                 <el-tabs v-model="activeTabName" type="card" v-on:tab-click="handleTabClick">
                     <el-tab-pane label="Search" name="searchTab">
@@ -118,7 +133,9 @@
 
     </main>
 </div>
-
+<style>
+    .custom-tree-node { flex: 1; display: flex; align-items: center; justify-content: space-between; font-size: 14px; padding:0 12px; }
+</style>
 <script type="text/javascript">
     $(document).ready(function() {
         new Vue({
@@ -139,11 +156,13 @@
                     activeTabName: 'searchTab',
                     drawer: false,
                     drawerTitle: 'titel title',
+                    treeItems: [],
                 }
             },
             created() {
                 const _this = this;
                 _this.initMainList();
+                _this.getClassificationTree();
             },
             methods: {
                 handleSizeChange(limit) {
@@ -256,7 +275,21 @@
                             _this.$message.error("Axios Error!");
                         });
                 },
+                getClassificationTree() {
+                    const params = {
 
+                    }
+                    axios.post("/api/setting/classification/tree.do", params).then((response) => {
+                        console.log("tree start");
+                        console.log(response.data.data);
+                        this.treeItems = response.data.data;
+                        console.log("tree end");
+                    })
+                },
+                append(data) {
+                    console.log(data)
+                }
+                // methods End
             }
         });
     });

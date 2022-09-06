@@ -1,5 +1,7 @@
 package online.buza.blog.service;
 
+import online.buza.blog.dto.ClassificationTreeDto;
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.entity.SysUser;
@@ -40,6 +42,7 @@ public interface AdminCommonService {
     public Boolean insertTbClassification(TbClassification tbClassification);
     public Boolean updateTbClassification(TbClassification tbClassification);
     public Boolean deleteTbClassification(Integer classificationId);
+    public List<LabelDto> getClassificationTree(ClassificationTreeDto classificationTreeDto);
 
 
 

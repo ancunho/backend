@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.SysUserMapper;
 import online.buza.blog.dao.TbClassificationMapper;
+import online.buza.blog.dto.ClassificationTreeDto;
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.entity.SysUser;
@@ -151,6 +153,10 @@ public class AdminCommonServiceImpl implements AdminCommonService {
             return true;
         }
         return false;
+    }
+
+    public List<LabelDto> getClassificationTree(ClassificationTreeDto classificationTreeDto) {
+        return tbClassificationMapper.getClassificationTree(classificationTreeDto);
     }
 
 
