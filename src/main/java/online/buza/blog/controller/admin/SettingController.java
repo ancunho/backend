@@ -281,6 +281,20 @@ public class SettingController {
         return BaseResponse.valueOfSuccess(lstClassificationTree);
     }
 
+    @AdminUserLogin
+    @PostMapping(value = "/classification/all_one_depth.do")
+    public BaseResponse get_all_one_depth_classification(BaseRequest baseRequest, @RequestBody TbClassificationDto tbClassificationDto) {
+        List<TbClassificationDto> lstTbClassification = adminCommonService.getAllOneDepthClassification(tbClassificationDto);
+        return BaseResponse.valueOfSuccess(lstTbClassification);
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/classification/all_two_depth.do")
+    public BaseResponse get_all_two_depth_classification(BaseRequest baseRequest, @RequestBody TbClassificationDto tbClassificationDto) {
+        List<TbClassificationDto> lstTbClassification = adminCommonService.getAllTwoDepthClassification(tbClassificationDto);
+        return BaseResponse.valueOfSuccess(lstTbClassification);
+    }
+
 
 
 

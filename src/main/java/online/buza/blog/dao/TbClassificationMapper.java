@@ -28,4 +28,8 @@ public interface TbClassificationMapper {
     Integer existClassificationName(Map<String, Object> mapParams);
 
     List<LabelDto> getClassificationTree(ClassificationTreeDto classificationTreeDto);
+
+    List<TbClassificationDto> getAllOneDepthClassification(TbClassificationDto tbClassificationDto);
+
+    List<TbClassificationDto> getAllTwoDepthClassification(TbClassificationDto tbClassificationDto);
 }

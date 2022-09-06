@@ -217,7 +217,12 @@
                 ,T1.CLASSIFICATION_ID
                 ,T1.CLASSIFICATION_NAME
                 ,T1.PARENT_CLASSIFICATION_ID
-                ,(SELECT A1.CLASSIFICATION_NAME FROM TB_CLASSIFICATION A1 WHERE A1.CLASSIFICATION_ID = T1.PARENT_CLASSIFICATION_ID) AS PARENT_CLASSIFICATION_NAME
+                ,CASE WHEN T1.PARENT_CLASSIFICATION_ID = 0 THEN '-'
+                    ELSE (
+                            SELECT  A1.CLASSIFICATION_NAME
+                            FROM    TB_CLASSIFICATION A1
+                            WHERE   A1.CLASSIFICATION_ID = T1.PARENT_CLASSIFICATION_ID
+                        ) end as PARENT_CLASSIFICATION_NAME
                 ,T1.CLASSIFICATION_TYPE
                 ,T1.CLASSIFICATION_IMAGE
                 ,T1.SORT_ORDER
@@ -304,5 +309,16 @@
         ]]>
     </select>
 
+    <select id="getAllOneDepthClassification" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
+        SELECT  *
+        FROM    TB_CLASSIFICATION T1
+        WHERE   T1.PARENT_CLASSIFICATION_ID = 0
+    </select>
+
+    <select id="getAllTwoDepthClassification" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
+        SELECT  *
+        FROM    TB_CLASSIFICATION T1
+        WHERE   T1.PARENT_CLASSIFICATION_ID = #{parentClassificationId}
+    </select>
 
 </mapper>

@@ -43,6 +43,8 @@ public interface AdminCommonService {
     public Boolean updateTbClassification(TbClassification tbClassification);
     public Boolean deleteTbClassification(Integer classificationId);
     public List<LabelDto> getClassificationTree(ClassificationTreeDto classificationTreeDto);
+    public List<TbClassificationDto> getAllOneDepthClassification(TbClassificationDto tbClassificationDto);
+    public List<TbClassificationDto> getAllTwoDepthClassification(TbClassificationDto tbClassificationDto);
 
 
 

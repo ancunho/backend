@@ -16,6 +16,7 @@ public class LabelDto extends BaseRequest implements Serializable {
     public static final long serialVersionUID = 1L;
 
     public int id;
+    public int value;
     public String label;
     public boolean hasChildren;
     public String status;

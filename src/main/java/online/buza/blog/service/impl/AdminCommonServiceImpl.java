@@ -159,5 +159,13 @@ public class AdminCommonServiceImpl implements AdminCommonService {
         return tbClassificationMapper.getClassificationTree(classificationTreeDto);
     }
 
+    public List<TbClassificationDto> getAllOneDepthClassification(TbClassificationDto tbClassificationDto) {
+        return tbClassificationMapper.getAllOneDepthClassification(tbClassificationDto);
+    }
+
+    public List<TbClassificationDto> getAllTwoDepthClassification(TbClassificationDto tbClassificationDto) {
+        return tbClassificationMapper.getAllTwoDepthClassification(tbClassificationDto);
+    }
+
 
 }

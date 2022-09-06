@@ -17,25 +17,25 @@
         <div class="">
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
-            <el-tree
-                    v-bind:data="treeItems"
-                    default-expand-all
-                    highlight-current
-                    expand-on-click-node="false"
-                    node-key="id">
-                <span class="custom-tree-node" slot-scope="{ node, data }">
-                    <span>{{ node.data.label }}</span>
-                    <span>
-                        <el-tag style="margin-right: 10px;" v-bind:type="node.data.status == '1' ? 'success' : 'danger'" size="mini">{{ node.data.statusName }}</el-tag>
-                        <el-button type="text" size="mini" v-on:click="() => append(node)"> Append </el-button>
-                        <el-button type="text" size="mini"> Delete </el-button>
-                    </span>
-                </span>
-            </el-tree>
+<!--            <el-tree-->
+<!--                    v-bind:data="treeItems"-->
+<!--                    default-expand-all-->
+<!--                    highlight-current-->
+<!--                    expand-on-click-node="false"-->
+<!--                    node-key="id">-->
+<!--                <span class="custom-tree-node" slot-scope="{ node, data }">-->
+<!--                    <span>{{ node.data.label }}</span>-->
+<!--                    <span>-->
+<!--                        <el-tag style="margin-right: 10px;" v-bind:type="node.data.status == '1' ? 'success' : 'danger'" size="mini">{{ node.data.statusName }}</el-tag>-->
+<!--                        <el-button type="text" size="mini" v-on:click="() => append(node)"> Append </el-button>-->
+<!--                        <el-button type="text" size="mini"> Delete </el-button>-->
+<!--                    </span>-->
+<!--                </span>-->
+<!--            </el-tree>-->
             <div class="">
                 <el-tabs v-model="activeTabName" type="card" v-on:tab-click="handleTabClick">
                     <el-tab-pane label="Search" name="searchTab">
-                        <p>asdfdsaf</p>
+                        <p>검색준비중</p>
                     </el-tab-pane>
                 </el-tabs>
             </div>
@@ -113,6 +113,21 @@
                         <el-form-item label="Type">
                             <el-input v-model="selectedItem.classificationType"></el-input>
                         </el-form-item>
+                        <el-form-item label="Parent">
+                            <el-select v-on:visible-change="handleParentSelectChange" v-model="selectedItem.parentClassificationId" placeholder="请选择">
+                                <el-option
+                                        v-for="item in oneDepthItems"
+                                        v-bind:key="item.classificationId"
+                                        v-bind:label="item.classificationName"
+                                        v-bind:value="item.classificationId">
+                                </el-option>
+                            </el-select>
+<!--                            <el-cascader-->
+<!--                                    v-bind:options="treeItems"-->
+<!--                                    v-bind:props="{ multiple: true, checkStrictly: true }"-->
+<!--                                    v-model="parentId"-->
+<!--                                    clearable></el-cascader>-->
+                        </el-form-item>
                         <el-form-item label="SORT">
                             <el-input v-model="selectedItem.sortOrder"></el-input>
                         </el-form-item>
@@ -157,6 +172,8 @@
                     drawer: false,
                     drawerTitle: 'titel title',
                     treeItems: [],
+                    oneDepthItems: [],
+                    twoDepthItems: [],
                 }
             },
             created() {
@@ -183,6 +200,7 @@
                     if (Tool.isEmpty(row.classificationId)) {
                         _this.drawerTitle = "Add New Classification";
                         _this.selectedItem = {};
+                        _this.getAllOneDepthClassificaiton();
                     } else {
                         _this.drawerTitle = row.classificationName + "'s modify";
                         _this.getMainDetail(row.classificationId);
@@ -227,12 +245,13 @@
                     _this.selectedItem = {};
                 },
                 saveItem(item) {
-                    const _this = this;
+                    let _this = this;
                     if (Tool.isEmpty(item.classificationId)) {
                         if(Tool.isEmpty(item.classificationName)) { _this.$message.info("Name必填"); }
                     }
 
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
+                    _this.selectedItem.parentClassificationId = _this.selectedItem.parentClassificationId === undefined ? "0" : _this.selectedItem.parentClassificationId;
                     axios.post("/api/setting/classification/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
@@ -269,6 +288,7 @@
                             } else {
                                 _this.selectedItem = response.data.data;
                                 _this.selectedItem.status = _this.selectedItem.status == '1' ? true : false;
+                                _this.getAllOneDepthClassificaiton();
                             }
                         })
                         .catch(error => {
@@ -276,18 +296,34 @@
                         });
                 },
                 getClassificationTree() {
-                    const params = {
-
-                    }
+                    const params = {};
                     axios.post("/api/setting/classification/tree.do", params).then((response) => {
                         console.log("tree start");
                         console.log(response.data.data);
                         this.treeItems = response.data.data;
                         console.log("tree end");
-                    })
+                    });
                 },
                 append(data) {
                     console.log(data)
+                },
+                getAllOneDepthClassificaiton() {
+                    let _this = this;
+                    const params = {}
+                    axios.post("/api/setting/classification/all_one_depth.do", params).then((response) => {
+                        _this.oneDepthItems = response.data.data;
+                    });
+                },
+                getAllTwoDepthClassificaiton() {
+                    let _this = this;
+                    const params = {}
+                    axios.post("/api/setting/classification/all_two_depth.do", params).then((response) => {
+                        _this.twoDepthItems = response.data.data;
+                    });
+                },
+                handleParentSelectChange() {
+                    let _this = this;
+                    _this.getAllOneDepthClassificaiton();
                 }
                 // methods End
             }
