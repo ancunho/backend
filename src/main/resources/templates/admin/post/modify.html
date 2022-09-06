@@ -25,24 +25,40 @@
         <input type="hidden" th:value="${postId}" class="initPostId" />
         <div class="">
             <!-- Main Contents Start -->
-            <div style="display: flex; justify-content: space-between">
-                <el-button type="primary" v-on:click="saveItem(selectedItem)" icon="el-icon-edit">Save</el-button>
-                <el-button type="info" v-on:click="handleRedirectList" icon="el-icon-notebook-2">Move to list</el-button>
+            <div style="display:flex; justify-content: space-between;">
+                <div>
+                    <el-button type="primary" v-on:click="saveItem(selectedItem)" icon="el-icon-edit">Save</el-button>
+                    <el-button type="info" v-on:click="handleRedirectList" icon="el-icon-notebook-2">Move to list</el-button>
+                </div>
+                <div>
+                    <el-form style="align-items: center" v-bind:inline="true" label-width="80px">
+                        <el-form-item label="是否发布">
+                            <el-switch v-model="selectedItem.status"></el-switch>
+                        </el-form-item>
+                    </el-form>
+                </div>
             </div>
-            <el-form v-bind:inline="true" label-width="80px">
-                <el-form-item label="是否发布">
-                    <el-switch v-model="selectedItem.status"></el-switch>
-                </el-form-item>
-            </el-form>
             <el-form>
                 <el-form-item label="标题">
                     <el-input v-model="selectedItem.postTitle"></el-input>
                 </el-form-item>
             </el-form>
             <el-form>
+                <el-form-item label="分类">
+                    <el-select v-on:visible-change="handlePostType" v-model="selectedItem.postType" placeholder="请选择">
+                        <el-option
+                                v-for="(item,idx) in postTypeList"
+                                v-bind:key="item.codeId"
+                                v-bind:label="item.codeName"
+                                v-bind:value="item.codeId">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <el-form>
                 <div class="">
                     <p class="post-content-label">
-                        Thunbnail Big <el-button type="primary" v-on:click="handleDrawerOpen">Select file</el-button>
+                        Thunbnail Big <el-button type="text" v-on:click="handleDrawerOpen">Select file</el-button>
                     </p>
                     <div>
                         <input type="hidden" v-model="selectedItem.postThumbnailBig" />
@@ -50,6 +66,7 @@
                     </div>
                 </div>
             </el-form>
+
             <div class="post-content" style="margin-bottom: 10px; font-size:12px; color:#475569">
                 <p class="post-content-label">
                     Post Content
@@ -75,6 +92,7 @@
 <style>
     .post-content {}
     .post-content .post-content-label { font-size:13px; color:#475569; font-weight: bold}
+    .box { display:flex; flex: 1; justify-content: space-between; align-items: center}
 </style>
 <script th:src="@{/js/tailwind-elements.min.js}"></script>
 <style>
@@ -95,11 +113,13 @@
                     selectedItem: {
                         postTitle: '',
                         postContent: '',
+                        postType: '',
                         postThumbnailBig: '',
                         status: false,
                     },
                     postId: '',
                     drawer: false,
+                    postTypeList: [],
                 }
             },
             mounted() {
@@ -110,6 +130,7 @@
                 } else {
                     _this.loading = false;
                 }
+                _this.handlePostType();
             },
             methods: {
                 handleRedirectList() {
@@ -151,6 +172,7 @@
                         } else {
                             _this.selectedItem.postTitle = response.data.data.postTitle;
                             _this.selectedItem.status = response.data.data.status === "1" ? true : false;
+                            _this.selectedItem.postType = response.data.data.postTypeName;
                             _this.selectedItem.postThumbnailBig = response.data.data.postThumbnailBig;
                             editor.setHtml(response.data.data.postContent);
                         }
@@ -168,9 +190,11 @@
                     }
                     _this.loading = true;
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
-                    _this.selectedItem.postType = "01";
+                    // _this.selectedItem.postType = "01";
                     _this.selectedItem.postContent = editor.getHtml();
                     _this.selectedItem.postId = _this.postId;
+                    // console.log(_this.selectedItem);
+                    // return;
                     axios.post('/api/post/proc.do', _this.selectedItem)
                         .then(response => {
                             _this.loading = false;
@@ -192,12 +216,26 @@
                             _this.$message.error("Request Error!")
                         });
                 },
-                //emitfile Start
                 emitfile(item) {
                     this.drawer = false;
                     this.selectedItem.postThumbnailBig = item.fileUrl;
+                },
+                handlePostType() {
+                    let _this = this;
+                    axios.get("/api/common_code/type/list.do?codeType=POST_TYPE")
+                    .then(response => {
+                        if (response.data.code !== 0) {
+                            _this.$message.error(response.data.msg);
+                        } else {
+                            _this.postTypeList = response.data.data;
+                        }
+                    })
+                    .catch(error => {
+                        _this.loading = false;
+                        _this.$message.error("Request Error!(Post Type)")
+                    })
                 }
-                //emitfile End
+                //methods end
 
             }
         });

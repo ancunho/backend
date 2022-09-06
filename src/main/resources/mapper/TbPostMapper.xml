@@ -342,7 +342,7 @@
                 ,(
                 SELECT  A1.CODE_NAME
                 FROM    TB_COMMON_CODE A1
-                WHERE   A1.CODE_CD = T1.POST_TYPE
+                WHERE   A1.CODE_ID = T1.POST_TYPE
                 AND     A1.CODE_TYPE = 'POST_TYPE'
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
