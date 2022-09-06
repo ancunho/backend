@@ -94,7 +94,7 @@ var fileUploadAndListComponent = Vue.extend({
                     title="图片详细信息"
                     v-bind:visible.sync="isDrawerVisible"
                     direction="rtl"
-                    size="50%"
+                    size="100%"
                     v-bind:close-on-press-escape="false"
             >
                 <p>fileId : {{ itemDetail.fileId }}</p>
