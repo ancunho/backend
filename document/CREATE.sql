@@ -167,7 +167,7 @@ CREATE TABLE `tb_common_code` (
                                   `CODE_NAME` varchar(45) DEFAULT NULL,
                                   `USE_YN` varchar(2) DEFAULT NULL,
                                   `REMARK` varchar(100) DEFAULT NULL,
-                                  `SORT_ORDER` int DEFAULT NULL,
+                                  `SORT` int DEFAULT NULL,
                                   `OPTION01` varchar(45) DEFAULT NULL,
                                   `OPTION02` varchar(45) DEFAULT NULL,
                                   `OPTION03` varchar(45) DEFAULT NULL,
