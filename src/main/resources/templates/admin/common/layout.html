@@ -1,14 +1,16 @@
 <div th:fragment="top">
     <div id="topContainer">
         <div class="topContainerBox">
-            <h1><a href="/admin"><img th:src="@{/images/buza_management_logo.png}" width="200" height="40"></a></h1>
-            <div class="topMenu">
-                <a href="/admin">Dashboard</a>
-                <a href="/admin/customer.ahn">Customer</a>
-                <a href="#">E-commerce</a>
-                <a href="/admin/post.ahn">Board</a>
-                <a href="/admin/material.ahn">Material</a>
-                <a href="/admin/setting.ahn">Setting</a>
+            <div style="display: flex; justify-content: start;">
+                <h1><a href="/admin"><img th:src="@{/images/buza_management_logo.png}" width="200" height="40"></a></h1>
+                <div class="topMenu">
+                    <a href="/admin">Dashboard</a>
+                    <a href="/admin/customer.ahn">Customer</a>
+                    <a href="#">E-commerce</a>
+                    <a href="/admin/post.ahn">Board</a>
+                    <a href="/admin/material.ahn">Material</a>
+                    <a href="/admin/setting.ahn">Setting</a>
+                </div>
             </div>
             <div class="topSubMenu">
 <!--                <svg class="" style="height: 1.5rem; width: 1.5rem; margin-right: 10px; color:#D1D5DB;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">-->
