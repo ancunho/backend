@@ -126,7 +126,7 @@ color-text-primary:1F2937
 
 
 #topContainer { background:#1F2937;}
-.topContainerBox {  margin: 0 auto; padding: 10px 0; display: flex; justify-content:space-between; }
+.topContainerBox {  margin: 0 auto; padding: 7px 0; display: flex; justify-content:space-between; }
 .topContainerBox h1 { margin: 0 40px 0 20px;}
 .topContainerBox .topMenu {display: flex; align-items: center;}
 .topContainerBox .topMenu a { text-decoration: none; color:#D1D5DB; padding: 10px 15px; display: inline-block;}
@@ -134,8 +134,9 @@ color-text-primary:1F2937
 .topContainerBox .topSubMenu {  display: flex; align-items: center; padding-right: 30px;}
 .topContainerBox .topSubMenu .topSubMenu-username { padding-right: 12px; color:#fff;}
 .topContainerBox .topSubMenu .btnLogout { display: inline-block; margin-left: 20px; text-decoration: none; color:#D1D5D8;}
-.header-top { background:#F3F4F6; margin-bottom: 20px; }
-.header-container { padding: 0 30px; margin: 0 auto; display: flex; justify-content: space-between;}
+.header-top { background:#f6f8fa; margin-bottom: 20px; }
+.header-container { border-bottom: 1px solid #ddd; padding: 0 30px; margin: 0 auto; display: flex; justify-content: space-between;}
+.header-container h3 { color:#475569;}
 .header-container .header-container-menu { display: flex; justify-content: flex-end; align-items: center;}
 .header-container .header-container-menu a { padding: 10px 15px; text-decoration: none; color:#3b82f6}
 .main-container { width: 1224px; margin: 0 auto; padding-bottom: 50px;}
