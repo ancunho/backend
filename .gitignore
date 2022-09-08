@@ -20,6 +20,9 @@ out/
 *.iml
 *.ipr
 
+*.pfx
+keystorePass.txt
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
