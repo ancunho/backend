@@ -142,3 +142,4 @@ color-text-primary:1F2937
 .main-container { width: 1224px; margin: 0 auto; padding-bottom: 50px;}
 
 
+.dialogDiv { z-index:20000;}

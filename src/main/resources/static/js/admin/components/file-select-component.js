@@ -112,6 +112,7 @@ var fileUploadAndListComponent = Vue.extend({
             </el-drawer>
             <!--  // drawer end  -->
             
+            
         </div>
     `,
     data() {
@@ -178,6 +179,7 @@ var fileUploadAndListComponent = Vue.extend({
                 _this.$message.error("当前文件已经存在!");
                 fileList.pop();
             }
+
             _this.fileList = fileList;
         },
         handleOnExceed() {
@@ -250,5 +252,21 @@ var fileUploadAndListComponent = Vue.extend({
             _this.$emit("emitfile", item);
 
         },
+        handleDialogClose(done) {
+            this.$confirm('确认关闭？')
+                .then(_ => {
+                    done();
+                })
+                .catch(_ => {});
+        }
     }
 })
+
+
+// Post Modify Component
+
+// var postModifyComponent = Vue.extend({
+//     template: `
+//
+//     `
+// })
