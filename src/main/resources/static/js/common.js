@@ -103,6 +103,17 @@ function BuzaRouter(url) {
     $frmBUZACommon.submit();
 }
 
+let imageWhiteList = ["jpg", "jpeg", "png", "gif", "bmp", "JPG", "JPEG", "GIF", "BMP"];
+let videoWhiteList = ["mp4", "avi", "3gp", "wma", "flv", "mpg", "mpeg", "mpe", "mov", "m4v", "vob", "dat", "mkv", "rm", "rmvb", "asf", "asx",
+    "MP4", "AVI", "3GP", "WMA", "FLV", "MPG", "MPEG", "MPE", "MOV", "M4V", "VOB", "DAT", "MKV", "RM", "RMVB", "ASF", "ASX"
+];
+let audioWhiteList = ["mp3", "wav", "wma", "mp2", "flac", "midi", "ra", "ape", "aac", "cda", "mov",
+    "MP3", "WAV", "WMA", "MP2", "FLAC", "MIDI", "RA", "APE", "AAC", "CDA", "MOV"
+];
+
+let fileWhiteList = ["pdf", "xls", "xlsx", "docx", "doc", "docm", "dotm", "txt", "hwp", "ppt", "pptx",
+    "PDF", "XLS", "XLSX", "DOCX", "DOC", "DOCM", "DOTM", "TXT", "HWP", "PPT", "PPTX"
+];
 
 Tool = {
     /**

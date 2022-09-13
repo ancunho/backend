@@ -13,6 +13,8 @@ import online.buza.blog.dto.TbFileListDto;
 import online.buza.blog.entity.TbFileList;
 import online.buza.blog.service.AliyunService;
 import online.buza.blog.service.FileService;
+import online.buza.blog.util.Box;
+import online.buza.blog.util.HttpUtility;
 import online.buza.blog.util.PropertiesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +39,7 @@ public class FileController {
     private FileService fileService;
 
     @AdminUserLogin
-    @PostMapping(value = "/upload")
+    @PostMapping(value = "/upload.do")
     public Map<String, Object> file_upload_return_url(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         Map<String, Object> result = new HashMap<>();
         List<String> imgList = new ArrayList<>();
@@ -58,7 +60,7 @@ public class FileController {
     }
 
     @PassLogin
-    @PostMapping(value = "/wangEditor/single/upload")
+    @PostMapping(value = "/wangEditor/single/upload.do")
     public Map<String, Object> file_wangEditor_upload_return_url(HttpServletRequest request, @RequestParam(value = "editorImageFile", required = false) MultipartFile file) throws Exception {
         Map<String, Object> result = new HashMap<>();
 //        for (MultipartFile file : multipartFiles) {
@@ -79,7 +81,7 @@ public class FileController {
     }
 
     @AdminUserLogin
-    @PostMapping(value = "/single/image/upload")
+    @PostMapping(value = "/single/image/upload.do")
     public Map<String, Object> image_upload_return_url(HttpServletRequest request, @RequestBody TbFileListDto tbFileListDto, @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         Map<String, Object> result = new HashMap<>();
         //Const.UPLOAD_IMAGE_MAX_SIZE : 2MB
@@ -96,8 +98,9 @@ public class FileController {
     }
 
     @AdminUserLogin
-    @PostMapping(value = "/multie/image/upload")
+    @PostMapping(value = "/multie/image/upload.do")
     public BaseResponse image_multie_upload_return_url(HttpServletRequest request, @RequestParam("imageFiles") List<MultipartFile> multipartFileList) {
+        Box box = HttpUtility.getBox(request);
         HttpSession session = request.getSession();
         SysUserDto loginUser = (SysUserDto) session.getAttribute("LOGINED_USER");
         try {
@@ -113,7 +116,7 @@ public class FileController {
                     if (isOSSSuccess) {
                         // 2. file info save in DB
                         TbFileList tbFileList = new TbFileList();
-                        tbFileList.setFileType("01"); // 01: image, 02: audio, 03: video
+                        tbFileList.setFileType(box.get("fileType")); // image,audio,video,file
                         tbFileList.setFileOriginName(returnFileMap.get("imageOriginName").toString());
                         tbFileList.setFileName(returnFileMap.get("imageName").toString());
                         tbFileList.setFilePath(returnFileMap.get("imagePath").toString());
@@ -159,7 +162,7 @@ public class FileController {
     }
 
     @AdminUserLogin
-    @PostMapping(value = "/single/image/delete")
+    @PostMapping(value = "/single/image/delete.do")
     public BaseResponse image_delete(HttpServletRequest request, @RequestParam("imageUrl") String imageUrl) throws Exception {
         if (imageUrl == null || "".equals(imageUrl)) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -172,7 +175,7 @@ public class FileController {
     }
 
     @AdminUserLogin
-    @PostMapping(value = "/list")
+    @PostMapping(value = "/list.do")
     public BaseResponse getAllTbFileList(BaseRequest baseRequest, @RequestBody TbFileListDto tbFileListDto) {
         PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
         List<TbFileListDto> returnData = fileService.getAllTbFileList(tbFileListDto);
@@ -180,7 +183,7 @@ public class FileController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/info")
+    @GetMapping(value = "/info.do")
     public BaseResponse getTbFileListInfoByFileId(BaseRequest baseRequest, @RequestParam("fileId") Integer fileId) {
         if (fileId == null) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());

@@ -296,31 +296,35 @@
     </update>
 
     <select id="getAllTbFileList" parameterType="online.buza.blog.dto.TbFileListDto" resultType="online.buza.blog.dto.TbFileListDto">
-      SELECT  T1.FILE_ID
-           ,T1.FILE_TYPE
-           ,T1.FILE_PURPOSE
-           ,T1.FILE_ORIGIN_NAME
-           ,T1.FILE_NAME
-           ,T1.FILE_PATH
-           ,T1.FILE_BUCKET_NAME
-           ,T1.FILE_BUCKET_OBJECT
-           ,T1.FILE_SIZE
-           ,T1.FILE_EXTENTION
-           ,T1.FILE_URL
-           ,T1.FILE_SORT
-           ,T1.FILE_IS_MAIN
-           ,T1.FILE_REMARK
-           ,T1.STATUS
-           ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
-           ,T1.OPTION01
-           ,T1.OPTION02
-           ,T1.OPTION03
-           ,T1.OPTION04
-           ,T1.OPTION05
-           ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
-           ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-      FROM    TB_FILE_LIST T1
-      ORDER BY T1.CREATE_TIME DESC
+        SELECT  T1.FILE_ID
+               ,T1.FILE_TYPE
+               ,T1.FILE_PURPOSE
+               ,T1.FILE_ORIGIN_NAME
+               ,T1.FILE_NAME
+               ,T1.FILE_PATH
+               ,T1.FILE_BUCKET_NAME
+               ,T1.FILE_BUCKET_OBJECT
+               ,T1.FILE_SIZE
+               ,T1.FILE_EXTENTION
+               ,T1.FILE_URL
+               ,T1.FILE_SORT
+               ,T1.FILE_IS_MAIN
+               ,T1.FILE_REMARK
+               ,T1.STATUS
+               ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+               ,T1.OPTION01
+               ,T1.OPTION02
+               ,T1.OPTION03
+               ,T1.OPTION04
+               ,T1.OPTION05
+               ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+               ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM    TB_FILE_LIST T1
+        WHERE   T1.STATUS = '1'
+        <if test="fileType != null">
+            AND T1.FILE_TYPE = #{fileType}
+        </if>
+        ORDER BY T1.CREATE_TIME DESC
     </select>
 
     <select id="getTbFileListInfoByFileId" parameterType="java.lang.Integer" resultType="online.buza.blog.dto.TbFileListDto">
