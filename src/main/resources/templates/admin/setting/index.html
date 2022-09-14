@@ -18,6 +18,20 @@
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
             <div class="">
+                <el-form v-bind:inline="true" v-bind:model="formInline" class="demo-form-inline">
+                    <el-form-item label="审批人">
+                        <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+                    </el-form-item>
+                    <el-form-item label="活动区域">
+                        <el-select v-model="formInline.region" placeholder="活动区域">
+                            <el-option label="区域一" value="shanghai"></el-option>
+                            <el-option label="区域二" value="beijing"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" v-on:click="onSubmit">查询</el-button>
+                    </el-form-item>
+                </el-form>
                 <el-tabs v-model="activeTabName" type="card" v-on:tab-click="handleTabClick">
                     <el-tab-pane label="Search" name="searchTab">
                         <p>검색준비중</p>
@@ -140,6 +154,10 @@
                     activeTabName: 'searchTab',
                     drawer: false,
                     drawerTitle: 'titel title',
+                    formInline: {
+                        user: '',
+                        region: ''
+                    }
                 }
             },
             created() {
@@ -147,6 +165,9 @@
                 this.initMainList();
             },
             methods: {
+                 onSubmit() {
+                    console.log('submit!');
+                },
                 handleSizeChange(limit) {
                     this.currentPage = 1;
                     this.pageSize = limit;
