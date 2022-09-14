@@ -23,6 +23,13 @@ var fileUploadAndListComponent = Vue.extend({
     template: `
     <div class="" style="padding: 0 30px;">
             <!-- Top File Upload Box Start -->
+            <div style="margin-bottom: 40px;">
+                <span>1. Type: </span>
+                <el-radio v-on:change="handleRadioTypeChange" v-model="uploadType" style="margin-right: 0px;" label="image" border>Image</el-radio>
+                <el-radio v-on:change="handleRadioTypeChange" v-model="uploadType" style="margin-right: 0px;" label="video" border>Video</el-radio>
+                <el-radio v-on:change="handleRadioTypeChange" v-model="uploadType" style="margin-right: 0px;" label="audio" border>Audio</el-radio>
+                <el-radio v-on:change="handleRadioTypeChange" v-model="uploadType" label="file" border>File</el-radio>
+            </div>
             <el-upload
                     class="upload-demo"
                     ref="upload"
@@ -35,8 +42,8 @@ var fileUploadAndListComponent = Vue.extend({
                     v-bind:on-exceed="handleOnExceed"
                     v-bind:http-request="handleOnUpload"
             >
-                <el-button slot="trigger" type="primary">1. 选取文件</el-button>
-                <el-button style="margin-left: 10px;" type="success" v-on:click="handleSubmitUpload">2. 上传到服务器</el-button>
+                <el-button slot="trigger" type="primary">2. 选取文件</el-button>
+                <el-button style="margin-left: 10px;" type="success" v-on:click="handleSubmitUpload">3. 上传到服务器</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload>
             <!-- // Top File Upload Box End -->
@@ -135,6 +142,8 @@ var fileUploadAndListComponent = Vue.extend({
             fileId: '',
             itemDetail: {},
             loadingDrawer: false,
+
+            uploadType: 'image',
         }
     },
     mounted() {
@@ -154,14 +163,14 @@ var fileUploadAndListComponent = Vue.extend({
         initMainList() {
             let _this = this;
             let params = {
-
+                fileType: _this.uploadType
             };
 
             axios.post(_this.initDataListURL + '?page=' + _this.currentPage + "&limit=" + _this.pageSize,params)
                 .then(res => {
                     if (res.data.status === 200) {
                         _this.arrInitData = res.data.data;
-                        _this.total = res.data.count;
+                        _this.total = res.data.total;
                     } else {
                         _this.$message.error(res.data.msg);
                     }
@@ -171,6 +180,9 @@ var fileUploadAndListComponent = Vue.extend({
                     _this.$message.error("Fail!!!!!!")
                     _this.loading = false;
                 });
+        },
+        handleRadioTypeChange(aaa) {
+            this.initMainList();
         },
         handleOnChange(file, fileList) {
             let _this = this;
@@ -190,8 +202,68 @@ var fileUploadAndListComponent = Vue.extend({
             _this.fileData.append("imageFiles", file.file);
         },
         //上传文件
-        handleSubmitUpload() {
+        async handleSubmitUpload() {
             let _this = this;
+
+            // File Type Check
+            var typeErrorFlag = '';
+            for (var i = 0; i < _this.fileList.length; i++) {
+                var file = _this.fileList[i];
+                const fileSuffix = file.raw.name.substring(file.raw.name.lastIndexOf(".") + 1);
+                if (_this.uploadType === 'image') {
+                    if (imageWhiteList.indexOf(fileSuffix) === -1) {
+                        // _this.$alert("업로드 가능한 이미지 파일형식: " + imageWhiteList);
+                        // _this.fileList = [];
+                        typeErrorFlag = 'imageError';
+                    }
+                } else if (_this.uploadType === 'video') {
+                    if (videoWhiteList.indexOf(fileSuffix) === -1) {
+                        // _this.$alert("업로드 가능한 동영상 파일형식: " + videoWhiteList);
+                        // _this.fileList = [];
+                        typeErrorFlag = 'videoError';
+                    }
+                } else if (_this.uploadType === 'audio') {
+                    if (audioWhiteList.indexOf(fileSuffix) === -1) {
+                        // _this.$alert("업로드 가능한 오디오 파일형식: " + audioWhiteList);
+                        // _this.fileList = [];
+                        typeErrorFlag = 'audioError';
+                    }
+                } else if (_this.uploadType === 'file') {
+                    if (audioWhiteList.indexOf(fileSuffix) === -1) {
+                        // _this.$alert("업로드 가능한 오디오 파일형식: " + audioWhiteList);
+                        // _this.fileList = [];
+                        typeErrorFlag = 'fileError';
+                    }
+                }
+            }
+
+            if (typeErrorFlag === 'imageError') {
+                _this.$alert("업로드 가능한 이미지 파일형식: " + imageWhiteList);
+                _this.fileList = [];
+                return;
+            } else if (typeErrorFlag === 'videoError') {
+                _this.$alert("업로드 가능한 동영상 파일형식: " + videoWhiteList);
+                _this.fileList = [];
+                return;
+            } else if (typeErrorFlag === 'audioError') {
+                _this.$alert("업로드 가능한 오디오 파일형식: " + audioWhiteList);
+                _this.fileList = [];
+                return;
+            } else if (typeErrorFlag === 'fileError') {
+                _this.$alert("업로드 가능한 파일형식: " + fileWhiteList);
+                _this.fileList = [];
+                return;
+            }
+
+            let fileSize = 1; //image size --- MB
+            if (_this.uploadType === 'image') {
+                fileSize = 2;
+            } else if (_this.uploadType === 'video' || _this.uploadType === 'audio') {
+                fileSize = 103;
+            } else if (_this.uploadType === 'file') {
+                fileSize = 20;
+            }
+
             const isLt1M = _this.fileList.every(file => file.size / 1024 / 1024 < 1);
             if (!isLt1M) {
                 _this.$message.error("请检查，上传文件大小不能超过1MB!");
@@ -199,8 +271,9 @@ var fileUploadAndListComponent = Vue.extend({
             }
 
             _this.fileData = new FormData();
+            _this.fileData.append("fileType", _this.uploadType); // 파일 형식
             _this.$refs.upload.submit();
-            _this.handleRequest(_this.fileData);
+            await _this.handleRequest(_this.fileData);
         },
         handleRequest(params) {
             console.log(params)
