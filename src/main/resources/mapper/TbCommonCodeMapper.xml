@@ -253,6 +253,7 @@
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
         FROM 	TB_COMMON_CODE T1
         WHERE   T1.CODE_TYPE = #{codeType}
+        AND     T1.USE_YN = '1'
         ]]>
     </select>
 </mapper>

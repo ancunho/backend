@@ -109,10 +109,6 @@
 /*    padding:0.5rem 0.75rem;*/
 /*    border-width: 1px;*/
 /*}*/
-body { margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "맑은 고딕"!important;}
-::selection {
-    background:#64748b; color:#fff;
-}
 
 
 /**
@@ -124,7 +120,8 @@ info:4B5563
 color-text-primary:1F2937
  */
 
-
+body { background:#f6f8fa; margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "맑은 고딕"!important;}
+::selection { background:#64748b; color:#fff; }
 #topContainer { background:#1F2937;}
 .topContainerBox {  margin: 0 auto; padding: 7px 0; display: flex; justify-content:space-between; }
 .topContainerBox h1 { margin: 0 40px 0 20px;}
@@ -139,8 +136,8 @@ color-text-primary:1F2937
 .header-container h3 { color:#475569;}
 .header-container .header-container-menu { display: flex; justify-content: flex-end; align-items: center;}
 .header-container .header-container-menu a { padding: 10px 15px; text-decoration: none; color:#3b82f6}
-.main-container { width: 1200px; overflow:hidden; height:100%; background:#fff;  margin: 0 auto; padding: 30px 30px 50px 30px;}
+.main-container {  width: 1200px; overflow:hidden; height:100%; background:#fff;  margin: 0 auto; padding: 30px 30px 50px 30px; border-radius: 15px;}
 
 
 .dialogDiv { z-index:20000;}
-.font-mono { background:#f6f8fa}
+.font-mono { }
