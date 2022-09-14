@@ -139,7 +139,8 @@ color-text-primary:1F2937
 .header-container h3 { color:#475569;}
 .header-container .header-container-menu { display: flex; justify-content: flex-end; align-items: center;}
 .header-container .header-container-menu a { padding: 10px 15px; text-decoration: none; color:#3b82f6}
-.main-container { width: 1224px; margin: 0 auto; padding-bottom: 50px;}
+.main-container { width: 1200px; overflow:hidden; height:100%; background:#fff;  margin: 0 auto; padding: 30px 30px 50px 30px;}
 
 
 .dialogDiv { z-index:20000;}
+.font-mono { background:#f6f8fa}
