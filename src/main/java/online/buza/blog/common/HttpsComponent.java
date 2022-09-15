@@ -34,7 +34,7 @@ public class HttpsComponent {
                 context.addConstraint(securityConstraint);
             }
         };
-        tomcat.addAdditionalTomcatConnectors(connector);
+        tomcat.addAdditionalTomcatConnectors(connector());
         return tomcat;
     }
 
