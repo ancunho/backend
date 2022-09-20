@@ -2,7 +2,6 @@ package online.buza.blog.interceptor;
 
 import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
-import online.buza.blog.annotation.UserLogin;
 import online.buza.blog.dto.CustomerDto;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.TbAccessHist;
@@ -56,20 +55,6 @@ public class BuzaInterceptor implements HandlerInterceptor {
                 if (sysUserDto == null) {
                     System.out.println(">>>>>need Login");
                     response.sendRedirect("/admin/login.ahn");
-                    return false;
-                }
-                return true;
-            }
-        }
-
-        if (method.isAnnotationPresent(UserLogin.class)) {
-            UserLogin userLogin = method.getAnnotation(UserLogin.class);
-            if (userLogin.required()) {
-                HttpSession session = request.getSession(true);
-                CustomerDto customerDto = (CustomerDto) session.getAttribute("CUSTOMER_USER");
-                if (customerDto == null) {
-                    System.out.println(">>>>>>Customer User Need Login");
-                    response.sendRedirect("/customer/login.ahn");
                     return false;
                 }
                 return true;
