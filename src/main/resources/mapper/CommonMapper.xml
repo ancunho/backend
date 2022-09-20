@@ -16,8 +16,8 @@
                 ,T1.OPTION03
                 ,T1.OPTION04
                 ,T1.OPTION05
-                , DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
-                , DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
+                , DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                , DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
         FROM    TB_COMMON_CODE T1
         WHERE   T1.CODE_TYPE = #{codeType}
         AND     T1.USE_YN = '1'

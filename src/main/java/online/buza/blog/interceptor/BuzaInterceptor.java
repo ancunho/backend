@@ -2,6 +2,7 @@ package online.buza.blog.interceptor;
 
 import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
+import online.buza.blog.annotation.WechatPassLogin;
 import online.buza.blog.dto.CustomerDto;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.TbAccessHist;
@@ -47,6 +48,13 @@ public class BuzaInterceptor implements HandlerInterceptor {
             }
         }
 
+        if (method.isAnnotationPresent(WechatPassLogin.class)) {
+            WechatPassLogin wechatPassLogin = method.getAnnotation(WechatPassLogin.class);
+            if (wechatPassLogin.required()) {
+                return true;
+            }
+        }
+
         if (method.isAnnotationPresent(AdminUserLogin.class)) {
             AdminUserLogin adminUserLogin = method.getAnnotation(AdminUserLogin.class);
             if (adminUserLogin.required()) {
@@ -69,59 +77,59 @@ public class BuzaInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        Box box = HttpUtility.getBox(request);
-
-        HttpSession session = request.getSession(true);
-        TbAccessHist tbAccessHist = new TbAccessHist();
-
-        try {
-            if (request.getRequestURI().contains("admin")) {
-                SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
-                if (sysUserDto == null) {
-                    tbAccessHist.setCuser("admin_stranger");
-                    tbAccessHist.setCustomerSeq(null);
-                } else {
-                    tbAccessHist.setCuser(Util.nullreplace(sysUserDto.getUsername(), ""));
-                    tbAccessHist.setCustomerSeq(sysUserDto.getUserSeq());
-                }
-                tbAccessHist.setMemo("backend");
-
-            } else {
-                CustomerDto customerDto = (CustomerDto) session.getAttribute("CUSTOMER_USER");
-                if (customerDto == null || customerDto.getUserSeq() == null || "".equals(Util.nullempty(customerDto.getUserSeq()))) {
-                    tbAccessHist.setCuser("stranger");
-                    tbAccessHist.setCustomerSeq(null);
-                } else {
-                    tbAccessHist.setCuser(customerDto.getUsername());
-                    tbAccessHist.setCustomerSeq(customerDto.getUserSeq());
-                }
-                tbAccessHist.setMemo("portal");
-            }
-
-            tbAccessHist.setIpAddr(Util.getRemortIP(request));
-            tbAccessHist.setUserAgent(request.getHeader("User-Agent"));
-            tbAccessHist.setSessionId(request.getSession(true).getId());
-            tbAccessHist.setReferer(request.getHeader("Referer"));
-            tbAccessHist.setRequestUrl(request.getRequestURL().toString());
-            tbAccessHist.setRequestUri(request.getRequestURI());
-
-            StringBuffer sbHeader = new StringBuffer();
-            sbHeader.append("RemoteAddr=" + request.getRemoteAddr()).append("&");
-
-            Enumeration eHeader = request.getHeaderNames();
-            while (eHeader.hasMoreElements()) {
-                String hName = (String) eHeader.nextElement();
-                String hValue = request.getHeader(hName);
-                sbHeader.append(hName + "=" + hValue).append("&");
-            }
-            tbAccessHist.setHeaderInfo(sbHeader.toString());
-            tbAccessHist.setParameters(box.toString());
-            tbAccessHist.setUseYn("1");
-
-//            commonService.insertTbAccessHist(tbAccessHist);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        Box box = HttpUtility.getBox(request);
+//
+//        HttpSession session = request.getSession(true);
+//        TbAccessHist tbAccessHist = new TbAccessHist();
+//
+//        try {
+//            if (request.getRequestURI().contains("admin")) {
+//                SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
+//                if (sysUserDto == null) {
+//                    tbAccessHist.setCuser("admin_stranger");
+//                    tbAccessHist.setCustomerSeq(null);
+//                } else {
+//                    tbAccessHist.setCuser(Util.nullreplace(sysUserDto.getUsername(), ""));
+//                    tbAccessHist.setCustomerSeq(sysUserDto.getUserSeq());
+//                }
+//                tbAccessHist.setMemo("backend");
+//
+//            } else {
+//                CustomerDto customerDto = (CustomerDto) session.getAttribute("CUSTOMER_USER");
+//                if (customerDto == null || customerDto.getUserSeq() == null || "".equals(Util.nullempty(customerDto.getUserSeq()))) {
+//                    tbAccessHist.setCuser("stranger");
+//                    tbAccessHist.setCustomerSeq(null);
+//                } else {
+//                    tbAccessHist.setCuser(customerDto.getUsername());
+//                    tbAccessHist.setCustomerSeq(customerDto.getUserSeq());
+//                }
+//                tbAccessHist.setMemo("portal");
+//            }
+//
+//            tbAccessHist.setIpAddr(Util.getRemortIP(request));
+//            tbAccessHist.setUserAgent(request.getHeader("User-Agent"));
+//            tbAccessHist.setSessionId(request.getSession(true).getId());
+//            tbAccessHist.setReferer(request.getHeader("Referer"));
+//            tbAccessHist.setRequestUrl(request.getRequestURL().toString());
+//            tbAccessHist.setRequestUri(request.getRequestURI());
+//
+//            StringBuffer sbHeader = new StringBuffer();
+//            sbHeader.append("RemoteAddr=" + request.getRemoteAddr()).append("&");
+//
+//            Enumeration eHeader = request.getHeaderNames();
+//            while (eHeader.hasMoreElements()) {
+//                String hName = (String) eHeader.nextElement();
+//                String hValue = request.getHeader(hName);
+//                sbHeader.append(hName + "=" + hValue).append("&");
+//            }
+//            tbAccessHist.setHeaderInfo(sbHeader.toString());
+//            tbAccessHist.setParameters(box.toString());
+//            tbAccessHist.setUseYn("1");
+//
+////            commonService.insertTbAccessHist(tbAccessHist);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }

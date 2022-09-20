@@ -2,10 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="online.buza.blog.dao.WechatMapper">
 
-    <select id="asdfsadf" resultType="java.util.Map">
+    <select id="getPostListByCodeName" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
         <![CDATA[
-
+        SELECT	T1.POST_ID
+                ,T1.POST_TYPE
+                ,T1.POST_CATEGORY_ID
+                ,T1.POST_TITLE
+                ,T1.POST_CONTENT
+                ,T1.EVENT_START_TIME
+                ,T1.EVENT_END_TIME
+                ,T1.POST_THUMBNAIL_SMALL
+                ,T1.POST_THUMBNAIL_BIG
+                ,T1.POST_AUTHOR
+                ,T1.IS_JOIN
+                ,T1.IS_NEED_PAY
+                ,T1.POST_PRICE
+                ,T1.STATUS
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                , DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                , DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM	TB_POST T1
+        WHERE	T1.POST_TYPE = #{postType}
+        AND		EXISTS	(
+                        SELECT	1
+                        FROM	TB_COMMON_CODE A1
+                        WHERE	A1.USE_YN = '1'
+                        AND		A1.CODE_NAME = T1.POST_TYPE
+                        AND		A1.CODE_TYPE = 'POST_TYPE'
+                        )
         ]]>
     </select>
 
 </mapper>
+
