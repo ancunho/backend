@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/miniapp")
+@RequestMapping(value = "/miniapp/api")
 public class MiniappController {
 
     /**
