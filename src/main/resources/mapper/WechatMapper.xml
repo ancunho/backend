@@ -31,7 +31,7 @@
                         SELECT	1
                         FROM	TB_COMMON_CODE A1
                         WHERE	A1.USE_YN = '1'
-                        AND		A1.CODE_NAME = T1.POST_TYPE
+                        AND		A1.CODE_ID = T1.POST_TYPE
                         AND		A1.CODE_TYPE = 'POST_TYPE'
                         )
         ]]>
