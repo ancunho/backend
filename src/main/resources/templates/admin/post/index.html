@@ -39,30 +39,58 @@
                     <el-link icon="el-icon-edit" href="/admin/post/create.ahn"  type="primary">Add New Post</el-link>
                 </div>
                 <div class="overflow-x-auto relative">
-                    <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">
-                        <el-table-column prop="postId" label="postId" v-if="false"></el-table-column>
-                        <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>
-                        <el-table-column prop="postAuthor" label="postAuthor" width="100"></el-table-column>
-                        <el-table-column prop="postTitle" label="postTitle" width="150"></el-table-column>
-                        <el-table-column prop="status" align="center" label="Status" width="120">
-                            <template slot-scope="scope">
-                                <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>
-                                <el-tag type="success" v-if="scope.row.status == '1'"> {{ scope.row.statusName }} </el-tag>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="createTime" label="CreateTime" width="220"></el-table-column>
-                        <el-table-column prop="updateTime" label="UpdateTime" width="220">
-                            <template slot-scope="scope">
-                                {{ scope.row.updateTime || '-' }}
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="Action" align="center" >
-                            <template slot-scope="scope">
-                                <el-button type="primary" v-on:click="handleDispatcherModify(scope.row.postId)" icon="el-icon-edit" circle></el-button>
-                                <el-button type="danger" v-on:click="handleConfirmOpen(scope.row.postId)" icon="el-icon-delete" circle></el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
+                    <el-row v-bind:title="item.postTitle"
+                            v-bind:gutter="20"
+                            v-for="(item, idx) in itemList" v-key="idx"
+                            style="margin:20px 0; padding:20px 0; border-bottom:1px solid #ddd">
+                        <el-col v-bind:span="4">
+                            <el-image v-bind:src="item.postThumbnailBig" style="width:150px;" fit="fill"></el-image>
+                        </el-col>
+                        <el-col v-bind:span="20">
+                            <el-descriptions v-bind:title="item.postTitle">
+                                <el-descriptions-item label="Author.">{{item.postAuthor}}</el-descriptions-item>
+                                <el-descriptions-item label="Category.">{{item.postTypeName}}</el-descriptions-item>
+                                <el-descriptions-item label="Status.">
+                                    <el-tag type="danger" size="mini" v-if="item.status == '0'"> {{ item.statusName }} </el-tag>
+                                    <el-tag type="success" size="mini" v-if="item.status == '1'"> {{ item.statusName }} </el-tag>
+                                </el-descriptions-item>
+                                <el-descriptions-item label="Create Time.">{{item.createTime}}</el-descriptions-item>
+                                <el-descriptions-item label="Update Time." span="2">{{item.updateTime || '-'}}</el-descriptions-item>
+                                <el-descriptions-item label="Action." style="text-align: right">
+                                    <el-button type="primary" size="mini" plain v-on:click="handleDispatcherModify(item.postId)" icon="el-icon-edit">Edit</el-button>
+                                    <el-button type="danger" size="mini" plain  v-on:click="handleConfirmOpen(item.postId)" icon="el-icon-delete">Delete</el-button>
+                                </el-descriptions-item>
+                            </el-descriptions>
+                        </el-col>
+
+                    </el-row>
+
+
+
+<!--                    <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">-->
+<!--                        <el-table-column prop="postId" label="postId" v-if="false"></el-table-column>-->
+<!--                        <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>-->
+<!--                        <el-table-column prop="postAuthor" label="postAuthor" width="100"></el-table-column>-->
+<!--                        <el-table-column prop="postTitle" label="postTitle" width="150"></el-table-column>-->
+<!--                        <el-table-column prop="status" align="center" label="Status" width="120">-->
+<!--                            <template slot-scope="scope">-->
+<!--                                <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>-->
+<!--                                <el-tag type="success" v-if="scope.row.status == '1'"> {{ scope.row.statusName }} </el-tag>-->
+<!--                            </template>-->
+<!--                        </el-table-column>-->
+<!--                        <el-table-column prop="createTime" label="CreateTime" width="220"></el-table-column>-->
+<!--                        <el-table-column prop="updateTime" label="UpdateTime" width="220">-->
+<!--                            <template slot-scope="scope">-->
+<!--                                {{ scope.row.updateTime || '-' }}-->
+<!--                            </template>-->
+<!--                        </el-table-column>-->
+<!--                        <el-table-column label="Action" align="center" >-->
+<!--                            <template slot-scope="scope">-->
+<!--                                <el-button type="primary" v-on:click="handleDispatcherModify(scope.row.postId)" icon="el-icon-edit" circle></el-button>-->
+<!--                                <el-button type="danger" v-on:click="handleConfirmOpen(scope.row.postId)" icon="el-icon-delete" circle></el-button>-->
+<!--                            </template>-->
+<!--                        </el-table-column>-->
+<!--                    </el-table>-->
                 </div>
                 <el-row style="margin: 2rem 0;">
                     <el-col :span="12" :offset="6">
@@ -133,8 +161,8 @@
                     modalType: 1, // 1:新增权限/修改权限
                     loading: true,
                     currentPage: 1, //page
-                    pageSize: 5, //limit
-                    pageSizes: [5,20,30,50],
+                    pageSize: 15, //limit
+                    pageSizes: [15,30,50, 100],
                     total: 100,
                     activeTabName: 'searchTab',
                     drawer: false,
@@ -143,11 +171,11 @@
                 }
             },
             created() {
-                const _this = this;
-                this.initMainList();
+
             },
             mounted() {
-
+                const _this = this;
+                this.initMainList();
             },
             methods: {
                 handleSizeChange(limit) {
@@ -242,12 +270,12 @@
                             _this.$message.error("Request Error!")
                         });
                 },
-                initMainList() {
+                async initMainList() {
                     let _this = this;
                     const params = {
 
                     }
-                    axios.post("/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
+                    await axios.post("/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
                         console.log(response.data.data);
                         _this.itemList = response.data.data;
                         _this.total = response.data.total;
