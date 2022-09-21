@@ -264,7 +264,7 @@ var fileUploadAndListComponent = Vue.extend({
                 fileSize = 20;
             }
 
-            const isLt1M = _this.fileList.every(file => file.size / 1024 / 1024 < 1);
+            const isLt1M = _this.fileList.every(file => file.size / 1024 / 1024 < fileSize);
             if (!isLt1M) {
                 _this.$message.error("请检查，上传文件大小不能超过1MB!");
                 return;
