@@ -27,6 +27,7 @@
                 , DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
         FROM	TB_POST T1
         WHERE	T1.POST_TYPE = #{postType}
+        AND     T1.STATUS = '1'
         AND		EXISTS	(
                         SELECT	1
                         FROM	TB_COMMON_CODE A1
