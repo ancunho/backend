@@ -6,10 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.annotation.WechatPassLogin;
 import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
+import online.buza.blog.common.ResponseCode;
+import online.buza.blog.dto.TbCollectDto;
 import online.buza.blog.dto.TbCommonCodeDto;
 import online.buza.blog.dto.TbPostDto;
+import online.buza.blog.entity.TbCollect;
 import online.buza.blog.service.CommonService;
 import online.buza.blog.service.WechatMiniappService;
+import online.buza.blog.util.Util;
 import online.buza.blog.util.WechatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +83,53 @@ public class MiniappController {
         return BaseResponse.valueOfSuccessList(lstPost);
     }
 
+    /**
+     * Insert Collect
+     * @param baseRequest
+     * @param tbCollectDto
+     * @return
+     */
+    @WechatPassLogin
+    @PostMapping(value = "/insertCollecType.do")
+    public BaseResponse insertCollectType(BaseRequest baseRequest, @RequestBody TbCollectDto tbCollectDto) {
+        if (tbCollectDto == null) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        TbCollect tbCollect = new TbCollect();
+        tbCollect.setActionType("COLLECT");
+        tbCollect.setPostId(tbCollectDto.getPostId());
+        tbCollect.setCustomerId(tbCollectDto.getCustomerId());
+
+        boolean isSuccessInsert = wechatMiniappService.insertCollectType(tbCollect);
+        if (isSuccessInsert) {
+            return BaseResponse.valueOfSuccessMessage(ResponseCode.INSERT_SUCCESS.getDesc());
+        }
+
+        return BaseResponse.valueOfFailureMessage(ResponseCode.INSERT_ERROR.getDesc());
+    }
+
+    /**
+     * Delete collect by postId and customerId
+     * @param baseRequest
+     * @param tbCollectDto
+     * @return
+     */
+    @WechatPassLogin
+    @PostMapping(value = "/deleteCollectTypeByPostIdAndCustomerId.do")
+    public BaseResponse deleteCollectTypeByPostIdAndCustomerId(BaseRequest baseRequest, @RequestBody TbCollectDto tbCollectDto) {
+        if (tbCollectDto == null || Util.isEmpty(tbCollectDto.getPostId()) || Util.isEmpty(tbCollectDto.getCustomerId())) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        boolean isSuccessDelete = wechatMiniappService.deleteCollectTypeByPostIdAndCustomerId(tbCollectDto);
+        if (isSuccessDelete) {
+            return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
+        }
+
+        return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
+
+    }
 
 
 }
