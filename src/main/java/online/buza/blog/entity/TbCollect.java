@@ -5,6 +5,8 @@ import java.util.Date;
 public class TbCollect {
     private Integer collectId;
 
+    private String actionType;
+
     private Integer postId;
 
     private Integer customerId;
@@ -29,6 +31,14 @@ public class TbCollect {
 
     public void setCollectId(Integer collectId) {
         this.collectId = collectId;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 
     public Integer getPostId() {
@@ -111,6 +121,7 @@ public class TbCollect {
         sb.append("Hash = ").append(hashCode());
         sb.append(", collectId=").append(collectId);
         sb.append(", postId=").append(postId);
+        sb.append(", actionType=").append(actionType);
         sb.append(", customerId=").append(customerId);
         sb.append(", option01=").append(option01);
         sb.append(", option02=").append(option02);

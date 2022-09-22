@@ -51,6 +51,10 @@ public class MiniappController {
     }
 
 
+    /**
+     * Get Post Category
+     * @return
+     */
     @WechatPassLogin
     @PostMapping(value = "/getPostCategory.do")
     public BaseResponse getCommonCodeByCodeType() {
@@ -60,6 +64,12 @@ public class MiniappController {
         return BaseResponse.valueOfSuccess(lstCommonCodeByPostType);
     }
 
+    /**
+     * Get Post List
+     * @param baseRequest
+     * @param tbPostDto
+     * @return
+     */
     @WechatPassLogin
     @PostMapping(value = "/getPostListByCodeName.do")
     public BaseResponse getPostListByCodeName(BaseRequest baseRequest, @RequestBody TbPostDto tbPostDto) {
@@ -68,5 +78,7 @@ public class MiniappController {
         List<TbPostDto> lstPost = wechatMiniappService.getPostListByCodeName(tbPostDto);
         return BaseResponse.valueOfSuccessList(lstPost);
     }
+
+
 
 }
