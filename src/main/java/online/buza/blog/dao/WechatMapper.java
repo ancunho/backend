@@ -8,4 +8,6 @@ public interface WechatMapper {
 
     public List<TbPostDto> getPostListByCodeName(TbPostDto tbPostDto);
 
+    public TbPostDto getPostDetailByPostId(Integer postId);
+
 }

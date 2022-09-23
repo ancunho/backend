@@ -10,6 +10,8 @@ public interface WechatMiniappService {
 
     public List<TbPostDto> getPostListByCodeName(TbPostDto tbPostDto);
 
+    public TbPostDto getPostDetailByPostId(Integer postId);
+
     public Boolean insertCollectType(TbCollect tbCollect);
 
     public Boolean deleteCollectTypeByCollectId(Integer collectId);

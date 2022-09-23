@@ -33,6 +33,10 @@ public class WechatMiniappServiceImpl implements WechatMiniappService {
         return wechatMapper.getPostListByCodeName(tbPostDto);
     }
 
+    public TbPostDto getPostDetailByPostId(Integer postId) {
+        return wechatMapper.getPostDetailByPostId(postId);
+    }
+
     @Transactional
     public Boolean insertCollectType(TbCollect tbCollect) {
         int insertCount = tbCollectMapper.insertSelective(tbCollect);

@@ -84,6 +84,22 @@ public class MiniappController {
     }
 
     /**
+     * Get TbPostDto by postId
+     * @param postId
+     * @return
+     */
+    @WechatPassLogin
+    @GetMapping(value = "/getPostDetailByPostId.do")
+    public BaseResponse getPostDetailByPostId(@RequestParam("postId") Integer postId) {
+        if (Util.isEmpty(postId)) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        TbPostDto tbPostDto = wechatMiniappService.getPostDetailByPostId(postId);
+        return BaseResponse.valueOfSuccess(tbPostDto);
+    }
+
+    /**
      * Insert Collect
      * @param baseRequest
      * @param tbCollectDto
