@@ -72,6 +72,7 @@
             <div class="post-content" style="margin-bottom: 10px; font-size:12px; color:#475569">
                 <p class="post-content-label">
                     Post Content
+                    <span style="color:#DC2626; font-size:12px;">(<strong>小程序이미지</strong> 너비 권장사이즈: <strong>최대750px</strong>, 텍스트가 있다면 fontSize좀 크게)</span>
                 </p>
                 <div id="editor—wrapper">
                     <div id="toolbar-container"><!-- 工具栏 --></div>
@@ -255,7 +256,7 @@
             uploadImage: {
                 server: '/api/file/handle/wangEditor/single/upload.do',
                 fieldName: 'editorImageFile',
-                maxFileSize: 1 * 1024 * 1024,
+                maxFileSize: 10 * 1024 * 1024,
                 maxNumberOfFiles: 1,
                 allowedFileTypes: ['image/*'],
                 onBeforeUpload(file) {
