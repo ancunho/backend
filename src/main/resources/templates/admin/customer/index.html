@@ -196,7 +196,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.get('/api/common_code/delete.do?codeId=' + codeId)
+                        axios.get(contextRootPath + '/api/common_code/delete.do?codeId=' + codeId)
                             .then(response => {
                                 if (response.data.code !== 0) {
                                     _this.$message.error(response.data.msg);
@@ -226,7 +226,7 @@
                     }
 
                     _this.selectedItem.useYn = _this.selectedItem.useYn === true ? "1" : "0";
-                    axios.post("/api/common_code/proc.do", _this.selectedItem)
+                    axios.post(contextRootPath + "/api/common_code/proc.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);
@@ -246,7 +246,7 @@
                     const params = {
 
                     }
-                    axios.post("/api/common_code/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
+                    axios.post(contextRootPath + "/api/common_code/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
                         console.log(response.data.data);
                         _this.itemList = response.data.data;
                         _this.total = response.data.total;
@@ -255,7 +255,7 @@
                 },
                 getMainDetail(codeId) {
                     const _this = this;
-                    axios.get("/api/common_code/info.do?codeId=" + codeId)
+                    axios.get(contextRootPath + "/api/common_code/info.do?codeId=" + codeId)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);

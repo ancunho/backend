@@ -1,4 +1,4 @@
-var contextRootPath = "";
+var contextRootPath = "/manage";
 
 function StringBuffer() {
     this.__strings__ = new Array;

@@ -222,7 +222,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.get('/api/setting/classification/delete.do?classificationId=' + classificationId)
+                        axios.get(contextRootPath + '/api/setting/classification/delete.do?classificationId=' + classificationId)
                             .then(response => {
                                 if (response.data.code !== 0) {
                                     _this.$message.error(response.data.msg);
@@ -252,7 +252,7 @@
 
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
                     _this.selectedItem.parentClassificationId = _this.selectedItem.parentClassificationId === undefined ? "0" : _this.selectedItem.parentClassificationId;
-                    axios.post("/api/setting/classification/modify.do", _this.selectedItem)
+                    axios.post(contextRootPath + "/api/setting/classification/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);
@@ -272,7 +272,7 @@
                     const params = {
 
                     }
-                    axios.post("/api/setting/classification/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
+                    axios.post(contextRootPath + "/api/setting/classification/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
                         console.log(response.data.data);
                         _this.itemList = response.data.data;
                         _this.total = response.data.total;
@@ -281,7 +281,7 @@
                 },
                 getMainDetail(classificationId) {
                     const _this = this;
-                    axios.get("/api/setting/classification/detail.do?classificationId=" + classificationId)
+                    axios.get(contextRootPath + "/api/setting/classification/detail.do?classificationId=" + classificationId)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);
@@ -297,7 +297,7 @@
                 },
                 getClassificationTree() {
                     const params = {};
-                    axios.post("/api/setting/classification/tree.do", params).then((response) => {
+                    axios.post(contextRootPath + "/api/setting/classification/tree.do", params).then((response) => {
                         console.log("tree start");
                         console.log(response.data.data);
                         this.treeItems = response.data.data;
@@ -310,14 +310,14 @@
                 getAllOneDepthClassificaiton() {
                     let _this = this;
                     const params = {}
-                    axios.post("/api/setting/classification/all_one_depth.do", params).then((response) => {
+                    axios.post(contextRootPath + "/api/setting/classification/all_one_depth.do", params).then((response) => {
                         _this.oneDepthItems = response.data.data;
                     });
                 },
                 getAllTwoDepthClassificaiton() {
                     let _this = this;
                     const params = {}
-                    axios.post("/api/setting/classification/all_two_depth.do", params).then((response) => {
+                    axios.post(contextRootPath + "/api/setting/classification/all_two_depth.do", params).then((response) => {
                         _this.twoDepthItems = response.data.data;
                     });
                 },

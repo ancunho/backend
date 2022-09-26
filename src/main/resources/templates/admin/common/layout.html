@@ -4,12 +4,12 @@
             <div style="display: flex; justify-content: start;">
 <!--                <h1><a href="/admin"><img th:src="@{/images/buza_management_logo.png}" width="200" height="40"></a></h1>-->
                 <div class="topMenu">
-                    <a href="/admin">Dashboard</a>
-                    <a href="/admin/customer.ahn">Customer</a>
-                    <a href="#">E-commerce</a>
-                    <a href="/admin/post.ahn">Board</a>
-                    <a href="/admin/material.ahn">Material</a>
-                    <a href="/admin/setting.ahn">Setting</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin'}">Dashboard</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/customer.ahn'}">Customer</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/#this'}">E-commerce</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/post.ahn'}">Board</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/material.ahn'}">Material</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/setting.ahn'}">Setting</a>
                 </div>
             </div>
             <div class="topSubMenu">

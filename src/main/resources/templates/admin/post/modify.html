@@ -162,7 +162,7 @@
                 },
                 async getDetail(postId) {
                     let _this = this;
-                    axios.get("/api/post/detail.do?postId=" + postId)
+                    axios.get(contextRootPath + "/api/post/detail.do?postId=" + postId)
                     .then(response => {
                         console.log(response);
                         if (response.data.count !== 0 || response.data.data === undefined) {
@@ -198,7 +198,7 @@
                     // _this.selectedItem.postType = "01";
                     _this.selectedItem.postContent = editor.getHtml();
                     _this.selectedItem.postId = _this.postId;
-                    axios.post('/api/post/proc.do', _this.selectedItem)
+                    axios.post(contextRootPath + '/api/post/proc.do', _this.selectedItem)
                         .then(response => {
                             _this.loading = false;
                             if (response.data.code !== 0) {
@@ -225,7 +225,7 @@
                 },
                 handlePostType() {
                     let _this = this;
-                    axios.get("/api/common_code/type/list.do?codeType=POST_TYPE")
+                    axios.get(contextRootPath + "/api/common_code/type/list.do?codeType=POST_TYPE")
                     .then(response => {
                         if (response.data.code !== 0) {
                             _this.$message.error(response.data.msg);
@@ -254,7 +254,7 @@
         },
         MENU_CONF: {
             uploadImage: {
-                server: '/api/file/handle/wangEditor/single/upload.do',
+                server: contextRootPath + '/api/file/handle/wangEditor/single/upload.do',
                 fieldName: 'editorImageFile',
                 maxFileSize: 10 * 1024 * 1024,
                 maxNumberOfFiles: 1,

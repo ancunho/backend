@@ -218,7 +218,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.get('/api/post/delete.do?postId=' + postId)
+                        axios.get(contextRootPath + '/api/post/delete.do?postId=' + postId)
                             .then(response => {
                                 if (response.data.code !== 0) {
                                     _this.$message.error(response.data.msg);
@@ -255,7 +255,7 @@
                     }
 
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
-                    axios.post("/api/post/modify.do", _this.selectedItem)
+                    axios.post(contextRootPath + "/api/post/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);
@@ -275,7 +275,7 @@
                     const params = {
 
                     }
-                    await axios.post("/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
+                    await axios.post(contextRootPath + "/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
                         console.log(response.data.data);
                         _this.itemList = response.data.data;
                         _this.total = response.data.total;
@@ -284,7 +284,7 @@
                 },
                 getMainDetail(postId) {
                     const _this = this;
-                    axios.post("/api/post/detail.do?postId=" + postId)
+                    axios.post(contextRootPath + "/api/post/detail.do?postId=" + postId)
                         .then(response => {
                             if (response.data.code !== 0) {
                                 _this.$message.error(response.data.msg);

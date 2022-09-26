@@ -62,7 +62,7 @@
         userTableDataGrid.datagrid({
             loader: function(param, success, error) {
                 $.ajax({
-                    url: '/api/common/user/list'
+                    url: contextRootPath + '/api/common/user/list'
                     ,method: 'post'
                     ,data: JSON.stringify(param)
                     ,contentType: 'application/json;charset=utf-8'

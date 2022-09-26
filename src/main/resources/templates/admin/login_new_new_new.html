@@ -96,7 +96,7 @@
                     params.password = _this.form.password;
                     params.captchaCode = _this.form.captchaCode;
                     params.captchaKey = _this.form.captchaKey;
-                    axios.post("/adminLoginProc.do", params).then(response => {
+                    axios.post(contextRootPath + "/adminLoginProc.do", params).then(response => {
                         if (response.data.code === 0) {
                             _this.$message.success("登录成功")
                             BuzaRouter('/admin/index.ahn');
@@ -111,7 +111,7 @@
                 },
                 loadCaptchaImage() {
                     let _this = this;
-                    axios.get("/api/common/captcha.do").then(response => {
+                    axios.get(contextRootPath + "/api/common/captcha.do").then(response => {
                         console.log(response);
                         _this.form.captchaImage = response.data.data.base64Img;
                         _this.form.captchaKey = response.data.data.captchaKey;

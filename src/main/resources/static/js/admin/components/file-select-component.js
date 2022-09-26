@@ -133,10 +133,10 @@ var fileUploadAndListComponent = Vue.extend({
 
             fileList: [],
             fileData: '', // 文件上传数据（多文件合一）
-            imgDeleteURL: '/api/file/handle/single/image/delete.do',
-            imgUploadURL: '/api/file/handle/multie/image/upload.do',
-            imgDetailURL: '/api/file/handle/info.do',
-            initDataListURL: '/api/file/handle/list.do',
+            imgDeleteURL: contextRootPath + '/api/file/handle/single/image/delete.do',
+            imgUploadURL: contextRootPath + '/api/file/handle/multie/image/upload.do',
+            imgDetailURL: contextRootPath + '/api/file/handle/info.do',
+            initDataListURL: contextRootPath + '/api/file/handle/list.do',
             arrInitData: [],
             isDrawerVisible: false,
             fileId: '',
