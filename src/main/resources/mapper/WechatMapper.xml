@@ -67,5 +67,41 @@
         ]]>
     </select>
 
+    <select id="getCustomerInfoByDto" parameterType="online.buza.blog.dto.TbCustomerDto" resultType="online.buza.blog.dto.TbCustomerDto">
+        <![CDATA[
+        SELECT  CUSTOMER_ID
+                ,T1.WEIXIN_OPEN_ID
+                ,T1.WEIXIN_UNION_ID
+                ,T1.USERNAME
+                ,T1.PASSWORD
+                ,T1.MOBILE_NO
+                ,T1.NICKNAME
+                ,T1.GRADE
+                ,T1.CUSTOMER_TYPE
+                ,T1.REALNAME
+                ,T1.BIRTHDAY
+                ,T1.SEX
+                ,T1.EMAIL
+                ,T1.COUNTRY
+                ,T1.PROVINCE
+                ,T1.CITY
+                ,T1.ADDRESS
+                ,T1.STATUS
+                ,T1.WECHAT_ID
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d') AS UPDATE_TIME
+        FROM    TB_CUSTOMER T1
+        WHERE   T1.STATUS = '1'
+        AND     T1.WEIXIN_OPEN_ID = #{openId}
+        ORDER BY T1.CREATE_TIME DESC
+        LIMIT 0,1
+        ]]>
+    </select>
+
 </mapper>
 

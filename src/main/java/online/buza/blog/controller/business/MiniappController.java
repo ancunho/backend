@@ -9,15 +9,20 @@ import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.dto.TbCollectDto;
 import online.buza.blog.dto.TbCommonCodeDto;
+import online.buza.blog.dto.TbCustomerDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbCollect;
+import online.buza.blog.entity.TbCustomer;
 import online.buza.blog.service.CommonService;
 import online.buza.blog.service.WechatMiniappService;
+import online.buza.blog.util.Box;
+import online.buza.blog.util.HttpUtility;
 import online.buza.blog.util.Util;
 import online.buza.blog.util.WechatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,7 +149,33 @@ public class MiniappController {
         }
 
         return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
+    }
 
+    /**
+     * Get TbCustomerDto by DTO
+     * main parameter: openId
+     * @param request
+     * @param tbCustomerDto
+     * @return
+     */
+    @WechatPassLogin
+    @PostMapping(value = "/getCustomerInfoByDto.do")
+    public BaseResponse getCustomerInfoByDto(HttpServletRequest request, @RequestBody TbCustomerDto tbCustomerDto) {
+        if (Util.isEmpty(tbCustomerDto) || Util.isEmpty(tbCustomerDto.getOpenId())) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+        tbCustomerDto = wechatMiniappService.getCustomerInfoByDto(tbCustomerDto);
+        return BaseResponse.valueOfSuccess(tbCustomerDto);
+    }
+
+    @WechatPassLogin
+    @PostMapping(value = "/proc_customer.do")
+    public BaseResponse proc_customer(HttpServletRequest request, @RequestBody TbCustomerDto tbCustomerDto) {
+        if (Util.isEmpty(tbCustomerDto)) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        return null;
     }
 
 

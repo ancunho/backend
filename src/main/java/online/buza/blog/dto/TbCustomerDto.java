@@ -16,6 +16,9 @@ public class TbCustomerDto extends BaseRequest implements Serializable {
 
     private Integer customerId;
     private String weixinOpenId;
+
+    private String openId; // 2022-09-28 add
+
     private String weixinUnionId;
     private String username;
     private String password;

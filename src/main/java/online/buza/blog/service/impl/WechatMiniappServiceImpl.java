@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.TbCollectMapper;
 import online.buza.blog.dao.WechatMapper;
 import online.buza.blog.dto.TbCollectDto;
+import online.buza.blog.dto.TbCustomerDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbCollect;
 import online.buza.blog.service.WechatMiniappService;
@@ -62,6 +63,11 @@ public class WechatMiniappServiceImpl implements WechatMiniappService {
             return true;
         }
         return false;
+    }
+
+    public TbCustomerDto getCustomerInfoByDto(TbCustomerDto tbCustomerDto) {
+        tbCustomerDto = wechatMapper.getCustomerInfoByDto(tbCustomerDto);
+        return tbCustomerDto;
     }
 
 

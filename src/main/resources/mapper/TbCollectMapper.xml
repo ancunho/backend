@@ -168,10 +168,14 @@
 
     <delete id="deleteCollectTypeByPostIdAndCustomerId" parameterType="online.buza.blog.dto.TbCollectDto">
         <![CDATA[
-        DELETE  FROM TB_COLLECT
-        WHERE   POST_ID = #{postId}
-        AND     CUSTOMER_ID = #{customerId}
+        DELETE
+        FROM TB_COLLECT
+        WHERE POST_ID = #{postId}
+          AND CUSTOMER_ID = #{customerId}
         ]]>
     </delete>
+
+
+
 
 </mapper>

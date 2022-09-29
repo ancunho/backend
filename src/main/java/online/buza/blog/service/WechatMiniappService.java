@@ -1,6 +1,7 @@
 package online.buza.blog.service;
 
 import online.buza.blog.dto.TbCollectDto;
+import online.buza.blog.dto.TbCustomerDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbCollect;
 
@@ -17,5 +18,7 @@ public interface WechatMiniappService {
     public Boolean deleteCollectTypeByCollectId(Integer collectId);
 
     public Boolean deleteCollectTypeByPostIdAndCustomerId(TbCollectDto tbCollectDto);
+
+    public TbCustomerDto getCustomerInfoByDto(TbCustomerDto tbCustomerDto);
 
 }
