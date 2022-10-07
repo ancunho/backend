@@ -129,7 +129,10 @@
                 let _this = this;
                 _this.postId = $(".initPostId").val();
                 if (!Tool.isEmpty(_this.postId)) {
-                    _this.getDetail(_this.postId);
+                    setTimeout(function() {
+                        _this.getDetail(_this.postId);
+                    }, 1500);
+
                 } else {
                     _this.loading = false;
                 }
