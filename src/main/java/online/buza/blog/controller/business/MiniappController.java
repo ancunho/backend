@@ -164,8 +164,9 @@ public class MiniappController {
         if (Util.isEmpty(tbCustomerDto) || Util.isEmpty(tbCustomerDto.getOpenId())) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-        tbCustomerDto = wechatMiniappService.getCustomerInfoByDto(tbCustomerDto);
-        return BaseResponse.valueOfSuccess(tbCustomerDto);
+        TbCustomerDto resultDto = new TbCustomerDto();
+        resultDto = wechatMiniappService.getCustomerInfoByDto(tbCustomerDto);
+        return BaseResponse.valueOfSuccess(resultDto);
     }
 
     @WechatPassLogin

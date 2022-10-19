@@ -18,13 +18,13 @@ import javax.servlet.http.HttpSession;
  */
 @Slf4j
 @Controller
-@RequestMapping("/business")
+@RequestMapping("/")
 public class BusinessPageController {
 
     @PassLogin
-    @GetMapping(value = "/")
+    @GetMapping(value = "")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
-        return "redirect:business/index";
+        return "business/index";
     }
 
     @PassLogin
