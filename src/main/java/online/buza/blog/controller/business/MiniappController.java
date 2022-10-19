@@ -169,6 +169,22 @@ public class MiniappController {
         return BaseResponse.valueOfSuccess(resultDto);
     }
 
+    /**
+     *
+     * @param request
+     * @param tbCustomerDto
+     * @return
+     */
+    @WechatPassLogin
+    @PostMapping(value = "/getCustomerInfoById.do")
+    public BaseResponse getCustomerInfoById(HttpServletRequest request, @RequestBody TbCustomerDto tbCustomerDto) {
+        if (Util.isEmpty(tbCustomerDto) || Util.isEmpty(tbCustomerDto.getOpenId())) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+        tbCustomerDto = wechatMiniappService.getCustomerInfoById(tbCustomerDto);
+        return BaseResponse.valueOfSuccess(tbCustomerDto);
+    }
+
     @WechatPassLogin
     @PostMapping(value = "/proc_customer.do")
     public BaseResponse proc_customer(HttpServletRequest request, @RequestBody TbCustomerDto tbCustomerDto) {
@@ -176,7 +192,75 @@ public class MiniappController {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        return null;
+        try {
+            if (Util.isEmpty(tbCustomerDto.getCustomerId())) {
+                // Insert New
+                TbCustomer tbCustomer = new TbCustomer();
+                tbCustomer.setWeixinOpenId(tbCustomerDto.getOpenId());
+                tbCustomer.setWeixinUnionId(tbCustomerDto.getWeixinUnionId());
+                tbCustomer.setUsername(tbCustomerDto.getUsername());
+                tbCustomer.setPassword(tbCustomerDto.getPassword());
+                tbCustomer.setMobileNo(tbCustomerDto.getMobileNo());
+                tbCustomer.setNickname(tbCustomerDto.getNickName());
+                tbCustomer.setGrade(tbCustomerDto.getGrade());
+                tbCustomer.setCustomerType(tbCustomerDto.getCustomerType());
+                tbCustomer.setRealname(tbCustomerDto.getRealname());
+                tbCustomer.setBirthday(tbCustomerDto.getBirthday());
+                tbCustomer.setEmail(tbCustomerDto.getEmail());
+                tbCustomer.setAvatarUrl(tbCustomerDto.getAvatarUrl());
+                tbCustomer.setCountry(tbCustomerDto.getProvince());
+                tbCustomer.setCity(tbCustomerDto.getCity());
+                tbCustomer.setAddress(tbCustomerDto.getAddress());
+                tbCustomer.setStatus(tbCustomerDto.getStatus());
+                tbCustomer.setOption01(tbCustomerDto.getOption01());
+                tbCustomer.setOption02(tbCustomerDto.getOption02());
+                tbCustomer.setOption03(tbCustomerDto.getOption03());
+                tbCustomer.setOption04(tbCustomerDto.getOption04());
+                tbCustomer.setOption05(tbCustomerDto.getOption05());
+
+                boolean isSuccessInsert = wechatMiniappService.insertTbCustomer(tbCustomer);
+                if (isSuccessInsert) {
+                    return BaseResponse.valueOfSuccessMessage(ResponseCode.INSERT_SUCCESS.getDesc());
+                }
+                return BaseResponse.valueOfFailureMessage(ResponseCode.INSERT_ERROR.getDesc());
+
+            } else {
+                // Update
+                TbCustomer tbCustomer = new TbCustomer();
+                tbCustomer.setCustomerId(tbCustomerDto.getCustomerId());
+                tbCustomer.setWeixinOpenId(tbCustomerDto.getOpenId());
+                tbCustomer.setWeixinUnionId(tbCustomerDto.getWeixinUnionId());
+                tbCustomer.setUsername(tbCustomerDto.getUsername());
+                tbCustomer.setPassword(tbCustomerDto.getPassword());
+                tbCustomer.setMobileNo(tbCustomerDto.getMobileNo());
+                tbCustomer.setNickname(tbCustomerDto.getNickName());
+                tbCustomer.setGrade(tbCustomerDto.getGrade());
+                tbCustomer.setCustomerType(tbCustomerDto.getCustomerType());
+                tbCustomer.setRealname(tbCustomerDto.getRealname());
+                tbCustomer.setBirthday(tbCustomerDto.getBirthday());
+                tbCustomer.setEmail(tbCustomerDto.getEmail());
+                tbCustomer.setAvatarUrl(tbCustomerDto.getAvatarUrl());
+                tbCustomer.setCountry(tbCustomerDto.getProvince());
+                tbCustomer.setCity(tbCustomerDto.getCity());
+                tbCustomer.setAddress(tbCustomerDto.getAddress());
+                tbCustomer.setStatus(tbCustomerDto.getStatus());
+                tbCustomer.setOption01(tbCustomerDto.getOption01());
+                tbCustomer.setOption02(tbCustomerDto.getOption02());
+                tbCustomer.setOption03(tbCustomerDto.getOption03());
+                tbCustomer.setOption04(tbCustomerDto.getOption04());
+                tbCustomer.setOption05(tbCustomerDto.getOption05());
+
+                boolean isSuccessUpdate = wechatMiniappService.updateTbCustomer(tbCustomer);
+                if (isSuccessUpdate) {
+                    return BaseResponse.valueOfSuccessMessage(ResponseCode.SAVE_SUCCESS.getDesc());
+                }
+                return BaseResponse.valueOfFailureMessage(ResponseCode.SAVE_ERROR.getDesc());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return BaseResponse.valueOfFailureMessage(ResponseCode.SAVE_ERROR.getDesc());
+        }
+
     }
 
 

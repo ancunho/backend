@@ -446,6 +446,7 @@ CREATE TABLE `tb_customer` (
                                `BIRTHDAY` varchar(45) DEFAULT NULL,
                                `SEX` varchar(2) DEFAULT NULL,
                                `EMAIL` varchar(100) DEFAULT NULL,
+                               `AVATAR_URL` varchar(300) DEFAULT NULL,
                                `COUNTRY` varchar(45) DEFAULT NULL,
                                `PROVINCE` varchar(45) DEFAULT NULL,
                                `CITY` varchar(45) DEFAULT NULL,

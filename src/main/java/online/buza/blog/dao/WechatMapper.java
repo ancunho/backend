@@ -12,5 +12,6 @@ public interface WechatMapper {
     public TbPostDto getPostDetailByPostId(Integer postId);
 
     TbCustomerDto getCustomerInfoByDto(TbCustomerDto tbCustomerDto);
+    TbCustomerDto getCustomerInfoById(TbCustomerDto tbCustomerDto);
 
 }

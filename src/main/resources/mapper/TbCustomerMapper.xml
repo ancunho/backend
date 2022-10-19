@@ -15,6 +15,7 @@
         <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday"/>
         <result column="SEX" jdbcType="VARCHAR" property="sex"/>
         <result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+        <result column="AVATAR_URL" jdbcType="VARCHAR" property="avatarUrl"/>
         <result column="COUNTRY" jdbcType="VARCHAR" property="country"/>
         <result column="PROVINCE" jdbcType="VARCHAR" property="province"/>
         <result column="CITY" jdbcType="VARCHAR" property="city"/>
@@ -32,7 +33,7 @@
     <sql id="Base_Column_List">
         CUSTOMER_ID
         , WEIXIN_OPEN_ID, WEIXIN_UNION_ID, USERNAME, `PASSWORD`, MOBILE_NO, NICKNAME,
-    GRADE, CUSTOMER_TYPE, REALNAME, BIRTHDAY, SEX, EMAIL, COUNTRY, PROVINCE, CITY, ADDRESS, 
+    GRADE, CUSTOMER_TYPE, REALNAME, BIRTHDAY, SEX, EMAIL, AVATAR_URL, COUNTRY, PROVINCE, CITY, ADDRESS,
     `STATUS`, WECHAT_ID, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, 
     UPDATE_TIME
     </sql>
@@ -52,7 +53,7 @@
                                  USERNAME, `PASSWORD`, MOBILE_NO,
                                  NICKNAME, GRADE, CUSTOMER_TYPE,
                                  REALNAME, BIRTHDAY, SEX,
-                                 EMAIL, COUNTRY, PROVINCE,
+                                 EMAIL, AVATAR_URL, COUNTRY, PROVINCE,
                                  CITY, ADDRESS, `STATUS`,
                                  WECHAT_ID, OPTION01, OPTION02,
                                  OPTION03, OPTION04, OPTION05,
@@ -61,7 +62,7 @@
                 #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR},
                 #{nickname,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR},
                 #{realname,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
-                #{email,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
                 #{city,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
                 #{wechatId,jdbcType=VARCHAR}, #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR},
                 #{option03,jdbcType=VARCHAR}, #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR},
@@ -108,6 +109,9 @@
             </if>
             <if test="email != null">
                 EMAIL,
+            </if>
+            <if test="avatarUrl != null">
+                AVATAR_URL,
             </if>
             <if test="country != null">
                 COUNTRY,
@@ -189,6 +193,9 @@
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
             </if>
+            <if test="avatarUrl != null">
+                #{avatarUrl,jdbcType=VARCHAR},
+            </if>
             <if test="country != null">
                 #{country,jdbcType=VARCHAR},
             </if>
@@ -269,6 +276,9 @@
             <if test="email != null">
                 EMAIL = #{email,jdbcType=VARCHAR},
             </if>
+            <if test="avatarUrl != null">
+                AVATAR_URL = #{avatarUrl,jdbcType=VARCHAR},
+            </if>
             <if test="country != null">
                 COUNTRY = #{country,jdbcType=VARCHAR},
             </if>
@@ -325,6 +335,7 @@
             BIRTHDAY        = #{birthday,jdbcType=VARCHAR},
             SEX             = #{sex,jdbcType=VARCHAR},
             EMAIL           = #{email,jdbcType=VARCHAR},
+            AVATAR_URL      = #{avatarUrl,jdbcType=VARCHAR},
             COUNTRY         = #{country,jdbcType=VARCHAR},
             PROVINCE        = #{province,jdbcType=VARCHAR},
             CITY            = #{city,jdbcType=VARCHAR},

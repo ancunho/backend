@@ -36,7 +36,8 @@
             <div class="">
                 <div style="text-align: right;">
 <!--                    <el-link icon="el-icon-edit" v-on:click="handleDrawerOpen" type="primary">Add New Post</el-link>-->
-                    <el-link icon="el-icon-edit" href="/admin/post/create.ahn"  type="primary">Add New Post</el-link>
+<!--                    <el-link icon="el-icon-edit" href="/admin/post/create.ahn"  type="primary">Add New Post</el-link>-->
+                    <a style="color:#3b82f6; text-decoration: none; font-weight: bold;" th:href="${#httpServletRequest.getContextPath() + '/admin/post/create.ahn'}">Add New Post</a>
                 </div>
                 <div class="overflow-x-auto relative">
                     <el-row v-bind:title="item.postTitle"
