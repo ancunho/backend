@@ -1,0 +1,12 @@
+
+/**
+primary:2563EB
+success:10B981
+warning:F59E0B
+danger:EF4444
+info:4B5563
+color-text-primary:1F2937
+ */
+html, body { }
+body {min-height: 100%; word-break: break-all;  margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "맑은 고딕"!important;}
+::selection { background:#64748b; color:#fff; }
