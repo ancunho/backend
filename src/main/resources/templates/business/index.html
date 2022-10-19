@@ -1,12 +1,25 @@
 <!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Buza Business</title>
-</head>
-<body>
-<h1>Hello,  main!</h1>
-asdf
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="business/common/head_meta::head_meta"></head>
+<title>Buza</title>
+<body style="background:#fff;">
+<div id="business-app">
+    <el-button type="primary" size="mini" plain icon="el-icon-edit">Edit</el-button>
+</div>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new Vue({
+            el: '#business-app',
+            data: function() {
+                return {
+                    loading: true
+                }
+            },
+            methods: {
+
+            }
+        });
+    });
+</script>
 </html>
