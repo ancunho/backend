@@ -44,6 +44,6 @@ color-text-primary:1F2937
     .business-container .business-post-list ul li { position:relative; width: calc(100% / 2);}
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 720px) {
     .business-container .business-post-list ul li { position:relative; width: calc(100%);}
 }
