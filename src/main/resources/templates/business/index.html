@@ -4,16 +4,137 @@
 <title>Buza</title>
 <body style="background:#fff;">
 <div id="business-app">
-    <el-button type="primary" size="mini" plain icon="el-icon-edit">Edit</el-button>
+    <div class="business-header">
+        <div class="business-header-con">
+            <h1><a th:href="${#httpServletRequest.getContextPath() + '/'}">Logo</a> </h1>
+            <div class="main-menu">
+                <ul>
+                    <li><a href="#this">111</a></li>
+                    <li><a href="#this">222</a></li>
+                    <li><a href="#this">333</a></li>
+                </ul>
+            </div>
+            <a href="#this"><i style="font-size: 1.8rem;" class="el-icon-search"></i></a>
+        </div>
+    </div>
+    <div class="business-container">
+        <div class="business-container-top">
+            <h2>Hello world!</h2>
+            <h4>美观的设计，强大的功能，助您自由发挥心中所想</h4>
+        </div>
+        <div class="business-post-list">
+            <ul>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+                <li>
+                    <a href="#this">
+                        <p class="thumbs">
+                            <img src="https://story.baemin.com/wp-content/uploads/2022/10/배민다움_딜리-써보니-어때요_삽입-사진_썸네일.jpg" alt="사장님, 딜리 써보니 어때요?">
+                        </p>
+                        <dl>
+                            <dt>HHHHHHHHHHHHHHHHHHHHHH</dt>
+                            <dd>asdfsadfsadf</dd>
+                            <dd class="dl-etc"></dd>
+                        </dl>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="business-footer">
+
+    </div>
 </div>
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
         new Vue({
             el: '#business-app',
-            data: function() {
+            data() {
                 return {
-                    loading: true
+
                 }
             },
             mounted() {

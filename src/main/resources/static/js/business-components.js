@@ -1,0 +1,5 @@
+
+
+var businessHeaderComponent = Vue.extend({
+    
+});
