@@ -1,0 +1,40 @@
+<div th:fragment="businessTop">
+    <div class="business-header" id="business-header">
+        <div class="business-header-con">
+            <h1><a th:href="${#httpServletRequest.getContextPath() + '/'}">Logo</a> </h1>
+            <div class="main-menu">
+                <ul>
+                    <li><a href="#this">111</a></li>
+                    <li><a href="#this">222</a></li>
+                    <li><a href="#this">333</a></li>
+                </ul>
+            </div>
+            <div class="main-etc-menu">
+                <a href="#this"><i style="font-size: 1.8rem;" class="el-icon-search"></i></a>
+                <a href="#this" @click="handleClick()" class="btn-small-menu"><i style="font-size: 1.8rem;" class="el-icon-menu"></i></a>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            new Vue({
+                el: '#business-header',
+                data() {
+                    return {
+
+                    }
+                },
+                mounted() {
+
+                },
+                methods: {
+                    handleClick() {
+                        alert(1);
+                    }
+                }
+            });
+        });
+    </script>
+
+</div>
