@@ -23,6 +23,7 @@ color-text-primary:1F2937
 .business-header .business-header-con .main-menu ul { display: flex; justify-content: flex-end; gap: 34px;}
 .business-header .business-header-con .main-menu ul li a { display: block; transition: .3s ease all; padding:1rem 2rem; font-weight: bold; font-size:1.3rem; color:#000; }
 .business-header .business-header-con .main-menu ul li a:hover { color:#38bdf8; }
+.business-header .business-header-con .btn-small-menu { display: none;}
 
 .business-container { width: 100%; max-width: 85rem; min-height: 100%; margin: 0 auto; padding:4rem 4rem 15.8rem 4rem; }
 .business-container .business-container-top { padding:2rem 0 1.4rem 0; }
@@ -46,4 +47,6 @@ color-text-primary:1F2937
 
 @media screen and (max-width: 720px) {
     .business-container .business-post-list ul li { position:relative; width: calc(100%);}
+    .business-header .business-header-con .btn-small-menu { display: inline-block!important;}
+    .business-header .business-header-con .main-menu {display: none;}
 }
