@@ -6,6 +6,10 @@ warning:F59E0B
 danger:EF4444
 info:4B5563
 color-text-primary:1F2937
+
+.link-under:after { position: absolute; left: 0; bottom: 0; width: 0%; height: 1.2rem; background-color: #2AC1BC; opacity: .3; display: block; transition: .4s ease width; content: ''; }
+.link-under:hover { color: #2AC1BC; }
+.link-under:hover:after { width: 100%; }
  */
 
 * { margin: 0; padding: 0; font-family: sans-serif; border: none;
@@ -19,9 +23,9 @@ color-text-primary:1F2937
 
 .business-header .business-header-con { width: 100%; overflow: hidden; max-width: 1380px; height: 1.5rem; padding: 2.2rem 4rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
 .business-header .business-header-con h1 { }
-.business-header .business-header-con .main-menu { display: flex; justify-content: center; align-items: center; }
+.business-header .business-header-con .main-menu { font-family: 's-core'; display: flex; justify-content: center; align-items: center; }
 .business-header .business-header-con .main-menu ul { display: flex; justify-content: flex-end; gap: 34px;}
-.business-header .business-header-con .main-menu ul li a { display: block; transition: .3s ease all; padding:1rem 2rem; font-size:1.1rem; color:#000; }
+.business-header .business-header-con .main-menu ul li a {  font-family: 's-core'!important; font-weight: 900; display: block; transition: .3s ease all; padding:1rem 2rem; font-size:1.1rem; color:#000; }
 .business-header .business-header-con .main-menu ul li a:hover { color:#38bdf8; }
 .business-header .business-header-con .btn-small-menu { display: none;}
 .business-header .business-header-con .submenu-drawer {}
@@ -44,7 +48,7 @@ color-text-primary:1F2937
 .business-container .business-post-list ul li p.thumbs { position: relative; padding-top: 62.36%; overflow: hidden; }
 .business-container .business-post-list ul li p.thumbs img { position: absolute; top: 50%; left: 50%; min-width: 100%; max-width: none; min-height: 100%; width: auto; height: 100%; transform: translate(-50%, -50%); transition: .3s ease all;}
 .business-container .business-post-list ul li dl { margin-top: 1.2rem;}
-.business-container .business-post-list ul li dl dt { color:#000; font-size: 2rem; font-weight: bold; letter-spacing: -.1rem; line-height: 2rem; transition: .3s ease all;}
+.business-container .business-post-list ul li dl dt { color:#000; font-size: 1.3rem; font-weight: bold; letter-spacing: -.1rem; line-height:2rem; transition: .3s ease all;}
 .business-container .business-post-list ul li dl dd { color:#000; margin-top: 0.2rem; font-size:1rem; line-height: 2.3rem;}
 
 @media screen and (max-width: 980px) {

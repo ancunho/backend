@@ -30,3 +30,10 @@ color-text-primary:1F2937
 html, body { }
 body {min-height: 100%; word-break: break-all;  margin: 0; padding: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace, "맑은 고딕"!important;}
 ::selection { background:#64748b; color:#fff; }
+
+@font-face{
+    font-family:'s-core';
+    src: url("../fonts/S-CoreDream-3Light.woff")  format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
