@@ -10,9 +10,31 @@
                 </ul>
             </div>
             <div class="main-etc-menu">
-                <a href="#this"><i style="font-size: 1.8rem;" class="el-icon-search"></i></a>
-                <a href="#this" @click="handleClick()" class="btn-small-menu"><i style="font-size: 1.8rem;" class="el-icon-menu"></i></a>
+<!--                <a href="#this" style="padding: 10px;"><i style="line-height:1 ;font-size: 1.4rem;" class="el-icon-search"></i></a>-->
+                <a href="#this" style="padding: 5px;">
+                    <svg t="1669357562198" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1151" width="35" height="35"><path d="M661.333333 597.333333h-33.706666l-11.946667-11.52A276.096 276.096 0 0 0 682.666667 405.333333 277.333333 277.333333 0 1 0 405.333333 682.666667c68.693333 0 131.84-25.173333 180.48-66.986667l11.52 11.946667v33.706666l213.333334 212.906667L874.24 810.666667l-212.906667-213.333334z m-256 0C299.093333 597.333333 213.333333 511.573333 213.333333 405.333333S299.093333 213.333333 405.333333 213.333333 597.333333 299.093333 597.333333 405.333333 511.573333 597.333333 405.333333 597.333333z" p-id="1152"></path></svg>
+                </a>
+<!--                <a href="#this" @click="handleClick()" class="btn-small-menu"><i style="font-size: 1.8rem;" class="el-icon-menu"></i></a>-->
+                <a href="#this" @click="handleClick()" class="btn-small-menu">
+                    <svg t="1669357482073" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="997" width="35" height="35"><path d="M128 768h768v-85.333333H128v85.333333z m0-213.333333h768v-85.333334H128v85.333334z m0-298.666667v85.333333h768V256H128z" p-id="998"></path></svg>
+                </a>
             </div>
+
+            <!-- sub menu start -> drawer -->
+            <el-drawer
+                    custom-class="submenu-drawer"
+                    title=""
+                    :visible.sync="subMenuShowFlag"
+                    direction="rtl" size="100%">
+                <div class="sub-main-menu">
+                    <ul>
+                        <li><a href="#this">111</a></li>
+                        <li><a href="#this">222</a></li>
+                        <li><a href="#this">333</a></li>
+                    </ul>
+                </div>
+            </el-drawer>
+            <!-- sub menu end -> drawer -->
 
         </div>
     </div>
@@ -22,7 +44,7 @@
                 el: '#business-header',
                 data() {
                     return {
-
+                        subMenuShowFlag: false
                     }
                 },
                 mounted() {
@@ -30,7 +52,7 @@
                 },
                 methods: {
                     handleClick() {
-                        alert(1);
+                        this.subMenuShowFlag = true;
                     }
                 }
             });
