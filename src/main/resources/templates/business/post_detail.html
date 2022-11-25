@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head xmlns:th="https://www.thymeleaf.org" th:replace="business/common/head_meta::head_meta"></head>
+<title>Buza</title>
+<body style="background:#fff;">
+<div>
+    <!-- Top Start -->
+    <div th:replace="business/common/layout::businessTop"></div>
+    <!-- //Top End -->
+    <div class="business-container" id="business-container">
+        <div class="business-container-top">
+            <h2>Hello world!</h2>
+            <h4>美观的设计，强大的功能，助您自由发挥心中所想</h4>
+        </div>
+        <div class="business-post-list">
+            <h1 th:text="${postId}"></h1>
+        </div>
+    </div>
+    <div class="business-footer">
+
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new Vue({
+            el: '#business-container',
+            data() {
+                return {
+                    itemList: [],
+                    modifyUserItem: {},
+                    selectedItem: {},
+                    modalType: 1, // 1:新增权限/修改权限
+                    loading: true,
+                    currentPage: 1, //page
+                    pageSize: 15, //limit
+                    pageSizes: [15,30,50, 100],
+                    total: 100,
+                    activeTabName: 'searchTab',
+                    drawer: false,
+                    drawerTitle: 'Drawer Title',
+                }
+            },
+            mounted() {
+                this.initMainList();
+            },
+            methods: {
+                async initMainList() {
+                    let _this = this;
+                    const params = {
+
+                    }
+                    await axios.post(contextRootPath + "/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
+                        _this.itemList = response.data.data;
+                        _this.total = response.data.total;
+                        _this.loading = false;
+                    })
+                },
+            }
+        });
+    });
+</script>
+</html>

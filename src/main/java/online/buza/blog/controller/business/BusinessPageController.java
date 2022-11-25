@@ -7,6 +7,7 @@ import online.buza.blog.util.Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,13 @@ public class BusinessPageController {
     @GetMapping(value = "")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "business/index";
+    }
+
+    @PassLogin
+    @GetMapping(value = "/post/{postId}.ahn")
+    public String post_detail(@PathVariable Integer postId, Model model, HttpServletRequest request, HttpServletResponse response) {
+        model.addAttribute("postId", postId);
+        return "business/post_detail";
     }
 
     @PassLogin
