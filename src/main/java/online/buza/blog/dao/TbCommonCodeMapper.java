@@ -1,5 +1,6 @@
 package online.buza.blog.dao;
 
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.TbCommonCodeDto;
 import online.buza.blog.entity.TbCommonCode;
 
@@ -25,4 +26,10 @@ public interface TbCommonCodeMapper {
     List<TbCommonCodeDto> lstTbCommonCodeByCodeType(String codeType);
 
     int deleteTbCommonCodeByCodeId(TbCommonCodeDto tbCommonCodeDto);
+
+    List<TbCommonCodeDto> getCommonCodeList(TbCommonCodeDto tbCommonCodeDto);
+
+    List<TbCommonCodeDto> getAllGroupTypeCommonCode(TbCommonCodeDto tbCommonCodeDto);
+
+
 }

@@ -38,10 +38,30 @@
                 }
             },
             mounted() {
-
+                let _this = this;
+                _this.getBlogCategory();
             },
             methods: {
+                getBlogCategory() {
+                    let _this = this;
+                    var params = {
 
+                    };
+                    axios.post(contextRootPath + '/api/post/getBlogCategoryTree.do', params)
+                        .then(response => {
+                            _this.loading = false;
+                            console.log(`response: ${response}`);
+                            if (response.data.code !== 0) {
+                                _this.$message.error(response.data.msg);
+                            } else {
+                                _this.$message.success(response.data.msg);
+                            }
+                        })
+                        .catch(() => {
+                            _this.loading = false;
+                            _this.$message.info("获取分类失败");
+                        })
+                }
             }
         });
     // });

@@ -271,4 +271,21 @@
         where CODE_ID = #{codeId}
     </update>
 
+    <select id="getCommonCodeList" parameterType="online.buza.blog.dto.TbCommonCodeDto" resultType="online.buza.blog.dto.TbCommonCodeDto">
+        <![CDATA[
+        select  *
+        from    tb_common_code t1
+        where   t1.use_yn = '1'
+        ]]>
+    </select>
+
+    <select id="getAllGroupTypeCommonCode" parameterType="online.buza.blog.dto.TbCommonCodeDto" resultType="online.buza.blog.dto.TbCommonCodeDto">
+        <![CDATA[
+        select  t1.code_id, t1.code_type, t1.code_cd
+        from    tb_common_code t1
+        where   t1.use_yn = '1'
+        group by t1.code_id, t1.code_type, t1.code_cd
+        ]]>
+    </select>
+
 </mapper>

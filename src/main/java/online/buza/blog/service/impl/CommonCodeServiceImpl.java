@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.TbCommonCodeMapper;
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.TbCommonCodeDto;
 import online.buza.blog.entity.TbCommonCode;
 import online.buza.blog.service.CommonCodeService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -72,6 +74,11 @@ public class CommonCodeServiceImpl implements CommonCodeService {
         return tbCommonCodeMapper.lstTbCommonCodeByCodeType(codeType);
     }
 
+    public List<TbCommonCodeDto> getCommonCodeList(TbCommonCodeDto tbCommonCodeDto) {
+        return tbCommonCodeMapper.getCommonCodeList(tbCommonCodeDto);
+    }
 
-
+    public List<TbCommonCodeDto> getAllGroupTypeCommonCode(TbCommonCodeDto tbCommonCodeDto) {
+        return tbCommonCodeMapper.getAllGroupTypeCommonCode(tbCommonCodeDto);
+    }
 }

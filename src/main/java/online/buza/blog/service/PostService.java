@@ -14,6 +14,7 @@ public interface PostService {
     public TbPostDto getTbPostByPostId(Integer postId);
     public Boolean deleteTbPost(Integer postId);
 
+    public List<TbClassificationDto> getBoardType01ClassificationTree(TbClassificationDto tbClassificationDto);
     public List<TbClassificationDto> buildClassificationTree(List<TbClassificationDto> classificationDtos);
 
 }

@@ -21,7 +21,7 @@
     <sql id="Base_Column_List">
         CLASSIFICATION_ID
         , PARENT_CLASSIFICATION_ID, CLASSIFICATION_NAME, CLASSIFICATION_TYPE,
-    CLASSIFICATION_IMAGE, SORT_ORDER, DEPTH_NUM, `STATUS`, OPTION01, OPTION02, OPTION03, 
+    CLASSIFICATION_IMAGE, SORT_ORDER, DEPTH_NUM, `STATUS`, OPTION01, OPTION02, OPTION03,
     OPTION04, OPTION05, CREATE_TIME, UPDATE_TIME
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -319,6 +319,36 @@
         SELECT  *
         FROM    TB_CLASSIFICATION T1
         WHERE   T1.PARENT_CLASSIFICATION_ID = #{parentClassificationId}
+    </select>
+
+    <select id="getBoardType01Classification" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
+        <![CDATA[
+        select  classification_id
+                ,t1.parent_classification_id
+                ,t1.classification_name
+                ,t1.classification_type
+                ,t1.classification_image
+                ,t1.sort_order
+                ,t1.depth_num
+                ,t1.option01
+                ,t1.option02
+                ,t1.option03
+                ,t1.option04
+                ,t1.option05
+                ,date_format(t1.create_time, '%Y-%m-%d %H:%i') as create_time
+                ,date_format(t1.update_time, '%Y-%m-%d %H:%i') as update_time
+        from	TB_CLASSIFICATION t1
+        where	t1.status = '1'
+        and     t1.classification_type in (
+                                            select  a1.code_cd
+                                            from 	tb_common_code a1
+                                            where	a1.code_cd = t1.classification_type
+                                            and		a1.code_type = 'BOARD_TYPE'
+                                            and		a1.code_cd = '01'
+                                            and		a1.use_yn = '1'
+                                            )
+        ]]>
+
     </select>
 
 </mapper>

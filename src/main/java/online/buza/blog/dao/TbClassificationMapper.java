@@ -32,4 +32,6 @@ public interface TbClassificationMapper {
     List<TbClassificationDto> getAllOneDepthClassification(TbClassificationDto tbClassificationDto);
 
     List<TbClassificationDto> getAllTwoDepthClassification(TbClassificationDto tbClassificationDto);
+
+    List<TbClassificationDto> getBoardType01Classification(TbClassificationDto tbClassificationDto);
 }

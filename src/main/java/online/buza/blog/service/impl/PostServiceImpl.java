@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import online.buza.blog.dao.TbClassificationMapper;
 import online.buza.blog.dao.TbPostMapper;
 import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.dto.TbPostDto;
@@ -27,6 +28,9 @@ public class PostServiceImpl implements PostService {
 
     @Resource
     private TbPostMapper tbPostMapper;
+
+    @Resource
+    private TbClassificationMapper tbClassificationMapper;
 
     @Transactional
     public Boolean insertTbPost(TbPost tbPost) {
@@ -61,6 +65,10 @@ public class PostServiceImpl implements PostService {
             return true;
         }
         return false;
+    }
+
+    public List<TbClassificationDto> getBoardType01ClassificationTree(TbClassificationDto tbClassificationDto) {
+        return tbClassificationMapper.getBoardType01Classification(tbClassificationDto);
     }
 
     public List<TbClassificationDto> buildClassificationTree(List<TbClassificationDto> classificationDtos) {

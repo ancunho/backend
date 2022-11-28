@@ -8,6 +8,7 @@ import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.controller.common.CommonController;
 import online.buza.blog.dto.SysUserDto;
+import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
 import online.buza.blog.service.PostService;
@@ -26,6 +27,7 @@ public class PostController extends CommonController {
 
     @Autowired
     private PostService postService;
+
 
     @AdminUserLogin
     @PostMapping(value = "/list.do")
@@ -140,6 +142,14 @@ public class PostController extends CommonController {
             return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
         }
         return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/getBlogCategoryTree.do")
+    public BaseResponse get_blog_category_list(@RequestBody TbClassificationDto tbClassificationDto) {
+        List<TbClassificationDto> classificationDtoList = postService.getBoardType01ClassificationTree(tbClassificationDto);
+        List<TbClassificationDto> resultList = postService.buildClassificationTree(classificationDtoList);
+        return BaseResponse.valueOfSuccess(resultList);
     }
 
 
