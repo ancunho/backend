@@ -5,7 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,5 +32,7 @@ public class TbClassificationDto extends BaseRequest implements Serializable {
     private String option05;
     private String createTime;
     private String updateTime;
+
+    private List<TbClassificationDto> children = new ArrayList<>();
 
 }

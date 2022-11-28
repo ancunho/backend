@@ -15,6 +15,7 @@
     </header>
     <main class="main-container" id="app" v-loading="loading">
         <div class="">
+<!--            <treeselect v-model="value" :multiple="true" :options="options" />-->
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
 <!--            <el-tree-->
@@ -42,6 +43,9 @@
             <!-- // Top Search Form Box End -->
             <!-- Result List Start -->
             <div class="">
+                <div>
+                    <treeselect v-model="value" v-bind:multiple="true" v-bind:options="options" />
+                </div>
                 <div style="text-align: right;">
                     <el-button size="small" icon="el-icon-plus" v-on:click="handleDrawerOpen" style="text-align: right;">Add New Classification</el-button>
                 </div>
@@ -153,6 +157,7 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
+        Vue.component('treeselect', VueTreeselect.Treeselect)
         new Vue({
             el: '#app',
             data() {
@@ -174,6 +179,25 @@
                     treeItems: [],
                     oneDepthItems: [],
                     twoDepthItems: [],
+                    value: null,
+                    // define options
+                    options: [ {
+                        id: 'a',
+                        label: 'a',
+                        children: [ {
+                            id: 'aa',
+                            label: 'aa',
+                        }, {
+                            id: 'ab',
+                            label: 'ab',
+                        } ],
+                    }, {
+                        id: 'b',
+                        label: 'b',
+                    }, {
+                        id: 'c',
+                        label: 'c',
+                    } ],
                 }
             },
             created() {
