@@ -6,125 +6,246 @@
 <link th:href="@{/css/wangEditor.min.css}" type="text/css" rel="stylesheet">
 <script th:src="@{/js/wangEditor.5.1.15.js}"></script>
 <!--<script th:src="@{/js/admin/post.js}"></script>-->
-<div class="min-h-full font-mono">
+<div class="min-h-full font-mono" id="app" v-loading="loading">
     <div th:replace="admin/common/layout::top"></div>
     <div th:replace="admin/common/layout::footer"></div>
     <header class="header-top">
         <!--        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">-->
         <div class="header-container ">
-            <h3>Post management</h3>
-            <div class="header-container-menu">
-                <a href="/admin/post.ahn" class="">Posting</a>
-                <a href="#" class="">Category</a>
-            </div>
+            <h3>Setting - Post {{ postId == '' ? 'Create' : 'Modify' }}</h3>
+            <!--            <div class="header-container-menu">-->
+            <!--                <a href="/admin/setting.ahn" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">사용자관리</a>-->
+            <!--                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">권한관리</a>-->
+            <!--                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">메뉴관리</a>-->
+            <!--                <a href="/admin/setting/common_code.ahn" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">공통코드관리</a>-->
+            <!--            </div>-->
         </div>
     </header>
-    <main class="main-container" id="app">
+    <main class="main-container">
         <input type="hidden" th:value="${postId}" class="initPostId" />
         <div class="">
             <!-- Main Contents Start -->
-<!--            <input type="hidden" v-model="selectedItem.userSeq" />-->
-            <el-form v-bind:inline="true" label-width="80px">
-                <el-form-item label="是否发布">
-                    <el-switch v-model="selectedItem.status"></el-switch>
-                </el-form-item>
-            </el-form>
+            <div style="display:flex; justify-content: space-between;">
+                <div>
+                    <el-button type="primary" v-on:click="saveItem(selectedItem)" icon="el-icon-edit">Save</el-button>
+                    <el-button type="info" v-on:click="handleRedirectList" icon="el-icon-notebook-2">Move to list</el-button>
+                </div>
+                <div>
+                    <el-form style="align-items: center" v-bind:inline="true" label-width="80px">
+                        <el-form-item label="是否发布">
+                            <el-switch v-model="selectedItem.status"></el-switch>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </div>
             <el-form>
                 <el-form-item label="标题">
                     <el-input v-model="selectedItem.postTitle"></el-input>
                 </el-form-item>
             </el-form>
-                <div class="post-content" style="margin-bottom: 10px; font-size:12px; color:#475569">
+            <el-form>
+                <el-form-item label="分类">
+                    <el-radio-group v-model="selectedItem.postType">
+                        <el-radio v-for="(item, idx) in postTypeList"
+                                  v-bind:key="item.codeId"
+                                  v-bind:label="item.codeId.toString()"
+                                  border
+                                  style="margin-right: 0;"
+                        >
+                            {{item.codeName}}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-form>
+            <el-form>
+                <div class="">
                     <p class="post-content-label">
-                        Post Content
+                        Thunbnail Big <el-button type="text" v-on:click="handleDrawerOpen">Select file</el-button>
                     </p>
-                    <div id="editor—wrapper">
-                        <div id="toolbar-container"><!-- 工具栏 --></div>
-                        <div id="editor-container"><!-- 编辑器 --></div>
+                    <div>
+                        <input type="hidden" v-model="selectedItem.postThumbnailBig" />
+                        <el-image style="width:100px; height: 100px;" v-bind:src="selectedItem.postThumbnailBig"></el-image>
                     </div>
                 </div>
+            </el-form>
+
+            <div class="post-content" style="margin-bottom: 10px; font-size:12px; color:#475569">
+                <p class="post-content-label">
+                    Post Content
+                    <span style="color:#DC2626; font-size:12px;">(<strong>小程序이미지</strong> 너비 권장사이즈: <strong>최대750px</strong>, 텍스트가 있다면 fontSize좀 크게)</span>
+                </p>
+                <div id="editor—wrapper">
+                    <div id="toolbar-container"><!-- 工具栏 --></div>
+                    <div id="editor-container"><!-- 编辑器 --></div>
+                </div>
+            </div>
 
             <el-button type="primary" v-on:click="saveItem(selectedItem)" icon="el-icon-edit">Save</el-button>
 
             <!-- // Main Contents End -->
         </div>
+        <el-drawer title="file upload list"
+                   v-bind:visible.sync="drawer"
+                   direction="rtl" size="100%">
+            <file-upload-component @emitfile="emitfile" />
+        </el-drawer>
     </main>
 </div>
-
 <style>
     .post-content {}
     .post-content .post-content-label { font-size:13px; color:#475569; font-weight: bold}
+    .box { display:flex; flex: 1; justify-content: space-between; align-items: center}
 </style>
-<script th:src="@{/js/tailwind-elements.min.js}"></script>
+<!--<script th:src="@{/js/tailwind-elements.min.js}"></script>-->
 <style>
     #editor—wrapper { border: 1px solid #ccc; z-index: 100; /* 按需定义 */ }
     #toolbar-container { border-bottom: 1px solid #ccc; }
     #editor-container { height: 400px; }
 </style>
 <script type="text/javascript">
-    $(document).ready(function() {
-        new Vue({
-            el: '#app',
-            data() {
-                return {
-                    loading: true,
-                    selectedItem: {
-                        postTitle: '',
-                        postContent: '',
-                        status: false,
-                    },
-                    postId: '',
-                }
-            },
-            mounted() {
-                let _this = this;
-                _this.postId = $(".initPostId").val();
-                if (!Tool.isEmpty(_this.postId)) {
+    // $(document).ready(function() {
+    new Vue({
+        el: '#app',
+        components: {
+            'file-upload-component': fileUploadAndListComponent,
+        },
+        data() {
+            return {
+                radioradio: '1',
+                loading: true,
+                selectedItem: {
+                    postTitle: '',
+                    postContent: '',
+                    postType: '',
+                    postThumbnailBig: '',
+                    status: false,
+                },
+                postId: '',
+                drawer: false,
+                postTypeList: [],
+            }
+        },
+        mounted() {
+            let _this = this;
+            _this.postId = $(".initPostId").val();
+            if (!Tool.isEmpty(_this.postId)) {
+                setTimeout(function() {
                     _this.getDetail(_this.postId);
-                }
+                }, 1000);
+
+            } else {
+                _this.loading = false;
+            }
+            _this.handlePostType();
+        },
+        methods: {
+            handleRedirectList() {
+                let _this = this;
+                _this.$confirm('是否保存？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                })
+                    .then(() => {
+                        _this.saveItem(_this.selectedItem);
+                    })
+                    .catch(() => {
+                        BuzaRouter("/admin/post.ahn");
+                    })
             },
-            methods: {
-                getDetail(postId) {
-                    let _this = this;
-                    axios.get("/api/post/detail.do?postId=" + postId)
+            handleDrawerOpen() {
+                this.drawer = true;
+            },
+            handleDrawerClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                    })
+                    .catch(_ => {});
+            },
+            async getDetail(postId) {
+                let _this = this;
+                axios.get(contextRootPath + "/api/post/detail.do?postId=" + postId)
                     .then(response => {
-                        _this.selectedItem.postTitle = response.data.data.postTitle;
+                        console.log(response);
+                        if (response.data.count !== 0 || response.data.data === undefined) {
+                            _this.$alert('点击确定返回列表页', 'Error', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    BuzaRouter("/admin/post.ahn");
+                                }
+                            });
+                        } else {
+                            console.log(response.data.data);
+                            _this.selectedItem.postTitle = response.data.data.postTitle;
+                            _this.selectedItem.status = response.data.data.status === "1" ? true : false;
+                            _this.selectedItem.postType = response.data.data.postType;
+                            _this.selectedItem.postTypeName = response.data.data.postTypeName;
+                            _this.selectedItem.postThumbnailBig = response.data.data.postThumbnailBig;
+                            editor.setHtml(response.data.data.postContent);
+                        }
+                        _this.loading = false;
                     })
                     .catch(error => {
-                        console.log(error);
+                        _this.loading = false;
+                        _this.$message.error("Error!");
                     });
-                },
-                saveItem(item) {
-                    console.log(editor.getHtml());
-                    const _this = this;
-                    if (Tool.isEmpty(item.postId)) {
-                        if(Tool.isEmpty(item.postTitle)) { _this.$message.info("username必填"); return; }
-                    }
-
-                    _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
-                    _this.selectedItem.postType = "01";
-                    axios.post("/api/post/proc.do", _this.selectedItem)
-                        .then(response => {
-                            if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
-                            } else {
-                                _this.selectedItem = {};
-                                _this.$alert('点击确定返回列表页', response.data.msg, {
-                                    confirmButtonText: '确定',
-                                    callback: action => {
-                                        BuzaRouter("/admin/post.ahn");
-                                    }
-                                })
-
-                            }
-                        })
-                        .catch(error => {
-                            _this.$message.error("Request Error!")
-                        });
+            },
+            saveItem(item) {
+                const _this = this;
+                if (Tool.isEmpty(item.postId)) {
+                    if(Tool.isEmpty(item.postTitle)) { _this.$message.info("postTitle必填"); return; }
                 }
+                _this.loading = true;
+                _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
+                // _this.selectedItem.postType = "01";
+                _this.selectedItem.postContent = editor.getHtml();
+                _this.selectedItem.postId = _this.postId;
+                axios.post(contextRootPath + '/api/post/proc.do', _this.selectedItem)
+                    .then(response => {
+                        _this.loading = false;
+                        if (response.data.code !== 0) {
+                            _this.$message.error(response.data.msg);
+                        } else {
+                            _this.selectedItem = {};
+                            _this.$alert('点击确定返回列表页', response.data.msg, {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    BuzaRouter("/admin/post.ahn");
+                                }
+                            });
+
+                        }
+                    })
+                    .catch(error => {
+                        _this.loading = false;
+                        _this.$message.error("Request Error!")
+                    });
+            },
+            emitfile(item) {
+                this.drawer = false;
+                this.selectedItem.postThumbnailBig = item.fileUrl;
+            },
+            handlePostType() {
+                let _this = this;
+                axios.get(contextRootPath + "/api/common_code/type/list.do?codeType=POST_TYPE")
+                    .then(response => {
+                        if (response.data.code !== 0) {
+                            _this.$message.error(response.data.msg);
+                        } else {
+                            _this.postTypeList = response.data.data;
+                        }
+                    })
+                    .catch(error => {
+                        _this.loading = false;
+                        _this.$message.error("Request Error!(Post Type)")
+                    })
             }
-        });
+            //methods end
+
+        }
     });
+    // });
 </script>
 <script>
     const { createEditor, createToolbar } = window.wangEditor;
@@ -133,22 +254,21 @@
         placeholder: 'Type here...',
         onChange(editor2) {
             const html = editor2.getHtml();
-        }
-    };
-
-    //Upload image for editor
-    editorConfig.MENU_CONF['uploadImage'] = {
-        server: '/api/file/handle/wangEditor/single/upload.do',
-        fieldName: 'editorImageFile',
-        maxFileSize: 1 * 1024 * 1024,
-        maxNumberOfFiles: 1,
-        allowedFileTypes: ['image/*'],
-        onBeforeUpload(file) {
-            console.log(file);
-            return file;
+        },
+        MENU_CONF: {
+            uploadImage: {
+                server: contextRootPath + '/api/file/handle/wangEditor/single/upload.do',
+                fieldName: 'editorImageFile',
+                maxFileSize: 10 * 1024 * 1024,
+                maxNumberOfFiles: 1,
+                allowedFileTypes: ['image/*'],
+                onBeforeUpload(file) {
+                    console.log(file);
+                    return file;
+                }
+            }
         }
     }
-
 
     const editor = createEditor({
         selector: '#editor-container',

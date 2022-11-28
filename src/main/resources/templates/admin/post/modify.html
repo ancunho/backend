@@ -13,12 +13,10 @@
         <!--        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">-->
         <div class="header-container ">
             <h3>Setting - Post {{ postId == '' ? 'Create' : 'Modify' }}</h3>
-            <!--            <div class="header-container-menu">-->
-            <!--                <a href="/admin/setting.ahn" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">사용자관리</a>-->
-            <!--                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">권한관리</a>-->
-            <!--                <a href="#" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">메뉴관리</a>-->
-            <!--                <a href="/admin/setting/common_code.ahn" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">공통코드관리</a>-->
-            <!--            </div>-->
+            <div class="header-container-menu">
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/post.ahn'}">Posting</a>
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/post/category.ahn'}">Category</a>
+            </div>
         </div>
     </header>
     <main class="main-container">
@@ -104,68 +102,68 @@
 </style>
 <script type="text/javascript">
     // $(document).ready(function() {
-        new Vue({
-            el: '#app',
-            components: {
-                'file-upload-component': fileUploadAndListComponent,
-            },
-            data() {
-                return {
-                    radioradio: '1',
-                    loading: true,
-                    selectedItem: {
-                        postTitle: '',
-                        postContent: '',
-                        postType: '',
-                        postThumbnailBig: '',
-                        status: false,
-                    },
-                    postId: '',
-                    drawer: false,
-                    postTypeList: [],
-                }
-            },
-            mounted() {
-                let _this = this;
-                _this.postId = $(".initPostId").val();
-                if (!Tool.isEmpty(_this.postId)) {
-                    setTimeout(function() {
-                        _this.getDetail(_this.postId);
-                    }, 1500);
+    new Vue({
+        el: '#app',
+        components: {
+            'file-upload-component': fileUploadAndListComponent,
+        },
+        data() {
+            return {
+                radioradio: '1',
+                loading: true,
+                selectedItem: {
+                    postTitle: '',
+                    postContent: '',
+                    postType: '',
+                    postThumbnailBig: '',
+                    status: false,
+                },
+                postId: '',
+                drawer: false,
+                postTypeList: [],
+            }
+        },
+        mounted() {
+            let _this = this;
+            _this.postId = $(".initPostId").val();
+            if (!Tool.isEmpty(_this.postId)) {
+                setTimeout(function() {
+                    _this.getDetail(_this.postId);
+                }, 1000);
 
-                } else {
-                    _this.loading = false;
-                }
-                _this.handlePostType();
-            },
-            methods: {
-                handleRedirectList() {
-                    let _this = this;
-                    _this.$confirm('是否保存？', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    })
+            } else {
+                _this.loading = false;
+            }
+            _this.handlePostType();
+        },
+        methods: {
+            handleRedirectList() {
+                let _this = this;
+                _this.$confirm('是否保存？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                })
                     .then(() => {
                         _this.saveItem(_this.selectedItem);
                     })
                     .catch(() => {
                         BuzaRouter("/admin/post.ahn");
                     })
-                },
-                handleDrawerOpen() {
-                    this.drawer = true;
-                },
-                handleDrawerClose(done) {
-                    this.$confirm('确认关闭？')
-                        .then(_ => {
-                            done();
-                        })
-                        .catch(_ => {});
-                },
-                async getDetail(postId) {
-                    let _this = this;
-                    axios.get(contextRootPath + "/api/post/detail.do?postId=" + postId)
+            },
+            handleDrawerOpen() {
+                this.drawer = true;
+            },
+            handleDrawerClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                    })
+                    .catch(_ => {});
+            },
+            async getDetail(postId) {
+                let _this = this;
+                axios.get(contextRootPath + "/api/post/detail.do?postId=" + postId)
                     .then(response => {
                         console.log(response);
                         if (response.data.count !== 0 || response.data.data === undefined) {
@@ -190,45 +188,45 @@
                         _this.loading = false;
                         _this.$message.error("Error!");
                     });
-                },
-                saveItem(item) {
-                    const _this = this;
-                    if (Tool.isEmpty(item.postId)) {
-                        if(Tool.isEmpty(item.postTitle)) { _this.$message.info("postTitle必填"); return; }
-                    }
-                    _this.loading = true;
-                    _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
-                    // _this.selectedItem.postType = "01";
-                    _this.selectedItem.postContent = editor.getHtml();
-                    _this.selectedItem.postId = _this.postId;
-                    axios.post(contextRootPath + '/api/post/proc.do', _this.selectedItem)
-                        .then(response => {
-                            _this.loading = false;
-                            if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
-                            } else {
-                                _this.selectedItem = {};
-                                _this.$alert('点击确定返回列表页', response.data.msg, {
-                                    confirmButtonText: '确定',
-                                    callback: action => {
-                                        BuzaRouter("/admin/post.ahn");
-                                    }
-                                });
+            },
+            saveItem(item) {
+                const _this = this;
+                if (Tool.isEmpty(item.postId)) {
+                    if(Tool.isEmpty(item.postTitle)) { _this.$message.info("postTitle必填"); return; }
+                }
+                _this.loading = true;
+                _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
+                // _this.selectedItem.postType = "01";
+                _this.selectedItem.postContent = editor.getHtml();
+                _this.selectedItem.postId = _this.postId;
+                axios.post(contextRootPath + '/api/post/proc.do', _this.selectedItem)
+                    .then(response => {
+                        _this.loading = false;
+                        if (response.data.code !== 0) {
+                            _this.$message.error(response.data.msg);
+                        } else {
+                            _this.selectedItem = {};
+                            _this.$alert('点击确定返回列表页', response.data.msg, {
+                                confirmButtonText: '确定',
+                                callback: action => {
+                                    BuzaRouter("/admin/post.ahn");
+                                }
+                            });
 
-                            }
-                        })
-                        .catch(error => {
-                            _this.loading = false;
-                            _this.$message.error("Request Error!")
-                        });
-                },
-                emitfile(item) {
-                    this.drawer = false;
-                    this.selectedItem.postThumbnailBig = item.fileUrl;
-                },
-                handlePostType() {
-                    let _this = this;
-                    axios.get(contextRootPath + "/api/common_code/type/list.do?codeType=POST_TYPE")
+                        }
+                    })
+                    .catch(error => {
+                        _this.loading = false;
+                        _this.$message.error("Request Error!")
+                    });
+            },
+            emitfile(item) {
+                this.drawer = false;
+                this.selectedItem.postThumbnailBig = item.fileUrl;
+            },
+            handlePostType() {
+                let _this = this;
+                axios.get(contextRootPath + "/api/common_code/type/list.do?codeType=POST_TYPE")
                     .then(response => {
                         if (response.data.code !== 0) {
                             _this.$message.error(response.data.msg);
@@ -240,11 +238,11 @@
                         _this.loading = false;
                         _this.$message.error("Request Error!(Post Type)")
                     })
-                }
-                //methods end
-
             }
-        });
+            //methods end
+
+        }
+    });
     // });
 </script>
 <script>

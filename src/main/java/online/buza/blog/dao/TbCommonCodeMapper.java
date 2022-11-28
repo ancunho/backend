@@ -23,4 +23,6 @@ public interface TbCommonCodeMapper {
     TbCommonCodeDto getTbCommonCodeInfoByCodeId(Integer codeId);
 
     List<TbCommonCodeDto> lstTbCommonCodeByCodeType(String codeType);
+
+    int deleteTbCommonCodeByCodeId(TbCommonCodeDto tbCommonCodeDto);
 }

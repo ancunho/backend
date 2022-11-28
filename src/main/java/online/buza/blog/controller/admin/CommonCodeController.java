@@ -104,13 +104,13 @@ public class CommonCodeController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/delete.do")
-    public BaseResponse code_delete(BaseRequest baseRequest, @RequestParam("codeId") Integer codeId) {
-        if (codeId == null || "".equals(String.valueOf(codeId))) {
+    @PostMapping(value = "/delete.do")
+    public BaseResponse code_delete(BaseRequest baseRequest, @RequestBody TbCommonCodeDto tbCommonCodeDto) {
+        if (tbCommonCodeDto == null || "".equals(String.valueOf(tbCommonCodeDto.getCodeId()))) {
             return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        boolean isSuccessDelete = commonCodeService.deleteTbCommonCode(codeId);
+        boolean isSuccessDelete = commonCodeService.deleteTbCommonCode(tbCommonCodeDto);
         if (isSuccessDelete) {
             return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
         }

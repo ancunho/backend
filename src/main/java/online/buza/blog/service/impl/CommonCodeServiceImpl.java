@@ -51,6 +51,15 @@ public class CommonCodeServiceImpl implements CommonCodeService {
         return false;
     }
 
+    @Transactional
+    public Boolean deleteTbCommonCode(TbCommonCodeDto tbCommonCodeDto) {
+        int deleteCount = tbCommonCodeMapper.deleteTbCommonCodeByCodeId(tbCommonCodeDto);
+        if (deleteCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public List<TbCommonCodeDto> getAllTbCommonCodeList(TbCommonCodeDto tbCommonCodeDto) {
         return tbCommonCodeMapper.getAllTbCommonCodeList(tbCommonCodeDto);
     }

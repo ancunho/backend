@@ -194,7 +194,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.get(contextRootPath + '/api/common_code/delete.do?codeId=' + codeId)
+                        axios.post(contextRootPath + '/api/common_code/delete.do?codeId=' + codeId)
                             .then(response => {
                                 if (response.data.code !== 0) {
                                     _this.$message.error(response.data.msg);

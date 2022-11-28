@@ -15,8 +15,8 @@
         <div class="header-container ">
             <h3>Post management</h3>
             <div class="header-container-menu">
-                <a href="/admin/post.ahn" class="">Posting</a>
-                <a href="#" class="">Category</a>
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/post.ahn'}">Posting</a>
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/post/category.ahn'}">Category</a>
             </div>
         </div>
     </header>

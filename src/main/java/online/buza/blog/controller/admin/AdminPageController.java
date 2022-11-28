@@ -3,8 +3,6 @@ package online.buza.blog.controller.admin;
 import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
-import online.buza.blog.common.BaseResponse;
-import online.buza.blog.controller.common.CommonController;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.util.Box;
 import online.buza.blog.util.HttpUtility;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,11 +30,11 @@ public class AdminPageController {
     public String admin(Model model, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
-        
+
         if (sysUserDto == null || "".equals(Util.nullempty(sysUserDto.getUserSeq()))) {
             return "redirect:/admin/login.ahn";
         }
-        
+
         return "redirect:/admin/index.ahn";
     }
 
@@ -92,6 +89,13 @@ public class AdminPageController {
         model.addAttribute("postId", box.get("postId"));
         return "admin/post/modify";
     }
+
+    @AdminUserLogin
+    @RequestMapping(value = "/post/category.ahn")
+    public String post_category(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/post/category";
+    }
+
 
     @AdminUserLogin
     @RequestMapping(value = "/material.ahn")

@@ -1,5 +1,6 @@
 package online.buza.blog.service;
 
+import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
 
@@ -12,5 +13,7 @@ public interface PostService {
     public List<TbPostDto> getAllTbPostListByTbPost(TbPostDto tbPostDto);
     public TbPostDto getTbPostByPostId(Integer postId);
     public Boolean deleteTbPost(Integer postId);
+
+    public List<TbClassificationDto> buildClassificationTree(List<TbClassificationDto> classificationDtos);
 
 }

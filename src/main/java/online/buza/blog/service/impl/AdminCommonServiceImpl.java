@@ -13,12 +13,9 @@ import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.entity.SysUser;
 import online.buza.blog.entity.TbClassification;
 import online.buza.blog.service.AdminCommonService;
-import online.buza.blog.util.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -170,53 +167,6 @@ public class AdminCommonServiceImpl implements AdminCommonService {
         return tbClassificationMapper.getAllTwoDepthClassification(tbClassificationDto);
     }
 
-    public List<TbClassificationDto> buildClassificationTree(List<TbClassificationDto> classificationDtos) {
-        List<TbClassificationDto> returnList = new ArrayList<>();
-        List<Integer> tempList = new ArrayList<>();
-
-        for (TbClassificationDto classificationDto : classificationDtos) {
-            tempList.add(classificationDto.getClassificationId());
-        }
-
-        for (TbClassificationDto classificationDto : classificationDtos) {
-            if (!tempList.contains(classificationDto.getParentClassificationId())) {
-                recursionFn(classificationDtos, classificationDto);
-                returnList.add(classificationDto);
-            }
-        }
-
-        if (returnList.isEmpty()) {
-            returnList = classificationDtos;
-        }
-        return returnList;
-    }
-
-    private void recursionFn(List<TbClassificationDto> list, TbClassificationDto t) {
-        // 得到子节点列表
-        List<TbClassificationDto> childList = getChildClassificationList(list, t);
-        t.setChildren(childList);
-        for (TbClassificationDto tbClassificationDto : childList) {
-            if (hasChildClassification(list, tbClassificationDto)) {
-                recursionFn(list, tbClassificationDto);
-            }
-        }
-    }
-
-    private List<TbClassificationDto> getChildClassificationList(List<TbClassificationDto> list, TbClassificationDto t) {
-        List<TbClassificationDto> tlist = new ArrayList<>();
-        Iterator<TbClassificationDto> it = list.iterator();
-        while (it.hasNext()) {
-            TbClassificationDto n = (TbClassificationDto) it.next();
-            if (StringUtils.isNotNull(n.getParentClassificationId()) && n.getParentClassificationId() == t.getClassificationId()) {
-                tlist.add(n);
-            }
-        }
-        return tlist;
-    }
-
-    private boolean hasChildClassification(List<TbClassificationDto> list, TbClassificationDto t) {
-        return getChildClassificationList(list, t).size() > 0;
-    }
 
 
 }

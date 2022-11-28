@@ -1,0 +1,51 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="bg-gray-50">
+<!--<script th:src="@{/js/admin/post.js}"></script>-->
+<div class="min-h-full font-mono" id="app" v-loading="loading">
+    <div th:replace="admin/common/layout::top"></div>
+    <div th:replace="admin/common/layout::footer"></div>
+    <header class="header-top">
+        <!--        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">-->
+        <div class="header-container ">
+            <h3>Setting - Post Category</h3>
+            <div class="header-container-menu">
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/post.ahn'}">Posting</a>
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/post/category.ahn'}">Category</a>
+            </div>
+        </div>
+    </header>
+    <main class="main-container">
+        <input type="hidden" th:value="${postId}" class="initPostId" />
+        <div class="">
+            <!-- Main Contents Start -->
+
+            <!-- // Main Contents End -->
+        </div>
+
+    </main>
+</div>
+
+<script type="text/javascript">
+    // $(document).ready(function() {
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    loading: true,
+                }
+            },
+            mounted() {
+
+            },
+            methods: {
+
+            }
+        });
+    // });
+</script>
+
+</body>
+</html>
