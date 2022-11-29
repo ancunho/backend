@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Getter
@@ -90,6 +88,10 @@ public class PostServiceImpl implements PostService {
             returnList = classificationDtos;
         }
         return returnList;
+    }
+
+    public List<TbClassificationDto> getClassificationListByType(Map<String, Object> mapParams) {
+        return tbClassificationMapper.getClassificationListByType(mapParams);
     }
 
     private void recursionFn(List<TbClassificationDto> list, TbClassificationDto t) {

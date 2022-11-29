@@ -13,12 +13,15 @@ import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
 import online.buza.blog.service.PostService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -151,6 +154,18 @@ public class PostController extends CommonController {
         List<TbClassificationDto> resultList = postService.buildClassificationTree(classificationDtoList);
         return BaseResponse.valueOfSuccess(resultList);
     }
+
+    @AdminUserLogin
+    @PostMapping(value = "/getCategoryTreeByType.do")
+    public BaseResponse get_category_tree_by_type(@RequestBody TbClassificationDto tbClassificationDto) {
+        Map<String, Object> mapParams = new HashMap<>();
+        mapParams.put("type", tbClassificationDto.getClassificationType());
+        List<TbClassificationDto> classificationDtoList = postService.getClassificationListByType(mapParams);
+        List<TbClassificationDto> resultList = postService.buildClassificationTree(classificationDtoList);
+        return BaseResponse.valueOfSuccess(resultList);
+    }
+
+
 
 
 

@@ -323,7 +323,7 @@
 
     <select id="getBoardType01Classification" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
         <![CDATA[
-        select  classification_id
+        select  t1.classification_id
                 ,t1.parent_classification_id
                 ,t1.classification_name
                 ,t1.classification_type
@@ -348,7 +348,27 @@
                                             and		a1.use_yn = '1'
                                             )
         ]]>
-
     </select>
+
+    <select id="getClassificationListByType" parameterType="java.util.Map" resultType="online.buza.blog.dto.TbClassificationDto">
+        select  t1.classification_id
+                ,t1.parent_classification_id
+                ,t1.classification_name
+                ,t1.classification_type
+                ,t1.classification_image
+                ,t1.sort_order
+                ,t1.depth_num
+                ,t1.option01
+                ,t1.option02
+                ,t1.option03
+                ,t1.option04
+                ,t1.option05
+                ,date_format(t1.create_time, '%Y-%m-%d %H:%i') as create_time
+                ,date_format(t1.update_time, '%Y-%m-%d %H:%i') as update_time
+        from	tb_classification t1
+        where   t1.status = '1'
+        and     t1.classification_type = concat(#{type},',',#{typeCode})
+    </select>
+
 
 </mapper>

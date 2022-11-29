@@ -66,6 +66,7 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/no_session")
                 .excludePathPatterns("/manage")
                 .excludePathPatterns("/backend/user/login")
+                .excludePathPatterns("/admin/login.ahn")
         ;
 //        WebMvcConfigurer.super.addInterceptors(registry);
     }
@@ -79,4 +80,5 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
 //        WebMvcConfigurer.super.addResourceHandlers(registry);
 
     }
+
 }

@@ -281,10 +281,10 @@
 
     <select id="getAllGroupTypeCommonCode" parameterType="online.buza.blog.dto.TbCommonCodeDto" resultType="online.buza.blog.dto.TbCommonCodeDto">
         <![CDATA[
-        select  t1.code_id, t1.code_type, t1.code_cd
+        select  t1.code_id, t1.code_type, t1.code_cd, t1.code_name
         from    tb_common_code t1
         where   t1.use_yn = '1'
-        group by t1.code_id, t1.code_type, t1.code_cd
+        group by t1.code_id, t1.code_type, t1.code_cd, t1.code_name
         ]]>
     </select>
 

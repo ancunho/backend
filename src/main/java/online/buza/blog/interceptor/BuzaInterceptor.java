@@ -1,5 +1,6 @@
 package online.buza.blog.interceptor;
 
+import com.google.gson.GsonBuilder;
 import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
 import online.buza.blog.annotation.WechatPassLogin;
@@ -9,6 +10,7 @@ import online.buza.blog.entity.TbAccessHist;
 import online.buza.blog.service.CommonService;
 import online.buza.blog.util.Box;
 import online.buza.blog.util.HttpUtility;
+import online.buza.blog.util.StringUtils;
 import online.buza.blog.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 
@@ -62,7 +65,13 @@ public class BuzaInterceptor implements HandlerInterceptor {
                 SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
                 if (sysUserDto == null) {
                     System.out.println(">>>>>need Login");
-                    response.sendRedirect("/admin/login.ahn");
+//                    request.getRequestDispatcher("/admin/login.ahn").forward(request, response);
+                    response.sendRedirect("/admin/login_new_new_new.html");
+//                    response.setCharacterEncoding("UTF-8");
+//                    PrintWriter pw = response.getWriter();
+//                    pw.print(new GsonBuilder().serializeNulls().create().toJson(msg));
+//                    pw.flush();
+//                    pw.close();
                     return false;
                 }
                 return true;

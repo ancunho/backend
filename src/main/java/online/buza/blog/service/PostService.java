@@ -5,6 +5,7 @@ import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PostService {
 
@@ -16,5 +17,7 @@ public interface PostService {
 
     public List<TbClassificationDto> getBoardType01ClassificationTree(TbClassificationDto tbClassificationDto);
     public List<TbClassificationDto> buildClassificationTree(List<TbClassificationDto> classificationDtos);
+
+    public List<TbClassificationDto> getClassificationListByType(Map<String, Object> mapParams);
 
 }

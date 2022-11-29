@@ -43,9 +43,9 @@
             <!-- // Top Search Form Box End -->
             <!-- Result List Start -->
             <div class="">
-                <div>
-                    <treeselect v-model="value" v-bind:multiple="true" v-bind:options="options" />
-                </div>
+<!--                <div>-->
+<!--                    <treeselect v-model="value" v-bind:multiple="true" v-bind:options="options" />-->
+<!--                </div>-->
                 <div style="text-align: right;">
                     <el-button size="small" icon="el-icon-plus" v-on:click="handleDrawerOpen" style="text-align: right;">Add New Classification</el-button>
                 </div>
@@ -53,8 +53,8 @@
                     <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">
                         <el-table-column prop="classificationId" label="classificationId" v-if="false"></el-table-column>
                         <el-table-column prop="rn" label="Rn" width="50"></el-table-column>
-                        <el-table-column prop="classificationType" label="Type" width="100"></el-table-column>
-                        <el-table-column prop="classificationName" label="Name" width="150"></el-table-column>
+                        <el-table-column prop="classificationType" label="Type" width="200"></el-table-column>
+                        <el-table-column prop="classificationName" label="Name" width="180"></el-table-column>
                         <el-table-column prop="parentClassificationName" label="parent" width="150"></el-table-column>
                         <el-table-column prop="sortOrder" label="sort" width="150"></el-table-column>
                         <el-table-column prop="status" align="center" label="status" width="120">
@@ -102,7 +102,7 @@
         <el-drawer
                 v-bind:title="drawerTitle"
                 v-bind:visible.sync="drawer"
-                direction="rtl" size="100%"
+                direction="rtl" size="30%"
                 v-bind:before-close="handleDrawerClose">
             <div class="drawer-container" style="padding: 20px;">
                 <div v-if="modalType == 1">
@@ -115,7 +115,14 @@
                             <el-input v-model="selectedItem.classificationName"></el-input>
                         </el-form-item>
                         <el-form-item label="Type">
-                            <el-input v-model="selectedItem.classificationType"></el-input>
+                            <el-select v-model="typeCode" filterable placeholder="Please Select Category Type">
+                                <el-option
+                                        v-for="item in codeGroupList"
+                                        v-bind:key="item.codeId"
+                                        v-bind:label="item.codeType + '【' + item.codeCd + '】-' + item.codeName"
+                                        v-bind:value="item.codeType + ',' + item.codeCd">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
                         <el-form-item label="Parent">
                             <el-select v-on:visible-change="handleParentSelectChange" v-model="selectedItem.parentClassificationId" placeholder="请选择">
@@ -144,8 +151,10 @@
                         </el-form-item>
                     </el-form>
                 </div>
-                <el-button type="danger" v-on:click="drawerHide">取 消</el-button>
-                <el-button type="primary" v-if="modalType == 1" v-on:click="saveItem(selectedItem)">保存用户</el-button>
+                <div style="text-align: center;">
+                    <el-button type="danger" v-on:click="drawerHide">取 消</el-button>
+                    <el-button type="primary" v-if="modalType == 1" v-on:click="saveItem(selectedItem)">保存用户</el-button>
+                </div>
             </div>
         </el-drawer>
         <!-- // Drawer End -->
@@ -170,8 +179,8 @@
                     roleIdChecked: [],
                     loading: true,
                     currentPage: 1, //page
-                    pageSize: 5, //limit
-                    pageSizes: [5,20,30,50],
+                    pageSize: 20, //limit
+                    pageSizes: [20,30,50,100],
                     total: 100,
                     activeTabName: 'searchTab',
                     drawer: false,
@@ -179,31 +188,15 @@
                     treeItems: [],
                     oneDepthItems: [],
                     twoDepthItems: [],
-                    value: null,
-                    // define options
-                    options: [ {
-                        id: 'a',
-                        label: 'a',
-                        children: [ {
-                            id: 'aa',
-                            label: 'aa',
-                        }, {
-                            id: 'ab',
-                            label: 'ab',
-                        } ],
-                    }, {
-                        id: 'b',
-                        label: 'b',
-                    }, {
-                        id: 'c',
-                        label: 'c',
-                    } ],
+                    codeGroupList: [],
+                    typeCode: '',
                 }
             },
             created() {
                 const _this = this;
                 _this.initMainList();
-                _this.getClassificationTree();
+                // _this.getClassificationTree();
+                _this.getClassificationTypeList();
             },
             methods: {
                 handleSizeChange(limit) {
@@ -216,11 +209,11 @@
                     this.initMainList();
                 },
                 handleTabClick(tab, event) {
-                    console.log(tab, event);
+
                 },
                 handleDrawerOpen(row) {
                     const _this = this;
-                    console.log(row);
+
                     if (Tool.isEmpty(row.classificationId)) {
                         _this.drawerTitle = "Add New Classification";
                         _this.selectedItem = {};
@@ -239,7 +232,6 @@
                         .catch(_ => {});
                 },
                 handleConfirmOpen(classificationId) {
-                    console.log(classificationId);
                     const _this = this;
                     _this.$confirm('确定删除此用户信息吗, 是否继续?', '提示', {
                         confirmButtonText: '确定',
@@ -276,6 +268,7 @@
 
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
                     _this.selectedItem.parentClassificationId = _this.selectedItem.parentClassificationId === undefined ? "0" : _this.selectedItem.parentClassificationId;
+                    _this.selectedItem.classificationType = _this.typeCode;
                     axios.post(contextRootPath + "/api/setting/classification/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
@@ -297,7 +290,6 @@
 
                     }
                     axios.post(contextRootPath + "/api/setting/classification/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
-                        console.log(response.data.data);
                         _this.itemList = response.data.data;
                         _this.total = response.data.total;
                         _this.loading = false;
@@ -319,15 +311,12 @@
                             _this.$message.error("Axios Error!");
                         });
                 },
-                getClassificationTree() {
-                    const params = {};
-                    axios.post(contextRootPath + "/api/setting/classification/tree.do", params).then((response) => {
-                        console.log("tree start");
-                        console.log(response.data.data);
-                        this.treeItems = response.data.data;
-                        console.log("tree end");
-                    });
-                },
+                // getClassificationTree() {
+                //     const params = {};
+                //     axios.post(contextRootPath + "/api/setting/classification/tree.do", params).then((response) => {
+                //         this.treeItems = response.data.data;
+                //     });
+                // },
                 append(data) {
                     console.log(data)
                 },
@@ -348,7 +337,22 @@
                 handleParentSelectChange() {
                     let _this = this;
                     _this.getAllOneDepthClassificaiton();
-                }
+                },
+                getClassificationTypeList() {
+                    let _this = this;
+                    var params = {};
+                    axios.post(contextRootPath + '/api/common_code/group_type.do', params)
+                        .then(response => {
+                            if (response.data.code !== 0) {
+                                _this.$message.error(response.data.msg);
+                            } else {
+                                _this.codeGroupList = response.data.data;
+                            }
+                        })
+                        .catch(error => {
+                            _this.$message.error("Get Code Group Error!");
+                        });
+                },
                 // methods End
             }
         });
