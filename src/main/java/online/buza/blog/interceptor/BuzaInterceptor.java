@@ -63,15 +63,27 @@ public class BuzaInterceptor implements HandlerInterceptor {
             if (adminUserLogin.required()) {
                 HttpSession session = request.getSession(true);
                 SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
+                String basePath = request.getScheme() + "://" + request.getServerName() + ":"  + request.getServerPort()+request.getContextPath();
                 if (sysUserDto == null) {
-                    System.out.println(">>>>>need Login");
+//                    System.out.println(">>>>>need Login");
 //                    request.getRequestDispatcher("/admin/login.ahn").forward(request, response);
-                    response.sendRedirect("/admin/login_new_new_new.html");
-//                    response.setCharacterEncoding("UTF-8");
-//                    PrintWriter pw = response.getWriter();
-//                    pw.print(new GsonBuilder().serializeNulls().create().toJson(msg));
-//                    pw.flush();
-//                    pw.close();
+//                    response.sendRedirect("/admin/login_new_new_new.html");
+
+//                    response.sendRedirect(basePath + "/admin");
+//                    response.sendRedirect(basePath + "/admin/login.ahn");
+
+                    response.setCharacterEncoding("UTF-8");
+                    response.setContentType("text/html");
+                    response.setHeader("Cache-Control","no-cache");
+                    PrintWriter pw = response.getWriter();
+
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("<script type='text/javascript'>");
+                    builder.append("window.location.href=" + "'" + basePath + "/admin/login.ahn';");
+                    builder.append("</script>");
+                    pw.write(builder.toString());
+
+                    pw.close();
                     return false;
                 }
                 return true;
