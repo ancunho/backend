@@ -350,7 +350,7 @@
         ]]>
     </select>
 
-    <select id="getClassificationListByType" parameterType="java.util.Map" resultType="online.buza.blog.dto.TbClassificationDto">
+    <select id="getClassificationListByTypeCode" parameterType="java.util.Map" resultType="online.buza.blog.dto.TbClassificationDto">
         select  t1.classification_id
                 ,t1.parent_classification_id
                 ,t1.classification_name
@@ -365,9 +365,24 @@
                 ,t1.option05
                 ,date_format(t1.create_time, '%Y-%m-%d %H:%i') as create_time
                 ,date_format(t1.update_time, '%Y-%m-%d %H:%i') as update_time
+
+                ,t1.classification_id as id
+                ,t1.classification_id as 'value'
+                ,t1.classification_name as label
+                ,t1.parent_classificaiton_id as parent_id
         from	tb_classification t1
         where   t1.status = '1'
-        and     t1.classification_type = concat(#{type},',',#{typeCode})
+        and		(IFNULL(#{codeTypeAndCd}, '') = '' or t1.classification_type = #{codeTypeAndCd})
+    </select>
+
+    <select id="getClassificationListByTypeCode_LabelDTO" parameterType="java.util.Map" resultType="online.buza.blog.dto.LabelDto">
+        select  t1.classification_id as id
+                ,t1.classification_id as 'value'
+                ,t1.classification_name as label
+                ,t1.parent_classification_id as parent_id
+        from	tb_classification t1
+        where   t1.status = '1'
+        and		(IFNULL(#{codeTypeAndCd}, '') = '' or t1.classification_type = #{codeTypeAndCd})
     </select>
 
 

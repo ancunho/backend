@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.TbClassificationMapper;
 import online.buza.blog.dao.TbPostMapper;
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.TbClassificationDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
@@ -69,6 +70,8 @@ public class PostServiceImpl implements PostService {
         return tbClassificationMapper.getBoardType01Classification(tbClassificationDto);
     }
 
+
+
     public List<TbClassificationDto> buildClassificationTree(List<TbClassificationDto> classificationDtos) {
         List<TbClassificationDto> returnList = new ArrayList<>();
         List<Integer> tempList = new ArrayList<>();
@@ -90,8 +93,33 @@ public class PostServiceImpl implements PostService {
         return returnList;
     }
 
-    public List<TbClassificationDto> getClassificationListByType(Map<String, Object> mapParams) {
-        return tbClassificationMapper.getClassificationListByType(mapParams);
+    public List<TbClassificationDto> getClassificationListByTypeCode(Map<String, Object> mapParams) {
+        return tbClassificationMapper.getClassificationListByTypeCode(mapParams);
+    }
+
+    public List<LabelDto> buildClassificationTreeOrigin(List<LabelDto> labelDtos) {
+        List<LabelDto> returnList = new ArrayList<>();
+        List<Integer> tempList = new ArrayList<>();
+
+        for (LabelDto labelDto : labelDtos) {
+            tempList.add(labelDto.getId());
+        }
+
+        for (LabelDto labelDto : labelDtos) {
+            if (!tempList.contains(labelDto.getParentId())) {
+                recursionLabelFn(labelDtos, labelDto);
+                returnList.add(labelDto);
+            }
+        }
+
+        if (returnList.isEmpty()) {
+            returnList = labelDtos;
+        }
+        return returnList;
+    }
+
+    public List<LabelDto> getClassificationListByTypeCode_LabelDTO(Map<String, Object> mapParams) {
+        return tbClassificationMapper.getClassificationListByTypeCode_LabelDTO(mapParams);
     }
 
     private void recursionFn(List<TbClassificationDto> list, TbClassificationDto t) {
@@ -119,6 +147,33 @@ public class PostServiceImpl implements PostService {
 
     private boolean hasChildClassification(List<TbClassificationDto> list, TbClassificationDto t) {
         return getChildClassificationList(list, t).size() > 0;
+    }
+
+    private boolean hasChildLabel(List<LabelDto> list, LabelDto t) {
+        return getChildLabelList(list, t).size() > 0;
+    }
+
+    private void recursionLabelFn(List<LabelDto> list, LabelDto t) {
+        // 得到子节点列表
+        List<LabelDto> childList = getChildLabelList(list, t);
+        t.setChildren(childList);
+        for (LabelDto labelDto : childList) {
+            if (hasChildLabel(list, labelDto)) {
+                recursionLabelFn(list, labelDto);
+            }
+        }
+    }
+
+    private List<LabelDto> getChildLabelList(List<LabelDto> list, LabelDto t) {
+        List<LabelDto> tlist = new ArrayList<>();
+        Iterator<LabelDto> it = list.iterator();
+        while (it.hasNext()) {
+            LabelDto n = (LabelDto) it.next();
+            if (StringUtils.isNotNull(n.getParentId()) && n.getParentId() == t.getId()) {
+                tlist.add(n);
+            }
+        }
+        return tlist;
     }
 
 

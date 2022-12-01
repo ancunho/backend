@@ -35,6 +35,7 @@ public interface TbClassificationMapper {
 
     List<TbClassificationDto> getBoardType01Classification(TbClassificationDto tbClassificationDto);
 
-    List<TbClassificationDto> getClassificationListByType(Map<String, Object> mapParams);
+    List<TbClassificationDto> getClassificationListByTypeCode(Map<String, Object> mapParams);
+    List<LabelDto> getClassificationListByTypeCode_LabelDTO(Map<String, Object> mapParams);
 
 }

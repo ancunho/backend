@@ -7,9 +7,7 @@ import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.controller.common.CommonController;
-import online.buza.blog.dto.SysUserDto;
-import online.buza.blog.dto.TbClassificationDto;
-import online.buza.blog.dto.TbPostDto;
+import online.buza.blog.dto.*;
 import online.buza.blog.entity.TbPost;
 import online.buza.blog.service.PostService;
 import org.apache.commons.lang3.StringUtils;
@@ -156,12 +154,12 @@ public class PostController extends CommonController {
     }
 
     @AdminUserLogin
-    @PostMapping(value = "/getCategoryTreeByType.do")
-    public BaseResponse get_category_tree_by_type(@RequestBody TbClassificationDto tbClassificationDto) {
+    @PostMapping(value = "/getClassificationListByTypeCode.do")
+    public BaseResponse get_category_tree_by_type(@RequestBody TbCommonCodeDto tbCommonCodeDto) {
         Map<String, Object> mapParams = new HashMap<>();
-        mapParams.put("type", tbClassificationDto.getClassificationType());
-        List<TbClassificationDto> classificationDtoList = postService.getClassificationListByType(mapParams);
-        List<TbClassificationDto> resultList = postService.buildClassificationTree(classificationDtoList);
+        mapParams.put("codeTypeAndCd", tbCommonCodeDto.getCodeTypeAndCd());
+        List<LabelDto> labelDtoList = postService.getClassificationListByTypeCode_LabelDTO(mapParams);
+        List<LabelDto> resultList = postService.buildClassificationTreeOrigin(labelDtoList);
         return BaseResponse.valueOfSuccess(resultList);
     }
 

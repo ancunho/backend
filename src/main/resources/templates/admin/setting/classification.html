@@ -7,7 +7,6 @@
     <div th:replace="admin/common/layout::top"></div>
     <div th:replace="admin/common/layout::footer"></div>
     <header class="header-top">
-        <!--        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">-->
         <div class="header-container">
             <h3>Setting - Classification</h3>
             <div th:replace="admin/setting/setting_submenu::setting_submenu"></div>
@@ -15,24 +14,8 @@
     </header>
     <main class="main-container" id="app" v-loading="loading">
         <div class="">
-<!--            <treeselect v-model="value" :multiple="true" :options="options" />-->
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
-<!--            <el-tree-->
-<!--                    v-bind:data="treeItems"-->
-<!--                    default-expand-all-->
-<!--                    highlight-current-->
-<!--                    expand-on-click-node="false"-->
-<!--                    node-key="id">-->
-<!--                <span class="custom-tree-node" slot-scope="{ node, data }">-->
-<!--                    <span>{{ node.data.label }}</span>-->
-<!--                    <span>-->
-<!--                        <el-tag style="margin-right: 10px;" v-bind:type="node.data.status == '1' ? 'success' : 'danger'" size="mini">{{ node.data.statusName }}</el-tag>-->
-<!--                        <el-button type="text" size="mini" v-on:click="() => append(node)"> Append </el-button>-->
-<!--                        <el-button type="text" size="mini"> Delete </el-button>-->
-<!--                    </span>-->
-<!--                </span>-->
-<!--            </el-tree>-->
             <div class="">
                 <el-tabs v-model="activeTabName" type="card" v-on:tab-click="handleTabClick">
                     <el-tab-pane label="Search" name="searchTab">
@@ -102,7 +85,7 @@
         <el-drawer
                 v-bind:title="drawerTitle"
                 v-bind:visible.sync="drawer"
-                direction="rtl" size="30%"
+                direction="rtl" size="40%"
                 v-bind:before-close="handleDrawerClose">
             <div class="drawer-container" style="padding: 20px;">
                 <div v-if="modalType == 1">
@@ -115,7 +98,9 @@
                             <el-input v-model="selectedItem.classificationName"></el-input>
                         </el-form-item>
                         <el-form-item label="Type">
-                            <el-select v-model="typeCode" filterable placeholder="Please Select Category Type">
+                            <el-select style="width:100%;"
+                                       v-on:change="handleClassificationTypeChange"
+                                       v-model="codeTypeAndCd" filterable placeholder="Please Select Category Type">
                                 <el-option
                                         v-for="item in codeGroupList"
                                         v-bind:key="item.codeId"
@@ -125,19 +110,12 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="Parent">
-                            <el-select v-on:visible-change="handleParentSelectChange" v-model="selectedItem.parentClassificationId" placeholder="请选择">
-                                <el-option
-                                        v-for="item in oneDepthItems"
-                                        v-bind:key="item.classificationId"
-                                        v-bind:label="item.classificationName"
-                                        v-bind:value="item.classificationId">
-                                </el-option>
-                            </el-select>
-<!--                            <el-cascader-->
-<!--                                    v-bind:options="treeItems"-->
-<!--                                    v-bind:props="{ multiple: true, checkStrictly: true }"-->
-<!--                                    v-model="parentId"-->
-<!--                                    clearable></el-cascader>-->
+                            <div>
+                                <treeselect v-model="selectedItem.parentClassificationId"
+                                            v-bind:multiple="false"
+                                            v-bind:options="classificationList" />
+                                <treeselect-value :value="selectedItem.parentClassificationId" />
+                            </div>
                         </el-form-item>
                         <el-form-item label="SORT">
                             <el-input v-model="selectedItem.sortOrder"></el-input>
@@ -189,13 +167,13 @@
                     oneDepthItems: [],
                     twoDepthItems: [],
                     codeGroupList: [],
-                    typeCode: '',
+                    classificationList: [],
+                    codeTypeAndCd: '',
                 }
             },
             created() {
                 const _this = this;
                 _this.initMainList();
-                // _this.getClassificationTree();
                 _this.getClassificationTypeList();
             },
             methods: {
@@ -268,7 +246,8 @@
 
                     _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
                     _this.selectedItem.parentClassificationId = _this.selectedItem.parentClassificationId === undefined ? "0" : _this.selectedItem.parentClassificationId;
-                    _this.selectedItem.classificationType = _this.typeCode;
+                    _this.selectedItem.classificationType = _this.codeTypeAndCd;
+                    console.log(_this.selectedItem);
                     axios.post(contextRootPath + "/api/setting/classification/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
@@ -311,12 +290,6 @@
                             _this.$message.error("Axios Error!");
                         });
                 },
-                // getClassificationTree() {
-                //     const params = {};
-                //     axios.post(contextRootPath + "/api/setting/classification/tree.do", params).then((response) => {
-                //         this.treeItems = response.data.data;
-                //     });
-                // },
                 append(data) {
 
                 },
@@ -334,9 +307,27 @@
                         _this.twoDepthItems = response.data.data;
                     });
                 },
-                handleParentSelectChange() {
+                handleClassificationTypeChange() {
                     let _this = this;
-                    _this.getAllOneDepthClassificaiton();
+                    _this.getClassificationListByTypeCode();
+                },
+                getClassificationListByTypeCode() {
+                    let _this = this;
+                    var params = {
+                        codeTypeAndCd: _this.codeTypeAndCd
+                    };
+
+                    axios.post(contextRootPath + "/api/post/getClassificationListByTypeCode.do", params)
+                        .then(response => {
+                            if (response.data.code !== 0) {
+                                gfn_Error(response.data.code, response.data.msg);
+                            } else {
+                                _this.classificationList = response.data.data;
+                            }
+                        })
+                        .catch(err => {
+                            _this.$message.error("Error!");
+                        });
                 },
                 getClassificationTypeList() {
                     let _this = this;
@@ -353,6 +344,7 @@
                             _this.$message.error("Get Code Group Error!");
                         });
                 },
+
                 // methods End
             }
         });
