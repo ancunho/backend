@@ -303,3 +303,46 @@ async onWechatInfo() {
 //                        if(pw != null) {
 //                            pw.close();
 //                        }
+
+
+//                        StringBuilder builder = new StringBuilder();
+//                        builder.append("<html>");
+//                        builder.append("<script type='text/javascript'>");
+//                        builder.append("window.location.href=" + "'" + basePath + "/admin/login.ahn';");
+//                        builder.append("</script>");
+//                        builder.append("</html>");
+//                        pw.write(builder.toString());
+
+
+ if (method.isAnnotationPresent(AdminUserLogin.class)) {
+            AdminUserLogin adminUserLogin = method.getAnnotation(AdminUserLogin.class);
+            if (adminUserLogin.required()) {
+                HttpSession session = request.getSession(true);
+                SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
+                String basePath = request.getScheme() + "://" + request.getServerName() + ":"  + request.getServerPort()+request.getContextPath();
+                if (sysUserDto == null) {
+                    PrintWriter pw = null;
+                    try {
+                        pw = response.getWriter();
+
+
+
+                        BaseResponse serverResponse = BaseResponse.valueOfFailureCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+                        response.setContentType("application/json; charset=UTF-8");
+                        response.setCharacterEncoding("UTF-8");
+//                        response.setContentType("text/html; charset=UTF-8");
+                        pw.write(JSONObject.toJSONString(serverResponse));
+//                        response.sendRedirect("/admin/login.ahn");
+                        return false;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        pw.flush();
+                        pw.close();
+                    }
+
+                } else {
+                    return true;
+                }
+            }
+        }

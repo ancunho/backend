@@ -2,8 +2,7 @@ package online.buza.blog.controller.business;
 
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import online.buza.blog.annotation.AdminUserLogin;
-import online.buza.blog.annotation.PassLogin;
+import online.buza.blog.annotation.BusinessPassLogin;
 import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.dto.TbPostDto;
@@ -26,7 +25,7 @@ public class BusinessController {
     @Autowired
     private PostService postService;
 
-    @PassLogin
+    @BusinessPassLogin
     @ResponseBody
     @PostMapping(value = "/list.do")
     public BaseResponse getAllTbPostListByTbPost(BaseRequest baseRequest, @RequestBody TbPostDto tbPostDto) {
