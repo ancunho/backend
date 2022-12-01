@@ -3,8 +3,6 @@
 <head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
 <title>Buza Management System</title>
 <body class="bg-gray-50">
-<!--<link href="https://unpkg.com/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">-->
-<!--<script src="https://unpkg.com/@wangeditor/editor@latest/dist/index.js"></script>-->
 <link th:href="@{/css/wangEditor.min.css}" type="text/css" rel="stylesheet">
 <script th:src="@{/js/wangEditor.5.1.15.js}"></script>
 <div class="min-h-full font-mono">
@@ -35,8 +33,6 @@
             <!-- Result List Start -->
             <div class="">
                 <div style="text-align: right;">
-<!--                    <el-link icon="el-icon-edit" v-on:click="handleDrawerOpen" type="primary">Add New Post</el-link>-->
-<!--                    <el-link icon="el-icon-edit" href="/admin/post/create.ahn"  type="primary">Add New Post</el-link>-->
                     <a style="color:#3b82f6; text-decoration: none; font-weight: bold;" th:href="${#httpServletRequest.getContextPath() + '/admin/post/create.ahn'}">Add New Post</a>
                 </div>
                 <div class="overflow-x-auto relative">
@@ -49,12 +45,13 @@
                         </el-col>
                         <el-col v-bind:span="20">
                             <el-descriptions v-bind:title="item.postTitle">
-                                <el-descriptions-item label="Author.">{{item.postAuthor}}</el-descriptions-item>
-                                <el-descriptions-item label="Category.">{{item.postTypeName}}</el-descriptions-item>
+                                <el-descriptions-item label="Author." label-class-name="">{{item.postAuthor}}</el-descriptions-item>
+                                <el-descriptions-item label="Type">{{item.postTypeName}}</el-descriptions-item>
                                 <el-descriptions-item label="Status.">
                                     <el-tag type="danger" size="mini" v-if="item.status == '0'"> {{ item.statusName }} </el-tag>
                                     <el-tag type="success" size="mini" v-if="item.status == '1'"> {{ item.statusName }} </el-tag>
                                 </el-descriptions-item>
+                                <el-descriptions-item label="Category."><strong>{{item.postCategoryName}}</strong></el-descriptions-item>
                                 <el-descriptions-item label="Create Time.">{{item.createTime}}</el-descriptions-item>
                                 <el-descriptions-item label="Update Time." span="2">{{item.updateTime || '-'}}</el-descriptions-item>
                                 <el-descriptions-item label="Action." style="text-align: right">
@@ -66,32 +63,6 @@
 
                     </el-row>
 
-
-
-<!--                    <el-table v-bind:data="itemList" style="width: 100%; margin-top: 1.5rem;">-->
-<!--                        <el-table-column prop="postId" label="postId" v-if="false"></el-table-column>-->
-<!--                        <el-table-column prop="rn" label="SEQ." width="60"></el-table-column>-->
-<!--                        <el-table-column prop="postAuthor" label="postAuthor" width="100"></el-table-column>-->
-<!--                        <el-table-column prop="postTitle" label="postTitle" width="150"></el-table-column>-->
-<!--                        <el-table-column prop="status" align="center" label="Status" width="120">-->
-<!--                            <template slot-scope="scope">-->
-<!--                                <el-tag type="danger" v-if="scope.row.status == '0'"> {{ scope.row.statusName }} </el-tag>-->
-<!--                                <el-tag type="success" v-if="scope.row.status == '1'"> {{ scope.row.statusName }} </el-tag>-->
-<!--                            </template>-->
-<!--                        </el-table-column>-->
-<!--                        <el-table-column prop="createTime" label="CreateTime" width="220"></el-table-column>-->
-<!--                        <el-table-column prop="updateTime" label="UpdateTime" width="220">-->
-<!--                            <template slot-scope="scope">-->
-<!--                                {{ scope.row.updateTime || '-' }}-->
-<!--                            </template>-->
-<!--                        </el-table-column>-->
-<!--                        <el-table-column label="Action" align="center" >-->
-<!--                            <template slot-scope="scope">-->
-<!--                                <el-button type="primary" v-on:click="handleDispatcherModify(scope.row.postId)" icon="el-icon-edit" circle></el-button>-->
-<!--                                <el-button type="danger" v-on:click="handleConfirmOpen(scope.row.postId)" icon="el-icon-delete" circle></el-button>-->
-<!--                            </template>-->
-<!--                        </el-table-column>-->
-<!--                    </el-table>-->
                 </div>
                 <el-row style="margin: 2rem 0;">
                     <el-col :span="12" :offset="6">

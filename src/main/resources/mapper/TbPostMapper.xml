@@ -293,10 +293,9 @@
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
                 ,(
-                SELECT  A1.CODE_NAME
-                FROM    TB_COMMON_CODE A1
-                WHERE   A1.CODE_ID = T1.POST_TYPE
-                AND     A1.CODE_TYPE = 'POST_TYPE'
+                SELECT  A1.CLASSIFICATION_NAME
+                FROM    TB_CLASSIFICATION A1
+                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
                 ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
                 ,T1.POST_CONTENT

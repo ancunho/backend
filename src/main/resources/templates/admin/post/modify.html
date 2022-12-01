@@ -37,24 +37,40 @@
                 </div>
             </div>
             <el-form>
-                <el-form-item label="标题">
+                <el-form-item label="标题" label-width="120px">
                     <el-input v-model="selectedItem.postTitle"></el-input>
                 </el-form-item>
             </el-form>
-            <el-form>
-                <el-form-item label="分类">
-                    <el-radio-group v-model="selectedItem.postType">
-                        <el-radio v-for="(item, idx) in postTypeList"
-                                  v-bind:key="item.codeId"
-                                  v-bind:label="item.codeId.toString()"
-                                  border
-                                  style="margin-right: 0;"
-                        >
-                            {{item.codeName}}
-                        </el-radio>
-                    </el-radio-group>
-                </el-form-item>
-            </el-form>
+            <el-row>
+                <el-col :span="6">
+                    <el-form>
+                        <el-form-item label="Category"  label-width="120px">
+                            <div>
+                                <treeselect v-model="selectedItem.postCategoryId"
+                                            v-bind:multiple="false" :flat="true"
+                                            v-bind:options="classificationList" />
+                                <treeselect-value v-bind:value="selectedItem.postCategoryId" />
+                            </div>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+                <el-col :span="18">
+                    <el-form>
+                        <el-form-item label="Post Type" label-width="120px">
+                            <el-radio-group v-model="selectedItem.postType">
+                                <el-radio v-for="(item, idx) in postTypeList"
+                                          v-bind:key="item.codeId"
+                                          v-bind:label="item.codeId.toString()"
+                                          border
+                                          style="margin-right: 0;"
+                                >
+                                    {{item.codeName}}
+                                </el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+            </el-row>
             <el-form>
                 <div class="">
                     <p class="post-content-label">
@@ -102,6 +118,7 @@
 </style>
 <script type="text/javascript">
     // $(document).ready(function() {
+    Vue.component('treeselect', VueTreeselect.Treeselect);
     new Vue({
         el: '#app',
         components: {
@@ -115,12 +132,14 @@
                     postTitle: '',
                     postContent: '',
                     postType: '',
+                    postCategoryId: '',
                     postThumbnailBig: '',
                     status: false,
                 },
                 postId: '',
                 drawer: false,
                 postTypeList: [],
+                classificationList: [],
             }
         },
         mounted() {
@@ -128,13 +147,13 @@
             _this.postId = $(".initPostId").val();
             if (!Tool.isEmpty(_this.postId)) {
                 setTimeout(function() {
-                    _this.getDetail(_this.postId);
+                    _this.getPostDetailById(_this.postId);
                 }, 1000);
-
             } else {
                 _this.loading = false;
             }
             _this.handlePostType();
+            _this.getClassificationListByTypeCode();
         },
         methods: {
             handleRedirectList() {
@@ -161,7 +180,7 @@
                     })
                     .catch(_ => {});
             },
-            async getDetail(postId) {
+            async getPostDetailById(postId) {
                 let _this = this;
                 axios.get(contextRootPath + "/api/post/detail.do?postId=" + postId)
                     .then(response => {
@@ -175,6 +194,7 @@
                         } else {
                             _this.selectedItem.postTitle = response.data.data.postTitle;
                             _this.selectedItem.status = response.data.data.status === "1" ? true : false;
+                            _this.selectedItem.postCategoryId = response.data.data.postCategoryId;
                             _this.selectedItem.postType = response.data.data.postType;
                             _this.selectedItem.postTypeName = response.data.data.postTypeName;
                             _this.selectedItem.postThumbnailBig = response.data.data.postThumbnailBig;
@@ -192,10 +212,18 @@
                 if (Tool.isEmpty(item.postId)) {
                     if(Tool.isEmpty(item.postTitle)) { _this.$message.info("postTitle必填"); return; }
                 }
+                if (Tool.isEmpty(item.postCategoryId)) {
+                    if(Tool.isEmpty(item.postCategoryId)) { _this.$message.info("选择分类"); return; }
+                }
+                _this.selectedItem.postContent = editor.getHtml();
+                if (Tool.isEmpty(item.postContent)) {
+                    if(Tool.isEmpty(item.postContent)) { _this.$message.info("内容加上"); return; }
+                }
+
+                console.log(_this.selectedItem);
+                return;
                 _this.loading = true;
                 _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
-                // _this.selectedItem.postType = "01";
-                _this.selectedItem.postContent = editor.getHtml();
                 _this.selectedItem.postId = _this.postId;
                 axios.post(contextRootPath + '/api/post/proc.do', _this.selectedItem)
                     .then(response => {
@@ -236,7 +264,26 @@
                         _this.loading = false;
                         _this.$message.error("Request Error!(Post Type)")
                     })
-            }
+            },
+            async getClassificationListByTypeCode() {
+                let _this = this;
+                var params = {
+                    codeTypeAndCd: ''
+                };
+
+                axios.post(contextRootPath + "/api/post/getClassificationListByTypeCode.do", params)
+                    .then(response => {
+                        console.log(response);
+                        if (response.data.code !== 0) {
+                            gfn_Error(response.data.code, response.data.msg);
+                        } else {
+                            _this.classificationList = response.data.data;
+                        }
+                    })
+                    .catch(err => {
+                        _this.$message.error("Error!");
+                    });
+            },
             //methods end
 
         }
