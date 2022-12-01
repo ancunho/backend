@@ -286,3 +286,20 @@ async onWechatInfo() {
 },
 
 
+//                    PrintWriter pw = null;
+//                    try {
+//                        pw = response.getWriter();
+//                        StringBuilder builder = new StringBuilder();
+//                        builder.append("<html>");
+//                        builder.append("<script type='text/javascript'>");
+//                        builder.append("window.location.href=" + "'" + basePath + "/admin/login.ahn';");
+//                        builder.append("</script>");
+//                        builder.append("</html>");
+//                        pw.write(builder.toString());
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    } finally {
+//                        if(pw != null) {
+//                            pw.close();
+//                        }

@@ -62,12 +62,21 @@
                     let _this = this;
                     const params = {
 
-                    }
-                    await axios.post(contextRootPath + "/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
-                        _this.itemList = response.data.data;
-                        _this.total = response.data.total;
-                        _this.loading = false;
-                    })
+                    };
+                    await axios.post(contextRootPath + "/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params)
+                        .then((response) => {
+                            if (response.data.code !== 0) {
+                                gfn_Error(response.data.code);
+                            } else {
+                                _this.itemList = response.data.data;
+                                _this.total = response.data.total;
+                                _this.loading = false;
+                            }
+
+                        })
+                        .catch(responseError => {
+                            _this.$message.error("1111");
+                        });
                 },
             }
         });

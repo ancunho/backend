@@ -1,9 +1,13 @@
 package online.buza.blog.interceptor;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.GsonBuilder;
 import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.annotation.PassLogin;
 import online.buza.blog.annotation.WechatPassLogin;
+import online.buza.blog.common.BaseResponse;
+import online.buza.blog.common.Const;
+import online.buza.blog.common.ResponseCode;
 import online.buza.blog.dto.CustomerDto;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.TbAccessHist;
@@ -13,17 +17,22 @@ import online.buza.blog.util.HttpUtility;
 import online.buza.blog.util.StringUtils;
 import online.buza.blog.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
+@Component
 public class BuzaInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -65,28 +74,32 @@ public class BuzaInterceptor implements HandlerInterceptor {
                 SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
                 String basePath = request.getScheme() + "://" + request.getServerName() + ":"  + request.getServerPort()+request.getContextPath();
                 if (sysUserDto == null) {
-//                    System.out.println(">>>>>need Login");
-//                    request.getRequestDispatcher("/admin/login.ahn").forward(request, response);
-//                    response.sendRedirect("/admin/login_new_new_new.html");
+                    PrintWriter pw = null;
+                    try {
+                        pw = response.getWriter();
+                        response.setContentType("text/html; charset=UTF-8");
+//                        StringBuilder builder = new StringBuilder();
+//                        builder.append("<html>");
+//                        builder.append("<script type='text/javascript'>");
+//                        builder.append("window.location.href=" + "'" + basePath + "/admin/login.ahn';");
+//                        builder.append("</script>");
+//                        builder.append("</html>");
+//                        pw.write(builder.toString());
 
-//                    response.sendRedirect(basePath + "/admin");
-//                    response.sendRedirect(basePath + "/admin/login.ahn");
+                        BaseResponse serverResponse = BaseResponse.valueOfFailureCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+                        response.setContentType("application/json; charset=UTF-8");
+                        pw.write(JSONObject.toJSONString(serverResponse));
 
-                    response.setCharacterEncoding("UTF-8");
-                    response.setContentType("text/html");
-                    response.setHeader("Cache-Control","no-cache");
-                    PrintWriter pw = response.getWriter();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        pw.flush();
+                        pw.close();
+                    }
 
-                    StringBuilder builder = new StringBuilder();
-                    builder.append("<script type='text/javascript'>");
-                    builder.append("window.location.href=" + "'" + basePath + "/admin/login.ahn';");
-                    builder.append("</script>");
-                    pw.write(builder.toString());
-
-                    pw.close();
-                    return false;
+                } else {
+                    return true;
                 }
-                return true;
             }
         }
 

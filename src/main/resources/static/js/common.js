@@ -263,14 +263,20 @@ Tool = {
 
         return uuid.join('');
     },
-
-    /**
-     * 数组转树
-     * @param list
-     * @param parentId
-     */
-    // listToTree: function(list, parentId = null) {
-    //     return list.
-    // }
-
 }
+// End Tool
+
+function gfn_Error(code, msg) {
+    if (msg === undefined || $.trim(msg) === "") {
+        msg = "Error!";
+    }
+    if (code === 403) {
+        alert("Need Login");
+        BuzaRouter("/admin/login.ahn");
+    } else {
+        alert(msg);
+    }
+}
+
+
+
