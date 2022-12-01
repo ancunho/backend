@@ -27,8 +27,8 @@
     <sql id="Base_Column_List">
         POST_ID
         , POST_TYPE, POST_CATEGORY_ID, POST_TITLE, POST_CONTENT, EVENT_START_TIME,
-    EVENT_END_TIME, POST_THUMBNAIL_SMALL, POST_THUMBNAIL_BIG, POST_AUTHOR, IS_JOIN, IS_NEED_PAY, 
-    POST_PRICE, `STATUS`, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, 
+    EVENT_END_TIME, POST_THUMBNAIL_SMALL, POST_THUMBNAIL_BIG, POST_AUTHOR, IS_JOIN, IS_NEED_PAY,
+    POST_PRICE, `STATUS`, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME,
     UPDATE_TIME
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -379,5 +379,12 @@
         WHERE   T1.POST_ID = #{postId}
         ]]>
     </select>
+
+    <update id="deleteTbPost" parameterType="java.lang.Integer">
+        update  tb_post t1
+        set     t1.status = '0'
+                ,t1.update_time = now()
+        where   t1.post_id = #{postId}
+    </update>
 
 </mapper>

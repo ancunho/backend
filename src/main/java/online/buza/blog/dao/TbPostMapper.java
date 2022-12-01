@@ -22,4 +22,6 @@ public interface TbPostMapper {
 
     TbPostDto getTbPostByPostId(Integer postId);
 
+    int deleteTbPost(Integer postId);
+
 }
