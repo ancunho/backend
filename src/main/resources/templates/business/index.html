@@ -63,10 +63,10 @@
                     const params = {
 
                     };
-                    await axios.post(contextRootPath + "/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params)
+                    await axios.post(contextRootPath + "/business/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params)
                         .then((response) => {
                             if (response.data.code !== 0) {
-                                gfn_Error(response.data.code);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.itemList = response.data.data;
                                 _this.total = response.data.total;

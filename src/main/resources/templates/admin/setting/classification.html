@@ -241,7 +241,7 @@
                         axios.get(contextRootPath + '/api/setting/classification/delete.do?classificationId=' + classificationId)
                             .then(response => {
                                 if (response.data.code !== 0) {
-                                    _this.$message.error(response.data.msg);
+                                    gfn_Error(response.data.code, response.data.msg);
                                 } else {
                                     _this.$message.success(response.data.msg);
                                     _this.initMainList();
@@ -272,7 +272,7 @@
                     axios.post(contextRootPath + "/api/setting/classification/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.selectedItem = {};
                                 _this.drawerHide();
@@ -300,7 +300,7 @@
                     axios.get(contextRootPath + "/api/setting/classification/detail.do?classificationId=" + classificationId)
                         .then(response => {
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.selectedItem = response.data.data;
                                 _this.selectedItem.status = _this.selectedItem.status == '1' ? true : false;
@@ -344,7 +344,7 @@
                     axios.post(contextRootPath + '/api/common_code/group_type.do', params)
                         .then(response => {
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.codeGroupList = response.data.data;
                             }

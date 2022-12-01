@@ -52,7 +52,7 @@
                             _this.loading = false;
                             console.log(`response: ${response}`);
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.$message.success(response.data.msg);
                             }

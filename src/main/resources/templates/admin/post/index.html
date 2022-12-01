@@ -222,7 +222,7 @@
                         axios.get(contextRootPath + '/api/post/delete.do?postId=' + postId)
                             .then(response => {
                                 if (response.data.code !== 0) {
-                                    _this.$message.error(response.data.msg);
+                                    gfn_Error(response.data.code, response.data.msg);
                                 } else {
                                     _this.$message.success(response.data.msg);
                                     _this.initMainList();
@@ -259,7 +259,7 @@
                     axios.post(contextRootPath + "/api/post/modify.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.selectedItem = {};
                                 _this.drawerHide();
@@ -288,7 +288,7 @@
                     axios.post(contextRootPath + "/api/post/detail.do?postId=" + postId)
                         .then(response => {
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.selectedItem = response.data.data;
                                 _this.selectedItem.status = _this.selectedItem.status == '1' ? true : false;

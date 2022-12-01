@@ -205,7 +205,7 @@
                     .then(response => {
                         _this.loading = false;
                         if (response.data.code !== 0) {
-                            _this.$message.error(response.data.msg);
+                            gfn_Error(response.data.code, response.data.msg);
                         } else {
                             _this.selectedItem = {};
                             _this.$alert('点击确定返回列表页', response.data.msg, {
@@ -231,7 +231,7 @@
                 axios.get(contextRootPath + "/api/common_code/type/list.do?codeType=POST_TYPE")
                     .then(response => {
                         if (response.data.code !== 0) {
-                            _this.$message.error(response.data.msg);
+                            gfn_Error(response.data.code, response.data.msg);
                         } else {
                             _this.postTypeList = response.data.data;
                         }

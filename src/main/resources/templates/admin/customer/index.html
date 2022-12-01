@@ -199,7 +199,7 @@
                         axios.get(contextRootPath + '/api/common_code/delete.do?codeId=' + codeId)
                             .then(response => {
                                 if (response.data.code !== 0) {
-                                    _this.$message.error(response.data.msg);
+                                    gfn_Error(response.data.code, response.data.msg);
                                 } else {
                                     _this.$message.success(response.data.msg);
                                     _this.initMainList();
@@ -229,7 +229,7 @@
                     axios.post(contextRootPath + "/api/common_code/proc.do", _this.selectedItem)
                         .then(response => {
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.selectedItem = {};
                                 _this.drawerHide();
@@ -258,7 +258,7 @@
                     axios.get(contextRootPath + "/api/common_code/info.do?codeId=" + codeId)
                         .then(response => {
                             if (response.data.code !== 0) {
-                                _this.$message.error(response.data.msg);
+                                gfn_Error(response.data.code, response.data.msg);
                             } else {
                                 _this.selectedItem = response.data.data;
                                 _this.selectedItem.useYn = _this.selectedItem.useYn == '1' ? true : false;
