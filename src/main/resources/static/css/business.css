@@ -22,7 +22,7 @@ color-text-primary:1F2937
 .business-header { border-bottom: 1px solid #eee; }
 
 .business-header .business-header-con { width: 100%; overflow: hidden; max-width: 1380px; height: 1.5rem; padding: 2.2rem 4rem; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-.business-header .business-header-con h1 { }
+.business-header .business-header-con h1 a{ color:black; }
 .business-header .business-header-con .main-menu { display: flex; justify-content: center; align-items: center; }
 .business-header .business-header-con .main-menu ul { display: flex; justify-content: flex-end; gap: 34px;}
 .business-header .business-header-con .main-menu ul li a {  font-weight: 900; display: block; transition: .3s ease all; padding:1rem 2rem; font-size:1.1rem; color:#000; }
