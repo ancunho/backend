@@ -77,6 +77,7 @@ public class BuzaInterceptor implements HandlerInterceptor {
                     PrintWriter pw = null;
                     try {
                         pw = response.getWriter();
+                        response.setCharacterEncoding("UTF-8");
                         response.setContentType("text/html; charset=UTF-8");
 //                        StringBuilder builder = new StringBuilder();
 //                        builder.append("<html>");

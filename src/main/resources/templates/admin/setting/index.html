@@ -166,7 +166,7 @@
             },
             methods: {
                  onSubmit() {
-                    console.log('submit!');
+
                 },
                 handleSizeChange(limit) {
                     this.currentPage = 1;
@@ -178,7 +178,7 @@
                     this.initMainList();
                 },
                 handleTabClick(tab, event) {
-                    console.log(tab, event);
+
                 },
                 handleDrawerOpen(row) {
                     const _this = this;
@@ -199,7 +199,6 @@
                         .catch(_ => {});
                 },
                 handleConfirmOpen(userSeq) {
-                    console.log(userSeq);
                     const _this = this;
                     _this.$confirm('确定删除此用户信息吗, 是否继续?', '提示', {
                         confirmButtonText: '确定',
@@ -264,7 +263,6 @@
 
                     }
                     axios.post(contextRootPath + "/api/setting/user/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
-                        console.log(response.data.data);
                         _this.userList = response.data.data;
                         _this.total = response.data.total;
                         _this.loading = false;

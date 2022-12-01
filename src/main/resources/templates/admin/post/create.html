@@ -167,7 +167,6 @@
                 let _this = this;
                 axios.get(contextRootPath + "/api/post/detail.do?postId=" + postId)
                     .then(response => {
-                        console.log(response);
                         if (response.data.count !== 0 || response.data.data === undefined) {
                             _this.$alert('点击确定返回列表页', 'Error', {
                                 confirmButtonText: '确定',
@@ -176,7 +175,6 @@
                                 }
                             });
                         } else {
-                            console.log(response.data.data);
                             _this.selectedItem.postTitle = response.data.data.postTitle;
                             _this.selectedItem.status = response.data.data.status === "1" ? true : false;
                             _this.selectedItem.postType = response.data.data.postType;
@@ -263,7 +261,6 @@
                 maxNumberOfFiles: 1,
                 allowedFileTypes: ['image/*'],
                 onBeforeUpload(file) {
-                    console.log(file);
                     return file;
                 }
             }

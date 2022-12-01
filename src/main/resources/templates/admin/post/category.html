@@ -50,7 +50,6 @@
                     axios.post(contextRootPath + '/api/post/getBlogCategoryTree.do', params)
                         .then(response => {
                             _this.loading = false;
-                            console.log(`response: ${response}`);
                             if (response.data.code !== 0) {
                                 gfn_Error(response.data.code, response.data.msg);
                             } else {

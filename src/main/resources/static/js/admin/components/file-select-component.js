@@ -276,7 +276,6 @@ var fileUploadAndListComponent = Vue.extend({
             await _this.handleRequest(_this.fileData);
         },
         handleRequest(params) {
-            console.log(params)
             let _this = this;
             _this.loading = true;
             var instance_files = axios.create({

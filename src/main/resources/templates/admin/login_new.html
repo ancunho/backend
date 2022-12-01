@@ -113,7 +113,6 @@
 
             axios.post(contextRootPath + "/adminLoginProc.do", params)
                 .then(res => {
-                    console.log(res);
                     var data = res.data;
                     if (data.code !== 0) {
                         swal("Error", data.msg, "error")

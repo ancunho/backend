@@ -50,7 +50,6 @@ function initData() {
                             icon: "success",
                             closeOnClickOutside: false,
                         }).then(value => {
-                                console.log("success");
                                 _this.form.postTitle = '';
                                 editor.setHtml('');
                             });
