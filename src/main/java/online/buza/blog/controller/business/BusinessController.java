@@ -9,10 +9,7 @@ import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +30,16 @@ public class BusinessController {
         List<TbPostDto> returnData = postService.getAllTbPostListInBusiness(tbPostDto);
         return BaseResponse.valueOfSuccessList(returnData);
     }
+
+    @BusinessPassLogin
+    @ResponseBody
+    @PostMapping(value = "/detail.do")
+    public BaseResponse getPostDetailByUUID(BaseRequest baseRequest, @RequestParam(value = "postUuid") String postUuid) {
+        PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
+        TbPostDto returnData = postService.getPostDetailByUUID(postUuid);
+        return BaseResponse.valueOfSuccess(returnData);
+    }
+
 
 
 

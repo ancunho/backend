@@ -29,9 +29,9 @@ public class BusinessPageController {
     }
 
     @PassLogin
-    @GetMapping(value = "/post/{postId}.ahn")
-    public String post_detail(@PathVariable Integer postId, Model model, HttpServletRequest request, HttpServletResponse response) {
-        model.addAttribute("postId", postId);
+    @GetMapping(value = "/post/{postUuid}.ahn")
+    public String post_detail(@PathVariable String postUuid, Model model, HttpServletRequest request, HttpServletResponse response) {
+        model.addAttribute("postUuid", postUuid);
         return "business/post_detail";
     }
 

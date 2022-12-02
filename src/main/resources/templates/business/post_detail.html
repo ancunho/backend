@@ -7,13 +7,10 @@
     <!-- Top Start -->
     <div th:replace="business/common/layout::businessTop"></div>
     <!-- //Top End -->
-    <div class="business-container" id="business-container">
-        <div class="business-container-top">
-            <h2>Hello world!</h2>
-            <h4>美观的设计，强大的功能，助您自由发挥心中所想</h4>
-        </div>
-        <div class="business-post-list">
-            <h1 th:text="${postId}"></h1>
+    <div class="business-container" id="business-container" v-loading="loading">
+        <div class="business-post-detail">
+            <input type="hidden" id="postUuid" v-model="postUuid" th:value="${postUuid}" />
+            <h1 th:text="${postUuid}"></h1>
         </div>
     </div>
     <div class="business-footer">
@@ -21,7 +18,7 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     $(document).ready(function () {
         new Vue({
             el: '#business-container',
@@ -39,10 +36,13 @@
                     activeTabName: 'searchTab',
                     drawer: false,
                     drawerTitle: 'Drawer Title',
+                    postUuid: [[${postUuid}]] || '',
                 }
             },
             mounted() {
+                console.log(this.postUuid);
                 this.initMainList();
+
             },
             methods: {
                 async initMainList() {

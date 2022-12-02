@@ -15,7 +15,7 @@
         <div class="business-post-list">
             <ul>
                 <li v-for="item in itemList">
-                    <a href="#this">
+                    <a :href="'/post/' + item.postUuid + '.ahn'">
                         <p class="thumbs">
                             <img :src="item.postThumbnailBig" :alt="item.postTitle">
                         </p>

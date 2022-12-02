@@ -25,5 +25,6 @@ public interface TbPostMapper {
     int deleteTbPost(Integer postId);
 
     List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto);
+    TbPostDto getPostDetailByUUID(String uuid);
 
 }

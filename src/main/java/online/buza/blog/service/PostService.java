@@ -29,5 +29,6 @@ public interface PostService {
      * Business
      */
     public List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto);
+    public TbPostDto getPostDetailByUUID(String uuid);
 
 }

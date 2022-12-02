@@ -401,40 +401,40 @@
 
     <select id="getAllTbPostListInBusiness" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
         SELECT 	ROW_NUMBER() OVER() AS RN
-        ,T1.POST_ID
-        ,T1.POST_UUID
-        ,T1.POST_TYPE
-        ,(
-        SELECT  A1.CODE_NAME
-        FROM    TB_COMMON_CODE A1
-        WHERE   A1.CODE_ID = T1.POST_TYPE
-        AND     A1.CODE_TYPE = 'POST_TYPE'
-        ) AS POST_TYPE_NAME
-        ,T1.POST_CATEGORY_ID
-        ,(
-        SELECT  A1.CLASSIFICATION_NAME
-        FROM    TB_CLASSIFICATION A1
-        WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
-        ) AS POST_CATEGORY_NAME
-        ,T1.POST_TITLE
-        ,T1.POST_CONTENT
-        ,T1.EVENT_START_TIME
-        ,T1.EVENT_END_TIME
-        ,T1.POST_THUMBNAIL_SMALL
-        ,T1.POST_THUMBNAIL_BIG
-        ,T1.POST_AUTHOR
-        ,T1.IS_JOIN
-        ,T1.IS_NEED_PAY
-        ,T1.POST_PRICE
-        ,T1.STATUS
-        ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
-        ,T1.OPTION01
-        ,T1.OPTION02
-        ,T1.OPTION03
-        ,T1.OPTION04
-        ,T1.OPTION05
-        ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
-        ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+                ,T1.POST_ID
+                ,T1.POST_UUID
+                ,T1.POST_TYPE
+                ,(
+                SELECT  A1.CODE_NAME
+                FROM    TB_COMMON_CODE A1
+                WHERE   A1.CODE_ID = T1.POST_TYPE
+                AND     A1.CODE_TYPE = 'POST_TYPE'
+                ) AS POST_TYPE_NAME
+                ,T1.POST_CATEGORY_ID
+                ,(
+                SELECT  A1.CLASSIFICATION_NAME
+                FROM    TB_CLASSIFICATION A1
+                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
+                ) AS POST_CATEGORY_NAME
+                ,T1.POST_TITLE
+                ,T1.POST_CONTENT
+                ,T1.EVENT_START_TIME
+                ,T1.EVENT_END_TIME
+                ,T1.POST_THUMBNAIL_SMALL
+                ,T1.POST_THUMBNAIL_BIG
+                ,T1.POST_AUTHOR
+                ,T1.IS_JOIN
+                ,T1.IS_NEED_PAY
+                ,T1.POST_PRICE
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
         FROM 	TB_POST T1
         <where>
             AND     T1.STATUS = '1'
@@ -458,6 +458,45 @@
             </if>
         </where>
         ORDER BY T1.CREATE_TIME DESC
+    </select>
+
+    <select id="getPostDetailByUUID" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
+        SELECT 	T1.POST_UUID
+                ,T1.POST_TYPE
+                ,(
+                SELECT  A1.CODE_NAME
+                FROM    TB_COMMON_CODE A1
+                WHERE   A1.CODE_ID = T1.POST_TYPE
+                AND     A1.CODE_TYPE = 'POST_TYPE'
+                ) AS POST_TYPE_NAME
+                ,T1.POST_CATEGORY_ID
+                ,(
+                SELECT  A1.CLASSIFICATION_NAME
+                FROM    TB_CLASSIFICATION A1
+                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
+                ) AS POST_CATEGORY_NAME
+                ,T1.POST_TITLE
+                ,T1.POST_CONTENT
+                ,T1.EVENT_START_TIME
+                ,T1.EVENT_END_TIME
+                ,T1.POST_THUMBNAIL_SMALL
+                ,T1.POST_THUMBNAIL_BIG
+                ,T1.POST_AUTHOR
+                ,T1.IS_JOIN
+                ,T1.IS_NEED_PAY
+                ,T1.POST_PRICE
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM 	TB_POST T1
+        WHERE   T1.STATUS = '1'
+        AND     T1.POST_UUID = #{postUuid}
     </select>
 
 </mapper>
