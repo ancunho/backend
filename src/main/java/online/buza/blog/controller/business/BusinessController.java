@@ -30,7 +30,7 @@ public class BusinessController {
     @PostMapping(value = "/list.do")
     public BaseResponse getAllTbPostListByTbPost(BaseRequest baseRequest, @RequestBody TbPostDto tbPostDto) {
         PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
-        List<TbPostDto> returnData = postService.getAllTbPostListByTbPost(tbPostDto);
+        List<TbPostDto> returnData = postService.getAllTbPostListInBusiness(tbPostDto);
         return BaseResponse.valueOfSuccessList(returnData);
     }
 

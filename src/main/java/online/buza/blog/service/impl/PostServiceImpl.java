@@ -122,6 +122,10 @@ public class PostServiceImpl implements PostService {
         return tbClassificationMapper.getClassificationListByTypeCode_LabelDTO(mapParams);
     }
 
+    public List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto) {
+        return tbPostMapper.getAllTbPostListInBusiness(tbPostDto);
+    }
+
     private void recursionFn(List<TbClassificationDto> list, TbClassificationDto t) {
         // 得到子节点列表
         List<TbClassificationDto> childList = getChildClassificationList(list, t);

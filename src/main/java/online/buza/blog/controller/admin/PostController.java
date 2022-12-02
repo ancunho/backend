@@ -10,6 +10,7 @@ import online.buza.blog.controller.common.CommonController;
 import online.buza.blog.dto.*;
 import online.buza.blog.entity.TbPost;
 import online.buza.blog.service.PostService;
+import online.buza.blog.util.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -61,6 +63,7 @@ public class PostController extends CommonController {
             if (tbPostDto.getPostId() == null || "".equals(tbPostDto.getPostId())) {
                 // insert new
                 TbPost tbPost = new TbPost();
+                tbPost.setPostUuid(Util.generateUUID());
                 tbPost.setPostTitle(tbPostDto.getPostTitle());
                 tbPost.setPostType(tbPostDto.getPostType());
                 tbPost.setPostCategoryId(tbPostDto.getPostCategoryId());

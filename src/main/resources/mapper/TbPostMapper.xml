@@ -394,9 +394,70 @@
 
     <update id="deleteTbPost" parameterType="java.lang.Integer">
         update  tb_post t1
-        set     t1.status = '0'
+        set     t1.status = '99'
                 ,t1.update_time = now()
         where   t1.post_id = #{postId}
     </update>
+
+    <select id="getAllTbPostListInBusiness" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
+        SELECT 	ROW_NUMBER() OVER() AS RN
+        ,T1.POST_ID
+        ,T1.POST_UUID
+        ,T1.POST_TYPE
+        ,(
+        SELECT  A1.CODE_NAME
+        FROM    TB_COMMON_CODE A1
+        WHERE   A1.CODE_ID = T1.POST_TYPE
+        AND     A1.CODE_TYPE = 'POST_TYPE'
+        ) AS POST_TYPE_NAME
+        ,T1.POST_CATEGORY_ID
+        ,(
+        SELECT  A1.CLASSIFICATION_NAME
+        FROM    TB_CLASSIFICATION A1
+        WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
+        ) AS POST_CATEGORY_NAME
+        ,T1.POST_TITLE
+        ,T1.POST_CONTENT
+        ,T1.EVENT_START_TIME
+        ,T1.EVENT_END_TIME
+        ,T1.POST_THUMBNAIL_SMALL
+        ,T1.POST_THUMBNAIL_BIG
+        ,T1.POST_AUTHOR
+        ,T1.IS_JOIN
+        ,T1.IS_NEED_PAY
+        ,T1.POST_PRICE
+        ,T1.STATUS
+        ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+        ,T1.OPTION01
+        ,T1.OPTION02
+        ,T1.OPTION03
+        ,T1.OPTION04
+        ,T1.OPTION05
+        ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+        ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM 	TB_POST T1
+        <where>
+            AND     T1.STATUS = '1'
+            <if test="postTitle != null">
+                AND     (IFNULL(#{postTitle}, '') = '' OR T1.POST_TITLE LIKE CONCAT('%', #{postTitle}, '%') )
+            </if>
+            <if test="postAuthor != null">
+                AND     (IFNULL(#{postAuthor}, '') = '' OR T1.POST_AUTHOR LIKE CONCAT('%', #{postAuthor}, '%') )
+            </if>
+            <if test="isJoin != null">
+                AND     (IFNULL(#{isJoin}, '') = '' OR T1.IS_JOIN = #{isJoin})
+            </if>
+            <if test="postType != null">
+                AND     T1.POST_TYPE = #{postType}
+            </if>
+            <if test="eventStartTime != null">
+                AND     T1.EVENT_START_TIME >= STR_TO_DATE(#{eventStartTime}, '%Y-%m-%d')
+            </if>
+            <if test="eventEndTime != null">
+                AND     T1.EVENT_END_TIME >= STR_TO_DATE(#{eventEndTime}, '%Y-%m-%d')
+            </if>
+        </where>
+        ORDER BY T1.CREATE_TIME DESC
+    </select>
 
 </mapper>

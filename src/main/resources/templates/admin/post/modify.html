@@ -220,8 +220,6 @@
                     if(Tool.isEmpty(item.postContent)) { _this.$message.info("内容加上"); return; }
                 }
 
-                console.log(_this.selectedItem);
-                return;
                 _this.loading = true;
                 _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
                 _this.selectedItem.postId = _this.postId;
