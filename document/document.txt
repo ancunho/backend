@@ -346,3 +346,68 @@ async onWechatInfo() {
                 }
             }
         }
+
+
+
+// 20221202 nginx config start
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+    	listen	80;
+        listen	443 ssl;
+        server_name  localhost;
+	    charset UTF-8;
+
+        ssl_certificate cunho.online_bundle.crt;
+
+        ssl_certificate_key cunho.online.key;
+        ssl_session_timeout 5m;
+
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_prefer_server_ciphers on;
+
+        if ($scheme = http) {
+            return 301 https://$host$request_uri;
+        }
+
+        location / {
+            proxy_pass http://localhost:8888;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        location /admin {
+            proxy_pass http://localhost:8888/admin;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+
+
+
+}
+
+// 20221202 nginx config end

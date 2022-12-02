@@ -75,6 +75,7 @@
 
                         })
                         .catch(responseError => {
+                            _this.loading = false;
                             _this.$message.error("1111");
                         });
                 },
