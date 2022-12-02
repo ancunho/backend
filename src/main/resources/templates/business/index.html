@@ -15,16 +15,16 @@
         <div class="business-post-list">
             <ul>
                 <li v-for="item in itemList">
-                    <a :href="'/post/' + item.postUuid + '.ahn'">
-                        <p class="thumbs">
+                    <p class="thumbs">
+                        <a :href="'/post/' + item.postUuid + '.ahn'">
                             <img :src="item.postThumbnailBig" :alt="item.postTitle">
-                        </p>
-                        <dl>
-                            <dt>{{item.postTitle}}</dt>
-                            <dd style="color:#38bdf8; font-size: 12px;"><strong>{{ item.postTypeName }}</strong></dd>
-                            <dd class="dl-etc"></dd>
-                        </dl>
-                    </a>
+                        </a>
+                    </p>
+                    <dl>
+                        <dt><a :href="'/post/' + item.postUuid + '.ahn'">{{item.postTitle}}</a></dt>
+                        <dd><a href="#this"><strong>{{ item.postTypeName }}</strong></a></dd>
+                        <dd class="dl-etc"></dd>
+                    </dl>
                 </li>
             </ul>
         </div>

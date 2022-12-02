@@ -7,27 +7,30 @@
     <!-- Top Start -->
     <div th:replace="business/common/layout::businessTop"></div>
     <!-- //Top End -->
-    <div class="business-container" id="business-container" v-loading="loading">
+    <div class="business-post-detail-container" id="business-post-detail-container" v-loading="loading">
         <div class="business-post-detail">
             <input type="hidden" id="postUuid" v-model="postUuid" th:value="${postUuid}" />
-            <h1 th:text="${postUuid}"></h1>
+            <p class="business-post-detail-category"><strong>{{ detailItem.postCategoryName }}</strong></p>
+            <h1>{{detailItem.postTitle}}</h1>
+            <div v-html="detailItem.postContent"></div>
         </div>
+        <p class="btnRedirectList"><a th:href="${#httpServletRequest.getContextPath() + '/'}">< &nbsp;&nbsp;List</a> </p>
     </div>
     <div class="business-footer">
 
     </div>
 </div>
+<style type="text/css">
+    .business-post-detail div[data-w-e-type="video"] {text-align: center}
+</style>
 </body>
 <script type="text/javascript" th:inline="javascript">
     $(document).ready(function () {
         new Vue({
-            el: '#business-container',
+            el: '#business-post-detail-container',
             data() {
                 return {
-                    itemList: [],
-                    modifyUserItem: {},
-                    selectedItem: {},
-                    modalType: 1, // 1:新增权限/修改权限
+                    detailItem: {},
                     loading: true,
                     currentPage: 1, //page
                     pageSize: 15, //limit
@@ -40,21 +43,29 @@
                 }
             },
             mounted() {
-                console.log(this.postUuid);
-                this.initMainList();
-
+                let _this = this;
+                if (Tool.isEmpty(_this.postUuid)) {
+                    BuzaRouter("/");
+                } else {
+                    this.initMainList(_this.postUuid);
+                }
             },
             methods: {
-                async initMainList() {
+                async initMainList(postUuid) {
                     let _this = this;
                     const params = {
-
+                        postUuid: postUuid
                     }
-                    await axios.post(contextRootPath + "/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
-                        _this.itemList = response.data.data;
-                        _this.total = response.data.total;
-                        _this.loading = false;
-                    })
+                    await axios.get(contextRootPath + "/business/post/detail/" + postUuid + ".do", params)
+                        .then((response) => {
+                            _this.detailItem = response.data.data;
+                            _this.loading = false;
+                        })
+                        .catch(err => {
+                            _this.loading = false;
+                            alert("Get Data Error！Retry！");
+                            BuzaRouter("/");
+                        });
                 },
             }
         });

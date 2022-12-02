@@ -33,9 +33,8 @@ public class BusinessController {
 
     @BusinessPassLogin
     @ResponseBody
-    @PostMapping(value = "/detail.do")
-    public BaseResponse getPostDetailByUUID(BaseRequest baseRequest, @RequestParam(value = "postUuid") String postUuid) {
-        PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
+    @GetMapping(value = "/detail/{postUuid}.do")
+    public BaseResponse getPostDetailByUUID(BaseRequest baseRequest, @PathVariable(value = "postUuid") String postUuid) {
         TbPostDto returnData = postService.getPostDetailByUUID(postUuid);
         return BaseResponse.valueOfSuccess(returnData);
     }
