@@ -38,6 +38,12 @@ color-text-primary:1F2937
 .business-container .business-container-top { padding:2rem 0 1.4rem 0; }
 .business-container .business-container-top h2 { color:#232324; text-align: center; line-height: 4rem; font-size: 2.5rem;}
 .business-container .business-container-top h4 { color:#232324; text-align: center; line-height: 2.8rem; font-size: 1.2rem;}
+.business-container .business-tab01 { width: 100%; height:70px;  white-space: nowrap; overflow: hidden;
+    overflow-x: auto; -webkit-backface-visibility: hidden; -webkit-overflow-scrolling: touch;
+    margin:0 auto;}
+.business-container .business-tab01 ul { display: flex; justify-content:flex-start;}
+.business-container .business-tab01 ul li { display:inline-block; padding: 20px 30px;}
+.business-container .business-tab01 ul li a { border-bottom:  1px solid #ddd;}
 .business-container .business-post-list {}
 .business-container .business-post-list ul { width: calc(100% + 4rem); margin-left:-2rem; display: flex; flex-wrap: wrap; justify-content: flex-start;}
 .business-container .business-post-list ul li { position:relative; width: calc(100% / 3); margin-top: 5rem; padding: 0 1.3rem; }
@@ -54,6 +60,7 @@ color-text-primary:1F2937
 .business-container .business-post-list ul li dl dt a { color:#000; font-size: 1.3rem; font-weight: 900; letter-spacing: -.1rem; line-height:2rem; transition: .3s ease all;}
 .business-container .business-post-list ul li dl dd { color:#000; margin-top: 0.2rem; font-size:1rem; line-height: 2.3rem;}
 .business-container .business-post-list ul li dl dd a { color:#38bdf8; font-size: 12px; margin-top: 0.2rem; line-height: 2.3rem;}
+
 
 .business-post-detail-container { max-width: 85rem; min-height: 100%; margin: 0 auto 50px auto; padding-top:50px; line-height: 1.8; }
 .business-post-detail h1 { line-height: 1.4; padding: 30px 0 50px 0; text-align: center; border-bottom: 1px solid #eee; margin-bottom:50px; }
