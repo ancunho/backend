@@ -320,7 +320,10 @@
                 ,T1.IS_NEED_PAY
                 ,T1.POST_PRICE
                 ,T1.STATUS
-                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,CASE   WHEN T1.STATUS = 1 THEN '使用中'
+                        WHEN T1.STATUS = 0 THEN '禁用'
+                        WHEN T1.STATUS = 99 THEN '已删除'
+                        ELSE '-' END AS STATUS_NAME
                 ,T1.OPTION01
                 ,T1.OPTION02
                 ,T1.OPTION03

@@ -48,8 +48,10 @@
                                 <el-descriptions-item label="Author." label-class-name="">{{item.postAuthor}}</el-descriptions-item>
                                 <el-descriptions-item label="Type">{{item.postTypeName}}</el-descriptions-item>
                                 <el-descriptions-item label="Status.">
-                                    <el-tag type="danger" size="mini" v-if="item.status == '0'"> {{ item.statusName }} </el-tag>
+                                    <el-tag type="info" size="mini" v-if="item.status == '0'"> {{ item.statusName }} </el-tag>
                                     <el-tag type="success" size="mini" v-if="item.status == '1'"> {{ item.statusName }} </el-tag>
+                                    <el-tag type="danger" size="mini" v-if="item.status == '99'"> {{ item.statusName }} </el-tag>
+                                    <el-tag type="warning" size="mini" v-if="item.status == '-'"> 未定义 </el-tag>
                                 </el-descriptions-item>
                                 <el-descriptions-item label="Category."><strong>{{item.postCategoryName}}</strong></el-descriptions-item>
                                 <el-descriptions-item label="Create Time.">{{item.createTime}}</el-descriptions-item>
