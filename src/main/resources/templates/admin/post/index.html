@@ -23,18 +23,34 @@
             <!-- Main Contents Start -->
             <!-- Top Search Form Box Start -->
             <div class="">
-                <el-tabs v-model="activeTabName" type="card" v-on:tab-click="handleTabClick">
-                    <el-tab-pane label="Search" name="searchTab">
-                        <p>검색준비중</p>
-                    </el-tab-pane>
-                </el-tabs>
+                <el-form v-bind:inline="true" class="demo-form-inline">
+                    <el-form-item label="Category:">
+                        <el-input v-model="searchForm.user" placeholder="분류를 선택해주세요."></el-input>
+                    </el-form-item>
+                    <el-form-item label="Status:">
+                        <el-select v-model="searchForm.region" placeholder="포스트 상태값을 선택해주세요.">
+                            <el-option label="已发布" value="1"></el-option>
+                            <el-option label="已下架" value="0"></el-option>
+                            <el-option label="已删除" value="99"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" v-on:click="handleSearch">查询</el-button>
+                    </el-form-item>
+                </el-form>
             </div>
             <!-- // Top Search Form Box End -->
             <!-- Result List Start -->
             <div class="">
-                <div style="text-align: right;">
-                    <a style="color:#3b82f6; text-decoration: none; font-weight: bold;" th:href="${#httpServletRequest.getContextPath() + '/admin/post/create.ahn'}">Add New Post</a>
+                <div style="position: fixed; bottom:50px; right:80px; border:1px solid #ddd;">
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/post/create.ahn'}"
+                       style="display:block; padding:20px; border-radius: 0.375rem; background: #3b82f6; color:#fff;">
+                        <i style="font-size:2rem;" class="el-icon-edit"></i>
+                    </a>
                 </div>
+<!--                <div style="text-align: right;">-->
+<!--                    <a style="color:#3b82f6; text-decoration: none; font-weight: bold;" >Add New Post</a>-->
+<!--                </div>-->
                 <div class="overflow-x-auto relative">
                     <el-row v-bind:title="item.postTitle"
                             v-bind:gutter="20"
@@ -141,7 +157,7 @@
                     activeTabName: 'searchTab',
                     drawer: false,
                     drawerTitle: 'Drawer Title',
-
+                    searchForm: {},
                 }
             },
             created() {
@@ -270,7 +286,10 @@
                             _this.$message.error("Axios Error!");
                         });
                 },
-
+                handleSearch() {
+                    let _this = this;
+                    console.log(_this.searchForm);
+                },
             }
         });
 
