@@ -10,7 +10,13 @@
 <!--        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">-->
         <div class="header-container ">
             <h3>Setting - 사용자 관리</h3>
-            <div th:replace="admin/setting/setting_submenu::setting_submenu"></div>
+            <div class="header-container-menu">
+                <a class="current" th:href="${#httpServletRequest.getContextPath() + '/admin/setting.ahn'}">사용자관리</a>
+                <a href="javascript:alert('준비중, 좀만 대기')">권한관리</a>
+                <a href="javascript:alert('준비중, 좀만 대기')">메뉴관리</a>
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/setting/classification.ahn'}">Classification</a>
+                <a th:href="${#httpServletRequest.getContextPath() + '/admin/setting/common_code.ahn'}">공통코드관리</a>
+            </div>
         </div>
     </header>
     <main class="main-container" id="app" v-loading="loading">

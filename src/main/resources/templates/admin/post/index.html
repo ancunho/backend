@@ -10,10 +10,10 @@
     <div th:replace="admin/common/layout::footer"></div>
     <header class="header-top">
         <!--        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-4 lg:px-6 grid grid-cols-12">-->
-        <div class="header-container ">
+        <div class="header-container">
             <h3>Post management</h3>
             <div class="header-container-menu">
-                <a th:href="${#httpServletRequest.getContextPath() + '/admin/post.ahn'}">Posting</a>
+                <a class="current" th:href="${#httpServletRequest.getContextPath() + '/admin/post.ahn'}">Posting</a>
                 <a th:href="${#httpServletRequest.getContextPath() + '/admin/post/category.ahn'}">Category</a>
             </div>
         </div>
