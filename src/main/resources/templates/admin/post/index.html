@@ -25,10 +25,10 @@
             <div class="">
                 <el-form v-bind:inline="true" class="demo-form-inline">
                     <el-form-item label="Category:">
-                        <el-input v-model="searchForm.user" placeholder="분류를 선택해주세요."></el-input>
+                        <el-input v-model="searchForm.categoryId" placeholder="분류를 선택해주세요."></el-input>
                     </el-form-item>
                     <el-form-item label="Status:">
-                        <el-select v-model="searchForm.region" placeholder="포스트 상태값을 선택해주세요.">
+                        <el-select v-model="searchForm.status" placeholder="포스트 상태값을 선택해주세요.">
                             <el-option label="已发布" value="1"></el-option>
                             <el-option label="已下架" value="0"></el-option>
                             <el-option label="已删除" value="99"></el-option>
@@ -263,7 +263,7 @@
                 async initMainList() {
                     let _this = this;
                     const params = {
-
+                        status: _this.searchForm.status || '1'
                     }
                     await axios.post(contextRootPath + "/api/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params).then((response) => {
                         _this.itemList = response.data.data;
@@ -288,7 +288,8 @@
                 },
                 handleSearch() {
                     let _this = this;
-                    console.log(_this.searchForm);
+                    _this.loading = true;
+                    _this.initMainList();
                 },
             }
         });
