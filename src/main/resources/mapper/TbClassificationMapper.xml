@@ -385,5 +385,19 @@
         and		(IFNULL(#{codeTypeAndCd}, '') = '' or t1.classification_type = #{codeTypeAndCd})
     </select>
 
+    <select id="getTopCategoryByType" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
+        <![CDATA[
+        SELECT 	T1.CLASSIFICATION_ID,
+                T1.PARENT_CLASSIFICATION_ID,
+                T1.CLASSIFICATION_NAME,
+                T1.CLASSIFICATION_IMAGE
+        FROM 	TB_CLASSIFICATION T1
+        WHERE	T1.STATUS = 1
+        AND		T1.CLASSIFICATION_TYPE = #{classificationType}
+        AND		T1.PARENT_CLASSIFICATION_ID = 0
+        ORDER BY T1.SORT_ORDER
+        ]]>
+    </select>
+
 
 </mapper>

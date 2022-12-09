@@ -130,6 +130,14 @@ public class PostServiceImpl implements PostService {
         return tbPostMapper.getPostDetailByUUID(uuid);
     }
 
+    public List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto) {
+        return tbPostMapper.getPostListByAnyDepthCategoryId(tbPostDto);
+    }
+
+    public List<TbClassificationDto> getTopCategoryByType(TbClassificationDto tbClassificationDto) {
+        return tbClassificationMapper.getTopCategoryByType(tbClassificationDto);
+    }
+
     private void recursionFn(List<TbClassificationDto> list, TbClassificationDto t) {
         // 得到子节点列表
         List<TbClassificationDto> childList = getChildClassificationList(list, t);

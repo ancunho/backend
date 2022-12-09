@@ -502,4 +502,25 @@
         AND     T1.POST_UUID = #{postUuid}
     </select>
 
+    <select id="getPostListByAnyDepthCategoryId" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
+        <![CDATA[
+        SELECT  *
+        FROM	TB_POST A1
+        WHERE	A1.POST_CATEGORY_ID IN 	(
+                                        SELECT 	CLASSIFICATION_ID
+                                        FROM 	(
+                                                SELECT  @R AS _IDS,
+                                                        (SELECT @R := GROUP_CONCAT(CLASSIFICATION_ID) FROM TB_CLASSIFICATION WHERE FIND_IN_SET(PARENT_CLASSIFICATION_ID, @R) ) AS SUBIDS
+                                                FROM 	(SELECT	@R := #{postCategoryId}) VARS,
+                                                        TB_CLASSIFICATION AREA
+                                                WHERE	@R IS NOT NULL
+                                                ) CATGEGORY_TEMP,
+                                            TB_CLASSIFICATION T1
+                                        WHERE	FIND_IN_SET(T1.CLASSIFICATION_ID, CATGEGORY_TEMP._IDS)
+                                        )
+        ]]>
+    </select>
+
+
+
 </mapper>

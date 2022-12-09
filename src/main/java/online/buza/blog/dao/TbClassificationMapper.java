@@ -38,4 +38,6 @@ public interface TbClassificationMapper {
     List<TbClassificationDto> getClassificationListByTypeCode(Map<String, Object> mapParams);
     List<LabelDto> getClassificationListByTypeCode_LabelDTO(Map<String, Object> mapParams);
 
+    List<TbClassificationDto> getTopCategoryByType(TbClassificationDto tbClassificationDto);
+
 }

@@ -31,4 +31,8 @@ public interface PostService {
     public List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto);
     public TbPostDto getPostDetailByUUID(String uuid);
 
+    public List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto);
+
+    public List<TbClassificationDto> getTopCategoryByType(TbClassificationDto tbClassificationDto);
+
 }

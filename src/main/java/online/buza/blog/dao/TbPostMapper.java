@@ -27,4 +27,8 @@ public interface TbPostMapper {
     List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto);
     TbPostDto getPostDetailByUUID(String uuid);
 
+    List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto);
+
+
+
 }
