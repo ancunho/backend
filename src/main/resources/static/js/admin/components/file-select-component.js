@@ -122,6 +122,7 @@ var fileUploadAndListComponent = Vue.extend({
             
         </div>
     `,
+    props: ["type"],
     data() {
         return {
             currentDate: new Date(),
@@ -322,7 +323,6 @@ var fileUploadAndListComponent = Vue.extend({
         emitfile(item) {
             let _this = this;
             _this.$emit("emitfile", item);
-
         },
         handleDialogClose(done) {
             this.$confirm('确认关闭？')

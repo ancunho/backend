@@ -71,17 +71,35 @@
                     </el-form>
                 </el-col>
             </el-row>
-            <el-form>
-                <div class="">
-                    <p class="post-content-label">
-                        Thunbnail Big <el-button type="text" v-on:click="handleDrawerOpen">Select file</el-button>
-                    </p>
-                    <div>
-                        <input type="hidden" v-model="selectedItem.postThumbnailBig" />
-                        <el-image style="width:100px; height: 100px;" v-bind:src="selectedItem.postThumbnailBig"></el-image>
-                    </div>
-                </div>
-            </el-form>
+            <el-row>
+                <el-col :span="12">
+                    <el-form>
+                        <div class="">
+                            <p class="post-content-label">
+                                Thunbnail Small <el-button type="text" v-on:click="handleDrawerOpenSmall">Select file</el-button>
+                            </p>
+                            <div>
+                                <input type="hidden" v-model="selectedItem.postThumbnailSmall" />
+                                <el-image style="width:100px; height: 100px;" v-bind:src="selectedItem.postThumbnailSmall"></el-image>
+                            </div>
+                        </div>
+                    </el-form>
+                </el-col>
+                <el-col :span="12">
+                    <el-form>
+                        <div class="">
+                            <p class="post-content-label">
+                                Thunbnail Big <el-button type="text" v-on:click="handleDrawerOpen">Select file</el-button>
+                            </p>
+                            <div>
+                                <input type="hidden" v-model="selectedItem.postThumbnailBig" />
+                                <el-image style="width:100px; height: 100px;" v-bind:src="selectedItem.postThumbnailBig"></el-image>
+                            </div>
+                        </div>
+                    </el-form>
+                </el-col>
+            </el-row>
+
 
             <div class="post-content" style="margin-bottom: 10px; font-size:12px; color:#475569">
                 <p class="post-content-label">
@@ -101,7 +119,12 @@
         <el-drawer title="file upload list"
                    v-bind:visible.sync="drawer"
                    direction="rtl" size="100%">
-            <file-upload-component @emitfile="emitfile" />
+            <file-upload-component type="big" @emitfile="emitfile" />
+        </el-drawer>
+        <el-drawer title="file upload list"
+                   v-bind:visible.sync="drawer2"
+                   direction="rtl" size="100%">
+            <file-upload-component type="small" @emitfile="emitfileSmall" />
         </el-drawer>
     </main>
 </div>
@@ -134,10 +157,12 @@
                     postType: '',
                     postCategoryId: '',
                     postThumbnailBig: '',
+                    postThumbnailSmall: '',
                     status: false,
                 },
                 postId: '',
                 drawer: false,
+                drawer2: false,
                 postTypeList: [],
                 classificationList: [],
             }
@@ -173,6 +198,9 @@
             handleDrawerOpen() {
                 this.drawer = true;
             },
+            handleDrawerOpenSmall() {
+                this.drawer2 = true;
+            },
             handleDrawerClose(done) {
                 this.$confirm('确认关闭？')
                     .then(_ => {
@@ -198,6 +226,7 @@
                             _this.selectedItem.postType = response.data.data.postType;
                             _this.selectedItem.postTypeName = response.data.data.postTypeName;
                             _this.selectedItem.postThumbnailBig = response.data.data.postThumbnailBig;
+                            _this.selectedItem.postThumbnailSmall = response.data.data.postThumbnailSmall;
                             editor.setHtml(response.data.data.postContent);
                         }
                         _this.loading = false;
@@ -247,6 +276,10 @@
             emitfile(item) {
                 this.drawer = false;
                 this.selectedItem.postThumbnailBig = item.fileUrl;
+            },
+            emitfileSmall(item) {
+                this.drawer2 = false;
+                this.selectedItem.postThumbnailSmall = item.fileUrl;
             },
             handlePostType() {
                 let _this = this;
