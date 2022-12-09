@@ -44,9 +44,8 @@ public class BusinessController {
     @ResponseBody
     @PostMapping(value = "/menu.do")
     public BaseResponse getTopCategoryByType(BaseRequest baseRequest, @RequestBody TbClassificationDto tbClassificationDto) {
-        PageHelper.startPage(baseRequest.getPage(), baseRequest.getLimit());
         List<TbClassificationDto> returnData = postService.getTopCategoryByType(tbClassificationDto);
-        return BaseResponse.valueOfSuccessList(returnData);
+        return BaseResponse.valueOfSuccess(returnData);
     }
 
     @BusinessPassLogin

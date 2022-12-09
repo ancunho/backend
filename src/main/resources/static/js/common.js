@@ -1,5 +1,7 @@
 var contextRootPath = "";
 
+var commonErrorMsg = "获取数据失败， 请刷新页面或联系管理员";
+
 function StringBuffer() {
     this.__strings__ = new Array;
 }

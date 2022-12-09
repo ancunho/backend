@@ -67,7 +67,7 @@ color-text-primary:1F2937
 .business-container .business-tab01 {  margin:4em auto ; border-bottom: 1px solid #eee; width: 100%; height:70px;  white-space: nowrap; overflow: hidden; overflow-x: auto; -webkit-backface-visibility: hidden; -webkit-overflow-scrolling: touch;}
 .business-container .business-tab01 ul { display: flex; justify-content:center;}
 .business-container .business-tab01 ul li { display:inline-block; }
-.business-container .business-tab01 ul li a { font-size: 20px; font-weight: 900; position: relative; color:#d6d7da; padding: 10px 30px; }
+.business-container .business-tab01 ul li a { cursor: pointer; font-size: 20px; font-weight: 900; position: relative; color:#d6d7da; padding: 10px 30px; }
 .business-container .business-tab01 ul li a.current,
 .business-container .business-tab01 ul li a:hover,
 .business-container .business-tab01 ul li a:focus,
