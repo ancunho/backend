@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class TbCustomer {
     private Integer customerId;
+    private String customerUuid;
 
     private String weixinOpenId;
 
@@ -63,6 +64,14 @@ public class TbCustomer {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCustomerUuid() {
+        return customerUuid;
+    }
+
+    public void setCustomerUuid(String customerUuid) {
+        this.customerUuid = customerUuid;
     }
 
     public String getWeixinOpenId() {
@@ -280,6 +289,7 @@ public class TbCustomer {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", customerId=").append(customerId);
+        sb.append(", customerUuid=").append(customerUuid);
         sb.append(", weixinOpenId=").append(weixinOpenId);
         sb.append(", weixinUnionId=").append(weixinUnionId);
         sb.append(", username=").append(username);

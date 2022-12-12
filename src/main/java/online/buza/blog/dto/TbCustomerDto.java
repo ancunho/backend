@@ -15,6 +15,8 @@ public class TbCustomerDto extends BaseRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer customerId;
+
+    private String customerUuid;
     private String weixinOpenId;
 
     private String openId; // 2022-09-28 add
@@ -44,5 +46,12 @@ public class TbCustomerDto extends BaseRequest implements Serializable {
     private String option05;
     private String createTime;
     private String updateTime;
+
+    private Integer useYn;
+    private String statusName;
+
+    private String captchaCode;
+    private String captchaKey;
+
 
 }

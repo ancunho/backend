@@ -1,0 +1,55 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head xmlns:th="https://www.thymeleaf.org" th:replace="business/common/head_meta::head_meta"></head>
+<title>Buza</title>
+<body style="background:#fff;">
+<div>
+    <!-- Top Start -->
+    <div th:replace="business/common/layout::businessTop"></div>
+    <!-- //Top End -->
+    <div class="business-container" id="business-container" v-loading="loading">
+        <div class="register-container">
+            <el-form ref="form" :model="registerForm" label-width="120px">
+                <el-form-item label="Account">
+                    <el-input v-model="registerForm.username"></el-input>
+                </el-form-item>
+                <el-form-item label="Password">
+                    <el-input v-model="registerForm.password"></el-input>
+                </el-form-item>
+                <el-form-item label="Check Password">
+                    <el-input v-model="registerForm.checkPassword"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button style="display:block; width:100%; margin-bottom: 10px;" type="primary" @click="handleRegister">가입하기</el-button>
+                    <el-button style="display:block; width:100%; margin-left:0;">취소</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</div>
+</body>
+<style type="text/css">
+    .register-container { max-width: 30rem; margin:0 auto;}
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new Vue({
+            el: '#business-container',
+            data() {
+                return {
+                    loading: false,
+                    registerForm: {}
+                }
+            },
+            mounted() {
+
+            },
+            methods: {
+                handleRegister() {
+
+                },
+            }
+        });
+    });
+</script>
+</html>
