@@ -122,21 +122,7 @@ public class PostServiceImpl implements PostService {
         return tbClassificationMapper.getClassificationListByTypeCode_LabelDTO(mapParams);
     }
 
-    public List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto) {
-        return tbPostMapper.getAllTbPostListInBusiness(tbPostDto);
-    }
 
-    public TbPostDto getPostDetailByUUID(String uuid) {
-        return tbPostMapper.getPostDetailByUUID(uuid);
-    }
-
-    public List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto) {
-        return tbPostMapper.getPostListByAnyDepthCategoryId(tbPostDto);
-    }
-
-    public List<TbClassificationDto> getTopCategoryByType(TbClassificationDto tbClassificationDto) {
-        return tbClassificationMapper.getTopCategoryByType(tbClassificationDto);
-    }
 
     private void recursionFn(List<TbClassificationDto> list, TbClassificationDto t) {
         // 得到子节点列表

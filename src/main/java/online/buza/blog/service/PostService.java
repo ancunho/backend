@@ -25,14 +25,6 @@ public interface PostService {
     public List<LabelDto> buildClassificationTreeOrigin(List<LabelDto> classificationDtos);
     public List<LabelDto> getClassificationListByTypeCode_LabelDTO(Map<String, Object> mapParams);
 
-    /**
-     * Business
-     */
-    public List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto);
-    public TbPostDto getPostDetailByUUID(String uuid);
 
-    public List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto);
-
-    public List<TbClassificationDto> getTopCategoryByType(TbClassificationDto tbClassificationDto);
 
 }
