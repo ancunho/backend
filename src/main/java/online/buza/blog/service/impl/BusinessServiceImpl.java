@@ -101,10 +101,20 @@ public class BusinessServiceImpl implements BusinessService {
         return tbPostMapper.getAllTbPostListInBusiness(tbPostDto);
     }
 
+    /**
+     * UUID로 포스트 상세가져오기
+     * @param uuid
+     * @return
+     */
     public TbPostDto getPostDetailByUUID(String uuid) {
         return tbPostMapper.getPostDetailByUUID(uuid);
     }
 
+    /**
+     *
+     * @param tbPostDto
+     * @return
+     */
     public List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto) {
         return tbPostMapper.getPostListByAnyDepthCategoryId(tbPostDto);
     }

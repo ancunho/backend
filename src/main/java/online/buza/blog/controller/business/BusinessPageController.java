@@ -44,8 +44,7 @@ public class BusinessPageController {
     @PassLogin
     @RequestMapping("/login.ahn")
     public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
-        model.addAttribute("name", "cunho");
-        return "index";
+        return "login";
     }
 
     @PassLogin
