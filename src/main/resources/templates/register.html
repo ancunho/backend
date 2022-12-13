@@ -11,19 +11,19 @@
         <div class="register-container">
             <h1 style="text-align: center; margin: 1rem 0 3rem 0;">회원가입</h1>
             <el-form label-position="top" ref="form" :model="registerForm" label-width="120px">
-                <el-form-item label="아이디">
+                <el-form-item label="아이디" class="register_form_box">
                     <el-input suffix-icon="el-icon-user" placeholder="아이디를 입력해주세요."
                               v-model="registerForm.username"></el-input>
                 </el-form-item>
-                <el-form-item label="비밀번호">
+                <el-form-item label="비밀번호" class="register_form_box">
                     <el-input suffix-icon="el-icon-lock" placeholder="비밀번호를 입력해주세요."
                               v-model="registerForm.password"></el-input>
                 </el-form-item>
-                <el-form-item label="비밀번호 확인">
-                    <el-input suffix-icon="el-icon-lock" placeholder="비밀번호를 입력해주세요."
+                <el-form-item label="비밀번호 확인" class="register_form_box">
+                    <el-input suffix-icon="el-icon-lock" placeholder="비밀번호를 재입력해주세요."
                               v-model="registerForm.checkPassword"></el-input>
                 </el-form-item>
-                <el-form-item>
+                <el-form-item style="margin-top:30px;">
                     <el-button style="display:block; padding: 20px; width:100%; margin-bottom: 10px;" type="primary" @click="handleRegister">가입하기</el-button>
                 </el-form-item>
             </el-form>
@@ -39,6 +39,9 @@
 </body>
 <style type="text/css">
     .register-container { max-width: 20rem; margin:0 auto;}
+    .register_form_box { margin-bottom: 15px!important;}
+    .register_form_box input.el-input__inner{height:55px!important;}
+    .register_form_box label {padding-bottom: 0!important;}
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -55,7 +58,7 @@
             },
             methods: {
                 handleRegister() {
-
+                    this.$message.info("준비중입니다. ");
                 },
             }
         });
