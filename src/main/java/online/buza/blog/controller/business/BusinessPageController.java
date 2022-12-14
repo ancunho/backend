@@ -48,6 +48,12 @@ public class BusinessPageController {
     }
 
     @PassLogin
+    @RequestMapping("/intro.ahn")
+    public String intro(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/intro";
+    }
+
+    @PassLogin
     @RequestMapping("/customer/login.ahn")
     public String customer_login(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("name", "cunho");
