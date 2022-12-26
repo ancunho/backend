@@ -65,7 +65,7 @@ public class FileController {
         Map<String, Object> result = new HashMap<>();
 //        for (MultipartFile file : multipartFiles) {
         //Const.UPLOAD_IMAGE_MAX_SIZE : 2MB
-        if (file.getSize() > 0 && file.getSize() <= (Const.UPLOAD_IMAGE_MAX_SIZE * 20)) {
+        if (file.getSize() > 0 && file.getSize() <= (Const.UPLOAD_IMAGE_MAX_SIZE * 100)) {
             String file_path_url = aliyunService.uploadFileReturnURL(file);
             Map<String, String> returnData = new HashMap<>();
             returnData.put("url", file_path_url);

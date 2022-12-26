@@ -44,7 +44,7 @@
                         <el-table-column prop="codeCd" label="codeCd" width="150"></el-table-column>
                         <el-table-column prop="codeName" label="codeName" width="150"></el-table-column>
                         <el-table-column prop="sort" label="sort" width="150"></el-table-column>
-                        <el-table-column prop="remark" label="remark" width="150"></el-table-column>
+                        <el-table-column prop="remark" label="remark" width="350"></el-table-column>
                         <el-table-column prop="useYn" align="center" label="useYn" width="120">
                             <template slot-scope="scope">
                                 <el-tag type="danger" v-if="scope.row.useYn == '0'"> {{ scope.row.statusName }} </el-tag>
@@ -90,7 +90,7 @@
         <el-drawer
                 v-bind:title="drawerTitle"
                 v-bind:visible.sync="drawer"
-                direction="rtl" size="100%"
+                direction="rtl" size="50%"
                 v-bind:before-close="handleDrawerClose">
             <div class="drawer-container" style="padding: 20px;">
                 <div v-if="modalType == 1">
@@ -149,8 +149,8 @@
                     buzaModalTitle: 'Modal',
                     loading: true,
                     currentPage: 1, //page
-                    pageSize: 5, //limit
-                    pageSizes: [5,20,30,50],
+                    pageSize: 20, //limit
+                    pageSizes: [20,30,50,100],
                     total: 100,
                     activeTabName: 'searchTab',
                     drawer: false,
