@@ -112,7 +112,6 @@
                 loadCaptchaImage() {
                     let _this = this;
                     axios.get(contextRootPath + "/api/common/captcha.do").then(response => {
-                        console.log(response);
                         _this.form.captchaImage = response.data.data.base64Img;
                         _this.form.captchaKey = response.data.data.captchaKey;
                         _this.form.captchaCode = response.data.data.captchaCode;

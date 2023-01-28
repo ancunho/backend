@@ -1,0 +1,78 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head xmlns:th="https://www.thymeleaf.org" th:replace="business/common/head_meta::head_meta"></head>
+<title>Buza</title>
+<script th:src="@{/js/html2canvas.min.js}"></script>
+<body style="background:#fff;">
+<div>
+    <!-- Top Start -->
+    <div th:replace="business/common/layout::businessTop"></div>
+    <!-- //Top End -->
+    <div class="business-container" id="business-container" v-loading="loading">
+        <el-button class="btn" @click="handleClick">asdf</el-button>
+        <div id="capture">
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+            <h1>Hello world@!@@@</h1>
+        </div>
+    </div>
+</div>
+</body>
+<style type="text/css">
+    .btn { margin: 3rem;}
+    #capture { width: 500px;height:100%; overflow-y: auto; border:1px solid #0a58ca;}
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        new Vue({
+            el: '#business-container',
+            data() {
+                return {
+                    loading: false,
+                }
+            },
+            mounted() {
+                console.log("========================")
+            },
+            methods: {
+                handleClick() {
+                    html2canvas(document.querySelector('#capture'), {})
+                        .then(canvas => {
+                            document.body.appendChild(canvas)
+                        })
+                }
+            }
+        });
+    });
+</script>
+</html>

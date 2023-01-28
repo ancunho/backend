@@ -3,6 +3,7 @@
 <mapper namespace="online.buza.blog.dao.TbCustomerMapper">
     <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbCustomer">
         <id column="CUSTOMER_ID" jdbcType="INTEGER" property="customerId"/>
+        <result column="CUSTOMER_UUID" jdbcType="VARCHAR" property="customerUuid"/>
         <result column="WEIXIN_OPEN_ID" jdbcType="VARCHAR" property="weixinOpenId"/>
         <result column="WEIXIN_UNION_ID" jdbcType="VARCHAR" property="weixinUnionId"/>
         <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
@@ -31,10 +32,10 @@
         <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        CUSTOMER_ID
+        CUSTOMER_ID, CUSTOMER_UUID
         , WEIXIN_OPEN_ID, WEIXIN_UNION_ID, USERNAME, `PASSWORD`, MOBILE_NO, NICKNAME,
     GRADE, CUSTOMER_TYPE, REALNAME, BIRTHDAY, SEX, EMAIL, AVATAR_URL, COUNTRY, PROVINCE, CITY, ADDRESS,
-    `STATUS`, WECHAT_ID, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, 
+    `STATUS`, WECHAT_ID, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME,
     UPDATE_TIME
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -49,7 +50,7 @@
         where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="online.buza.blog.entity.TbCustomer">
-        insert into tb_customer (CUSTOMER_ID, WEIXIN_OPEN_ID, WEIXIN_UNION_ID,
+        insert into tb_customer (CUSTOMER_ID,CUSTOMER_UUID, WEIXIN_OPEN_ID, WEIXIN_UNION_ID,
                                  USERNAME, `PASSWORD`, MOBILE_NO,
                                  NICKNAME, GRADE, CUSTOMER_TYPE,
                                  REALNAME, BIRTHDAY, SEX,
@@ -58,11 +59,12 @@
                                  WECHAT_ID, OPTION01, OPTION02,
                                  OPTION03, OPTION04, OPTION05,
                                  CREATE_TIME, UPDATE_TIME)
-        values (#{customerId,jdbcType=INTEGER}, #{weixinOpenId,jdbcType=VARCHAR}, #{weixinUnionId,jdbcType=VARCHAR},
+        values (#{customerId,jdbcType=INTEGER}, #{customerUuid,jdbcType=VARCHAR}, #{weixinOpenId,jdbcType=VARCHAR}, #{weixinUnionId,jdbcType=VARCHAR},
                 #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR},
                 #{nickname,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR},
                 #{realname,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
-                #{email,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR},
+                #{province,jdbcType=VARCHAR},
                 #{city,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
                 #{wechatId,jdbcType=VARCHAR}, #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR},
                 #{option03,jdbcType=VARCHAR}, #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR},
@@ -73,6 +75,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="customerId != null">
                 CUSTOMER_ID,
+            </if>
+            <if test="customerUuid != null">
+                CUSTOMER_UUID,
             </if>
             <if test="weixinOpenId != null">
                 WEIXIN_OPEN_ID,
@@ -157,6 +162,9 @@
             <if test="customerId != null">
                 #{customerId,jdbcType=INTEGER},
             </if>
+            <if test="customerUuid != null">
+                #{customerUuid,jdbcType=VARCHAR},
+            </if>
             <if test="weixinOpenId != null">
                 #{weixinOpenId,jdbcType=VARCHAR},
             </if>
@@ -240,6 +248,9 @@
     <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbCustomer">
         update tb_customer
         <set>
+            <if test="customerUuid != null">
+                CUSTOMER_UUID = #{customerUuid,jdbcType=VARCHAR},
+            </if>
             <if test="weixinOpenId != null">
                 WEIXIN_OPEN_ID = #{weixinOpenId,jdbcType=VARCHAR},
             </if>
@@ -323,7 +334,8 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbCustomer">
         update tb_customer
-        set WEIXIN_OPEN_ID  = #{weixinOpenId,jdbcType=VARCHAR},
+        set CUSTOMER_UUID = #{customerUuid,jdbcType=VARCHAR},
+            WEIXIN_OPEN_ID  = #{weixinOpenId,jdbcType=VARCHAR},
             WEIXIN_UNION_ID = #{weixinUnionId,jdbcType=VARCHAR},
             USERNAME        = #{username,jdbcType=VARCHAR},
             `PASSWORD`      = #{password,jdbcType=VARCHAR},
@@ -351,6 +363,89 @@
             UPDATE_TIME     = #{updateTime,jdbcType=TIMESTAMP}
         where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}
     </update>
+
+    <select id="existUserName" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT  1
+        FROM    TB_CUSTOMER T1
+        WHERE   EXISTS  (
+                        SELECT 1
+                        FROM TB_CUSTOMER A1
+                        WHERE A1.CUSTOMER_ID = T1.CUSTOMER_ID
+                        <if test="userSeq != null">
+                            AND A1.CUSTOMER_ID != #{customerId}
+                        </if>
+                        AND A1.USERNAME = #{username}
+                        )
+    </select>
+
+    <select id="getTbCustomerByUsernameAndPassword" parameterType="online.buza.blog.dto.TbCustomerDto" resultType="online.buza.blog.dto.TbCustomerDto">
+        SELECT T1.CUSTOMER_ID
+                ,T1.CUSTOMER_UUID
+                ,T1.WEIXIN_OPEN_ID
+                ,T1.WEIXIN_UNION_ID
+                ,T1.USERNAME
+                ,T1.PASSWORD
+                ,T1.MOBILE_NO
+                ,T1.NICKNAME
+                ,T1.GRADE
+                ,T1.CUSTOMER_TYPE
+                ,T1.REALNAME
+                ,T1.BIRTHDAY
+                ,T1.SEX
+                ,T1.EMAIL
+                ,T1.COUNTRY
+                ,T1.PROVINCE
+                ,T1.CITY
+                ,T1.ADDRESS
+                ,T1.STATUS
+                ,T1.WECHAT_ID
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
+                ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
+        FROM tb_customer T1
+        WHERE T1.USERNAME = #{username}
+          AND T1.PASSWORD = #{password}
+          AND T1.STATUS = '1'
+    </select>
+
+    <select id="selectTbCustomerDtoByCustomerUuid" parameterType="java.lang.String" resultType="online.buza.blog.dto.TbCustomerDto">
+        <![CDATA[
+        SELECT  T1.CUSTOMER_ID
+                ,T1.CUSTOMER_UUID
+                ,T1.WEIXIN_OPEN_ID
+                ,T1.WEIXIN_UNION_ID
+                ,T1.USERNAME
+                ,T1.PASSWORD
+                ,T1.MOBILE_NO
+                ,T1.NICKNAME
+                ,T1.GRADE
+                ,T1.CUSTOMER_TYPE
+                ,T1.REALNAME
+                ,T1.BIRTHDAY
+                ,T1.SEX
+                ,T1.EMAIL
+                ,T1.COUNTRY
+                ,T1.PROVINCE
+                ,T1.CITY
+                ,T1.ADDRESS
+                , CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.STATUS
+                ,T1.WECHAT_ID
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                , DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
+                , DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
+        FROM    tb_customer T1
+        WHERE   T1.CUSTOMER_UUID = #{customerUuid}
+        ]]>
+    </select>
 
 
 </mapper>

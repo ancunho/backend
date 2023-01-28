@@ -6,6 +6,7 @@ import online.buza.blog.annotation.AdminUserLogin;
 import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
+import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.TbCommonCodeDto;
 import online.buza.blog.entity.TbCommonCode;
 import online.buza.blog.service.CommonCodeService;
@@ -104,13 +105,13 @@ public class CommonCodeController {
     }
 
     @AdminUserLogin
-    @GetMapping(value = "/delete.do")
-    public BaseResponse code_delete(BaseRequest baseRequest, @RequestParam("codeId") Integer codeId) {
-        if (codeId == null || "".equals(String.valueOf(codeId))) {
+    @PostMapping(value = "/delete.do")
+    public BaseResponse code_delete(BaseRequest baseRequest, @RequestBody TbCommonCodeDto tbCommonCodeDto) {
+        if (tbCommonCodeDto == null || "".equals(String.valueOf(tbCommonCodeDto.getCodeId()))) {
             return BaseResponse.valueOfFailureMessage(ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
-        boolean isSuccessDelete = commonCodeService.deleteTbCommonCode(codeId);
+        boolean isSuccessDelete = commonCodeService.deleteTbCommonCode(tbCommonCodeDto);
         if (isSuccessDelete) {
             return BaseResponse.valueOfSuccessMessage(ResponseCode.DELETE_SUCCESS.getDesc());
         }
@@ -127,6 +128,13 @@ public class CommonCodeController {
 
         List<TbCommonCodeDto> lstTbCommonCodeByCodeType = commonCodeService.lstTbCommonCodeByCodeType(codeType);
         return BaseResponse.valueOfSuccess(lstTbCommonCodeByCodeType);
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/group_type.do")
+    public BaseResponse getAllGroupTypeCommonCode(BaseRequest baseRequest, @RequestBody TbCommonCodeDto tbCommonCodeDto) {
+        List<TbCommonCodeDto> commonCodeDtoList = commonCodeService.getAllGroupTypeCommonCode(tbCommonCodeDto);
+        return BaseResponse.valueOfSuccessList(commonCodeDtoList);
     }
 
 }

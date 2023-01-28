@@ -7,6 +7,7 @@ import online.buza.blog.util.Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +29,28 @@ public class BusinessPageController {
     }
 
     @PassLogin
+    @GetMapping(value = "/post/{postUuid}.ahn")
+    public String post_detail(@PathVariable String postUuid, Model model, HttpServletRequest request, HttpServletResponse response) {
+        model.addAttribute("postUuid", postUuid);
+        return "business/post_detail";
+    }
+
+    @PassLogin
+    @RequestMapping("/register.ahn")
+    public String register(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "register";
+    }
+
+    @PassLogin
     @RequestMapping("/login.ahn")
     public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
-        model.addAttribute("name", "cunho");
-        return "index";
+        return "login";
+    }
+
+    @PassLogin
+    @RequestMapping("/intro.ahn")
+    public String intro(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/intro";
     }
 
     @PassLogin

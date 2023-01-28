@@ -15,6 +15,9 @@ public class Const {
     public final static String RedirectLoginPage = "login";
     public final static String DEFAULT_PASSWORD = "123456";
 
+    public static final String HTTP = "http://";
+    public static final String HTTPS = "https://";
+
     /**
      * 上传图片的最大大小： 500K
      * 1KB = 1024Byte
@@ -74,6 +77,7 @@ public class Const {
         String USERNAME_OR_PASSWORD_NOT_FOUND = "用户名或密码不正确";
         String CAPTCHAR_KEY_ERROR = "验证码错误";
         String NO_SESSION = "Session过期";
+        String NEED_LOGIN = "Need Login";
     }
 
     public interface FileType {

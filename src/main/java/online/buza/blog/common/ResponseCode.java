@@ -12,7 +12,7 @@ public enum ResponseCode {
     ERROR(400,"ERROR"),
     UNAUTHORIZED(401,"无权限"),
     ILLEGAL_ARGUMENT(402,"参数错误"),
-    TOKEN_EXPIRED(403,"token错误"),
+    NEED_LOGIN(403,"需要登录"),
 
     INSERT_SUCCESS(1000, "新增成功"),
     INSERT_ERROR(1999, "新增失败"),
@@ -22,6 +22,7 @@ public enum ResponseCode {
     DELETE_ERROR(3999, "删除失败"),
 
     LOGIN_EXPIRED(9999, "Session超时"),
+
     ;
 
 

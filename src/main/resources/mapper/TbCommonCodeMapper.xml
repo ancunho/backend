@@ -204,6 +204,7 @@
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
         FROM 	TB_COMMON_CODE T1
+        WHERE   T1.USE_YN = '1'
         ORDER BY CODE_TYPE,CODE_CD
         ]]>
     </select>
@@ -229,6 +230,7 @@
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
         FROM 	TB_COMMON_CODE T1
         WHERE   T1.CODE_ID = #{codeId}
+        AND     T1.USE_YN = '1'
         ]]>
     </select>
 
@@ -256,4 +258,34 @@
         AND     T1.USE_YN = '1'
         ]]>
     </select>
+
+    <update id="deleteTbCommonCodeByCodeId" parameterType="online.buza.blog.dto.TbCommonCodeDto">
+        update  tb_common_code
+        <set>
+            USE_YN = '0',
+            <if test="option01 != null">
+                OPTION01 = #{option01,jdbcType=VARCHAR},
+            </if>
+            UPDATE_TIME = now()
+        </set>
+        where CODE_ID = #{codeId}
+    </update>
+
+    <select id="getCommonCodeList" parameterType="online.buza.blog.dto.TbCommonCodeDto" resultType="online.buza.blog.dto.TbCommonCodeDto">
+        <![CDATA[
+        select  *
+        from    tb_common_code t1
+        where   t1.use_yn = '1'
+        ]]>
+    </select>
+
+    <select id="getAllGroupTypeCommonCode" parameterType="online.buza.blog.dto.TbCommonCodeDto" resultType="online.buza.blog.dto.TbCommonCodeDto">
+        <![CDATA[
+        select  t1.code_id, t1.code_type, t1.code_cd, t1.code_name
+        from    tb_common_code t1
+        where   t1.use_yn = '1'
+        group by t1.code_id, t1.code_type, t1.code_cd, t1.code_name
+        ]]>
+    </select>
+
 </mapper>

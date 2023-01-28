@@ -122,6 +122,7 @@ var fileUploadAndListComponent = Vue.extend({
             
         </div>
     `,
+    props: ["type"],
     data() {
         return {
             currentDate: new Date(),
@@ -276,7 +277,6 @@ var fileUploadAndListComponent = Vue.extend({
             await _this.handleRequest(_this.fileData);
         },
         handleRequest(params) {
-            console.log(params)
             let _this = this;
             _this.loading = true;
             var instance_files = axios.create({
@@ -323,7 +323,6 @@ var fileUploadAndListComponent = Vue.extend({
         emitfile(item) {
             let _this = this;
             _this.$emit("emitfile", item);
-
         },
         handleDialogClose(done) {
             this.$confirm('确认关闭？')

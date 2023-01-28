@@ -7,17 +7,21 @@ import online.buza.blog.common.BaseRequest;
 import online.buza.blog.common.BaseResponse;
 import online.buza.blog.common.ResponseCode;
 import online.buza.blog.controller.common.CommonController;
-import online.buza.blog.dto.SysUserDto;
-import online.buza.blog.dto.TbPostDto;
+import online.buza.blog.dto.*;
 import online.buza.blog.entity.TbPost;
 import online.buza.blog.service.PostService;
+import online.buza.blog.util.Util;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -26,6 +30,7 @@ public class PostController extends CommonController {
 
     @Autowired
     private PostService postService;
+
 
     @AdminUserLogin
     @PostMapping(value = "/list.do")
@@ -58,6 +63,7 @@ public class PostController extends CommonController {
             if (tbPostDto.getPostId() == null || "".equals(tbPostDto.getPostId())) {
                 // insert new
                 TbPost tbPost = new TbPost();
+                tbPost.setPostUuid(Util.generateUUID());
                 tbPost.setPostTitle(tbPostDto.getPostTitle());
                 tbPost.setPostType(tbPostDto.getPostType());
                 tbPost.setPostCategoryId(tbPostDto.getPostCategoryId());
@@ -141,6 +147,26 @@ public class PostController extends CommonController {
         }
         return BaseResponse.valueOfFailureMessage(ResponseCode.DELETE_ERROR.getDesc());
     }
+
+    @AdminUserLogin
+    @PostMapping(value = "/getBlogCategoryTree.do")
+    public BaseResponse get_blog_category_list(@RequestBody TbClassificationDto tbClassificationDto) {
+        List<TbClassificationDto> classificationDtoList = postService.getBoardType01ClassificationTree(tbClassificationDto);
+        List<TbClassificationDto> resultList = postService.buildClassificationTree(classificationDtoList);
+        return BaseResponse.valueOfSuccess(resultList);
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/getClassificationListByTypeCode.do")
+    public BaseResponse get_category_tree_by_type(@RequestBody TbCommonCodeDto tbCommonCodeDto) {
+        Map<String, Object> mapParams = new HashMap<>();
+        mapParams.put("codeTypeAndCd", tbCommonCodeDto.getCodeTypeAndCd());
+        List<LabelDto> labelDtoList = postService.getClassificationListByTypeCode_LabelDTO(mapParams);
+        List<LabelDto> resultList = postService.buildClassificationTreeOrigin(labelDtoList);
+        return BaseResponse.valueOfSuccess(resultList);
+    }
+
+
 
 
 

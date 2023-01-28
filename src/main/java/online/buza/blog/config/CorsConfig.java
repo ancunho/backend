@@ -15,10 +15,10 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class CorsConfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public BuzaInterceptor buzaInterceptor() {
-        return new BuzaInterceptor();
-    }
+//    @Bean
+//    public BuzaInterceptor buzaInterceptor() {
+//        return new BuzaInterceptor();
+//    }
 
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -53,7 +53,7 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 //        WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(buzaInterceptor())
+        registry.addInterceptor(new BuzaInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/static/**")
                 .excludePathPatterns("/css/**")
@@ -66,6 +66,7 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/no_session")
                 .excludePathPatterns("/manage")
                 .excludePathPatterns("/backend/user/login")
+                .excludePathPatterns("/admin/login.ahn")
         ;
 //        WebMvcConfigurer.super.addInterceptors(registry);
     }
@@ -78,5 +79,10 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
                 .addResolver(new GzipResourceResolver());
 //        WebMvcConfigurer.super.addResourceHandlers(registry);
 
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        super.addViewControllers(registry);
     }
 }

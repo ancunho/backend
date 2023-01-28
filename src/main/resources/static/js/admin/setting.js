@@ -19,7 +19,6 @@ function initCommonCodeIndex() {
         buzaModalTitle: 'Modal',
         save() {
             const _this = this;
-            console.log(_this.item);
             axios.post(contextRootPath + "/api/common_code/proc.do", _this.item)
                 .then(res => {
                     var data = res.data;

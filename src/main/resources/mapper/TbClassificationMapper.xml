@@ -21,7 +21,7 @@
     <sql id="Base_Column_List">
         CLASSIFICATION_ID
         , PARENT_CLASSIFICATION_ID, CLASSIFICATION_NAME, CLASSIFICATION_TYPE,
-    CLASSIFICATION_IMAGE, SORT_ORDER, DEPTH_NUM, `STATUS`, OPTION01, OPTION02, OPTION03, 
+    CLASSIFICATION_IMAGE, SORT_ORDER, DEPTH_NUM, `STATUS`, OPTION01, OPTION02, OPTION03,
     OPTION04, OPTION05, CREATE_TIME, UPDATE_TIME
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -320,5 +320,84 @@
         FROM    TB_CLASSIFICATION T1
         WHERE   T1.PARENT_CLASSIFICATION_ID = #{parentClassificationId}
     </select>
+
+    <select id="getBoardType01Classification" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
+        <![CDATA[
+        select  t1.classification_id
+                ,t1.parent_classification_id
+                ,t1.classification_name
+                ,t1.classification_type
+                ,t1.classification_image
+                ,t1.sort_order
+                ,t1.depth_num
+                ,t1.option01
+                ,t1.option02
+                ,t1.option03
+                ,t1.option04
+                ,t1.option05
+                ,date_format(t1.create_time, '%Y-%m-%d %H:%i') as create_time
+                ,date_format(t1.update_time, '%Y-%m-%d %H:%i') as update_time
+        from	TB_CLASSIFICATION t1
+        where	t1.status = '1'
+        and     t1.classification_type in (
+                                            select  a1.code_cd
+                                            from 	tb_common_code a1
+                                            where	a1.code_cd = t1.classification_type
+                                            and		a1.code_type = 'BOARD_TYPE'
+                                            and		a1.code_cd = '01'
+                                            and		a1.use_yn = '1'
+                                            )
+        ]]>
+    </select>
+
+    <select id="getClassificationListByTypeCode" parameterType="java.util.Map" resultType="online.buza.blog.dto.TbClassificationDto">
+        select  t1.classification_id
+                ,t1.parent_classification_id
+                ,t1.classification_name
+                ,t1.classification_type
+                ,t1.classification_image
+                ,t1.sort_order
+                ,t1.depth_num
+                ,t1.option01
+                ,t1.option02
+                ,t1.option03
+                ,t1.option04
+                ,t1.option05
+                ,date_format(t1.create_time, '%Y-%m-%d %H:%i') as create_time
+                ,date_format(t1.update_time, '%Y-%m-%d %H:%i') as update_time
+
+                ,t1.classification_id as id
+                ,t1.classification_id as 'value'
+                ,t1.classification_name as label
+                ,t1.parent_classificaiton_id as parent_id
+        from	tb_classification t1
+        where   t1.status = '1'
+        and		(IFNULL(#{codeTypeAndCd}, '') = '' or t1.classification_type = #{codeTypeAndCd})
+    </select>
+
+    <select id="getClassificationListByTypeCode_LabelDTO" parameterType="java.util.Map" resultType="online.buza.blog.dto.LabelDto">
+        select  t1.classification_id as id
+                ,t1.classification_id as 'value'
+                ,t1.classification_name as label
+                ,t1.parent_classification_id as parent_id
+        from	tb_classification t1
+        where   t1.status = '1'
+        and		(IFNULL(#{codeTypeAndCd}, '') = '' or t1.classification_type = #{codeTypeAndCd})
+    </select>
+
+    <select id="getTopCategoryByType" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
+        <![CDATA[
+        SELECT 	T1.CLASSIFICATION_ID,
+                T1.PARENT_CLASSIFICATION_ID,
+                T1.CLASSIFICATION_NAME,
+                T1.CLASSIFICATION_IMAGE
+        FROM 	TB_CLASSIFICATION T1
+        WHERE	T1.STATUS = 1
+        AND		T1.CLASSIFICATION_TYPE = #{classificationType}
+        AND		T1.PARENT_CLASSIFICATION_ID = 0
+        ORDER BY T1.SORT_ORDER
+        ]]>
+    </select>
+
 
 </mapper>

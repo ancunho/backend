@@ -1,26 +1,39 @@
 package online.buza.blog.interceptor;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.GsonBuilder;
 import online.buza.blog.annotation.AdminUserLogin;
+import online.buza.blog.annotation.BusinessPassLogin;
 import online.buza.blog.annotation.PassLogin;
 import online.buza.blog.annotation.WechatPassLogin;
+import online.buza.blog.common.BaseResponse;
+import online.buza.blog.common.Const;
+import online.buza.blog.common.ResponseCode;
 import online.buza.blog.dto.CustomerDto;
 import online.buza.blog.dto.SysUserDto;
 import online.buza.blog.entity.TbAccessHist;
 import online.buza.blog.service.CommonService;
 import online.buza.blog.util.Box;
 import online.buza.blog.util.HttpUtility;
+import online.buza.blog.util.StringUtils;
 import online.buza.blog.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
+@Component
 public class BuzaInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -60,11 +73,20 @@ public class BuzaInterceptor implements HandlerInterceptor {
             if (adminUserLogin.required()) {
                 HttpSession session = request.getSession(true);
                 SysUserDto sysUserDto = (SysUserDto) session.getAttribute("LOGINED_USER");
+                String basePath = request.getScheme() + "://" + request.getServerName() + ":"  + request.getServerPort()+request.getContextPath();
                 if (sysUserDto == null) {
-                    System.out.println(">>>>>need Login");
+                    response.setContentType("text/html;charset=UTF-8");
                     response.sendRedirect("/admin/login.ahn");
                     return false;
+                } else {
+                    return true;
                 }
+            }
+        }
+
+        if (method.isAnnotationPresent(BusinessPassLogin.class)) {
+            BusinessPassLogin businessPassLogin = method.getAnnotation(BusinessPassLogin.class);
+            if (businessPassLogin.required()) {
                 return true;
             }
         }

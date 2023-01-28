@@ -10,6 +10,8 @@ public class TbPost implements Serializable {
 
     private Integer postId;
 
+    private String postUuid;
+
     private String postType;
 
     private Integer postCategoryId;
@@ -56,6 +58,14 @@ public class TbPost implements Serializable {
 
     public void setPostId(Integer postId) {
         this.postId = postId;
+    }
+
+    public String getPostUuid() {
+        return postUuid;
+    }
+
+    public void setPostUuid(String postUuid) {
+        this.postUuid = postUuid;
     }
 
     public String getPostType() {
@@ -225,6 +235,7 @@ public class TbPost implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", postId=").append(postId);
+        sb.append(", postUuid=").append(postUuid);
         sb.append(", postType=").append(postType);
         sb.append(", postCategoryId=").append(postCategoryId);
         sb.append(", postTitle=").append(postTitle);

@@ -463,6 +463,10 @@ CREATE TABLE `tb_customer` (
                                PRIMARY KEY (`CUSTOMER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='고객테이블 - 클라이언트 고객정보  ';
 
+ALTER TABLE `business`.`tb_customer`
+ADD COLUMN `CUSTOMER_UUID` VARCHAR(45) NULL AFTER `CUSTOMER_ID`;
+
+
 -- 매장정보테이블
 CREATE TABLE `tb_shop` (
                            `SHOP_ID` int NOT NULL AUTO_INCREMENT,

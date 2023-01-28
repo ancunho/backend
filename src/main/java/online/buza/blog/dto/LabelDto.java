@@ -17,6 +17,7 @@ public class LabelDto extends BaseRequest implements Serializable {
 
     public int id;
     public int value;
+    public int parentId;
     public String label;
     public boolean hasChildren;
     public String status;

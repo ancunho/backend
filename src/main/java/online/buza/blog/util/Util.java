@@ -631,4 +631,12 @@ public class Util {
         return  dataTime.format(DF_FMT_PREFIX) + SEQ.getAndIncrement();
     }
 
+    public static String generateUUID() {
+        LocalDateTime dataTime = LocalDateTime.now(ZONE_ID);
+        if(SEQ.intValue() > 9990){
+            SEQ.getAndSet(1000);
+        }
+        return  dataTime.format(DF_FMT_PREFIX) + SEQ.getAndIncrement();
+    }
+
 }

@@ -30,4 +30,6 @@ public class TbCommonCodeDto extends BaseRequest implements Serializable {
     private String status;
     private String statusName;
 
+    private String codeTypeAndCd;
+
 }

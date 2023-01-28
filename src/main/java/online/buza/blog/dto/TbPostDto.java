@@ -16,6 +16,7 @@ public class TbPostDto extends BaseRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer postId;
+    private String postUuid;
     private String postType;
     private Integer postCategoryId;
     private String postTitle;

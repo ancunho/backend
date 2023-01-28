@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head xmlns:th="https://www.thymeleaf.org" th:replace="business/common/head_meta::head_meta"></head>
+<title>Buza</title>
+<body style="background:#fff;">
+<div>
+    <!-- Top Start -->
+    <div th:replace="business/common/layout::businessTop"></div>
+    <!-- //Top End -->
+    <div class="business-container" id="business-container" v-loading="loading">
+        <div class="login-container">
+            <h1 style="text-align: center; margin: 1rem 0 3rem 0;">로그인</h1>
+            <el-form label-position="top" ref="form" :model="loginForm" label-width="120px">
+                <el-form-item label="아이디" class="register_form_box">
+                    <el-input suffix-icon="el-icon-user" placeholder="아이디를 입력해주세요."
+                              v-model="loginForm.username"></el-input>
+                </el-form-item>
+                <el-form-item label="비밀번호" class="register_form_box">
+                    <el-input suffix-icon="el-icon-lock" placeholder="비밀번호를 입력해주세요."
+                              v-model="loginForm.password"></el-input>
+                </el-form-item>
+                <el-form-item style="margin-top:30px;">
+                    <el-button style="display:block; padding: 20px; width:100%; margin-bottom: 10px;" type="primary" @click="handleLogin">로그인</el-button>
+                </el-form-item>
+            </el-form>
+            <div class="login-etc-menu">
+                <ul>
+                    <li><a th:href="${#httpServletRequest.getContextPath() + '/register.ahn'}" style="color:#2563EB; text-decoration: underline;">회원가입</a> </li>
+                    <li><a href="#this">비밀번호찾기</a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<style type="text/css">
+    .login-container { max-width: 20rem; margin:0 auto;}
+    .register_form_box { margin-bottom: 15px!important;}
+    .register_form_box input.el-input__inner{height:55px!important;}
+    .register_form_box label {padding-bottom: 0!important;}
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new Vue({
+            el: '#business-container',
+            data() {
+                return {
+                    loading: false,
+                    loginForm: {}
+                }
+            },
+            mounted() {
+
+            },
+            methods: {
+                handleLogin() {
+                    this.$message.info("준비중입니다. ");
+                },
+            }
+        });
+    });
+</script>
+</html>

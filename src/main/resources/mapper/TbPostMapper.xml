@@ -3,6 +3,7 @@
 <mapper namespace="online.buza.blog.dao.TbPostMapper">
     <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbPost">
         <id column="POST_ID" jdbcType="INTEGER" property="postId"/>
+        <result column="POST_UUID" jdbcType="VARCHAR" property="postUuid"/>
         <result column="POST_TYPE" jdbcType="VARCHAR" property="postType"/>
         <result column="POST_CATEGORY_ID" jdbcType="INTEGER" property="postCategoryId"/>
         <result column="POST_TITLE" jdbcType="VARCHAR" property="postTitle"/>
@@ -26,9 +27,9 @@
     </resultMap>
     <sql id="Base_Column_List">
         POST_ID
-        , POST_TYPE, POST_CATEGORY_ID, POST_TITLE, POST_CONTENT, EVENT_START_TIME,
-    EVENT_END_TIME, POST_THUMBNAIL_SMALL, POST_THUMBNAIL_BIG, POST_AUTHOR, IS_JOIN, IS_NEED_PAY, 
-    POST_PRICE, `STATUS`, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, 
+        , POST_UUID,POST_TYPE, POST_CATEGORY_ID, POST_TITLE, POST_CONTENT, EVENT_START_TIME,
+    EVENT_END_TIME, POST_THUMBNAIL_SMALL, POST_THUMBNAIL_BIG, POST_AUTHOR, IS_JOIN, IS_NEED_PAY,
+    POST_PRICE, `STATUS`, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME,
     UPDATE_TIME
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -43,14 +44,14 @@
         where POST_ID = #{postId,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="online.buza.blog.entity.TbPost">
-        insert into tb_post (POST_ID, POST_TYPE, POST_CATEGORY_ID,
+        insert into tb_post (POST_ID,POST_UUID, POST_TYPE, POST_CATEGORY_ID,
                              POST_TITLE, POST_CONTENT, EVENT_START_TIME,
                              EVENT_END_TIME, POST_THUMBNAIL_SMALL, POST_THUMBNAIL_BIG,
                              POST_AUTHOR, IS_JOIN, IS_NEED_PAY,
                              POST_PRICE, `STATUS`, OPTION01,
                              OPTION02, OPTION03, OPTION04,
                              OPTION05, CREATE_TIME, UPDATE_TIME)
-        values (#{postId,jdbcType=INTEGER}, #{postType,jdbcType=VARCHAR}, #{postCategoryId,jdbcType=INTEGER},
+        values (#{postId,jdbcType=INTEGER}, #{postUuid,jdbcType=VARCHAR}, #{postType,jdbcType=VARCHAR}, #{postCategoryId,jdbcType=INTEGER},
                 #{postTitle,jdbcType=VARCHAR}, #{postContent,jdbcType=VARCHAR}, #{eventStartTime,jdbcType=VARCHAR},
                 #{eventEndTime,jdbcType=VARCHAR}, #{postThumbnailSmall,jdbcType=VARCHAR},
                 #{postThumbnailBig,jdbcType=VARCHAR},
@@ -64,6 +65,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="postId != null">
                 POST_ID,
+            </if>
+            <if test="postUuid != null">
+                POST_UUID,
             </if>
             <if test="postType != null">
                 POST_TYPE,
@@ -130,6 +134,9 @@
             <if test="postId != null">
                 #{postId,jdbcType=INTEGER},
             </if>
+            <if test="postUuid != null">
+                #{postUuid,jdbcType=VARCHAR},
+            </if>
             <if test="postType != null">
                 #{postType,jdbcType=VARCHAR},
             </if>
@@ -195,6 +202,9 @@
     <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbPost">
         update tb_post
         <set>
+            <if test="postUuid != null">
+                POST_UUID = #{postUuid,jdbcType=VARCHAR},
+            </if>
             <if test="postType != null">
                 POST_TYPE = #{postType,jdbcType=VARCHAR},
             </if>
@@ -258,7 +268,8 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbPost">
         update tb_post
-        set POST_TYPE            = #{postType,jdbcType=VARCHAR},
+        set POST_UUID            = #{postUuid,jdbcType=VARCHAR},
+            POST_TYPE            = #{postType,jdbcType=VARCHAR},
             POST_CATEGORY_ID     = #{postCategoryId,jdbcType=INTEGER},
             POST_TITLE           = #{postTitle,jdbcType=VARCHAR},
             POST_CONTENT         = #{postContent,jdbcType=VARCHAR},
@@ -284,6 +295,7 @@
     <select id="getAllTbPostListByTbPost" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
         SELECT 	ROW_NUMBER() OVER() AS RN
                 ,T1.POST_ID
+                ,T1.POST_UUID
                 ,T1.POST_TYPE
                 ,(
                 SELECT  A1.CODE_NAME
@@ -293,10 +305,9 @@
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
                 ,(
-                SELECT  A1.CODE_NAME
-                FROM    TB_COMMON_CODE A1
-                WHERE   A1.CODE_ID = T1.POST_TYPE
-                AND     A1.CODE_TYPE = 'POST_TYPE'
+                SELECT  A1.CLASSIFICATION_NAME
+                FROM    TB_CLASSIFICATION A1
+                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
                 ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
                 ,T1.POST_CONTENT
@@ -309,7 +320,10 @@
                 ,T1.IS_NEED_PAY
                 ,T1.POST_PRICE
                 ,T1.STATUS
-                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,CASE   WHEN T1.STATUS = 1 THEN '使用中'
+                        WHEN T1.STATUS = 0 THEN '禁用'
+                        WHEN T1.STATUS = 99 THEN '已删除'
+                        ELSE '-' END AS STATUS_NAME
                 ,T1.OPTION01
                 ,T1.OPTION02
                 ,T1.OPTION03
@@ -348,6 +362,7 @@
         <![CDATA[
         SELECT 	ROW_NUMBER() OVER() AS RN
                 ,T1.POST_ID
+                ,T1.POST_UUID
                 ,T1.POST_TYPE
                 ,(
                 SELECT  A1.CODE_NAME
@@ -379,5 +394,178 @@
         WHERE   T1.POST_ID = #{postId}
         ]]>
     </select>
+
+    <update id="deleteTbPost" parameterType="java.lang.Integer">
+        update  tb_post t1
+        set     t1.status = '99'
+                ,t1.update_time = now()
+        where   t1.post_id = #{postId}
+    </update>
+
+    <select id="getAllTbPostListInBusiness" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
+        SELECT 	ROW_NUMBER() OVER() AS RN
+                ,T1.POST_ID
+                ,T1.POST_UUID
+                ,T1.POST_TYPE
+                ,(
+                SELECT  A1.CODE_NAME
+                FROM    TB_COMMON_CODE A1
+                WHERE   A1.CODE_ID = T1.POST_TYPE
+                AND     A1.CODE_TYPE = 'POST_TYPE'
+                ) AS POST_TYPE_NAME
+                ,T1.POST_CATEGORY_ID
+                ,(
+                SELECT  A1.CLASSIFICATION_NAME
+                FROM    TB_CLASSIFICATION A1
+                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
+                ) AS POST_CATEGORY_NAME
+                ,T1.POST_TITLE
+                ,T1.POST_CONTENT
+                ,T1.EVENT_START_TIME
+                ,T1.EVENT_END_TIME
+                ,T1.POST_THUMBNAIL_SMALL
+                ,T1.POST_THUMBNAIL_BIG
+                ,T1.POST_AUTHOR
+                ,T1.IS_JOIN
+                ,T1.IS_NEED_PAY
+                ,T1.POST_PRICE
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM 	TB_POST T1
+        <where>
+            AND     T1.STATUS = '1'
+            <if test="postTitle != null">
+                AND     (IFNULL(#{postTitle}, '') = '' OR T1.POST_TITLE LIKE CONCAT('%', #{postTitle}, '%') )
+            </if>
+            <if test="postAuthor != null">
+                AND     (IFNULL(#{postAuthor}, '') = '' OR T1.POST_AUTHOR LIKE CONCAT('%', #{postAuthor}, '%') )
+            </if>
+            <if test="isJoin != null">
+                AND     (IFNULL(#{isJoin}, '') = '' OR T1.IS_JOIN = #{isJoin})
+            </if>
+            <if test="postType != null">
+                AND     T1.POST_TYPE = #{postType}
+            </if>
+            <if test="eventStartTime != null">
+                AND     T1.EVENT_START_TIME >= STR_TO_DATE(#{eventStartTime}, '%Y-%m-%d')
+            </if>
+            <if test="eventEndTime != null">
+                AND     T1.EVENT_END_TIME >= STR_TO_DATE(#{eventEndTime}, '%Y-%m-%d')
+            </if>
+        </where>
+        ORDER BY T1.CREATE_TIME DESC
+    </select>
+
+    <select id="getPostDetailByUUID" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
+        SELECT 	T1.POST_UUID
+                ,T1.POST_TYPE
+                ,(
+                SELECT  A1.CODE_NAME
+                FROM    TB_COMMON_CODE A1
+                WHERE   A1.CODE_ID = T1.POST_TYPE
+                AND     A1.CODE_TYPE = 'POST_TYPE'
+                ) AS POST_TYPE_NAME
+                ,T1.POST_CATEGORY_ID
+                ,(
+                SELECT  A1.CLASSIFICATION_NAME
+                FROM    TB_CLASSIFICATION A1
+                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
+                ) AS POST_CATEGORY_NAME
+                ,T1.POST_TITLE
+                ,T1.POST_CONTENT
+                ,T1.EVENT_START_TIME
+                ,T1.EVENT_END_TIME
+                ,T1.POST_THUMBNAIL_SMALL
+                ,T1.POST_THUMBNAIL_BIG
+                ,T1.POST_AUTHOR
+                ,T1.IS_JOIN
+                ,T1.IS_NEED_PAY
+                ,T1.POST_PRICE
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM 	TB_POST T1
+        WHERE   T1.STATUS = '1'
+        AND     T1.POST_UUID = #{postUuid}
+    </select>
+
+    <select id="getPostListByAnyDepthCategoryId" parameterType="online.buza.blog.dto.TbPostDto" resultType="online.buza.blog.dto.TbPostDto">
+        <![CDATA[
+        SELECT  ROW_NUMBER() OVER() AS RN
+                ,T1.POST_ID
+                ,T1.POST_UUID
+                ,T1.POST_TYPE
+                ,(SELECT  A1.CODE_NAME FROM TB_COMMON_CODE A1 WHERE A1.CODE_ID = T1.POST_TYPE AND A1.CODE_TYPE = 'POST_TYPE') AS POST_TYPE_NAME
+                ,T1.POST_CATEGORY_ID
+                ,(SELECT  A1.CLASSIFICATION_NAME FROM    TB_CLASSIFICATION A1 WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID ) AS POST_CATEGORY_NAME
+                ,T1.POST_TITLE
+                ,T1.POST_CONTENT
+                ,T1.EVENT_START_TIME
+                ,T1.EVENT_END_TIME
+                ,T1.POST_THUMBNAIL_SMALL
+                ,T1.POST_THUMBNAIL_BIG
+                ,T1.POST_AUTHOR
+                ,T1.IS_JOIN
+                ,T1.IS_NEED_PAY
+                ,T1.POST_PRICE
+                ,T1.STATUS
+                ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM	TB_POST T1
+        WHERE   T1.STATUS = '1'
+        AND     T1.POST_CATEGORY_ID IN 	(
+                                        SELECT 	CLASSIFICATION_ID
+                                        FROM 	(
+                                                SELECT  @R AS _IDS,
+                                                        (SELECT @R := GROUP_CONCAT(CLASSIFICATION_ID) FROM TB_CLASSIFICATION WHERE FIND_IN_SET(PARENT_CLASSIFICATION_ID, @R) ) AS SUBIDS
+                                                FROM 	(SELECT	@R := #{postCategoryId}) VARS,
+                                                        TB_CLASSIFICATION AREA
+                                                WHERE	@R IS NOT NULL
+                                                ) CATGEGORY_TEMP,
+                                            TB_CLASSIFICATION T1
+                                        WHERE	FIND_IN_SET(T1.CLASSIFICATION_ID, CATGEGORY_TEMP._IDS)
+                                        )
+
+        ]]>
+        <if test="postTitle != null">
+            AND     (IFNULL(#{postTitle}, '') = '' OR T1.POST_TITLE LIKE CONCAT('%', #{postTitle}, '%') )
+        </if>
+        <if test="postAuthor != null">
+            AND     (IFNULL(#{postAuthor}, '') = '' OR T1.POST_AUTHOR LIKE CONCAT('%', #{postAuthor}, '%') )
+        </if>
+        <if test="isJoin != null">
+            AND     (IFNULL(#{isJoin}, '') = '' OR T1.IS_JOIN = #{isJoin})
+        </if>
+        <if test="postType != null">
+            AND     T1.POST_TYPE = #{postType}
+        </if>
+        <if test="eventStartTime != null">
+            AND     T1.EVENT_START_TIME >= STR_TO_DATE(#{eventStartTime}, '%Y-%m-%d')
+        </if>
+        <if test="eventEndTime != null">
+            AND     T1.EVENT_END_TIME >= STR_TO_DATE(#{eventEndTime}, '%Y-%m-%d')
+        </if>
+    </select>
+
+
 
 </mapper>

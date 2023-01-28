@@ -1,5 +1,7 @@
 var contextRootPath = "";
 
+var commonErrorMsg = "获取数据失败， 请刷新页面或联系管理员";
+
 function StringBuffer() {
     this.__strings__ = new Array;
 }
@@ -263,14 +265,20 @@ Tool = {
 
         return uuid.join('');
     },
-
-    /**
-     * 数组转树
-     * @param list
-     * @param parentId
-     */
-    // listToTree: function(list, parentId = null) {
-    //     return list.
-    // }
-
 }
+// End Tool
+
+function gfn_Error(code, msg) {
+    if (msg === undefined || $.trim(msg) === "") {
+        msg = "Error!";
+    }
+    if (code === 403) {
+        alert("Need Login");
+        BuzaRouter("/admin/login.ahn");
+    } else {
+        alert(msg);
+    }
+}
+
+
+

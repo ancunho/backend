@@ -22,4 +22,13 @@ public interface TbPostMapper {
 
     TbPostDto getTbPostByPostId(Integer postId);
 
+    int deleteTbPost(Integer postId);
+
+    List<TbPostDto> getAllTbPostListInBusiness(TbPostDto tbPostDto);
+    TbPostDto getPostDetailByUUID(String uuid);
+
+    List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto);
+
+
+
 }
