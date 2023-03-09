@@ -45,16 +45,16 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from SYS_USER
+        from sys_user
         where USER_SEQ = #{userSeq,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from SYS_USER
+        from sys_user
         where USER_SEQ = #{userSeq,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="online.buza.blog.entity.SysUser">
-        insert into SYS_USER (USER_SEQ, OPENID, UNIONID,
+        insert into sys_user (USER_SEQ, OPENID, UNIONID,
                               USERNAME, `PASSWORD`, ROLE_NO,
                               `ROLE`, `STATUS`, USER_TYPE,
                               REALNAME, COMPANY, COMPANY_TYPE,
@@ -78,7 +78,7 @@
                 #{updatetime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="online.buza.blog.entity.SysUser">
-        insert into SYS_USER
+        insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userSeq != null">USER_SEQ,</if>
             <if test="openid != null">OPENID,</if>
@@ -146,7 +146,7 @@
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysUser">
-        update SYS_USER
+        update sys_user
         <set>
             <if test="openid != null">
                 OPENID = #{openid,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
         where USER_SEQ = #{userSeq,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysUser">
-        update SYS_USER
+        update sys_user
         set OPENID        = #{openid,jdbcType=VARCHAR},
             UNIONID       = #{unionid,jdbcType=VARCHAR},
             USERNAME      = #{username,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
              , T1.OPTION05
              , DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
              , DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
-        FROM SYS_USER T1
+        FROM sys_user T1
         ]]>
         <where>
             <if test="status != null">
@@ -319,10 +319,10 @@
 
     <select id="existUserName" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT  1
-        FROM    SYS_USER T1
+        FROM    sys_user T1
         WHERE   EXISTS  (
                         SELECT 1
-                        FROM SYS_USER A1
+                        FROM sys_user A1
                         WHERE A1.USER_SEQ = T1.USER_SEQ
                         <if test="userSeq != null">
                             AND A1.USER_SEQ != #{userSeq}
@@ -338,11 +338,11 @@
                 ,Z1.CODE    AS ROLE_CODE
                 ,Z1.REMARK  AS ROLE_REMARK
                 ,CASE WHEN Z2.USER_SEQ IS NOT NULL THEN '1' WHEN Z2.USER_SEQ IS NULL THEN '0' ELSE '0' END AS IS_CONTAIN
-        FROM SYS_ROLE Z1
+        FROM sys_role Z1
              LEFT OUTER JOIN (
                             SELECT  T1.USER_SEQ
                                     ,T1.ROLE_ID
-                            FROM    SYS_USER_ROLE T1
+                            FROM    sys_user_role T1
                             WHERE   T1.USER_SEQ = #{userSeq}
                             ) Z2 ON Z1.ID = Z2.ROLE_ID
         WHERE Z1.STATUS = 1
@@ -381,7 +381,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
                 ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
-        FROM    SYS_USER T1
+        FROM    sys_user T1
         WHERE   T1.USERNAME = #{username}
         AND     T1.PASSWORD = #{password}
         AND     T1.STATUS = '1'
@@ -417,7 +417,7 @@
                  , T1.OPTION05
                  , DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i') AS CREATETIME
                  , DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i') AS UPDATETIME
-        FROM SYS_USER T1
+        FROM sys_user T1
         WHERE   T1.USER_SEQ = #{userSeq}
         ]]>
     </select>

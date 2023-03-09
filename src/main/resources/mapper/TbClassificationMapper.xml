@@ -200,10 +200,10 @@
 
     <select id="existClassificationName" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT  1
-        FROM    TB_CLASSIFICATION T1
+        FROM    tb_classification T1
         WHERE   EXISTS  (
                         SELECT  1
-                        FROM    TB_CLASSIFICATION A1
+                        FROM    tb_classification A1
                         WHERE   A1.CLASSIFICATION_ID = T1.CLASSIFICATION_ID
                         <if test="classificationId != null">
                             AND A1.CLASSIFICATION_ID != #{classificationId}
@@ -220,7 +220,7 @@
                 ,CASE WHEN T1.PARENT_CLASSIFICATION_ID = 0 THEN '-'
                     ELSE (
                             SELECT  A1.CLASSIFICATION_NAME
-                            FROM    TB_CLASSIFICATION A1
+                            FROM    tb_classification A1
                             WHERE   A1.CLASSIFICATION_ID = T1.PARENT_CLASSIFICATION_ID
                         ) end as PARENT_CLASSIFICATION_NAME
                 ,T1.CLASSIFICATION_TYPE
@@ -236,7 +236,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM    TB_CLASSIFICATION T1
+        FROM    tb_classification T1
         ORDER BY T1.CREATE_TIME DESC
     </select>
 
@@ -257,7 +257,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM    TB_CLASSIFICATION T1
+        FROM    tb_classification T1
         WHERE   T1.CLASSIFICATION_ID = #{classificationId}
     </select>
 
@@ -289,7 +289,7 @@
                         0 AS PRENT_ID,
                         T1.SORT_ORDER AS SORT_ORDER,
                         T1.STATUS
-                FROM	TB_CLASSIFICATION T1
+                FROM	tb_classification T1
                 WHERE	T1.PARENT_CLASSIFICATION_ID = 0
                 AND		(IFNULL(#{classificationId}, '') = '' OR T1.CLASSIFICATION_ID = #{classificationId})
                 UNION ALL
@@ -299,8 +299,8 @@
                           T2.PARENT_CLASSIFICATION_ID AS PRENT_ID,
                           T2.SORT_ORDER AS SORT_ORDER,
                           T2.STATUS
-                FROM	TB_CLASSIFICATION T1
-                            INNER JOIN TB_CLASSIFICATION T2 ON T1.CLASSIFICATION_ID = T2.PARENT_CLASSIFICATION_ID
+                FROM	tb_classification T1
+                            INNER JOIN tb_classification T2 ON T1.CLASSIFICATION_ID = T2.PARENT_CLASSIFICATION_ID
                 WHERE	T2.PARENT_CLASSIFICATION_ID <> 0
                 AND		(IFNULL(#{classificationId}, '') = '' OR T2.PARENT_CLASSIFICATION_ID = #{classificationId})
                 GROUP BY T1.CLASSIFICATION_ID,T2.CLASSIFICATION_ID,T2.PARENT_CLASSIFICATION_ID
@@ -311,13 +311,13 @@
 
     <select id="getAllOneDepthClassification" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
         SELECT  *
-        FROM    TB_CLASSIFICATION T1
+        FROM    tb_classification T1
         WHERE   T1.PARENT_CLASSIFICATION_ID = 0
     </select>
 
     <select id="getAllTwoDepthClassification" parameterType="online.buza.blog.dto.TbClassificationDto" resultType="online.buza.blog.dto.TbClassificationDto">
         SELECT  *
-        FROM    TB_CLASSIFICATION T1
+        FROM    tb_classification T1
         WHERE   T1.PARENT_CLASSIFICATION_ID = #{parentClassificationId}
     </select>
 
@@ -337,7 +337,7 @@
                 ,t1.option05
                 ,date_format(t1.create_time, '%Y-%m-%d %H:%i') as create_time
                 ,date_format(t1.update_time, '%Y-%m-%d %H:%i') as update_time
-        from	TB_CLASSIFICATION t1
+        from	tb_classification t1
         where	t1.status = '1'
         and     t1.classification_type in (
                                             select  a1.code_cd
@@ -391,7 +391,7 @@
                 T1.PARENT_CLASSIFICATION_ID,
                 T1.CLASSIFICATION_NAME,
                 T1.CLASSIFICATION_IMAGE
-        FROM 	TB_CLASSIFICATION T1
+        FROM 	tb_classification T1
         WHERE	T1.STATUS = 1
         AND		T1.CLASSIFICATION_TYPE = #{classificationType}
         AND		T1.PARENT_CLASSIFICATION_ID = 0

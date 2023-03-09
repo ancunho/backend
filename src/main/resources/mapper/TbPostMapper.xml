@@ -299,14 +299,14 @@
                 ,T1.POST_TYPE
                 ,(
                 SELECT  A1.CODE_NAME
-                FROM    TB_COMMON_CODE A1
+                FROM    tb_common_code A1
                 WHERE   A1.CODE_ID = T1.POST_TYPE
                 AND     A1.CODE_TYPE = 'POST_TYPE'
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
                 ,(
                 SELECT  A1.CLASSIFICATION_NAME
-                FROM    TB_CLASSIFICATION A1
+                FROM    tb_classification A1
                 WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
                 ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
@@ -331,7 +331,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM 	TB_POST T1
+        FROM 	tb_post T1
         <where>
             <if test="postTitle != null">
                 AND     (IFNULL(#{postTitle}, '') = '' OR T1.POST_TITLE LIKE CONCAT('%', #{postTitle}, '%') )
@@ -390,7 +390,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM 	TB_POST T1
+        FROM 	tb_post T1
         WHERE   T1.POST_ID = #{postId}
         ]]>
     </select>
@@ -409,14 +409,14 @@
                 ,T1.POST_TYPE
                 ,(
                 SELECT  A1.CODE_NAME
-                FROM    TB_COMMON_CODE A1
+                FROM    tb_common_code A1
                 WHERE   A1.CODE_ID = T1.POST_TYPE
                 AND     A1.CODE_TYPE = 'POST_TYPE'
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
                 ,(
                 SELECT  A1.CLASSIFICATION_NAME
-                FROM    TB_CLASSIFICATION A1
+                FROM    tb_classification A1
                 WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
                 ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
@@ -438,7 +438,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM 	TB_POST T1
+        FROM 	tb_post T1
         <where>
             AND     T1.STATUS = '1'
             <if test="postTitle != null">
@@ -468,14 +468,14 @@
                 ,T1.POST_TYPE
                 ,(
                 SELECT  A1.CODE_NAME
-                FROM    TB_COMMON_CODE A1
+                FROM    tb_common_code A1
                 WHERE   A1.CODE_ID = T1.POST_TYPE
                 AND     A1.CODE_TYPE = 'POST_TYPE'
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
                 ,(
                 SELECT  A1.CLASSIFICATION_NAME
-                FROM    TB_CLASSIFICATION A1
+                FROM    tb_classification A1
                 WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
                 ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
@@ -497,7 +497,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM 	TB_POST T1
+        FROM 	tb_post T1
         WHERE   T1.STATUS = '1'
         AND     T1.POST_UUID = #{postUuid}
     </select>
@@ -508,9 +508,9 @@
                 ,T1.POST_ID
                 ,T1.POST_UUID
                 ,T1.POST_TYPE
-                ,(SELECT  A1.CODE_NAME FROM TB_COMMON_CODE A1 WHERE A1.CODE_ID = T1.POST_TYPE AND A1.CODE_TYPE = 'POST_TYPE') AS POST_TYPE_NAME
+                ,(SELECT  A1.CODE_NAME FROM tb_common_code A1 WHERE A1.CODE_ID = T1.POST_TYPE AND A1.CODE_TYPE = 'POST_TYPE') AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
-                ,(SELECT  A1.CLASSIFICATION_NAME FROM    TB_CLASSIFICATION A1 WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID ) AS POST_CATEGORY_NAME
+                ,(SELECT  A1.CLASSIFICATION_NAME FROM    tb_classification A1 WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
                 ,T1.POST_CONTENT
                 ,T1.EVENT_START_TIME
@@ -530,18 +530,18 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM	TB_POST T1
+        FROM	tb_post T1
         WHERE   T1.STATUS = '1'
         AND     T1.POST_CATEGORY_ID IN 	(
                                         SELECT 	CLASSIFICATION_ID
                                         FROM 	(
                                                 SELECT  @R AS _IDS,
-                                                        (SELECT @R := GROUP_CONCAT(CLASSIFICATION_ID) FROM TB_CLASSIFICATION WHERE FIND_IN_SET(PARENT_CLASSIFICATION_ID, @R) ) AS SUBIDS
+                                                        (SELECT @R := GROUP_CONCAT(CLASSIFICATION_ID) FROM tb_classification WHERE FIND_IN_SET(PARENT_CLASSIFICATION_ID, @R) ) AS SUBIDS
                                                 FROM 	(SELECT	@R := #{postCategoryId}) VARS,
-                                                        TB_CLASSIFICATION AREA
+                                                        tb_classification AREA
                                                 WHERE	@R IS NOT NULL
                                                 ) CATGEGORY_TEMP,
-                                            TB_CLASSIFICATION T1
+                                            tb_classification T1
                                         WHERE	FIND_IN_SET(T1.CLASSIFICATION_ID, CATGEGORY_TEMP._IDS)
                                         )
 

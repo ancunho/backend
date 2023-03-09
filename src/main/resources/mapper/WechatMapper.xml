@@ -25,12 +25,12 @@
                 ,T1.OPTION05
                 , DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d') AS CREATE_TIME
                 , DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d') AS UPDATE_TIME
-        FROM	TB_POST T1
+        FROM	tb_post T1
         WHERE	T1.POST_TYPE = #{postType}
         AND     T1.STATUS = '1'
         AND		EXISTS	(
                         SELECT	1
-                        FROM	TB_COMMON_CODE A1
+                        FROM	tb_common_code A1
                         WHERE	A1.USE_YN = '1'
                         AND		A1.CODE_ID = T1.POST_TYPE
                         AND		A1.CODE_TYPE = 'POST_TYPE'
@@ -61,7 +61,7 @@
                 ,T1.OPTION05
                 , DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d') AS CREATE_TIME
                 , DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d') AS UPDATE_TIME
-        FROM	TB_POST T1
+        FROM	tb_post T1
         WHERE   T1.STATUS = '1'
         AND     T1.POST_ID = #{postId}
         ]]>
@@ -95,7 +95,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d') AS UPDATE_TIME
-        FROM    TB_CUSTOMER T1
+        FROM    tb_customer T1
         WHERE   T1.STATUS = '1'
         AND     T1.WEIXIN_OPEN_ID = #{openId}
         ORDER BY T1.CREATE_TIME DESC
@@ -131,7 +131,7 @@
              ,T1.OPTION05
              ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d') AS CREATE_TIME
              ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d') AS UPDATE_TIME
-        FROM    TB_CUSTOMER T1
+        FROM    tb_customer T1
         WHERE   T1.STATUS = '1'
           AND     T1.CUSTOMER_ID = #{customerId}
         ORDER BY T1.CREATE_TIME DESC

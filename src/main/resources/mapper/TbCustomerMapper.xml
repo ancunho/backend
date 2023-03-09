@@ -366,10 +366,10 @@
 
     <select id="existUserName" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT  1
-        FROM    TB_CUSTOMER T1
+        FROM    tb_customer T1
         WHERE   EXISTS  (
                         SELECT 1
-                        FROM TB_CUSTOMER A1
+                        FROM tb_customer A1
                         WHERE A1.CUSTOMER_ID = T1.CUSTOMER_ID
                         <if test="userSeq != null">
                             AND A1.CUSTOMER_ID != #{customerId}

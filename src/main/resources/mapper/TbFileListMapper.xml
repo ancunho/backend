@@ -28,8 +28,8 @@
     <sql id="Base_Column_List">
         FILE_ID
         , FILE_TYPE, FILE_PURPOSE, FILE_ORIGIN_NAME, FILE_NAME, FILE_PATH, FILE_BUCKET_NAME,
-    FILE_BUCKET_OBJECT, FILE_SIZE, FILE_EXTENTION, FILE_URL, FILE_SORT, FILE_IS_MAIN, 
-    FILE_REMARK, `STATUS`, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME, 
+    FILE_BUCKET_OBJECT, FILE_SIZE, FILE_EXTENTION, FILE_URL, FILE_SORT, FILE_IS_MAIN,
+    FILE_REMARK, `STATUS`, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME,
     UPDATE_TIME
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -319,7 +319,7 @@
                ,T1.OPTION05
                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM    TB_FILE_LIST T1
+        FROM    tb_file_list T1
         WHERE   T1.STATUS = '1'
         <if test="fileType != null">
             AND T1.FILE_TYPE = #{fileType}
@@ -351,7 +351,7 @@
            ,T1.OPTION05
            ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
            ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-      FROM    TB_FILE_LIST T1
+      FROM    tb_file_list T1
       WHERE   T1.FILE_ID = #{fileId}
     </select>
 

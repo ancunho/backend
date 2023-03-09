@@ -203,7 +203,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM 	TB_COMMON_CODE T1
+        FROM 	tb_common_code T1
         WHERE   T1.USE_YN = '1'
         ORDER BY CODE_TYPE,CODE_CD
         ]]>
@@ -228,7 +228,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM 	TB_COMMON_CODE T1
+        FROM 	tb_common_code T1
         WHERE   T1.CODE_ID = #{codeId}
         AND     T1.USE_YN = '1'
         ]]>
@@ -253,7 +253,7 @@
                 ,T1.OPTION05
                 ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
                 ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
-        FROM 	TB_COMMON_CODE T1
+        FROM 	tb_common_code T1
         WHERE   T1.CODE_TYPE = #{codeType}
         AND     T1.USE_YN = '1'
         ]]>

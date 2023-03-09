@@ -13,20 +13,20 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from SYS_ROLE_MENU
+        from sys_role_menu
         where ID = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
-        from SYS_ROLE_MENU
+        from sys_role_menu
         where ID = #{id,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="online.buza.blog.entity.SysRoleMenu">
-        insert into SYS_ROLE_MENU (ID, ROLE_ID, MENU_ID)
+        insert into sys_role_menu (ID, ROLE_ID, MENU_ID)
         values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT})
     </insert>
     <insert id="insertSelective" parameterType="online.buza.blog.entity.SysRoleMenu">
-        insert into SYS_ROLE_MENU
+        insert into sys_role_menu
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 ID,
@@ -51,7 +51,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysRoleMenu">
-        update SYS_ROLE_MENU
+        update sys_role_menu
         <set>
             <if test="roleId != null">
                 ROLE_ID = #{roleId,jdbcType=BIGINT},
@@ -63,7 +63,7 @@
         where ID = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysRoleMenu">
-        update SYS_ROLE_MENU
+        update sys_role_menu
         set ROLE_ID = #{roleId,jdbcType=BIGINT},
             MENU_ID = #{menuId,jdbcType=BIGINT}
         where ID = #{id,jdbcType=BIGINT}
@@ -81,7 +81,7 @@
                  ,Z1.ORDER_NUM AS MENU_ORDER_NUM
                  ,Z1.STATUS AS MENU_STATUS
                  ,CASE WHEN Z2.MENU_ID IS NOT NULL THEN '1' ELSE '0' END AS IS_CONTAIN
-        FROM 	SYS_MENU Z1
+        FROM 	sys_menu Z1
                 LEFT OUTER JOIN (
                                 SELECT 	T1.ID AS MENU_ID
                                          ,T1.PARENT_ID AS MENU_PARENT_ID
@@ -97,9 +97,9 @@
                                          ,T3.CODE AS ROLE_CODE
                                          ,T3.REMARK AS ROLE_REMARK
                                          ,T3.STATUS AS ROLE_STATUS
-                                FROM 	SYS_MENU T1
-                                       ,SYS_ROLE_MENU T2
-                                       ,SYS_ROLE T3
+                                FROM 	sys_menu T1
+                                       ,sys_role_menu T2
+                                       ,sys_role T3
                                 WHERE 	T1.ID = T2.MENU_ID
                                 AND     T1.STATUS = 1
                                 AND 	T2.ROLE_ID = T3.ID
@@ -110,13 +110,13 @@
 
     <delete id="deleteSysRoleMenuByRoleId" parameterType="java.lang.Integer">
         <![CDATA[
-        DELETE FROM SYS_ROLE_MENU T1 WHERE T1.ROLE_ID = #{roleId}
+        DELETE FROM sys_role_menu T1 WHERE T1.ROLE_ID = #{roleId}
         ]]>
     </delete>
 
     <insert id="insertSysRoleMenuByRoleIdMenuIds" parameterType="java.util.Map">
         <![CDATA[
-        INSERT INTO SYS_ROLE_MENU (ROLE_ID, MENU_ID)
+        INSERT INTO sys_role_menu (ROLE_ID, MENU_ID)
         VALUES
         ]]>
         <foreach collection="lstMenuIds" separator="," item="item">

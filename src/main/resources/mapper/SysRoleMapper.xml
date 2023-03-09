@@ -19,18 +19,18 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from SYS_ROLE
+        from sys_role
         where ID = #{id,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
-        from SYS_ROLE
+        from sys_role
         where ID = #{id,jdbcType=BIGINT}
     </delete>
 
     <insert id="insert" parameterType="online.buza.blog.entity.SysRole">
-        insert into SYS_ROLE (ID, `NAME`, CODE,
+        insert into sys_role (ID, `NAME`, CODE,
                               REMARK, CREATETIME, UPDATETIME,
                               `STATUS`)
         values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
@@ -39,7 +39,7 @@
     </insert>
 
     <insert id="insertSelective" parameterType="online.buza.blog.entity.SysRole">
-        insert into SYS_ROLE
+        insert into sys_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 ID,
@@ -79,7 +79,7 @@
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysRole">
-        update SYS_ROLE
+        update sys_role
         <set>
             <if test="name != null">
                 `NAME` = #{name,jdbcType=VARCHAR},
@@ -99,7 +99,7 @@
     </update>
 
     <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysRole">
-        update SYS_ROLE
+        update sys_role
         set `NAME`     = #{name,jdbcType=VARCHAR},
             CODE       = #{code,jdbcType=VARCHAR},
             REMARK     = #{remark,jdbcType=VARCHAR},
@@ -119,15 +119,15 @@
                 ,CASE WHEN T1.STATUS = 1 THEN '使用中' WHEN T1.STATUS = 0 THEN '禁用' ELSE '-' END AS STATUS_NAME
                 ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d') AS CREATETIME
                 ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d') AS UPDATETIME
-        FROM 	SYS_ROLE T1
+        FROM 	sys_role T1
     </select>
 
     <select id="existRoleName" parameterType="java.util.Map" resultType="java.lang.Integer">
         SELECT  1
-        FROM    SYS_MENU T1
+        FROM    sys_menu T1
         WHERE   EXISTS  (
                         SELECT  1
-                        FROM    SYS_MENU A1
+                        FROM    sys_menu A1
                         WHERE   A1.ID = T1.ID
                         <if test="menuId != null">
                             AND     A1.ID != #{menuId}

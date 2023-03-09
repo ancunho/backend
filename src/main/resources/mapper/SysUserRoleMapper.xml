@@ -13,20 +13,20 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from SYS_USER_ROLE
+        from sys_user_role
         where ID = #{id,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
-        from SYS_USER_ROLE
+        from sys_user_role
         where ID = #{id,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="online.buza.blog.entity.SysUserRole">
-        insert into SYS_USER_ROLE (ID, USER_SEQ, ROLE_ID)
+        insert into sys_user_role (ID, USER_SEQ, ROLE_ID)
         values (#{id,jdbcType=BIGINT}, #{userSeq,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
     </insert>
     <insert id="insertSelective" parameterType="online.buza.blog.entity.SysUserRole">
-        insert into SYS_USER_ROLE
+        insert into sys_user_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 ID,
@@ -51,7 +51,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.SysUserRole">
-        update SYS_USER_ROLE
+        update sys_user_role
         <set>
             <if test="userSeq != null">
                 USER_SEQ = #{userSeq,jdbcType=BIGINT},
@@ -63,19 +63,19 @@
         where ID = #{id,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.SysUserRole">
-        update SYS_USER_ROLE
+        update sys_user_role
         set USER_SEQ = #{userSeq,jdbcType=BIGINT},
             ROLE_ID  = #{roleId,jdbcType=BIGINT}
         where ID = #{id,jdbcType=BIGINT}
     </update>
 
     <delete id="deleteSysUserRoleByUserSeq" parameterType="java.lang.Integer">
-        delete from SYS_USER_ROLE where user_seq = #{userSeq}
+        delete from sys_user_role where user_seq = #{userSeq}
     </delete>
 
     <insert id="insertSysUserRoleByUserSeqRoleIds" parameterType="java.util.Map">
     <![CDATA[
-        INSERT INTO SYS_USER_ROLE (USER_SEQ, ROLE_ID)
+        INSERT INTO sys_user_role (USER_SEQ, ROLE_ID)
         VALUES
     ]]>
         <foreach collection="lstRoleIds" separator="," item="item">
