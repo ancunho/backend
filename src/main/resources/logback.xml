@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 修改一下路径-->
-    <property name="PATH" value="C:/log/blog"></property>
+<!--    <property name="PATH" value="C:/log/blog"></property>-->
+    <property name="PATH" value="/home/ec2-user/blog-log/blog"></property>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
