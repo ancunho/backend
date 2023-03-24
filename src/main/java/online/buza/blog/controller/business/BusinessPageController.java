@@ -54,6 +54,18 @@ public class BusinessPageController {
     }
 
     @PassLogin
+    @RequestMapping("/life.ahn")
+    public String life(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/life";
+    }
+
+    @PassLogin
+    @RequestMapping("/contact.ahn")
+    public String contact(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/contact";
+    }
+
+    @PassLogin
     @RequestMapping("/customer/login.ahn")
     public String customer_login(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("name", "cunho");
