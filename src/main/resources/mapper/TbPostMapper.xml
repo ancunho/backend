@@ -366,7 +366,7 @@
                 ,T1.POST_TYPE
                 ,(
                 SELECT  A1.CODE_NAME
-                FROM    TB_COMMON_CODE A1
+                FROM    tb_common_code A1
                 WHERE   A1.CODE_ID = T1.POST_TYPE
                 AND     A1.CODE_TYPE = 'POST_TYPE'
                 ) AS POST_TYPE_NAME
