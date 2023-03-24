@@ -8,7 +8,7 @@
             <div class="main-menu">
                 <ul>
                     <li><a href="/">포스트</a></li>
-                    <li><a href="/life.ahn">정리&생각</a></li>
+                    <li><a href="/life.ahn" v-if="">정리&생각</a></li>
                     <li><a href="/contact.ahn">Contact Me</a></li>
                 </ul>
             </div>
@@ -41,7 +41,12 @@
                     }
                 },
                 mounted() {
-
+                    $(".main-menu ul li").each(function(idx, elem) {
+                        $(elem).find("a").removeClass("active");
+                        if ($(elem).find("a").attr("href") == window.location.pathname) {
+                            $(elem).find("a").addClass("active");
+                        }
+                    });
                 },
                 methods: {
                     handleSearch() {
