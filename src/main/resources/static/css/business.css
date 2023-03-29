@@ -104,6 +104,10 @@ color-text-primary:1F2937
 .business-container .business-post-list .business_paging .el-pagination button { height: 48px; line-height: 48px; font-size: 20px; }
 
 .business-post-detail-container { max-width: 780px; min-height: 100%; margin: 5rem auto 50px auto; padding-top:50px; line-height: 2; }
+.business-post-detail-container-contents pre > code {width: 100%; display: block; background-color:#f5f2f0; border:1px solid #e8e8e8; border-radius: 4px 4px; word-wrap: normal; webkit-hyphens:none;hyphens:none;line-height:1.5;margin:.5em 0;overflow:auto;padding:1em;-moz-tab-size:4;-o-tab-size:4;tab-size:4;text-align:left;text-shadow:0 1px #fff;white-space:pre;word-break:normal;word-spacing:normal}
+.business-post-detail-container-contents table {border-collapse: collapse; }
+.business-post-detail-container-contents table th { background:#64748b; color:#fff; font-weight: 700; text-align: center; border: 1px solid #ccc;line-height: 1.5; min-width: 30px; padding: 3px 5px;}
+.business-post-detail-container-contents table td { font-weight: 700; text-align: center; border: 1px solid #ccc;line-height: 1.5; min-width: 30px; padding: 3px 5px;}
 .business-post-detail h1 { line-height: 1.4; padding: 30px 0 50px 0; text-align: center; border-bottom: 1px solid #eee; margin-bottom:50px; }
 .business-post-detail-category { font-size:16px; color:#38bdf8; padding: 20px 0 0 0; text-align: center;}
 .btnRedirectList { margin: 25px auto 0 auto; text-align: center; }

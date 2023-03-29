@@ -1,7 +1,22 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" >
-<head xmlns:th="https://www.thymeleaf.org" th:replace="business/common/head_meta::head_meta"></head>
+<!--<head xmlns:th="https://www.thymeleaf.org" th:replace="business/common/head_meta::head_meta"></head>-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link th:href="@{/css/default-business.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/element-my-theme.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/business.css}" type="text/css" rel="stylesheet">
+    <script th:src="@{/js/vue.2.7.10.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/element-ui.2.15.7.min.js}"></script>
+    <script th:src="@{/js/axios.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/business-components.js}"></script>
+</head>
 <title>Buza</title>
+<link th:href="@{/css/wangEditor.min.css}" type="text/css" rel="stylesheet">
 <body style="background:#fff;">
 <div>
     <!-- Top Start -->
@@ -12,7 +27,7 @@
             <input type="hidden" id="postUuid" v-model="postUuid" th:value="${postUuid}" />
             <p class="business-post-detail-category"><strong>{{ detailItem.postCategoryName }}</strong></p>
             <h1>{{detailItem.postTitle}}</h1>
-            <div v-html="detailItem.postContent"></div>
+            <div class="business-post-detail-container-contents" v-html="detailItem.postContent"></div>
         </div>
         <p class="btnRedirectList"><a th:href="${#httpServletRequest.getContextPath() + '/'}">< &nbsp;&nbsp;List</a> </p>
     </div>
