@@ -179,6 +179,9 @@
             }
             _this.handlePostType();
             _this.getClassificationListByTypeCode();
+            setInterval(function() {
+                _this.autoSaveItem();
+            }, 60000); // 30초마다 자동저장
         },
         methods: {
             handleRedirectList() {
@@ -236,9 +239,30 @@
                         _this.$message.error("Error!");
                     });
             },
+            autoSaveItem() {
+                const _this = this;
+                _this.selectedItem.postContent = editor.getHtml();
+                _this.selectedItem.postId = $(".initPostId").val();
+                console.log(_this.selectedItem);
+                if (!Tool.isEmpty(_this.selectedItem.postId)) {
+                    _this.selectedItem.status = _this.selectedItem.status === true ? "1" : "0";
+                    _this.selectedItem.postId = _this.postId;
+                    axios.post(contextRootPath + '/api/post/proc.do', _this.selectedItem)
+                        .then(response => {
+                            _this.loading = false;
+                            if (response.data.code !== 0) {
+                                gfn_Error(response.data.code, response.data.msg);
+                            }
+                        })
+                        .catch(error => {
+                            _this.loading = false;
+                            _this.$message.error("Request Error!")
+                        });
+                }
+            },
             saveItem(item) {
                 const _this = this;
-                if (Tool.isEmpty(item.postId)) {
+                if (Tool.isEmpty(item.postTitle)) {
                     if(Tool.isEmpty(item.postTitle)) { _this.$message.info("postTitle必填"); return; }
                 }
                 if (Tool.isEmpty(item.postCategoryId)) {
