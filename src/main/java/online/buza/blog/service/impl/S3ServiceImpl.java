@@ -58,10 +58,9 @@ public class S3ServiceImpl implements S3Service {
 
         String objectKey = year + "/" + month + "/" + date + "/" + uploadFileName;;
 
-        PutObjectRequest objectRequest = new PutObjectRequest(AWS_S3_BUCKET_NAME, objectKey, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead);
+        PutObjectRequest objectRequest = new PutObjectRequest(AWS_S3_BUCKET_NAME, objectKey, file);
         PutObjectResult result = s3Client.putObject(objectRequest);
-
+        file.delete();
         return result.getETag();
     }
 
