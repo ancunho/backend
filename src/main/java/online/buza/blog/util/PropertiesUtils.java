@@ -30,6 +30,13 @@ public class PropertiesUtils {
     private static String JS_CODE_TO_SESSION_URL;
     private static String GET_ACCESS_TOKEN_URL;
 
+    private static String AWS_ACCESS_KEY;
+    private static String AWS_SECRET_KEY;
+    private static String AWS_S3_ENDPOINT_URL;
+
+    private static String AWS_S3_BUCKET_NAME;
+    private static String AWS_REGION;
+
     static {
         properties = new Properties();
         InputStream inStream = PropertiesUtils.class.getClassLoader().getResourceAsStream("config.properties");
@@ -49,6 +56,11 @@ public class PropertiesUtils {
             BUZA_MINIAPP_SECRET = properties.getProperty("BUZA_MINIAPP_SECRET");
             JS_CODE_TO_SESSION_URL = properties.getProperty("JS_CODE_TO_SESSION_URL");
             GET_ACCESS_TOKEN_URL = properties.getProperty("GET_ACCESS_TOKEN_URL");
+            AWS_ACCESS_KEY = properties.getProperty("AWS_ACCESS_KEY");
+            AWS_SECRET_KEY = properties.getProperty("AWS_SECRET_KEY");
+            AWS_S3_ENDPOINT_URL = properties.getProperty("AWS_S3_ENDPOINT_URL");
+            AWS_S3_BUCKET_NAME = properties.getProperty("AWS_S3_BUCKET_NAME");
+            AWS_REGION = properties.getProperty("AWS_REGION");
 
         } catch (Exception e){
             e.printStackTrace();
@@ -81,7 +93,7 @@ public class PropertiesUtils {
     public static void setProgramName(String programName) {
         PROGRAM_NAME = programName;
     }
-    
+
     public static String getAdminLoginUrl() {
         return ADMIN_LOGIN_URL;
     }
@@ -176,5 +188,45 @@ public class PropertiesUtils {
 
     public static void setGetAccessTokenUrl(String getAccessTokenUrl) {
         GET_ACCESS_TOKEN_URL = getAccessTokenUrl;
+    }
+
+    public static String getAwsAccessKey() {
+        return AWS_ACCESS_KEY;
+    }
+
+    public static void setAwsAccessKey(String awsAccessKey) {
+        AWS_ACCESS_KEY = awsAccessKey;
+    }
+
+    public static String getAwsSecretKey() {
+        return AWS_SECRET_KEY;
+    }
+
+    public static void setAwsSecretKey(String awsSecretKey) {
+        AWS_SECRET_KEY = awsSecretKey;
+    }
+
+    public static String getAwsS3EndpointUrl() {
+        return AWS_S3_ENDPOINT_URL;
+    }
+
+    public static void setAwsS3EndpointUrl(String awsS3EndpointUrl) {
+        AWS_S3_ENDPOINT_URL = awsS3EndpointUrl;
+    }
+
+    public static String getAwsS3BucketName() {
+        return AWS_S3_BUCKET_NAME;
+    }
+
+    public static void setAwsS3BucketName(String awsS3BucketName) {
+        AWS_S3_BUCKET_NAME = awsS3BucketName;
+    }
+
+    public static String getAwsRegion() {
+        return AWS_REGION;
+    }
+
+    public static void setAwsRegion(String awsRegion) {
+        AWS_REGION = awsRegion;
     }
 }

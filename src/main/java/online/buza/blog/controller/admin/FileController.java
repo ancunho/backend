@@ -13,7 +13,9 @@ import online.buza.blog.dto.TbFileListDto;
 import online.buza.blog.entity.TbFileList;
 import online.buza.blog.service.AliyunService;
 import online.buza.blog.service.FileService;
+import online.buza.blog.service.S3Service;
 import online.buza.blog.util.Box;
+import online.buza.blog.util.FileUtil;
 import online.buza.blog.util.HttpUtility;
 import online.buza.blog.util.PropertiesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +37,9 @@ public class FileController {
 
     @Autowired
     private AliyunService aliyunService;
+
+    @Autowired
+    private S3Service s3Service;
 
     @Autowired
     private FileService fileService;
@@ -65,8 +71,11 @@ public class FileController {
         Map<String, Object> result = new HashMap<>();
 //        for (MultipartFile file : multipartFiles) {
         //Const.UPLOAD_IMAGE_MAX_SIZE : 2MB
+
         if (file.getSize() > 0 && file.getSize() <= (Const.UPLOAD_IMAGE_MAX_SIZE * 100)) {
-            String file_path_url = aliyunService.uploadFileReturnURL(file);
+//            String file_path_url = aliyunService.uploadFileReturnURL(file);
+            File fileOrg = FileUtil.convertMultipartFileToFile(file);
+            String file_path_url = s3Service.updateFileToS3ReturnETag(fileOrg);
             Map<String, String> returnData = new HashMap<>();
             returnData.put("url", file_path_url);
             result.put("errno", 0);
