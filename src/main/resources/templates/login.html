@@ -9,8 +9,8 @@
     <!-- //Top End -->
     <div class="business-container" id="business-container" v-loading="loading">
         <div class="login-container">
-            <h1 style="text-align: center; margin: 1rem 0 3rem 0;">로그인</h1>
-            <el-form label-position="top" ref="form" :model="loginForm" label-width="120px">
+            <h1 style="text-align: center; margin: 1rem 0 1rem 0;">로그인</h1>
+            <el-form label-position="top" ref="loginForm" :model="loginForm" label-width="120px">
                 <el-form-item label="아이디" class="register_form_box">
                     <el-input suffix-icon="el-icon-user" placeholder="아이디를 입력해주세요."
                               v-model="loginForm.username"></el-input>
@@ -19,6 +19,15 @@
                     <el-input suffix-icon="el-icon-lock" placeholder="비밀번호를 입력해주세요."
                               v-model="loginForm.password"></el-input>
                 </el-form-item>
+                <p class="login-box-text" style="margin-bottom: 10px;">验证码:</p>
+                <div style="display:flex; justify-content: flex-start;">
+                    <el-input class="captchaInput" style="margin-bottom: 20px; width: 60%; height:55px;" placeholder="请输入验证码" v-model="loginForm.captchaCode"></el-input>
+                    <el-image
+                            v-on:click="handleClickCaptchaImage"
+                            style="width: 40%; height: 55px;"
+                            :src="loginForm.captchaImage"
+                            fit="fill"></el-image>
+                </div>
                 <el-form-item style="margin-top:30px;">
                     <el-button style="display:block; padding: 20px; width:100%; margin-bottom: 10px;" type="primary" @click="handleLogin">로그인</el-button>
                 </el-form-item>
@@ -38,6 +47,7 @@
     .register_form_box { margin-bottom: 15px!important;}
     .register_form_box input.el-input__inner{height:55px!important;}
     .register_form_box label {padding-bottom: 0!important;}
+    .captchaInput input {display: inline-block; height: 55px;}
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -46,13 +56,33 @@
             data() {
                 return {
                     loading: false,
-                    loginForm: {}
+                    loginForm: {
+                        username: '',
+                        password: '',
+                        captchaImage: '',
+                        captchaKey: '',
+                        captchaCode: '',
+                    }
                 }
             },
             mounted() {
-
+                let _this = this;
+                _this.loadCaptchaImage();
             },
             methods: {
+                loadCaptchaImage() {
+                    let _this = this;
+                    axios.get(contextRootPath + "/api/common/captcha.do").then(response => {
+                        _this.loginForm.captchaImage = response.data.data.base64Img;
+                        _this.loginForm.captchaKey = response.data.data.captchaKey;
+                        // _this.loginForm.captchaCode = response.data.data.captchaCode;
+                        _this.loading = false;
+                    })
+                },
+                handleClickCaptchaImage() {
+                    let _this = this;
+                    _this.loadCaptchaImage();
+                },
                 handleLogin() {
                     this.$message.info("준비중입니다. ");
                 },
