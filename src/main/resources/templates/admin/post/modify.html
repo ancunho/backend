@@ -5,6 +5,23 @@
 <body class="bg-gray-50">
 <link th:href="@{/css/wangEditor.min.css}" type="text/css" rel="stylesheet">
 <script th:src="@{/js/wangEditor.5.1.15.js}"></script>
+<style>
+    .el-tag + .el-tag {
+        margin-left: 10px;
+    }
+    .button-new-tag {
+        margin-left: 10px;
+        height: 32px;
+        line-height: 30px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .input-new-tag {
+        width: 90px;
+        margin-left: 10px;
+        vertical-align: bottom;
+    }
+</style>
 <!--<script th:src="@{/js/admin/post.js}"></script>-->
 <div class="min-h-full font-mono" id="app" v-loading="loading">
     <div th:replace="admin/common/layout::top"></div>
@@ -70,6 +87,18 @@
                         </el-form-item>
                     </el-form>
                 </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="18">
+                    <el-form>
+                        <el-form-item label="Tag"  label-width="120px">
+                            <div>
+
+                            </div>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+                <el-col :span="6"></el-col>
             </el-row>
             <el-row>
                 <el-col :span="12">
@@ -149,6 +178,10 @@
         },
         data() {
             return {
+                dynamicTags: ['标签一', '标签二', '标签三'],
+                inputVisible: false,
+                inputValue: '',
+
                 radioradio: '1',
                 loading: true,
                 selectedItem: {

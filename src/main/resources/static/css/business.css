@@ -82,13 +82,13 @@ color-text-primary:1F2937
 .business-container .business-post-list > ul { width: calc(100% + 4rem); margin-left:-2rem; display: flex; flex-wrap: wrap; justify-content: flex-start;}
 .business-container .business-post-list > ul li { list-style: none; position:relative; width: calc(100% / 3); margin-bottom: 5rem; padding: 0 1.3rem; }
 .business-container .business-post-list > ul li > a { display: flex; flex-direction: column; margin: 0; padding: 0; }
-.business-container .business-post-list > ul li > p.thumbs a:hover  img { min-width: 130%; min-height: 130%;}
+/*.business-container .business-post-list > ul li > p.thumbs a:hover  img { min-width: 130%; min-height: 130%;}*/
 .business-container .business-post-list > ul li > a dl dt { color:#232324; }
 .business-container .business-post-list > ul li > a dl dt a { color:#232324; }
 .business-container .business-post-list > ul li > a:hover dl dt { color:#38bdf8; }
 .business-container .business-post-list > ul li > a:hover dl dt a { color:#38bdf8; }
 .business-container .business-post-list > ul li p.thumbs { position: relative; padding-top: 62.36%; overflow: hidden; }
-.business-container .business-post-list > ul li p.thumbs img { position: absolute; top: 50%; left: 50%; min-width: 100%; max-width: none; min-height: 100%; width: auto; height: 100%; transform: translate(-50%, -50%); transition: .3s ease all;}
+.business-container .business-post-list > ul li p.thumbs img { position: absolute; top: 50%; left: 50%; max-width: none; min-height: 100%; width: 100%; height: 100%; transform: translate(-50%, -50%); transition: .3s ease all;}
 .business-container .business-post-list > ul li dl { margin-top: 1.2rem;}
 .business-container .business-post-list > ul li dl dt { color:#000; font-size: 1.3rem; font-weight: 900; letter-spacing: -.1rem; line-height:2rem; transition: .3s ease all;}
 .business-container .business-post-list > ul li dl dt a { text-decoration: none; color:#000; font-size: 1.3rem; font-weight: 900; letter-spacing: -.1rem; line-height:2rem; transition: .3s ease all;}
