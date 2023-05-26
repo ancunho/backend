@@ -50,10 +50,7 @@ public class PostController extends CommonController {
     @AdminUserLogin
     @PostMapping(value = "/proc.do")
     public BaseResponse procTbPostByTbPostDto(HttpServletRequest request, @RequestBody TbPostDto tbPostDto) {
-        if (tbPostDto == null
-                || StringUtils.isEmpty(tbPostDto.getPostTitle())
-                || StringUtils.isEmpty(tbPostDto.getPostType())
-        ) {
+        if (tbPostDto == null|| StringUtils.isEmpty(tbPostDto.getPostTitle())) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 

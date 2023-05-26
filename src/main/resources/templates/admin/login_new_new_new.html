@@ -29,7 +29,7 @@
 
 <div id="app" class="">
     <div class="login-box" v-loading="loading">
-        <h1 style="text-align: center">Login</h1>
+        <h1 style="text-align: center; margin: 2rem 0 1rem 0;">로그인</h1>
         <el-row>
             <el-col :xs="24" :sm="24" :md="{span: 6, offset: 9}">
                 <el-form ref="form" :model="form" label-width="80px">
@@ -42,7 +42,7 @@
                         <el-input class="aaaa" style="margin-bottom: 20px; width: 60%" placeholder="请输入验证码" v-model="form.captchaCode"></el-input>
                         <el-image
                                 v-on:click="handleClickCaptchaImage"
-                                style="width: 40%; height: 40px;"
+                                style="width: 40%; height: 55px;"
                                 :src="form.captchaImage"
                                 fit="fill"></el-image>
                     </div>
@@ -53,6 +53,9 @@
 
     </div>
 </div>
+<style type="text/css">
+    .login-box input.el-input__inner{height:55px!important;}
+</style>
 
 <script type="text/javascript">
     $(document).ready(function() {
