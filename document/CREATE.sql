@@ -562,3 +562,23 @@ CREATE TABLE `tb_post_classification` (
                                           `UPDATE_TIME` datetime DEFAULT NULL,
                                           PRIMARY KEY (`POST_CLASSIFICATION_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Post Category Table
+CREATE TABLE `tb_post_category` (
+                                               `POST_CATEGORY_ID` INT NOT NULL AUTO_INCREMENT,
+                                               `POST_CATEGORY_PARENT_ID` INT NULL DEFAULT 0,
+                                               `POST_CATEGORY_NAME` VARCHAR(45) NULL,
+                                               `POST_CATEGORY_STATUS` VARCHAR(10) NULL,
+                                               `POST_CATEGORY_DESC` VARCHAR(100) NULL,
+                                               `OPTION01` VARCHAR(45) NULL,
+                                               `OPTION02` VARCHAR(45) NULL,
+                                               `OPTION03` VARCHAR(45) NULL,
+                                               `OPTION04` VARCHAR(45) NULL,
+                                               `OPTION05` VARCHAR(45) NULL,
+                                               `CREATE_TIME` DATETIME NULL,
+                                               `UPDATE_TIME` DATETIME NULL,
+                                               PRIMARY KEY (`POST_CATEGORY_ID`))
+    ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci
+COMMENT = 'post category';

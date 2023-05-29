@@ -73,9 +73,9 @@ public class FileController {
         //Const.UPLOAD_IMAGE_MAX_SIZE : 2MB
 
         if (file.getSize() > 0 && file.getSize() <= (Const.UPLOAD_IMAGE_MAX_SIZE * 100)) {
-//            String file_path_url = aliyunService.uploadFileReturnURL(file);
-            File fileOrg = FileUtil.convertMultipartFileToFile(file);
-            String file_path_url = s3Service.updateFileToS3ReturnETag(file);
+//            File fileOrg = FileUtil.convertMultipartFileToFile(file);
+//            String file_path_url = s3Service.updateFileToS3ReturnETag(file);
+            String file_path_url = aliyunService.uploadFileReturnURL(file);
             Map<String, String> returnData = new HashMap<>();
             if ("".equals(file_path_url)) {
                 result.put("errno", 1);
