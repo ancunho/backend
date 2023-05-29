@@ -430,6 +430,7 @@ transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-transfor
 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
 
 
+<<<<<<< HEAD
 //cunho--ftp.ppk
 PuTTY-User-Key-File-3: ssh-rsa
 Encryption: none
@@ -498,3 +499,64 @@ cunhoftpuser/cnsgh910kk
 公众号
 appID： wx8715bff36251fb04
 appSecret： 31bd641a83cc31d7f84835ff1b5b2fe3
+=======
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "VisualEditor0",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": [
+				"s3:GetObject",
+				"s3:ListBucket",
+				"s3:GetBucketPolicy",
+				"s3:PutBucketPolicy",
+				"s3:GetBucketLocation"
+			],
+			"Resource": "arn:aws:s3:::buza-blog/*"
+		}
+	]
+}
+
+
+---SSU wordpress -> S3 upload plulgins
+define('SSU_PROVIDER', 'aws'); // put either aws or wasabi
+define('SSU_KEY', 'AKIAYHCBPVVDBVQ7WF5G');
+define('SSU_SECRET', 'K3h5FLXGDsMWkUuAcCpFmCr0WI5KcVzGYj/Jntm0');
+define('SSU_BUCKET', 'buza-blog');
+define('SSU_FOLDER', 'your-bucket-folder'); // optional
+define('SSU_REGION', 'ap-northeast-2');
+define('SSU_SURL_EXPIRY', 60); // in seconds
+define('SSU_CAPABILITY', 'manage_options'); // optional
+
+
+public String updateFileToS3ReturnETag(File file) {
+        String fileName = file.getName();
+        String fileExtensionName = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String uploadFileName = DateUtil.getTime() + "_" + ValueUtil.generateUid(10) + "." + fileExtensionName;
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int date = calendar.get(Calendar.DATE);
+
+        String objectKey = year + "/" + month + "/" + date + "/" + uploadFileName;;
+
+        PutObjectRequest objectRequest = new PutObjectRequest(AWS_S3_BUCKET_NAME, objectKey, file);
+        try {
+            PutObjectResult result = amazonS3Client.putObject(objectRequest);
+            if (!"".equals(result.getETag())) {
+                file.delete();
+//                return "https://" + AWS_S3_BUCKET_NAME + ".s3.ap-northeast-2.amazonaws.com/" + objectKey;
+                return this.generateImageURL(objectKey);
+            } else {
+                return "";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }
+>>>>>>> 43da11a1866250953c1941f6d6943467f542a0ba

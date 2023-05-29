@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.TbClassificationMapper;
+import online.buza.blog.dao.TbPostCategoryMapper;
 import online.buza.blog.dao.TbPostMapper;
 import online.buza.blog.dto.LabelDto;
 import online.buza.blog.dto.TbClassificationDto;
+import online.buza.blog.dto.TbPostCategoryDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
+import online.buza.blog.entity.TbPostCategory;
 import online.buza.blog.service.PostService;
 import online.buza.blog.util.StringUtils;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+
+/***
+ * @author  Cunho
+ */
 
 @Slf4j
 @Getter
@@ -30,6 +37,10 @@ public class PostServiceImpl implements PostService {
 
     @Resource
     private TbClassificationMapper tbClassificationMapper;
+
+    @Resource
+    private TbPostCategoryMapper tbPostCategoryMapper;
+
 
     @Transactional
     public Boolean insertTbPost(TbPost tbPost) {
@@ -122,6 +133,34 @@ public class PostServiceImpl implements PostService {
         return tbClassificationMapper.getClassificationListByTypeCode_LabelDTO(mapParams);
     }
 
+    public List<TbPostCategoryDto> getPostCategoryList(TbPostCategoryDto tbPostCategoryDto) {
+        return tbPostCategoryMapper.getPostCategoryList(tbPostCategoryDto);
+    }
+
+    @Transactional
+    public Boolean insertTbPostCategory(TbPostCategory tbPostCategory) {
+        int insertCount = tbPostCategoryMapper.insertSelective(tbPostCategory);
+        if (insertCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Transactional
+    public Boolean updateTbPostCategory(TbPostCategory tbPostCategory) {
+        int updateCount = tbPostCategoryMapper.updateByPrimaryKeySelective(tbPostCategory);
+        if (updateCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public TbPostCategoryDto getPostCategoryDetailById(Integer postCategoryId) {
+        Map<String, Object> mapParams = new HashMap<>();
+        mapParams.put("postCategoryId", postCategoryId);
+        TbPostCategoryDto tbPostCategoryDto = tbPostCategoryMapper.getPostCategoryDetailById(mapParams);
+        return tbPostCategoryDto;
+    }
 
 
     private void recursionFn(List<TbClassificationDto> list, TbClassificationDto t) {

@@ -73,14 +73,18 @@ public class FileController {
         //Const.UPLOAD_IMAGE_MAX_SIZE : 2MB
 
         if (file.getSize() > 0 && file.getSize() <= (Const.UPLOAD_IMAGE_MAX_SIZE * 100)) {
-//            String file_path_url = aliyunService.uploadFileReturnURL(file);
-            File fileOrg = FileUtil.convertMultipartFileToFile(file);
-            String file_path_url = s3Service.updateFileToS3ReturnETag(fileOrg);
+//            File fileOrg = FileUtil.convertMultipartFileToFile(file);
+//            String file_path_url = s3Service.updateFileToS3ReturnETag(file);
+            String file_path_url = aliyunService.uploadFileReturnURL(file);
             Map<String, String> returnData = new HashMap<>();
-            returnData.put("url", file_path_url);
-            result.put("errno", 0);
-            result.put("data", returnData);
-
+            if ("".equals(file_path_url)) {
+                result.put("errno", 1);
+                result.put("message", "上传失败");
+            } else {
+                returnData.put("url", file_path_url);
+                result.put("errno", 0);
+                result.put("data", returnData);
+            }
         } else {
             result.put("errno", 1);
             result.put("message", "上传失败");

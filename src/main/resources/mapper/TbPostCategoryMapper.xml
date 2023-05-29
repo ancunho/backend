@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.TbPostCategoryMapper">
+    <resultMap id="BaseResultMap" type="online.buza.blog.entity.TbPostCategory">
+        <id column="POST_CATEGORY_ID" jdbcType="INTEGER" property="postCategoryId"/>
+        <result column="POST_CATEGORY_PARENT_ID" jdbcType="INTEGER" property="postCategoryParentId"/>
+        <result column="POST_CATEGORY_NAME" jdbcType="VARCHAR" property="postCategoryName"/>
+        <result column="POST_CATEGORY_STATUS" jdbcType="VARCHAR" property="postCategoryStatus"/>
+        <result column="POST_CATEGORY_STATUS" jdbcType="INTEGER" property="postCategorySort"/>
+        <result column="POST_CATEGORY_DESC" jdbcType="VARCHAR" property="postCategoryDesc"/>
+        <result column="OPTION01" jdbcType="VARCHAR" property="option01"/>
+        <result column="OPTION02" jdbcType="VARCHAR" property="option02"/>
+        <result column="OPTION03" jdbcType="VARCHAR" property="option03"/>
+        <result column="OPTION04" jdbcType="VARCHAR" property="option04"/>
+        <result column="OPTION05" jdbcType="VARCHAR" property="option05"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        POST_CATEGORY_ID
+        , POST_CATEGORY_PARENT_ID, POST_CATEGORY_NAME, POST_CATEGORY_STATUS, POST_CATEGORY_SORT,
+    POST_CATEGORY_DESC, OPTION01, OPTION02, OPTION03, OPTION04, OPTION05, CREATE_TIME,
+    UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_post_category
+        where POST_CATEGORY_ID = #{postCategoryId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from tb_post_category
+        where POST_CATEGORY_ID = #{postCategoryId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="online.buza.blog.entity.TbPostCategory">
+        insert into tb_post_category (POST_CATEGORY_ID, POST_CATEGORY_PARENT_ID,
+                                      POST_CATEGORY_NAME, POST_CATEGORY_STATUS, POST_CATEGORY_SORT, POST_CATEGORY_DESC,
+                                      OPTION01, OPTION02, OPTION03,
+                                      OPTION04, OPTION05, CREATE_TIME)
+        values (#{postCategoryId,jdbcType=INTEGER}, #{postCategoryParentId,jdbcType=INTEGER},
+                #{postCategoryName,jdbcType=VARCHAR}, #{postCategoryStatus,jdbcType=VARCHAR},
+                #{postCategorySort,jdbcType=INTEGER},
+                #{postCategoryDesc,jdbcType=VARCHAR}, #{option01,jdbcType=VARCHAR}, #{option02,jdbcType=VARCHAR},
+                #{option03,jdbcType=VARCHAR},
+                #{option04,jdbcType=VARCHAR}, #{option05,jdbcType=VARCHAR}, now())
+    </insert>
+    <insert id="insertSelective" parameterType="online.buza.blog.entity.TbPostCategory">
+        insert into tb_post_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postCategoryId != null">
+                POST_CATEGORY_ID,
+            </if>
+            <if test="postCategoryParentId != null">
+                POST_CATEGORY_PARENT_ID,
+            </if>
+            <if test="postCategoryName != null">
+                POST_CATEGORY_NAME,
+            </if>
+            <if test="postCategoryStatus != null">
+                POST_CATEGORY_STATUS,
+            </if>
+            <if test="postCategorySort != null">
+                POST_CATEGORY_SORT,
+            </if>
+            <if test="postCategoryDesc != null">
+                POST_CATEGORY_DESC,
+            </if>
+            <if test="option01 != null">
+                OPTION01,
+            </if>
+            <if test="option02 != null">
+                OPTION02,
+            </if>
+            <if test="option03 != null">
+                OPTION03,
+            </if>
+            <if test="option04 != null">
+                OPTION04,
+            </if>
+            <if test="option05 != null">
+                OPTION05,
+            </if>
+            CREATE_TIME
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="postCategoryId != null">
+                #{postCategoryId,jdbcType=INTEGER},
+            </if>
+            <if test="postCategoryParentId != null">
+                #{postCategoryParentId,jdbcType=INTEGER},
+            </if>
+            <if test="postCategoryName != null">
+                #{postCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="postCategoryStatus != null">
+                #{postCategoryStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="postCategorySort != null">
+                #{postCategorySort,jdbcType=INTEGER},
+            </if>
+            <if test="postCategoryDesc != null">
+                #{postCategoryDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="option01 != null">
+                #{option01,jdbcType=VARCHAR},
+            </if>
+            <if test="option02 != null">
+                #{option02,jdbcType=VARCHAR},
+            </if>
+            <if test="option03 != null">
+                #{option03,jdbcType=VARCHAR},
+            </if>
+            <if test="option04 != null">
+                #{option04,jdbcType=VARCHAR},
+            </if>
+            <if test="option05 != null">
+                #{option05,jdbcType=VARCHAR},
+            </if>
+            now()
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.TbPostCategory">
+        update tb_post_category
+        <set>
+            <if test="postCategoryParentId != null">
+                POST_CATEGORY_PARENT_ID = #{postCategoryParentId,jdbcType=INTEGER},
+            </if>
+            <if test="postCategoryName != null">
+                POST_CATEGORY_NAME = #{postCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="postCategoryStatus != null">
+                POST_CATEGORY_STATUS = #{postCategoryStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="postCategorySort != null">
+                POST_CATEGORY_SORT = #{postCategorySort,jdbcType=INTEGER},
+            </if>
+            <if test="postCategoryDesc != null">
+                POST_CATEGORY_DESC = #{postCategoryDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="option01 != null">
+                OPTION01 = #{option01,jdbcType=VARCHAR},
+            </if>
+            <if test="option02 != null">
+                OPTION02 = #{option02,jdbcType=VARCHAR},
+            </if>
+            <if test="option03 != null">
+                OPTION03 = #{option03,jdbcType=VARCHAR},
+            </if>
+            <if test="option04 != null">
+                OPTION04 = #{option04,jdbcType=VARCHAR},
+            </if>
+            <if test="option05 != null">
+                OPTION05 = #{option05,jdbcType=VARCHAR},
+            </if>
+            UPDATE_TIME = now()
+        </set>
+        where POST_CATEGORY_ID = #{postCategoryId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.TbPostCategory">
+        update tb_post_category
+        set POST_CATEGORY_PARENT_ID = #{postCategoryParentId,jdbcType=INTEGER},
+            POST_CATEGORY_NAME      = #{postCategoryName,jdbcType=VARCHAR},
+            POST_CATEGORY_STATUS    = #{postCategoryStatus,jdbcType=VARCHAR},
+            POST_CATEGORY_SORT      = #{postCategorySort,jdbcType=INTEGER},
+            POST_CATEGORY_DESC      = #{postCategoryDesc,jdbcType=VARCHAR},
+            OPTION01                = #{option01,jdbcType=VARCHAR},
+            OPTION02                = #{option02,jdbcType=VARCHAR},
+            OPTION03                = #{option03,jdbcType=VARCHAR},
+            OPTION04                = #{option04,jdbcType=VARCHAR},
+            OPTION05                = #{option05,jdbcType=VARCHAR},
+            UPDATE_TIME             = now()
+        where POST_CATEGORY_ID = #{postCategoryId,jdbcType=INTEGER}
+    </update>
+
+    <select id="getPostCategoryList" parameterType="online.buza.blog.dto.TbPostCategoryDto" resultType="online.buza.blog.dto.TbPostCategoryDto">
+        <![CDATA[
+        SELECT  T1.POST_CATEGORY_ID
+                ,T1.POST_CATEGORY_PARENT_ID
+                ,case   when t1.post_category_parent_id = 0 then '-'
+                        else    (
+                                select    a1.post_category_name
+                                from      tb_post_category a1
+                                where     a1.post_category_id = t1.post_category_parent_id
+                                )
+                end as POST_CATEGORY_PARENT_NAME
+                ,T1.POST_CATEGORY_NAME
+                ,T1.POST_CATEGORY_STATUS
+                ,T1.POST_CATEGORY_SORT
+                ,T1.POST_CATEGORY_DESC
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM    tb_post_category T1
+        WHERE   T1.POST_CATEGORY_STATUS = '1'
+        ]]>
+    </select>
+
+    <select id="getPostCategoryDetailById" parameterType="java.util.Map" resultType="online.buza.blog.dto.TbPostCategoryDto">
+        <![CDATA[
+        SELECT  T1.POST_CATEGORY_ID
+                ,T1.POST_CATEGORY_PARENT_ID
+                 ,case   when t1.post_category_parent_id = 0 then '-'
+                         else    (
+                             select    a1.post_category_name
+                             from      tb_post_category a1
+                             where     a1.post_category_id = t1.post_category_parent_id
+                         ) end as POST_CATEGORY_PARENT_NAME
+                ,T1.POST_CATEGORY_NAME
+                ,T1.POST_CATEGORY_STATUS
+                ,T1.POST_CATEGORY_SORT
+                ,T1.POST_CATEGORY_DESC
+                ,T1.OPTION01
+                ,T1.OPTION02
+                ,T1.OPTION03
+                ,T1.OPTION04
+                ,T1.OPTION05
+                ,DATE_FORMAT(T1.CREATE_TIME, '%Y-%m-%d %H:%i') AS CREATE_TIME
+                ,DATE_FORMAT(T1.UPDATE_TIME, '%Y-%m-%d %H:%i') AS UPDATE_TIME
+        FROM    tb_post_category T1
+        WHERE   (T1.POST_CATEGORY_ID = #{postCategoryId} OR T1.POST_CATEGORY_PARENT_ID = #{postCategoryId})
+        ]]>
+    </select>
+
+</mapper>
