@@ -305,9 +305,9 @@
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
                 ,(
-                SELECT  A1.CLASSIFICATION_NAME
-                FROM    tb_classification A1
-                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
+                SELECT  A1.POST_CATEGORY_NAME
+                FROM    tb_post_category A1
+                WHERE   A1.POST_CATEGORY_ID = T1.POST_CATEGORY_ID
                 ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
                 ,T1.POST_CONTENT
@@ -415,9 +415,9 @@
                 ) AS POST_TYPE_NAME
                 ,T1.POST_CATEGORY_ID
                 ,(
-                SELECT  A1.CLASSIFICATION_NAME
-                FROM    tb_classification A1
-                WHERE   A1.CLASSIFICATION_ID = T1.POST_CATEGORY_ID
+                SELECT  A1.POST_CATEGORY_NAME
+                FROM    tb_post_category A1
+                WHERE   A1.POST_CATEGORY_ID = T1.POST_CATEGORY_ID
                 ) AS POST_CATEGORY_NAME
                 ,T1.POST_TITLE
                 ,T1.POST_CONTENT
