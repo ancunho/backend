@@ -194,12 +194,15 @@
                 },
                 handleConfirmOpen(codeId) {
                     const _this = this;
+                    var params = {
+                        codeId
+                    }
                     _this.$confirm('确定删除此用户信息吗, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.post(contextRootPath + '/api/common_code/delete.do?codeId=' + codeId)
+                        axios.post(contextRootPath + '/api/common_code/delete.do', params)
                             .then(response => {
                                 if (response.data.code !== 0) {
                                     gfn_Error(response.data.code, response.data.msg);
