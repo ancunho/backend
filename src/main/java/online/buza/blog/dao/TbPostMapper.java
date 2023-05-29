@@ -1,5 +1,6 @@
 package online.buza.blog.dao;
 
+import online.buza.blog.dto.TbPostCategoryDto;
 import online.buza.blog.dto.TbPostDto;
 import online.buza.blog.entity.TbPost;
 
@@ -28,7 +29,5 @@ public interface TbPostMapper {
     TbPostDto getPostDetailByUUID(String uuid);
 
     List<TbPostDto> getPostListByAnyDepthCategoryId(TbPostDto tbPostDto);
-
-
 
 }

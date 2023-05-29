@@ -1,34 +1,26 @@
-package online.buza.blog.entity;
+package online.buza.blog.dto;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class TbPostCategory {
+public class TbPostCategoryDto extends BaseRequest implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private Integer postCategoryId;
-
+    private String postCategoryName;
     private Integer postCategoryParentId;
 
-    private String postCategoryName;
-
+    private String postCategoryParentName;
     private String postCategoryStatus;
-
     private Integer postCategorySort;
-
     private String postCategoryDesc;
-
     private String option01;
-
     private String option02;
-
     private String option03;
-
     private String option04;
-
     private String option05;
-
-    private Date createTime;
-
-    private Date updateTime;
-
+    private String createTime;
+    private String updateTime;
 
     public Integer getPostCategoryId() {
         return postCategoryId;
@@ -36,6 +28,14 @@ public class TbPostCategory {
 
     public void setPostCategoryId(Integer postCategoryId) {
         this.postCategoryId = postCategoryId;
+    }
+
+    public String getPostCategoryName() {
+        return postCategoryName;
+    }
+
+    public void setPostCategoryName(String postCategoryName) {
+        this.postCategoryName = postCategoryName;
     }
 
     public Integer getPostCategoryParentId() {
@@ -46,12 +46,12 @@ public class TbPostCategory {
         this.postCategoryParentId = postCategoryParentId;
     }
 
-    public String getPostCategoryName() {
-        return postCategoryName;
+    public String getPostCategoryParentName() {
+        return postCategoryParentName;
     }
 
-    public void setPostCategoryName(String postCategoryName) {
-        this.postCategoryName = postCategoryName;
+    public void setPostCategoryParentName(String postCategoryParentName) {
+        this.postCategoryParentName = postCategoryParentName;
     }
 
     public String getPostCategoryStatus() {
@@ -118,28 +118,29 @@ public class TbPostCategory {
         this.option05 = option05;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
     @Override
     public String toString() {
-        return "TbPostCategory{" +
+        return "TbPostCategoryDto{" +
                 "postCategoryId=" + postCategoryId +
-                ", postCategoryParentId=" + postCategoryParentId +
                 ", postCategoryName='" + postCategoryName + '\'' +
+                ", postCategoryParentId=" + postCategoryParentId +
+                ", postCategoryParentName='" + postCategoryParentName + '\'' +
                 ", postCategoryStatus='" + postCategoryStatus + '\'' +
                 ", postCategorySort=" + postCategorySort +
                 ", postCategoryDesc='" + postCategoryDesc + '\'' +
@@ -148,8 +149,8 @@ public class TbPostCategory {
                 ", option03='" + option03 + '\'' +
                 ", option04='" + option04 + '\'' +
                 ", option05='" + option05 + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
+                ", createTime='" + createTime + '\'' +
+                ", updateTime='" + updateTime + '\'' +
                 '}';
     }
 }

@@ -9,6 +9,7 @@ import online.buza.blog.common.ResponseCode;
 import online.buza.blog.controller.common.CommonController;
 import online.buza.blog.dto.*;
 import online.buza.blog.entity.TbPost;
+import online.buza.blog.entity.TbPostCategory;
 import online.buza.blog.service.PostService;
 import online.buza.blog.util.Util;
 import org.apache.commons.lang3.StringUtils;
@@ -50,7 +51,7 @@ public class PostController extends CommonController {
     @AdminUserLogin
     @PostMapping(value = "/proc.do")
     public BaseResponse procTbPostByTbPostDto(HttpServletRequest request, @RequestBody TbPostDto tbPostDto) {
-        if (tbPostDto == null|| StringUtils.isEmpty(tbPostDto.getPostTitle())) {
+        if (tbPostDto == null || StringUtils.isEmpty(tbPostDto.getPostTitle())) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
 
@@ -163,6 +164,78 @@ public class PostController extends CommonController {
         return BaseResponse.valueOfSuccess(resultList);
     }
 
+    @AdminUserLogin
+    @PostMapping(value = "/category/list.do")
+    public BaseResponse get_post_category_list(@RequestBody TbPostCategoryDto tbPostCategoryDto) {
+        List<TbPostCategoryDto> resultList = postService.getPostCategoryList(tbPostCategoryDto);
+        return BaseResponse.valueOfSuccess(resultList);
+    }
+
+
+    @AdminUserLogin
+    @GetMapping(value = "/category/detail.do")
+    public BaseResponse get_post_category_detail_by_id(@RequestParam("postCategoryId") Integer postCategoryId) {
+        if (postCategoryId == null) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        TbPostCategoryDto tbPostCategoryDto = postService.getPostCategoryDetailById(postCategoryId);
+        return BaseResponse.valueOfSuccess(tbPostCategoryDto);
+    }
+
+    @AdminUserLogin
+    @PostMapping(value = "/category/proc.do")
+    public BaseResponse procTbPostCategoryDto(@RequestBody TbPostCategoryDto tbPostCategoryDto) {
+        if (tbPostCategoryDto == null || StringUtils.isEmpty(tbPostCategoryDto.getPostCategoryName())) {
+            return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
+        }
+
+        try {
+            if (tbPostCategoryDto.getPostCategoryId() == null || "".equals(tbPostCategoryDto.getPostCategoryId())) {
+                // insert new
+                TbPostCategory tbPostCategory = new TbPostCategory();
+                tbPostCategory.setPostCategoryParentId(tbPostCategoryDto.getPostCategoryParentId());
+                tbPostCategory.setPostCategoryName(tbPostCategoryDto.getPostCategoryName());
+                tbPostCategory.setPostCategoryDesc(tbPostCategoryDto.getPostCategoryDesc());
+                tbPostCategory.setPostCategoryStatus(tbPostCategoryDto.getPostCategoryStatus());
+                tbPostCategory.setPostCategorySort(tbPostCategoryDto.getPostCategorySort());
+                tbPostCategory.setOption01(tbPostCategoryDto.getOption01());
+                tbPostCategory.setOption02(tbPostCategoryDto.getOption02());
+                tbPostCategory.setOption03(tbPostCategoryDto.getOption03());
+                tbPostCategory.setOption04(tbPostCategoryDto.getOption04());
+                tbPostCategory.setOption05(tbPostCategoryDto.getOption05());
+
+                boolean isSuccessInsert = postService.insertTbPostCategory(tbPostCategory);
+                if (isSuccessInsert) {
+                    return BaseResponse.valueOfSuccessMessage(ResponseCode.INSERT_SUCCESS.getDesc());
+                }
+                return BaseResponse.valueOfFailureMessage(ResponseCode.INSERT_ERROR.getDesc());
+            } else {
+                // update
+                TbPostCategory tbPostCategory = new TbPostCategory();
+                tbPostCategory.setPostCategoryId(tbPostCategoryDto.getPostCategoryId());
+                tbPostCategory.setPostCategoryParentId(tbPostCategoryDto.getPostCategoryParentId());
+                tbPostCategory.setPostCategoryName(tbPostCategoryDto.getPostCategoryName());
+                tbPostCategory.setPostCategoryDesc(tbPostCategoryDto.getPostCategoryDesc());
+                tbPostCategory.setPostCategoryStatus(tbPostCategoryDto.getPostCategoryStatus());
+                tbPostCategory.setPostCategorySort(tbPostCategoryDto.getPostCategorySort());
+                tbPostCategory.setOption01(tbPostCategoryDto.getOption01());
+                tbPostCategory.setOption02(tbPostCategoryDto.getOption02());
+                tbPostCategory.setOption03(tbPostCategoryDto.getOption03());
+                tbPostCategory.setOption04(tbPostCategoryDto.getOption04());
+                tbPostCategory.setOption05(tbPostCategoryDto.getOption05());
+
+                boolean isSuccessUpdate = postService.updateTbPostCategory(tbPostCategory);
+                if (isSuccessUpdate) {
+                    return BaseResponse.valueOfSuccessMessage(ResponseCode.SAVE_SUCCESS.getDesc());
+                }
+                return BaseResponse.valueOfFailureMessage(ResponseCode.SAVE_ERROR.getDesc());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return BaseResponse.valueOfFailureMessage(ResponseCode.SAVE_ERROR.getDesc());
+        }
+    }
 
 
 

@@ -569,6 +569,7 @@ CREATE TABLE `tb_post_category` (
                                                `POST_CATEGORY_PARENT_ID` INT NULL DEFAULT 0,
                                                `POST_CATEGORY_NAME` VARCHAR(45) NULL,
                                                `POST_CATEGORY_STATUS` VARCHAR(10) NULL,
+                                               `POST_CATEGORY_SORT` INT NULL DEFAULT 0,
                                                `POST_CATEGORY_DESC` VARCHAR(100) NULL,
                                                `OPTION01` VARCHAR(45) NULL,
                                                `OPTION02` VARCHAR(45) NULL,
