@@ -9,7 +9,7 @@
     <!-- //Top End -->
     <div class="business-container" id="business-container" v-loading="loading">
         <div class="register-container">
-            <h1 style="text-align: center; margin: 1rem 0 1rem 0;">회원가입</h1>
+            <h1 style="text-align: center; margin:3rem 0 1rem 0;">회원가입</h1>
             <el-form label-position="top" ref="form" :model="registerForm" label-width="120px">
                 <el-form-item label="아이디" class="register_form_box">
                     <el-input suffix-icon="el-icon-user" placeholder="아이디를 입력해주세요."
@@ -23,6 +23,15 @@
                     <el-input suffix-icon="el-icon-lock" placeholder="비밀번호를 재입력해주세요."
                               v-model="registerForm.checkPassword"></el-input>
                 </el-form-item>
+                <p class="login-box-text" style="color:#6b7280; font-size:14px;line-height: 40px;">인증코드:</p>
+                <div style="display:flex; justify-content: flex-start;">
+                    <el-input class="captchaInput" style="margin-bottom: 20px; width: 60%; height:55px;" placeholder="인증코드를 입력해주세요." v-model="loginForm.captchaCode"></el-input>
+                    <el-image
+                            v-on:click="handleClickCaptchaImage"
+                            style="width: 40%; height: 55px;"
+                            :src="loginForm.captchaImage"
+                            fit="fill"></el-image>
+                </div>
                 <el-form-item style="margin-top:30px;">
                     <el-button style="display:block; padding: 20px; width:100%; margin-bottom: 10px;" type="primary" @click="handleRegister">가입하기</el-button>
                 </el-form-item>
@@ -42,6 +51,7 @@
     .register_form_box { margin-bottom: 15px!important;}
     .register_form_box input.el-input__inner{height:55px!important;}
     .register_form_box label {padding-bottom: 0!important;}
+    .captchaInput input {display: inline-block; height: 55px;}
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -50,14 +60,37 @@
             data() {
                 return {
                     loading: false,
-                    registerForm: {}
+                    registerForm: {},
+                    loginForm: {
+                        username: '',
+                        password: '',
+                        captchaImage: '',
+                        captchaKey: '',
+                        captchaCode: '',
+                    }
                 }
             },
             mounted() {
-
+                let _this = this;
+                _this.loadCaptchaImage();
             },
             methods: {
+                handleClickCaptchaImage() {
+                    let _this = this;
+                    _this.loadCaptchaImage();
+                },
+                loadCaptchaImage() {
+                    let _this = this;
+                    axios.get(contextRootPath + "/api/common/captcha.do").then(response => {
+                        _this.loginForm.captchaImage = response.data.data.base64Img;
+                        _this.loginForm.captchaKey = response.data.data.captchaKey;
+                        // _this.loginForm.captchaCode = response.data.data.captchaCode;
+                        _this.loading = false;
+                    })
+                },
                 handleRegister() {
+                    let _this = this;
+                    console.log(_this.registerForm);
                     this.$message.info("준비중입니다. ");
                 },
             }
