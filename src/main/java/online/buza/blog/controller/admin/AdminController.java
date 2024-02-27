@@ -40,7 +40,9 @@ public class AdminController extends CommonController {
         if (sysUserDto.getUsername() == null || "".equals(sysUserDto.getUsername())) {
             return BaseResponse.valueOfFailureCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(MD5Util.MD5EncodeUtf8("111"));
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         sysUserDto.setPassword(MD5Util.MD5EncodeUtf8(sysUserDto.getPassword()));
         SysUserDto selectedSysUser = adminCommonService.selectSysUserByLogin(sysUserDto);
         if (selectedSysUser == null || "".equals(Util.nullempty(selectedSysUser.getUsername()))) {
