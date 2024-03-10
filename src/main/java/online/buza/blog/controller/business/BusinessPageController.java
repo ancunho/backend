@@ -30,10 +30,35 @@ public class BusinessPageController {
     }
 
     @PassLogin
+    @GetMapping(value = "/about")
+    public String about(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/about_2024";
+    }
+
+    @PassLogin
+    @GetMapping(value = "/service")
+    public String service(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/service_2024";
+    }
+
+    @PassLogin
+    @GetMapping(value = "/blog")
+    public String blog(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/post_list_2024";
+    }
+
+    @PassLogin
+    @RequestMapping("/contact")
+    public String contact(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "business/contact";
+    }
+
+    @PassLogin
     @GetMapping(value = "/post/{postUuid}.ahn")
     public String post_detail(@PathVariable String postUuid, Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("postUuid", postUuid);
-        return "business/post_detail";
+//        return "business/post_detail";
+        return "business/post_detail_2024";
     }
 
     @PassLogin
@@ -58,12 +83,6 @@ public class BusinessPageController {
     @RequestMapping("/life.ahn")
     public String life(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "business/life";
-    }
-
-    @PassLogin
-    @RequestMapping("/contact.ahn")
-    public String contact(Model model, HttpServletRequest request, HttpServletResponse response) {
-        return "business/contact";
     }
 
     @PassLogin

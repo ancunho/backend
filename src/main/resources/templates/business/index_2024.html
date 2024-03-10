@@ -26,18 +26,7 @@
     </header>
 
     <!-- Nav -->
-    <nav id="nav">
-        <ul class="links">
-            <li class="active"><a href="index.html">This is Massively</a></li>
-            <li><a href="generic.html">Generic Page</a></li>
-            <li><a href="elements.html">Elements Reference</a></li>
-        </ul>
-        <ul class="icons">
-            <li><a href="#" class="icon brands fa-weixin"><span class="label">Wechat</span></a></li>
-            <li><a href="#" class="icon brands fa-linkedin"><span class="label">Linkedin</span></a></li>
-            <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-        </ul>
-    </nav>
+    <div th:replace="business/common/layout::nav_2024"></div>
 
     <!-- Main -->
     <div id="main">
@@ -46,8 +35,7 @@
         <article class="post featured">
             <header class="major">
                 <span class="date">April 25, 2017</span>
-                <h2><a href="#">And this is a<br/>
-                    massive headline</a></h2>
+                <h2><a href="#">오늘 하루 당신의 삶을 어떠셨나요?</a></h2>
                 <p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br/>
                     facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br/>
                     amet nullam sed etiam veroeros.</p>
@@ -106,7 +94,7 @@
                         nulla imperdiet</a></h2>
                 </header>
                 <a href="#" class="image fit"><img th:src="@{/images/pic05.jpg}" alt=""/></a>
-                <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque
+                <p>Donec eget ex onec eget ex magna. Interdum et malonec eget ex magna. Interdum et malonec eget ex magna. Interdum et malonec eget ex magna. Interdum et malonec eget ex magna. Interdum et malonec eget ex magna. Interdum et malmagna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque
                     venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
                 <ul class="actions special">
                     <li><a href="#" class="button">Full Story</a></li>
@@ -119,7 +107,7 @@
                         sed consectetur</a></h2>
                 </header>
                 <a href="#" class="image fit"><img th:src="@{/images/pic06.jpg}" alt=""/></a>
-                <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque
+                <p>Donec eget ex magna. Interdum et malonec eget ex magna. Interdum et malonec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque
                     venenatis dolor imperdiet dolor mattis sagittis magna etiam.</p>
                 <ul class="actions special">
                     <li><a href="#" class="button">Full Story</a></li>
@@ -217,13 +205,7 @@
 </div>
 
 <!-- Scripts -->
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/jquery.scrollex.min.js}"></script>
-<script th:src="@{/js/jquery.scrolly.min.js}"></script>
-<script th:src="@{/js/browser.min.js}"></script>
-<script th:src="@{/js/breakpoints.min.js}"></script>
-<script th:src="@{/js/util.js}"></script>
-<script th:src="@{/js/main.js}"></script>
+<div th:replace="business/common/bottom_script::bottom_script"></div>
 
 <script type="text/javascript">
     $(document).ready(function () {

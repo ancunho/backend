@@ -22,8 +22,8 @@ public class ErrorConfig implements ErrorPageRegistrar {
          * 参数2 出现响应状态码的时候的跳转路径  可以自定义跳转路径
          */
 
-        ErrorPage UNAUTHORIZED_ERROR_PAGE = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error_401");
-        ErrorPage FORBIDDEN_ERROR_PAGE = new ErrorPage(HttpStatus.FORBIDDEN, "/error_403");
+        ErrorPage UNAUTHORIZED_ERROR_PAGE = new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401");
+        ErrorPage FORBIDDEN_ERROR_PAGE = new ErrorPage(HttpStatus.FORBIDDEN, "/error/403");
         ErrorPage NOT_FOUND_ERROR_PAGE = new ErrorPage(HttpStatus.NOT_FOUND, "/error/404");
         ErrorPage INTERNAL_SERVER_ERROR_ERROR_PAGE = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500");
 

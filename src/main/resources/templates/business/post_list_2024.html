@@ -1,0 +1,234 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link th:href="@{/css/element-my-theme.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/business.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/css/business_2024.css}" type="text/css" rel="stylesheet">
+</head>
+<title>Wisdom.</title>
+<body class="is-preload">
+
+<!-- Wrapper -->
+<div id="wrapper" class="fade-in">
+
+    <!-- Intro -->
+    <div id="intro">
+        <h1>This is Cunho</h1>
+        <p>A free, fully responsive HTML5 + CSS3 site template designed by and released for free under the .</p>
+        <ul class="actions">
+            <li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+        </ul>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="index.html" class="logo">Massively</a>
+    </header>
+
+    <!-- Nav -->
+    <div th:replace="business/common/layout::nav_2024"></div>
+
+    <!-- Main -->
+    <div id="main" v-loading="loading">
+        <!-- Posts -->
+        <section class="posts">
+            <article v-for="item in itemList">
+                <header>
+                    <span class="date">{{item.createTime}}</span>
+                    <h2><a href="#">{{item.postTitle}}</a></h2>
+                </header>
+<!--                <a href="#" class="image fit"><img th:src="@{/images/pic02.jpg}" alt=""/></a>-->
+                <a :href="'/post/' + item.postUuid + '.ahn'" class="image fit">
+                    <img :src="item.postThumbnailBig" :alt="item.postTitle">
+                </a>
+                <p>{{item.postTypeName}}</p>
+                <ul class="actions special">
+                    <li><a :href="'/post/' + item.postUuid + '.ahn'" class="button">Full Story</a></li>
+                </ul>
+            </article>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+<!--            <div class="pagination">-->
+<!--                &lt;!&ndash;<a href="#" class="previous">Prev</a>&ndash;&gt;-->
+<!--                <a href="#" class="page active">1</a>-->
+<!--                <a href="#" class="page">2</a>-->
+<!--                <a href="#" class="page">3</a>-->
+<!--                <span class="extra">&hellip;</span>-->
+<!--                <a href="#" class="page">8</a>-->
+<!--                <a href="#" class="page">9</a>-->
+<!--                <a href="#" class="page">10</a>-->
+<!--                <a href="#" class="next">Next</a>-->
+<!--            </div>-->
+            <el-row style="margin: 2rem 0; text-align: center;" class="business_paging">
+                <el-col>
+                    <!-- layout="total, sizes, prev, pager, next, jumper"-->
+                    <el-pagination
+                            background
+                            v-on:size-change="handleSizeChange"
+                            v-on:current-change="handleCurrentChange"
+                            v-bind:current-page="currentPage"
+                            v-bind:page-sizes="pageSizes"
+                            v-bind:page-size="pageSize"
+                            layout="prev,pager, next"
+                            v-bind:total="total">
+                    </el-pagination>
+                </el-col>
+            </el-row>
+        </footer>
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <section>
+            <form method="post" action="#">
+                <div class="fields">
+                    <div class="field">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name"/>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email"/>
+                    </div>
+                    <div class="field">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" rows="3"></textarea>
+                    </div>
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Send Message"/></li>
+                </ul>
+            </form>
+        </section>
+        <section class="split contact">
+            <section class="alt">
+                <h3>Address</h3>
+                <p>1234 Somewhere Road #87257<br/>
+                    Nashville, TN 00000-0000</p>
+            </section>
+            <section>
+                <h3>Phone</h3>
+                <p><a href="#">(000) 000-0000</a></p>
+            </section>
+            <section>
+                <h3>Email</h3>
+                <p><a href="#">info@untitled.tld</a></p>
+            </section>
+            <section>
+                <h3>Social</h3>
+                <ul class="icons alt">
+                    <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                    <li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                    <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                    <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                </ul>
+            </section>
+        </section>
+    </footer>
+
+    <!-- Copyright -->
+    <div id="copyright">
+        <ul>
+            <li>&copy; Untitled</li>
+            <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<div th:replace="business/common/bottom_script::bottom_script"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        new Vue({
+            el: '#main',
+            data() {
+                return {
+                    itemList: [],
+                    menuList: [],
+                    modifyUserItem: {},
+                    selectedItem: {},
+                    modalType: 1, // 1:新增权限/修改权限
+                    loading: true,
+                    currentPage: 1, //page
+                    pageSize: 15, //limit
+                    pageSizes: [15, 30, 50, 100],
+                    total: 100,
+                    activeTabName: 'searchTab',
+                    drawer: false,
+                    drawerTitle: 'Drawer Title',
+                    currentMenu: '',
+                }
+            },
+            mounted() {
+                this.initBlogList();
+            },
+            methods: {
+                handleSizeChange(limit) {
+                    this.currentPage = 1;
+                    this.pageSize = limit;
+                    this.initMainList(this.currentMenu);
+                },
+                handleCurrentChange(page) {
+                    this.currentPage = page;
+                    this.initMainList(this.currentMenu);
+                },
+                handleMenuClick(item) {
+                    this.loading = true;
+                    this.currentMenu = item.classificationId;
+                    this.initMainList(item.classificationId);
+                },
+                async initBlogList() {
+                    let _this = this;
+                    const params = {};
+                    await  axios.post(contextRootPath + "/business/post/list.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params)
+                        .then(response => {
+                            if (response.data.code !== 0) {
+                                gfn_Error(response.data.code, response.data.msg);
+                            } else {
+                                _this.itemList = response.data.data;
+                                _this.total = response.data.total;
+                                _this.loading = false;
+                            }
+                        })
+                        .catch(responseError => {
+                            _this.loading = false;
+                            _this.$message.error(commonErrorMsg);
+                        })
+                },
+                async initMainList(postCategoryId) {
+                    let _this = this;
+                    const params = {
+                        postCategoryId: postCategoryId
+                    };
+                    await axios.post(contextRootPath + "/business/post/list_by_category_id.do?page=" + _this.currentPage + "&limit=" + _this.pageSize, params)
+                        .then((response) => {
+                            if (response.data.code !== 0) {
+                                gfn_Error(response.data.code, response.data.msg);
+                            } else {
+                                _this.itemList = response.data.data;
+                                _this.total = response.data.total;
+                                _this.loading = false;
+                            }
+
+                        })
+                        .catch(responseError => {
+                            _this.loading = false;
+                            _this.$message.error(commonErrorMsg);
+                        });
+                },
+
+
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
