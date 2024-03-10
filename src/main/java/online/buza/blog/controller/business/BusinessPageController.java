@@ -25,7 +25,8 @@ public class BusinessPageController {
     @PassLogin
     @GetMapping(value = "")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
-        return "business/index";
+//        return "business/index";
+        return "business/index_2024";
     }
 
     @PassLogin
