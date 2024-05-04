@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="online.buza.blog.dao.EcStoreProductMapper">
+  <resultMap id="BaseResultMap" type="online.buza.blog.entity.EcStoreProduct">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="product_code" jdbcType="VARCHAR" property="productCode" />
+    <result column="main_image" jdbcType="VARCHAR" property="mainImage" />
+    <result column="slider_image" jdbcType="VARCHAR" property="sliderImage" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_info" jdbcType="VARCHAR" property="productInfo" />
+    <result column="product_keyword" jdbcType="VARCHAR" property="productKeyword" />
+    <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
+    <result column="cate_id" jdbcType="VARCHAR" property="cateId" />
+    <result column="sales_price" jdbcType="DECIMAL" property="salesPrice" />
+    <result column="vip_price" jdbcType="DECIMAL" property="vipPrice" />
+    <result column="ot_price" jdbcType="DECIMAL" property="otPrice" />
+    <result column="postage" jdbcType="DECIMAL" property="postage" />
+    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
+    <result column="sort" jdbcType="SMALLINT" property="sort" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="is_show" jdbcType="BIT" property="isShow" />
+    <result column="is_hot" jdbcType="BIT" property="isHot" />
+    <result column="is_benefit" jdbcType="BIT" property="isBenefit" />
+    <result column="is_best" jdbcType="BIT" property="isBest" />
+    <result column="is_new" jdbcType="BIT" property="isNew" />
+    <result column="add_time" jdbcType="INTEGER" property="addTime" />
+    <result column="is_postage" jdbcType="TINYINT" property="isPostage" />
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
+    <result column="can_use_point" jdbcType="INTEGER" property="canUsePoint" />
+    <result column="tag_price" jdbcType="DECIMAL" property="tagPrice" />
+    <result column="temp_id" jdbcType="INTEGER" property="tempId" />
+    <result column="spec_type" jdbcType="BIT" property="specType" />
+    <result column="is_recycle" jdbcType="BIT" property="isRecycle" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, mer_id, product_code, main_image, slider_image, product_name, product_info, product_keyword, 
+    bar_code, cate_id, sales_price, vip_price, ot_price, postage, unit_name, sort, stock, 
+    is_show, is_hot, is_benefit, is_best, is_new, add_time, is_postage, is_del, can_use_point, 
+    tag_price, temp_id, spec_type, is_recycle
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ec_store_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ec_store_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="online.buza.blog.entity.EcStoreProduct">
+    insert into ec_store_product (id, mer_id, product_code, 
+      main_image, slider_image, product_name, 
+      product_info, product_keyword, bar_code, 
+      cate_id, sales_price, vip_price, 
+      ot_price, postage, unit_name, 
+      sort, stock, is_show, is_hot, 
+      is_benefit, is_best, is_new, add_time, 
+      is_postage, is_del, can_use_point, 
+      tag_price, temp_id, spec_type, 
+      is_recycle)
+    values (#{id,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{productCode,jdbcType=VARCHAR}, 
+      #{mainImage,jdbcType=VARCHAR}, #{sliderImage,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productInfo,jdbcType=VARCHAR}, #{productKeyword,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR}, 
+      #{cateId,jdbcType=VARCHAR}, #{salesPrice,jdbcType=DECIMAL}, #{vipPrice,jdbcType=DECIMAL}, 
+      #{otPrice,jdbcType=DECIMAL}, #{postage,jdbcType=DECIMAL}, #{unitName,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=SMALLINT}, #{stock,jdbcType=INTEGER}, #{isShow,jdbcType=BIT}, #{isHot,jdbcType=BIT}, 
+      #{isBenefit,jdbcType=BIT}, #{isBest,jdbcType=BIT}, #{isNew,jdbcType=BIT}, #{addTime,jdbcType=INTEGER}, 
+      #{isPostage,jdbcType=TINYINT}, #{isDel,jdbcType=TINYINT}, #{canUsePoint,jdbcType=INTEGER}, 
+      #{tagPrice,jdbcType=DECIMAL}, #{tempId,jdbcType=INTEGER}, #{specType,jdbcType=BIT}, 
+      #{isRecycle,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="online.buza.blog.entity.EcStoreProduct">
+    insert into ec_store_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="productCode != null">
+        product_code,
+      </if>
+      <if test="mainImage != null">
+        main_image,
+      </if>
+      <if test="sliderImage != null">
+        slider_image,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productInfo != null">
+        product_info,
+      </if>
+      <if test="productKeyword != null">
+        product_keyword,
+      </if>
+      <if test="barCode != null">
+        bar_code,
+      </if>
+      <if test="cateId != null">
+        cate_id,
+      </if>
+      <if test="salesPrice != null">
+        sales_price,
+      </if>
+      <if test="vipPrice != null">
+        vip_price,
+      </if>
+      <if test="otPrice != null">
+        ot_price,
+      </if>
+      <if test="postage != null">
+        postage,
+      </if>
+      <if test="unitName != null">
+        unit_name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="stock != null">
+        stock,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="isBenefit != null">
+        is_benefit,
+      </if>
+      <if test="isBest != null">
+        is_best,
+      </if>
+      <if test="isNew != null">
+        is_new,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="isPostage != null">
+        is_postage,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="canUsePoint != null">
+        can_use_point,
+      </if>
+      <if test="tagPrice != null">
+        tag_price,
+      </if>
+      <if test="tempId != null">
+        temp_id,
+      </if>
+      <if test="specType != null">
+        spec_type,
+      </if>
+      <if test="isRecycle != null">
+        is_recycle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null">
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sliderImage != null">
+        #{sliderImage,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productInfo != null">
+        #{productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="productKeyword != null">
+        #{productKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cateId != null">
+        #{cateId,jdbcType=VARCHAR},
+      </if>
+      <if test="salesPrice != null">
+        #{salesPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="otPrice != null">
+        #{otPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="postage != null">
+        #{postage,jdbcType=DECIMAL},
+      </if>
+      <if test="unitName != null">
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=SMALLINT},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isBenefit != null">
+        #{isBenefit,jdbcType=BIT},
+      </if>
+      <if test="isBest != null">
+        #{isBest,jdbcType=BIT},
+      </if>
+      <if test="isNew != null">
+        #{isNew,jdbcType=BIT},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="isPostage != null">
+        #{isPostage,jdbcType=TINYINT},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=TINYINT},
+      </if>
+      <if test="canUsePoint != null">
+        #{canUsePoint,jdbcType=INTEGER},
+      </if>
+      <if test="tagPrice != null">
+        #{tagPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tempId != null">
+        #{tempId,jdbcType=INTEGER},
+      </if>
+      <if test="specType != null">
+        #{specType,jdbcType=BIT},
+      </if>
+      <if test="isRecycle != null">
+        #{isRecycle,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="online.buza.blog.entity.EcStoreProduct">
+    update ec_store_product
+    <set>
+      <if test="merId != null">
+        mer_id = #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="productCode != null">
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null">
+        main_image = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sliderImage != null">
+        slider_image = #{sliderImage,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productInfo != null">
+        product_info = #{productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="productKeyword != null">
+        product_keyword = #{productKeyword,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null">
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cateId != null">
+        cate_id = #{cateId,jdbcType=VARCHAR},
+      </if>
+      <if test="salesPrice != null">
+        sales_price = #{salesPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        vip_price = #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="otPrice != null">
+        ot_price = #{otPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="postage != null">
+        postage = #{postage,jdbcType=DECIMAL},
+      </if>
+      <if test="unitName != null">
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=SMALLINT},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isBenefit != null">
+        is_benefit = #{isBenefit,jdbcType=BIT},
+      </if>
+      <if test="isBest != null">
+        is_best = #{isBest,jdbcType=BIT},
+      </if>
+      <if test="isNew != null">
+        is_new = #{isNew,jdbcType=BIT},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="isPostage != null">
+        is_postage = #{isPostage,jdbcType=TINYINT},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=TINYINT},
+      </if>
+      <if test="canUsePoint != null">
+        can_use_point = #{canUsePoint,jdbcType=INTEGER},
+      </if>
+      <if test="tagPrice != null">
+        tag_price = #{tagPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tempId != null">
+        temp_id = #{tempId,jdbcType=INTEGER},
+      </if>
+      <if test="specType != null">
+        spec_type = #{specType,jdbcType=BIT},
+      </if>
+      <if test="isRecycle != null">
+        is_recycle = #{isRecycle,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="online.buza.blog.entity.EcStoreProduct">
+    update ec_store_product
+    set mer_id = #{merId,jdbcType=INTEGER},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      main_image = #{mainImage,jdbcType=VARCHAR},
+      slider_image = #{sliderImage,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_info = #{productInfo,jdbcType=VARCHAR},
+      product_keyword = #{productKeyword,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      cate_id = #{cateId,jdbcType=VARCHAR},
+      sales_price = #{salesPrice,jdbcType=DECIMAL},
+      vip_price = #{vipPrice,jdbcType=DECIMAL},
+      ot_price = #{otPrice,jdbcType=DECIMAL},
+      postage = #{postage,jdbcType=DECIMAL},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=SMALLINT},
+      stock = #{stock,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=BIT},
+      is_hot = #{isHot,jdbcType=BIT},
+      is_benefit = #{isBenefit,jdbcType=BIT},
+      is_best = #{isBest,jdbcType=BIT},
+      is_new = #{isNew,jdbcType=BIT},
+      add_time = #{addTime,jdbcType=INTEGER},
+      is_postage = #{isPostage,jdbcType=TINYINT},
+      is_del = #{isDel,jdbcType=TINYINT},
+      can_use_point = #{canUsePoint,jdbcType=INTEGER},
+      tag_price = #{tagPrice,jdbcType=DECIMAL},
+      temp_id = #{tempId,jdbcType=INTEGER},
+      spec_type = #{specType,jdbcType=BIT},
+      is_recycle = #{isRecycle,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
