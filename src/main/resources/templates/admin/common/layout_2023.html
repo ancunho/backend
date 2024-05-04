@@ -1,0 +1,89 @@
+<div th:fragment="top">
+    <div id="topContainer">
+        <div class="topContainerBox">
+            <div style="display: flex; justify-content: start;">
+<!--                <h1><a href="/admin"><img th:src="@{/images/buza_management_logo.png}" width="200" height="40"></a></h1>-->
+                <div class="topMenu">
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin'}">Dashboard</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/customer.ahn'}">Customer</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/#this'}">E-commerce</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/post.ahn'}">Board</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/material.ahn'}">Material</a>
+                    <a th:href="${#httpServletRequest.getContextPath() + '/admin/setting.ahn'}">Setting</a>
+                </div>
+            </div>
+            <div class="topSubMenu">
+<!--                <svg class="" style="height: 1.5rem; width: 1.5rem; margin-right: 10px; color:#D1D5DB;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">-->
+<!--                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />-->
+<!--                </svg>-->
+                <span><a href="/" target="_blank" style="color:#fff; text-decoration: underline; display:inline-block; margin-right: 30px;">Portal</a> </span>
+                <span th:text="${session.LOGINED_USER.getRealname()}" class="topSubMenu-username"></span>
+                <el-avatar v-bind:size="40" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"/>
+                </el-avatar>
+                <i class="el-icon-switch-button btnLogout" style="font-size: 25px; cursor:pointer"></i>
+            </div>
+        </div>
+    </div>
+    <style>
+
+    </style>
+
+
+    <script type="text/javascript">
+        new Vue({
+            el: '#topContainer',
+            data() {
+                return {
+                    activeIndex: '1'
+                }
+            },
+            methods: {
+                handleSelect(key, keyPath) {
+
+                }
+            }
+        });
+        // Logout
+        $(".btnLogout").unbind('click').click(function(){
+            swal({
+                title: "确定要退出吗?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willLogout => {
+                if (willLogout) {
+                    var $frmBUZACommon = $("#frmBUZACommon");
+                    if($frmBUZACommon.length < 1) {
+                        $frmBUZACommon = $("<form/>").attr({id:"frmBUZACommon", method:'POST'});
+                        $(document.body).append($frmBUZACommon);
+                    }
+                    $frmBUZACommon.empty();
+                    $frmBUZACommon.attr('target', '_self');
+                    $frmBUZACommon.attr('action', contextRootPath + '/admin/adminLogoutProc.do');
+
+                    $frmBUZACommon.submit();
+                }
+            }));
+
+        });
+    </script>
+
+</div>
+
+<div th:fragment="footer" style="z-index:10000; background:#f6f8fa; width: 100%; text-align: center; padding: 0.5rem; position:fixed; bottom:0;left: 0;">
+        &copy;2022 Buza Studio Management System
+</div>
+
+<div th:fragment="nav" >
+    <div class="left_top">
+        <a href="/admin/dashboard.ahn" class="btn-dashboard">Dashboard</a>
+        <a href="/admin/setting.ahn" class="btn-setting">Setting</a>
+    </div>
+    <div  id="sm">
+    </div>
+    <style type="text/css">
+        #sm .accordion { border:none;}
+    </style>
+</div>

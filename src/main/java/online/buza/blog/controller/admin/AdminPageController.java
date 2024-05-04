@@ -71,6 +71,12 @@ public class AdminPageController {
     }
 
     @AdminUserLogin
+    @RequestMapping(value = "/product.ahn")
+    public String product(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/product/index";
+    }
+
+    @AdminUserLogin
     @RequestMapping(value = "/customer.ahn")
     public String customer(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/customer/index";
@@ -141,6 +147,8 @@ public class AdminPageController {
     public String setting_common_code(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/setting/common_code";
     }
+
+
 
 
 

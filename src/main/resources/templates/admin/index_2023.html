@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="bg-gray-50">
+<div class="min-h-full font-mono">
+    <div th:replace="admin/common/layout::top"></div>
+    <div th:replace="admin/common/layout::footer"></div>
+
+    <header class="bg-white shadow">
+        <div class="header-container ">
+            <h3>Dashboard</h3>
+            <div th:fragment="setting_submenu" class="header-container-menu">
+                <a href="/admin/setting.ahn" class="ml-5 text-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline hover:underline-offset-8 hover:decoration-wavy">통계</a>
+            </div>
+        </div>
+    </header>
+    <main class="main-container">
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Main Contents Start -->
+            <!-- Top Analysis Start -->
+            <div style="height:210px; border:4px dashed #fecaca; text-align: center; padding-top:190px;">
+                <svg xmlns="http://www.w3.org/2000/svg" style="width:1.5rem; " fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
+                </svg>
+            </div>
+            <!-- // Top Analysis End -->
+            <!-- Top Analysis Start -->
+
+            <!-- // Top Analysis End -->
+            <!-- // Main Contents End -->
+        </div>
+    </main>
+</div>
+</body>
+</html>
