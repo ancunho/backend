@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
-public class ECStoreProductDto {
+public class ECStoreProductDto extends BaseRequest {
 
     private Integer id;
     private Integer merId;

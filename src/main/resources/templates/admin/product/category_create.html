@@ -1,0 +1,131 @@
+<!doctype html>
+<html class="h-full bg-gray-100" xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="h-full">
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('productData', () => ({
+            productName: '',
+            productCode: '',
+            productInfo: '',
+            saveProduct() {
+                let _this = this;
+                var params = {
+                    productName: _this.productName
+                    ,productCode: _this.productCode
+                    ,productInfo: _this.productInfo
+                };
+
+                if (_this.productName.trim() !== "") {
+                    axios.post(contextRootPath + "/api/ecommerce/product/proc.do", params)
+                        .then(response => {
+                            if (response.data.code !== 0) {
+                                gfn_Error(response.data.code, response.data.msg);
+                            } else {
+                                console.log(response);
+                            }
+                        })
+                        .catch(error => {
+                            _this.loading = false;
+                            _this.$message.error("Request Error!(Post Type)")
+                        })
+                } else {
+                    alert("상품명은 공백일수없습니다. ");
+                }
+            }
+        }));
+    });
+
+
+</script>
+
+<div class="mx-auto" x-data="productData()">
+
+    <div th:replace="admin/common/layout::top"></div>
+
+
+    <header class="bg-white shadow-sm">
+        <div class="mx-auto px-4 py-4 sm:px-6 lg:px-8">
+            <h1 class="text-lg font-semibold leading-6 text-gray-900">카테고리등록</h1>
+        </div>
+    </header>
+    <main>
+        <div class="mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Content Start -->
+            <div class="bg-white p-2 rounded-lg px-4 sm:px-6 lg:px-8" x-data="{optionBox : false}">
+                <div class="mt-4 flow-root">
+                    <!-- Product Create Start -->
+                    <div class="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-4 ">
+                        <div class="sm:col-span-1 sm:col-start-1">
+                            <label class="block text-sm font-medium leading-6 text-gray-900">대분류</label>
+                            <div class="">
+                                <ul>
+                                    <li>asdf</li>
+                                    <li>asdf</li>
+                                    <li>asdf</li>
+                                    <li>asdf</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-1">
+                            <label class="block text-sm font-medium leading-6 text-gray-900">중분류</label>
+                            <div class="">
+
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-1">
+                            <label class="block text-sm font-medium leading-6 text-gray-900">소분류</label>
+                            <div class="">
+
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-1 mt-6">
+                            <button type="button" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">저장</button>
+                        </div>
+
+                    </div>
+                    <!-- //Product Create End -->
+                </div>
+            </div>
+            <!-- //Content End -->
+        </div>
+    </main>
+</div>
+
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function(){
+
+
+        // $("#save").unbind('click').click(function() {
+        //     var params = {
+        //
+        //     }
+        //     axios.post(contextRootPath + "/api/common_code/type/list.do?codeType=POST_TYPE")
+        //         .then(response => {
+        //             if (response.data.code !== 0) {
+        //                 gfn_Error(response.data.code, response.data.msg);
+        //             } else {
+        //                 _this.postTypeList = response.data.data;
+        //             }
+        //         })
+        //         .catch(error => {
+        //             _this.loading = false;
+        //             _this.$message.error("Request Error!(Post Type)")
+        //         })
+        // });
+    });
+</script>
+
+
+<div th:replace="admin/common/layout::footer"></div>
+</body>
+</html>

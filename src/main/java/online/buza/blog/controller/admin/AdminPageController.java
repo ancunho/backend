@@ -148,6 +148,17 @@ public class AdminPageController {
         return "admin/setting/common_code";
     }
 
+    @AdminUserLogin
+    @RequestMapping(value = "/product/create.ahn")
+    public String ecommerce_create_product(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/product/create";
+    }
+
+    @AdminUserLogin
+    @RequestMapping(value = "/product/category_create.ahn")
+    public String ecommerce_create_category(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/product/category_create";
+    }
 
 
 

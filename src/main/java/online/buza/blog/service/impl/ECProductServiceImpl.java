@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import online.buza.blog.dao.EcStoreProductMapper;
+import online.buza.blog.dto.ECStoreProductDto;
 import online.buza.blog.entity.EcStoreProduct;
 import online.buza.blog.service.ECProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Slf4j
 @Getter
