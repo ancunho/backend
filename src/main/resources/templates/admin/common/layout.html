@@ -16,6 +16,9 @@
                             <a th:href="${#httpServletRequest.getContextPath() + '/admin/product.ahn'}" x-transition
                                th:classappend="${#request.requestURI == '/admin/product.ahn'} ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'"
                                class="rounded-md px-3 py-2 text-sm font-medium">Product</a>
+                            <a th:href="${#httpServletRequest.getContextPath() + '/admin/blog.ahn'}" x-transition
+                               th:classappend="${#request.requestURI == '/admin/blog.ahn'} ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'"
+                               class="rounded-md px-3 py-2 text-sm font-medium">Blog</a>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html class="h-full bg-gray-100" xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="https://www.thymeleaf.org" th:replace="admin/common/head_meta::head_meta"></head>
+<title>Buza Management System</title>
+<body class="h-full">
+<!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-gray-100">
+  <body class="h-full">
+  ```
+-->
+<div class="mx-auto">
+
+    <div th:replace="admin/common/layout::top"></div>
+
+
+    <header class="bg-white shadow-sm">
+        <div class="mx-auto px-4 py-4 sm:px-6 lg:px-8">
+            <h1 class="text-lg font-semibold leading-6 text-gray-900">Blog</h1>
+        </div>
+    </header>
+    <main>
+        <div class="mx-auto py-6 sm:px-6 lg:px-8 ">
+            <!-- Content Start -->
+            <h1>Hello blog</h1>
+
+            <!-- //Content End -->
+        </div>
+    </main>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#user-menu-item-2").click(function(){
+            alert(111);
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

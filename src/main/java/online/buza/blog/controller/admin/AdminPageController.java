@@ -77,6 +77,12 @@ public class AdminPageController {
     }
 
     @AdminUserLogin
+    @RequestMapping(value = "/blog.ahn")
+    public String blog(Model model, HttpServletRequest request, HttpServletResponse response) {
+        return "admin/blog/index";
+    }
+
+    @AdminUserLogin
     @RequestMapping(value = "/customer.ahn")
     public String customer(Model model, HttpServletRequest request, HttpServletResponse response) {
         return "admin/customer/index";
